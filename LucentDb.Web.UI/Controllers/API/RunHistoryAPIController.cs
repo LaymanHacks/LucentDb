@@ -92,7 +92,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPost]
         public long Insert(RunHistory runHistory)
         {
-            return _dbRepository.Insert(runHistory.Id, runHistory.ScriptId, runHistory.RunDateTime, runHistory.IsPass,
+            return _dbRepository.Insert( runHistory.ScriptId, runHistory.RunDateTime, runHistory.IsPass,
                 runHistory.ResultString);
         }
 
@@ -100,7 +100,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPut]
         public void Update(RunHistory runHistory)
         {
-            _dbRepository.Update(runHistory.Id, runHistory.ScriptId, runHistory.RunDateTime, runHistory.IsPass,
+            _dbRepository.Update(runHistory.ScriptId, runHistory.RunDateTime, runHistory.IsPass,
                 runHistory.ResultString, runHistory.Id);
         }
     }

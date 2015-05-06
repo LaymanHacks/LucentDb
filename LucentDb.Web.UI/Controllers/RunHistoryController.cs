@@ -74,7 +74,7 @@ namespace LucentDb.Web.UI.Controllers
         {
             try
             {
-                _dbRunHistoryRepository.Update(runHistory,id);
+                _dbRunHistoryRepository.Update(runHistory);
                 return RedirectToAction("Index");
             }
             catch

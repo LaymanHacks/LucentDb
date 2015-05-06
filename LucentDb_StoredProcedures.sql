@@ -589,46 +589,6 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Connection_GetConnectionsByProjectId]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_GetConnectionsByProjectId]
-(
-@ProjectId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-Connection.[Id], 
-Connection.[Name], 
-Connection.[ConnectionString], 
-Connection.[IsActive]
-FROM [Connection] INNER JOIN Project_Connection ON Connection.[Id] = Project_Connection.[ConnectionId]
-WHERE Project_Connection.[ProjectId] = @ProjectId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Connection_GetConnectionsByProjectId]
-(
-@ProjectId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-Connection.[Id], 
-Connection.[Name], 
-Connection.[ConnectionString], 
-Connection.[IsActive]
-FROM [Connection] INNER JOIN Project_Connection ON Connection.[Id] = Project_Connection.[ConnectionId]
-WHERE Project_Connection.[ProjectId] = @ProjectId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResult_Select]') AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_Select]
@@ -1337,44 +1297,6 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Project_GetProjectsByConnectionId]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Project_GetProjectsByConnectionId]
-(
-@ConnectionId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-Project.[Id], 
-Project.[Name], 
-Project.[IsActive]
-FROM [Project] INNER JOIN Project_Connection ON Project.[Id] = Project_Connection.[ProjectId]
-WHERE Project_Connection.[ConnectionId] = @ConnectionId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Project_GetProjectsByConnectionId]
-(
-@ConnectionId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-Project.[Id], 
-Project.[Name], 
-Project.[IsActive]
-FROM [Project] INNER JOIN Project_Connection ON Project.[Id] = Project_Connection.[ProjectId]
-WHERE Project_Connection.[ConnectionId] = @ConnectionId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Project_Connection_Select]') AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Project_Connection_Select]
@@ -1909,43 +1831,39 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ru
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_Update]
 (
-@Id bigint, 
 @ScriptId int, 
 @RunDateTime datetime, 
 @IsPass bit, 
 @ResultString varchar(1000), 
-@Original_Id bigint
+@Id bigint
   )
 
   AS
    SET NOCOUNT ON;
-UPDATE [RunHistory] SET [Id]=@Id
-     , [ScriptId]=@ScriptId
+UPDATE [RunHistory] SET [ScriptId]=@ScriptId
      , [RunDateTime]=@RunDateTime
      , [IsPass]=@IsPass
      , [ResultString]=@ResultString
-WHERE [Id]=@Original_Id'
+WHERE [Id]=@Id'
     END
   ELSE
   BEGIN
   EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[RunHistory_Update]
 (
-@Id bigint, 
 @ScriptId int, 
 @RunDateTime datetime, 
 @IsPass bit, 
 @ResultString varchar(1000), 
-@Original_Id bigint
+@Id bigint
   )
 
   AS
    SET NOCOUNT ON;
-   UPDATE [RunHistory] SET [Id]=@Id
-     , [ScriptId]=@ScriptId
+   UPDATE [RunHistory] SET [ScriptId]=@ScriptId
      , [RunDateTime]=@RunDateTime
      , [IsPass]=@IsPass
      , [ResultString]=@ResultString
-WHERE [Id]=@Original_Id'
+WHERE [Id]=@Id'
   END
 GO
 
@@ -1989,7 +1907,6 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ru
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_Insert]
 (
-@Id bigint, 
 @ScriptId int, 
 @RunDateTime datetime, 
 @IsPass bit, 
@@ -1998,13 +1915,12 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_Insert]
 
   AS
    SET NOCOUNT ON;
-INSERT INTO [RunHistory] ([Id], [ScriptId], [RunDateTime], [IsPass], [ResultString]) VALUES (@Id, @ScriptId, @RunDateTime, @IsPass, @ResultString);SELECT @Id;'
+INSERT INTO [RunHistory] ([ScriptId], [RunDateTime], [IsPass], [ResultString]) VALUES (@ScriptId, @RunDateTime, @IsPass, @ResultString);SELECT SCOPE_IDENTITY();'
     END
   ELSE
   BEGIN
   EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[RunHistory_Insert]
 (
-@Id bigint, 
 @ScriptId int, 
 @RunDateTime datetime, 
 @IsPass bit, 
@@ -2013,7 +1929,7 @@ INSERT INTO [RunHistory] ([Id], [ScriptId], [RunDateTime], [IsPass], [ResultStri
 
   AS
    SET NOCOUNT ON;
-   INSERT INTO [RunHistory] ([Id], [ScriptId], [RunDateTime], [IsPass], [ResultString]) VALUES (@Id, @ScriptId, @RunDateTime, @IsPass, @ResultString);SELECT @Id;'
+   INSERT INTO [RunHistory] ([ScriptId], [RunDateTime], [IsPass], [ResultString]) VALUES (@ScriptId, @RunDateTime, @IsPass, @ResultString);SELECT SCOPE_IDENTITY();'
   END
 GO
 
