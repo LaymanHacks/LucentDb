@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:msd="urn:schemas-microsoft-com:xml-msdatasource" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5DD5E69B-33E9-4684-B441-4C54756167FA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace />
+    <AssemblyName>LucentDb.Domain.Entities.Extensions</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>LucentDb.Domain.Entities.Extensions.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>On</OptionStrict>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssertTypeExtension.cs" />
+    <Compile Include="ConnectionExtension.cs" />
+    <Compile Include="ExpectedResultExtension.cs" />
+    <Compile Include="ProjectExtension.cs" />
+    <Compile Include="Project_ConnectionExtension.cs" />
+    <Compile Include="RunHistoryExtension.cs" />
+    <Compile Include="ScriptExtension.cs" />
+    <Compile Include="ScriptTypeExtension.cs" />
+    <Compile Include="Script_ExpectedResultExtension.cs" />
+    <Compile Include="TestExtension.cs" />
+    <Compile Include="TestTypeExtension.cs" />
+    <Compile Include="Test_ScriptExtension.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LucentDb.Data.Repository\LucentDb.Data.Repository.vbproj">
+      <Project>{a0c74624-564b-4b23-a21c-ca3ead34187f}</Project>
+      <Name>LucentDb.Data.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LucentDb.Data\LucentDb.Data.vbproj">
+      <Project>{97e07ab1-aadd-4a17-bd14-1d876ccab30a}</Project>
+      <Name>LucentDb.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LucentDb.Domain.Entities\LucentDb.Domain.Entities.csproj">
+      <Project>{4adcf3cb-049f-4be2-b421-7875dc51301b}</Project>
+      <Name>LucentDb.Domain.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
