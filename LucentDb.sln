@@ -25,6 +25,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{5A0A37CF-CF62-4E78-9699-D132E7AC54F5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{83F69FB1-16A9-4F16-9AAA-4243F72A08EE}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2FBCD085-5BD3-402F-B07B-D96D7F04072D}"
 EndProject
