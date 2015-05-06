@@ -233,6 +233,10 @@
     <Content Include="app\TestType\Index.js" />
     <Content Include="app\Test\Index.js" />
     <Content Include="app\Test_Script\Index.js" />
+    <Content Include="App_Data\LucentDb.mdf" />
+    <Content Include="App_Data\LucentDb_log.ldf">
+      <DependentUpon>LucentDb.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -315,9 +319,7 @@
     <Content Include="Views\Test_Script\Edit.cshtml" />
     <Content Include="Views\Test_Script\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
