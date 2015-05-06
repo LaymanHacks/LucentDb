@@ -2866,9 +2866,9 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedRes
    SET NOCOUNT ON;
 DELETE 
 FROM [Script_ExpectedResult]
-WHERE [@ScriptId]=@Original_ScriptId
-  AND [@ExpectedResultId]=@Original_ExpectedResultId
-  AND [@ResultIndex]=@Original_ResultIndex'
+WHERE [ScriptId]=@ScriptId
+  AND [ExpectedResultId]=@ExpectedResultId
+  AND [ResultIndex]=@ResultIndex'
     END
   ELSE
   BEGIN
@@ -2883,9 +2883,9 @@ WHERE [@ScriptId]=@Original_ScriptId
    SET NOCOUNT ON;
    DELETE 
 FROM [Script_ExpectedResult]
-WHERE [@ScriptId]=@Original_ScriptId
-  AND [@ExpectedResultId]=@Original_ExpectedResultId
-  AND [@ResultIndex]=@Original_ResultIndex'
+WHERE [ScriptId]=@ScriptId
+  AND [ExpectedResultId]=@ExpectedResultId
+  AND [ResultIndex]=@ResultIndex'
   END
 GO
 
@@ -4513,8 +4513,8 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_Delete
    SET NOCOUNT ON;
 DELETE 
 FROM [Test_Script]
-WHERE [@TestId]=@Original_TestId
-  AND [@ScriptId]=@Original_ScriptId'
+WHERE [TestId]=TestId
+  AND [ScriptId]=@ScriptId'
     END
   ELSE
   BEGIN
@@ -4528,8 +4528,8 @@ WHERE [@TestId]=@Original_TestId
    SET NOCOUNT ON;
    DELETE 
 FROM [Test_Script]
-WHERE [@TestId]=@Original_TestId
-  AND [@ScriptId]=@Original_ScriptId'
+WHERE [TestId]=@TestId
+  AND [ScriptId]=@ScriptId'
   END
 GO
 
