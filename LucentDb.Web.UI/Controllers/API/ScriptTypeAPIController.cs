@@ -42,7 +42,7 @@ namespace LucentDb.Web.UI.Controllers.Api
             }
         }
 
-        [Route("api/scriptTypes/all", Name = "ScriptTypesGetActiveDataRoute")]
+        [Route("api/scriptTypes/active/all", Name = "ScriptTypesGetActiveDataRoute")]
         [HttpGet]
         public IQueryable<ScriptType> GetActiveData()
         {

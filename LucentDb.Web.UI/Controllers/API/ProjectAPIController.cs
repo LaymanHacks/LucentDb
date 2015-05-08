@@ -42,7 +42,7 @@ namespace LucentDb.Web.UI.Controllers.Api
             }
         }
 
-        [Route("api/projects/all", Name = "ProjectsGetActiveDataRoute")]
+        [Route("api/projects/active/all", Name = "ProjectsGetActiveDataRoute")]
         [HttpGet]
         public IQueryable<Project> GetActiveData()
         {

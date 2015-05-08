@@ -42,6 +42,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="SimpleInjector">
+      <HintPath>..\packages\SimpleInjector.2.8.0\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Extensions.ExecutionContextScoping">
+      <HintPath>..\packages\SimpleInjector.Extensions.ExecutionContextScoping.2.8.0\lib\net45\SimpleInjector.Extensions.ExecutionContextScoping.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.2.8.0\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web.Mvc">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.Mvc.2.8.0\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.WebApi">
+      <HintPath>..\packages\SimpleInjector.Integration.WebApi.2.8.1\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -200,6 +215,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InjectorContainerFactory.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -331,6 +347,10 @@
     <ProjectReference Include="..\LucentDb.Data.Repository\LucentDb.Data.Repository.vbproj">
       <Project>{a0c74624-564b-4b23-a21c-ca3ead34187f}</Project>
       <Name>LucentDb.Data.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LucentDb.Data.SQLClient\LucentDb.Data.SqlClient.vbproj">
+      <Project>{46c3e43a-b955-4f85-be09-e06e7b0c45e9}</Project>
+      <Name>LucentDb.Data.SqlClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\LucentDb.Data\LucentDb.Data.vbproj">
       <Project>{97E07AB1-AADD-4A17-BD14-1D876CCAB30A}</Project>
