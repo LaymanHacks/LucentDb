@@ -42,7 +42,7 @@ namespace LucentDb.Web.UI.Controllers.Api
             }
         }
 
-        [Route("api/scriptTypes/active/all", Name = "ScriptTypesGetActiveDataRoute")]
+        [Route("api/scriptTypes/all/active", Name = "ScriptTypesGetActiveDataRoute")]
         [HttpGet]
         public IQueryable<ScriptType> GetActiveData()
         {
@@ -62,7 +62,7 @@ namespace LucentDb.Web.UI.Controllers.Api
             return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
         }
 
-        [Route("api/scriptTypes/all", Name = "ScriptTypesGetDataRoute")]
+        [Route("api/scriptTypes/all/active", Name = "ScriptTypesGetDataRoute")]
         [HttpGet]
         public IQueryable<ScriptType> GetData()
         {
