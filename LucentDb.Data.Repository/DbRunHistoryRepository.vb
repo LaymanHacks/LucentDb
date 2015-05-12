@@ -63,7 +63,7 @@ Namespace LucentDb.Data.Repository
    ''' <remarks></remarks> 
   <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)> _ 
     Public Sub Update( ByVal scriptId As Int32,  ByVal runDateTime As DateTime,  ByVal isPass As Boolean,  ByVal resultString As String,  ByVal id As Int64)  Implements IRunHistoryRepository.Update
-            Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetUpdateDbCommand(scriptId, runDateTime, isPass, resultString, id)
+        Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetUpdateDbCommand(ScriptId, RunDateTime, IsPass, ResultString, Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
           Command.ExecuteNonQuery

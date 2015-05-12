@@ -1,0 +1,27 @@
+﻿<div class="col-md-12 column clearfix projectItem">
+    <h3>
+        {{script.name}}
+    </h3>
+    <p>
+        <div ui-codemirror="{
+      lineNumbers: true,
+    styleActiveLine: true,
+    matchBrackets: true,
+      theme : 'ambiance',
+      mode: 'text/x-sql'
+    }" ng-model="script.sqlScript"></div>
+    </p>
+    <div class="row clearfix">
+        <div class="col-md-12  clearfix  form-inline  ">
+            <label class="control-label">Assert.</label><label class="form-control" style="margin-bottom: 0;" ng-repeat="aType in vm.assertTypes | filter:{id:script.assertTypeId}"> {{aType.name}}</label> 
+            <label class="form-control" style="margin-bottom: 0;">{{script.expectedValue}}</label>
+        </div>
+
+
+    </div>
+    <p>
+        <a href="" ng-click="vm.deleteProject(script.id)">
+            <i class="fa fa-trash-o"></i>
+        </a>
+    </p>
+</div>

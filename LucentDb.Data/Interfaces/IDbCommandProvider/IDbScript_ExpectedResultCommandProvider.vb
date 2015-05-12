@@ -12,29 +12,21 @@ Imports System.Data
 
 Namespace LucentDb.Data.DbCommandProvider
     Public Interface IDbScript_ExpectedResultCommandProvider
-        ReadOnly Property Script_ExpectedResultDbConnectionHolder As DbConnectionHolder
+        ReadOnly Property Script_ExpectedResultDbConnectionHolder() As DbConnectionHolder
         ReadOnly Property DbConnectionName As String
         Function GetGetDataDbCommand() As IDbCommand
-
-        Function GetUpdateDbCommand(scriptId As Int32, expectedResultId As Int32, resultIndex As Int32,
-                                    original_ScriptId As Int32, original_ExpectedResultId As Int32,
-                                    original_ResultIndex As Int32) As IDbCommand
-
-        Function GetDeleteDbCommand(scriptId As Int32, expectedResultId As Int32, resultIndex As Int32) As IDbCommand
-        Function GetInsertDbCommand(scriptId As Int32, expectedResultId As Int32, resultIndex As Int32) As IDbCommand
-        Function GetGetDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) As IDbCommand
+        Function GetUpdateDbCommand( ByVal scriptId As Int32,  ByVal expectedResultId As Int32,  ByVal resultIndex As Int32,  ByVal original_ScriptId As Int32,  ByVal original_ExpectedResultId As Int32) As IDbCommand
+        Function GetDeleteDbCommand( ByVal scriptId As Int32,  ByVal expectedResultId As Int32) As IDbCommand
+        Function GetInsertDbCommand( ByVal scriptId As Int32,  ByVal expectedResultId As Int32,  ByVal resultIndex As Int32) As IDbCommand
+        Function GetGetDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
         Function GetGetRowCountDbCommand() As IDbCommand
-        Function GetGetDataByExpectedResultIdDbCommand(expectedResultId As Int32) As IDbCommand
+        Function GetGetDataByScriptIdExpectedResultIdDbCommand( ByVal scriptId As Int32,  ByVal expectedResultId As Int32) As IDbCommand
+        Function GetGetDataByExpectedResultIdDbCommand( ByVal expectedResultId As Int32) As IDbCommand
+        Function GetGetDataByExpectedResultIdPageableDbCommand( ByVal expectedResultId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
+        Function GetGetDataByExpectedResultIdRowCountDbCommand( ByVal expectedResultId As Int32) As IDbCommand
+        Function GetGetDataByScriptIdDbCommand( ByVal scriptId As Int32) As IDbCommand
+        Function GetGetDataByScriptIdPageableDbCommand( ByVal scriptId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
+        Function GetGetDataByScriptIdRowCountDbCommand( ByVal scriptId As Int32) As IDbCommand
 
-        Function GetGetDataByExpectedResultIdPageableDbCommand(expectedResultId As Int32, sortExpression As String,
-                                                               page As Int32, pageSize As Int32) As IDbCommand
-
-        Function GetGetDataByExpectedResultIdRowCountDbCommand(expectedResultId As Int32) As IDbCommand
-        Function GetGetDataByScriptIdDbCommand(scriptId As Int32) As IDbCommand
-
-        Function GetGetDataByScriptIdPageableDbCommand(scriptId As Int32, sortExpression As String, page As Int32,
-                                                       pageSize As Int32) As IDbCommand
-
-        Function GetGetDataByScriptIdRowCountDbCommand(scriptId As Int32) As IDbCommand
     End Interface
 End Namespace

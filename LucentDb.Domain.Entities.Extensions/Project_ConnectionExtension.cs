@@ -16,18 +16,18 @@ namespace LucentDb.Domain.Entities.Extensions
   {
    
      
-      public static Project_Connection IncludeConnectionConnection(this Project_Connection project_Connection, IConnectionRepository connectionRepository) 
+      public static Project_Connection IncludeConnection(this Project_Connection project_Connection, IConnectionRepository connectionRepository) 
       {
-         if (project_Connection.ConnectionConnection != null) return  project_Connection;   
-               project_Connection.ConnectionConnection = connectionRepository.GetDataById(project_Connection.ConnectionId).ToList().First();
+         if (project_Connection.Connection != null) return  project_Connection;   
+               project_Connection.Connection = connectionRepository.GetDataByConnectionId(project_Connection.ConnectionId).ToList().First();
          return  project_Connection;      
       }
   
      
-      public static Project_Connection IncludeProjectProject(this Project_Connection project_Connection, IProjectRepository projectRepository) 
+      public static Project_Connection IncludeProject(this Project_Connection project_Connection, IProjectRepository projectRepository) 
       {
-         if (project_Connection.ProjectProject != null) return  project_Connection;   
-               project_Connection.ProjectProject = projectRepository.GetDataById(project_Connection.ProjectId).ToList().First();
+         if (project_Connection.Project != null) return  project_Connection;   
+               project_Connection.Project = projectRepository.GetDataByProjectId(project_Connection.ProjectId).ToList().First();
          return  project_Connection;      
       }
      

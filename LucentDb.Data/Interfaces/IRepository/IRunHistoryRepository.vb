@@ -12,21 +12,22 @@ Imports System.Collections.Generic
 Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface IRunHistoryRepository
-        Function GetData() As ICollection(Of RunHistory)
-        Sub Update(ByVal scriptId As Int32, ByVal runDateTime As DateTime, ByVal isPass As Boolean, ByVal resultString As String, ByVal id As Int64)
-        Sub Update(ByVal runHistory As RunHistory)
-        Sub Delete(ByVal id As Int64)
-        Sub Delete(ByVal runHistory As RunHistory)
-        Function Insert(ByVal scriptId As Int32, ByVal runDateTime As DateTime, ByVal isPass As Boolean, ByVal resultString As String) As Int64
-        Function Insert(ByVal runHistory As RunHistory) As Int64
-        Function GetDataPageable(ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As ICollection(Of RunHistory)
-        Function GetRowCount() As Int32
-        Function GetDataById(ByVal id As Int64) As ICollection(Of RunHistory)
-        Function GetDataByScriptId(ByVal scriptId As Int32) As ICollection(Of RunHistory)
-        Function GetDataByScriptIdPageable(ByVal scriptId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As ICollection(Of RunHistory)
-        Function GetDataByScriptIdRowCount(ByVal scriptId As Int32) As Int32
-    End Interface
-End Namespace
+        Function GetData()  as ICollection(Of RunHistory)
+        Sub Update( ByVal scriptId As Int32,  ByVal runDateTime As DateTime,  ByVal isPass As Boolean,  ByVal resultString As String,  ByVal id As Int64) 
+        Sub Update(ByVal runHistory as RunHistory) 
+        Sub Delete( ByVal id As Int64) 
+        Sub Delete(ByVal runHistory as RunHistory) 
+        Function Insert( ByVal scriptId As Int32,  ByVal runDateTime As DateTime,  ByVal isPass As Boolean,  ByVal resultString As String)  as Int64
+        Function Insert(ByVal runHistory as RunHistory)  as Int64
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of RunHistory)
+        Function GetRowCount()  as Int32
+        Function GetDataById( ByVal id As Int64)  as ICollection(Of RunHistory)
+        Function GetDataByScriptId( ByVal scriptId As Int32)  as ICollection(Of RunHistory)
+        Function GetDataByScriptIdPageable( ByVal scriptId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of RunHistory)
+        Function GetDataByScriptIdRowCount( ByVal scriptId As Int32)  as Int32
+    End Interface 
+End NameSpace
+  

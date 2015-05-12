@@ -16,18 +16,18 @@ namespace LucentDb.Domain.Entities.Extensions
   {
    
      
-      public static Script_ExpectedResult IncludeExpectedResultExpectedResult(this Script_ExpectedResult script_ExpectedResult, IExpectedResultRepository expectedResultRepository) 
+      public static Script_ExpectedResult IncludeExpectedResult(this Script_ExpectedResult script_ExpectedResult, IExpectedResultRepository expectedResultRepository) 
       {
-         if (script_ExpectedResult.ExpectedResultExpectedResult != null) return  script_ExpectedResult;   
-               script_ExpectedResult.ExpectedResultExpectedResult = expectedResultRepository.GetDataById(script_ExpectedResult.ExpectedResultId).ToList().First();
+         if (script_ExpectedResult.ExpectedResult != null) return  script_ExpectedResult;   
+               script_ExpectedResult.ExpectedResult = expectedResultRepository.GetDataById(script_ExpectedResult.ExpectedResultId).ToList().First();
          return  script_ExpectedResult;      
       }
   
      
-      public static Script_ExpectedResult IncludeScriptScript(this Script_ExpectedResult script_ExpectedResult, IScriptRepository scriptRepository) 
+      public static Script_ExpectedResult IncludeScript(this Script_ExpectedResult script_ExpectedResult, IScriptRepository scriptRepository) 
       {
-         if (script_ExpectedResult.ScriptScript != null) return  script_ExpectedResult;   
-               script_ExpectedResult.ScriptScript = scriptRepository.GetDataById(script_ExpectedResult.ScriptId).ToList().First();
+         if (script_ExpectedResult.Script != null) return  script_ExpectedResult;   
+               script_ExpectedResult.Script = scriptRepository.GetDataById(script_ExpectedResult.ScriptId).ToList().First();
          return  script_ExpectedResult;      
       }
      

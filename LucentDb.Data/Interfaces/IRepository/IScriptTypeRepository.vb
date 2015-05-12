@@ -9,29 +9,25 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface IScriptTypeRepository
-        Function GetData() As ICollection(Of ScriptType)
-        Sub Update(name As String, isActive As Boolean, id As Int32)
-        Sub Update(scriptType As ScriptType)
-        Sub Delete(id As Int32)
-        Sub Delete(scriptType As ScriptType)
-        Function Insert(name As String, isActive As Boolean) As Int32
-        Function Insert(scriptType As ScriptType) As Int32
-
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            As ICollection(Of ScriptType)
-
-        Function GetRowCount() As Int32
-        Function GetDataById(id As Int32) As ICollection(Of ScriptType)
-        Function GetActiveData() As ICollection(Of ScriptType)
-
-        Function GetActiveDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            As ICollection(Of ScriptType)
-
-        Function GetActiveDataRowCount() As Int32
-    End Interface
-End Namespace
+        Function GetData()  as ICollection(Of ScriptType)
+        Sub Update( ByVal name As String,  ByVal isActive As Boolean,  ByVal id As Int32) 
+        Sub Update(ByVal scriptType as ScriptType) 
+        Sub Delete( ByVal id As Int32) 
+        Sub Delete(ByVal scriptType as ScriptType) 
+        Function Insert( ByVal name As String,  ByVal isActive As Boolean)  as Int32
+        Function Insert(ByVal scriptType as ScriptType)  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ScriptType)
+        Function GetRowCount()  as Int32
+        Function GetDataById( ByVal id As Int32)  as ICollection(Of ScriptType)
+        Function GetActiveData()  as ICollection(Of ScriptType)
+        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ScriptType)
+        Function GetActiveDataRowCount()  as Int32
+    End Interface 
+End NameSpace
+  

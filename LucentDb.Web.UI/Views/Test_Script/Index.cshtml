@@ -27,47 +27,39 @@
             <span class="sr-only">Split button!</span>
         </button>
         <ul class="dropdown-menu" role="menu">
-            <li>
-                <a href="#" ng-click="vm.pageSize=10;vm.pageChanged()">10</a>
-            </li>
-            <li>
-                <a href="#" ng-click="vm.pageSize=20;vm.pageChanged()">20</a>
-            </li>
-            <li>
-                <a href="#" ng-click="vm.pageSize=50;vm.pageChanged()">50</a>
-            </li>
+            <li><a href="#" ng-click="vm.pageSize=10;vm.pageChanged()">10</a></li>
+            <li><a href="#" ng-click="vm.pageSize=20;vm.pageChanged()">20</a></li>
+            <li><a href="#" ng-click="vm.pageSize=50;vm.pageChanged()">50</a></li>
         </ul>
     </div>
     <table class="table">
         <tr>
 
-            <th>
+          <th>
                 Test Id
-            </th>
+          </th>     
 
-            <th>
+          <th>
                 Script Id
-            </th>
+          </th>     
 
-            <th></th>
+          <th></th>
         </tr>
 
 
         <tr ng-repeat="item in vm.pageableResults.results">
 
-            <td>
+          <td>
                 {{item.testId}}
-            </td>
+          </td>     
 
-            <td>
+          <td>
                 {{item.scriptId}}
-            </td>
+          </td>     
 
-            <td>
-                <a href="" ng-click="vm.deleteTest_Script()">
-                    <i class="fa fa-trash-o"></i>
-                </a>
-                <a href="/Test_Script/Edit/">Edit</a>
+          <td>
+                <a href="" ng-click="vm.deleteTest_Script(item.testId, item.scriptId)"><i class="fa fa-trash-o"></i></a>
+                <a href="/Test_Script/Edit/{{item.testId}}/{{item.scriptId}}">Edit</a>
             </td>
         </tr>
 

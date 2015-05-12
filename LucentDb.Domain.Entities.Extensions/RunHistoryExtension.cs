@@ -16,10 +16,10 @@ namespace LucentDb.Domain.Entities.Extensions
   {
    
      
-      public static RunHistory IncludeScriptScript(this RunHistory runHistory, IScriptRepository scriptRepository) 
+      public static RunHistory IncludeScript(this RunHistory runHistory, IScriptRepository scriptRepository) 
       {
-         if (runHistory.ScriptScript != null) return  runHistory;   
-               runHistory.ScriptScript = scriptRepository.GetDataById(runHistory.ScriptId).ToList().First();
+         if (runHistory.Script != null) return  runHistory;   
+               runHistory.Script = scriptRepository.GetDataById(runHistory.ScriptId).ToList().First();
          return  runHistory;      
       }
      

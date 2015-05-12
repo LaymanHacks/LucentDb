@@ -16,18 +16,18 @@ namespace LucentDb.Domain.Entities.Extensions
   {
    
      
-      public static ExpectedResult IncludeScript_ExpectedResultExpectedResult(this ExpectedResult expectedResult, IScript_ExpectedResultRepository script_ExpectedResultRepository) 
+      public static ExpectedResult IncludeScript_ExpectedResult(this ExpectedResult expectedResult, IScript_ExpectedResultRepository script_ExpectedResultRepository) 
       {
-         if (expectedResult.Script_ExpectedResultExpectedResult != null) return  expectedResult;   
-               expectedResult.Script_ExpectedResultExpectedResult = (Script_ExpectedResultList)script_ExpectedResultRepository.GetDataByExpectedResultId(expectedResult.ExpectedResultId);
+         if (expectedResult.Script_ExpectedResult != null) return  expectedResult;   
+               expectedResult.Script_ExpectedResult = (Script_ExpectedResultList)script_ExpectedResultRepository.GetDataByExpectedResultId(expectedResult.Id);
          return  expectedResult;      
       }
   
      
-      public static ExpectedResult IncludeAssertTypeAssertType(this ExpectedResult expectedResult, IAssertTypeRepository assertTypeRepository) 
+      public static ExpectedResult IncludeAssertType(this ExpectedResult expectedResult, IAssertTypeRepository assertTypeRepository) 
       {
-         if (expectedResult.AssertTypeAssertType != null) return  expectedResult;   
-               expectedResult.AssertTypeAssertType = assertTypeRepository.GetDataById(expectedResult.AssertTypeId).ToList().First();
+         if (expectedResult.AssertType != null) return  expectedResult;   
+               expectedResult.AssertType = assertTypeRepository.GetDataById(expectedResult.AssertTypeId).ToList().First();
          return  expectedResult;      
       }
      

@@ -16,10 +16,10 @@ namespace LucentDb.Domain.Entities.Extensions
   {
    
      
-      public static ScriptType IncludeScriptsScriptType(this ScriptType scriptType, IScriptRepository scriptRepository) 
+      public static ScriptType IncludeScripts(this ScriptType scriptType, IScriptRepository scriptRepository) 
       {
-         if (scriptType.ScriptsScriptType != null) return  scriptType;   
-               scriptType.ScriptsScriptType = (ScriptList)scriptRepository.GetDataByScriptTypeId(scriptType.ScriptTypeId);
+         if (scriptType.Scripts != null) return  scriptType;   
+               scriptType.Scripts = (ScriptList)scriptRepository.GetDataByScriptTypeId(scriptType.Id);
          return  scriptType;      
       }
      

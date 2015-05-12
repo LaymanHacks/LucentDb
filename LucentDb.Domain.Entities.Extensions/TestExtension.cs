@@ -16,26 +16,26 @@ namespace LucentDb.Domain.Entities.Extensions
   {
    
      
-      public static Test IncludeTest_ScriptTest(this Test test, ITest_ScriptRepository test_ScriptRepository) 
+      public static Test IncludeScripts(this Test test, IScriptRepository scriptRepository) 
       {
-         if (test.Test_ScriptTest != null) return  test;   
-               test.Test_ScriptTest = (Test_ScriptList)test_ScriptRepository.GetDataByTestId(test.TestId);
+         if (test.Scripts != null) return  test;   
+               test.Scripts = (ScriptList)scriptRepository.GetScriptsForTestByTestId(test.Id);
          return  test;      
       }
   
      
-      public static Test IncludeProjectProject(this Test test, IProjectRepository projectRepository) 
+      public static Test IncludeProject(this Test test, IProjectRepository projectRepository) 
       {
-         if (test.ProjectProject != null) return  test;   
-               test.ProjectProject = projectRepository.GetDataById(test.ProjectId).ToList().First();
+         if (test.Project != null) return  test;   
+               test.Project = projectRepository.GetDataByProjectId(test.ProjectId).ToList().First();
          return  test;      
       }
   
      
-      public static Test IncludeTestTypeTestType(this Test test, ITestTypeRepository testTypeRepository) 
+      public static Test IncludeTestType(this Test test, ITestTypeRepository testTypeRepository) 
       {
-         if (test.TestTypeTestType != null) return  test;   
-               test.TestTypeTestType = testTypeRepository.GetDataById(test.TestTypeId).ToList().First();
+         if (test.TestType != null) return  test;   
+               test.TestType = testTypeRepository.GetDataById(test.TestTypeId).ToList().First();
          return  test;      
       }
      

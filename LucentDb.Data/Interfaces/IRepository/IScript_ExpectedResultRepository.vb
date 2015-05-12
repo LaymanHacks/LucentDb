@@ -9,39 +9,28 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface IScript_ExpectedResultRepository
-        Function GetData() As ICollection(Of Script_ExpectedResult)
-
-        Sub Update(scriptId As Int32, expectedResultId As Int32, resultIndex As Int32, original_ScriptId As Int32,
-                   original_ExpectedResultId As Int32, original_ResultIndex As Int32)
-
-        Sub Update(script_ExpectedResult As Script_ExpectedResult, original_ScriptId As Int32,
-                   original_ExpectedResultId As Int32, original_ResultIndex As Int32)
-
-        Sub Delete(scriptId As Int32, expectedResultId As Int32, resultIndex As Int32)
-        Sub Delete(script_ExpectedResult As Script_ExpectedResult)
-        Sub Insert(scriptId As Int32, expectedResultId As Int32, resultIndex As Int32)
-        Sub Insert(script_ExpectedResult As Script_ExpectedResult)
-
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            As ICollection(Of Script_ExpectedResult)
-
-        Function GetRowCount() As Int32
-        Function GetDataByExpectedResultId(expectedResultId As Int32) As ICollection(Of Script_ExpectedResult)
-
-        Function GetDataByExpectedResultIdPageable(expectedResultId As Int32, sortExpression As String, page As Int32,
-                                                   pageSize As Int32) As ICollection(Of Script_ExpectedResult)
-
-        Function GetDataByExpectedResultIdRowCount(expectedResultId As Int32) As Int32
-        Function GetDataByScriptId(scriptId As Int32) As ICollection(Of Script_ExpectedResult)
-
-        Function GetDataByScriptIdPageable(scriptId As Int32, sortExpression As String, page As Int32, pageSize As Int32) _
-            As ICollection(Of Script_ExpectedResult)
-
-        Function GetDataByScriptIdRowCount(scriptId As Int32) As Int32
-    End Interface
-End Namespace
+        Function GetData()  as ICollection(Of Script_ExpectedResult)
+        Sub Update( ByVal scriptId As Int32,  ByVal expectedResultId As Int32,  ByVal resultIndex As Int32,  ByVal original_ScriptId As Int32,  ByVal original_ExpectedResultId As Int32) 
+        Sub Update(ByVal script_ExpectedResult as Script_ExpectedResult, ByVal original_ScriptId As Int32, ByVal original_ExpectedResultId As Int32) 
+        Sub Delete( ByVal scriptId As Int32,  ByVal expectedResultId As Int32) 
+        Sub Delete(ByVal script_ExpectedResult as Script_ExpectedResult) 
+        Function Insert( ByVal scriptId As Int32,  ByVal expectedResultId As Int32,  ByVal resultIndex As Int32)  as ICollection(Of Script_ExpectedResult)
+        Function Insert(ByVal script_ExpectedResult as Script_ExpectedResult)  as ICollection(Of Script_ExpectedResult)
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Script_ExpectedResult)
+        Function GetRowCount()  as Int32
+        Function GetDataByScriptIdExpectedResultId( ByVal scriptId As Int32,  ByVal expectedResultId As Int32)  as ICollection(Of Script_ExpectedResult)
+        Function GetDataByExpectedResultId( ByVal expectedResultId As Int32)  as ICollection(Of Script_ExpectedResult)
+        Function GetDataByExpectedResultIdPageable( ByVal expectedResultId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Script_ExpectedResult)
+        Function GetDataByExpectedResultIdRowCount( ByVal expectedResultId As Int32)  as Int32
+        Function GetDataByScriptId( ByVal scriptId As Int32)  as ICollection(Of Script_ExpectedResult)
+        Function GetDataByScriptIdPageable( ByVal scriptId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Script_ExpectedResult)
+        Function GetDataByScriptIdRowCount( ByVal scriptId As Int32)  as Int32
+    End Interface 
+End NameSpace
+  

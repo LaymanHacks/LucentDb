@@ -16,34 +16,34 @@ namespace LucentDb.Domain.Entities.Extensions
   {
    
      
-      public static Script IncludeRunHistoriesScript(this Script script, IRunHistoryRepository runHistoryRepository) 
+      public static Script IncludeRunHistories(this Script script, IRunHistoryRepository runHistoryRepository) 
       {
-         if (script.RunHistoriesScript != null) return  script;   
-               script.RunHistoriesScript = (RunHistoryList)runHistoryRepository.GetDataByScriptId(script.ScriptId);
+         if (script.RunHistories != null) return  script;   
+               script.RunHistories = (RunHistoryList)runHistoryRepository.GetDataByScriptId(script.Id);
          return  script;      
       }
   
      
-      public static Script IncludeScript_ExpectedResultScript(this Script script, IScript_ExpectedResultRepository script_ExpectedResultRepository) 
+      public static Script IncludeScript_ExpectedResult(this Script script, IScript_ExpectedResultRepository script_ExpectedResultRepository) 
       {
-         if (script.Script_ExpectedResultScript != null) return  script;   
-               script.Script_ExpectedResultScript = (Script_ExpectedResultList)script_ExpectedResultRepository.GetDataByScriptId(script.ScriptId);
+         if (script.Script_ExpectedResult != null) return  script;   
+               script.Script_ExpectedResult = (Script_ExpectedResultList)script_ExpectedResultRepository.GetDataByScriptId(script.Id);
          return  script;      
       }
   
      
-      public static Script IncludeTest_ScriptScript(this Script script, ITest_ScriptRepository test_ScriptRepository) 
+      public static Script IncludeTests(this Script script, ITestRepository testRepository) 
       {
-         if (script.Test_ScriptScript != null) return  script;   
-               script.Test_ScriptScript = (Test_ScriptList)test_ScriptRepository.GetDataByScriptId(script.ScriptId);
+         if (script.Tests != null) return  script;   
+               script.Tests = (TestList)testRepository.GetTestsForScriptByScriptId(script.Id);
          return  script;      
       }
   
      
-      public static Script IncludeScriptTypeScriptType(this Script script, IScriptTypeRepository scriptTypeRepository) 
+      public static Script IncludeScriptType(this Script script, IScriptTypeRepository scriptTypeRepository) 
       {
-         if (script.ScriptTypeScriptType != null) return  script;   
-               script.ScriptTypeScriptType = scriptTypeRepository.GetDataById(script.ScriptTypeId).ToList().First();
+         if (script.ScriptType != null) return  script;   
+               script.ScriptType = scriptTypeRepository.GetDataById(script.ScriptTypeId).ToList().First();
          return  script;      
       }
      

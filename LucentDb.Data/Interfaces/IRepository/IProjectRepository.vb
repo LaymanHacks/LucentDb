@@ -9,27 +9,28 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface IProjectRepository
-        Function GetData() As ICollection(Of Project)
-        Sub Update(name As String, isActive As Boolean, id As Int32)
-        Sub Update(project As Project)
-        Sub Delete(id As Int32)
-        Sub Delete(project As Project)
-        Function Insert(name As String, isActive As Boolean) As Int32
-        Function Insert(project As Project) As Int32
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) As ICollection(Of Project)
-        Function GetRowCount() As Int32
-        Function GetDataById(id As Int32) As ICollection(Of Project)
-        Function GetActiveData() As ICollection(Of Project)
-
-        Function GetActiveDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            As ICollection(Of Project)
-
-        Function GetActiveDataRowCount() As Int32
-        Function GetProjectsByConnectionId(connectionId As Int32) As ICollection(Of Project)
-    End Interface
-End Namespace
+        Function GetData()  as ICollection(Of Project)
+        Sub Update( ByVal name As String,  ByVal isActive As Boolean,  ByVal projectId As Int32) 
+        Sub Update(ByVal project as Project) 
+        Sub Delete( ByVal projectId As Int32) 
+        Sub Delete(ByVal project as Project) 
+        Function Insert( ByVal name As String,  ByVal isActive As Boolean)  as Int32
+        Function Insert(ByVal project as Project)  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project)
+        Function GetRowCount()  as Int32
+        Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Project)
+        Function GetActiveData()  as ICollection(Of Project)
+        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project)
+        Function GetActiveDataRowCount()  as Int32
+        Function GetProjectsForConnectionByConnectionId( ByVal connectionId As Int32)  as ICollection(Of Project)
+        Function GetProjectsForConnectionByConnectionIdPageable( ByVal connectionId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project)
+        Function GetProjectsForConnectionByConnectionIdRowCount( ByVal connectionId As Int32)  as Int32
+    End Interface 
+End NameSpace
+  

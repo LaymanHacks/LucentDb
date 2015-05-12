@@ -16,10 +16,10 @@ namespace LucentDb.Domain.Entities.Extensions
   {
    
      
-      public static TestType IncludeTestsTestType(this TestType testType, ITestRepository testRepository) 
+      public static TestType IncludeTests(this TestType testType, ITestRepository testRepository) 
       {
-         if (testType.TestsTestType != null) return  testType;   
-               testType.TestsTestType = (TestList)testRepository.GetDataByTestTypeId(testType.Id);
+         if (testType.Tests != null) return  testType;   
+               testType.Tests = (TestList)testRepository.GetDataByTestTypeId(testType.Id);
          return  testType;      
       }
      

@@ -9,34 +9,28 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface ITest_ScriptRepository
-        Function GetData() As ICollection(Of Test_Script)
-        Sub Update(testId As Int32, scriptId As Int32, original_TestId As Int32, original_ScriptId As Int32)
-        Sub Update(test_Script As Test_Script, original_TestId As Int32, original_ScriptId As Int32)
-        Sub Delete(testId As Int32, scriptId As Int32)
-        Sub Delete(test_Script As Test_Script)
-        Sub Insert(testId As Int32, scriptId As Int32)
-        Sub Insert(test_Script As Test_Script)
-
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            As ICollection(Of Test_Script)
-
-        Function GetRowCount() As Int32
-        Function GetDataByScriptId(scriptId As Int32) As ICollection(Of Test_Script)
-
-        Function GetDataByScriptIdPageable(scriptId As Int32, sortExpression As String, page As Int32, pageSize As Int32) _
-            As ICollection(Of Test_Script)
-
-        Function GetDataByScriptIdRowCount(scriptId As Int32) As Int32
-        Function GetDataByTestId(testId As Int32) As ICollection(Of Test_Script)
-
-        Function GetDataByTestIdPageable(testId As Int32, sortExpression As String, page As Int32, pageSize As Int32) _
-            As ICollection(Of Test_Script)
-
-        Function GetDataByTestIdRowCount(testId As Int32) As Int32
-    End Interface
-End Namespace
+        Function GetData()  as ICollection(Of Test_Script)
+        Sub Update( ByVal testId As Int32,  ByVal scriptId As Int32,  ByVal original_TestId As Int32,  ByVal original_ScriptId As Int32) 
+        Sub Update(ByVal test_Script as Test_Script, ByVal original_TestId As Int32, ByVal original_ScriptId As Int32) 
+        Sub Delete( ByVal testId As Int32,  ByVal scriptId As Int32) 
+        Sub Delete(ByVal test_Script as Test_Script) 
+        Function Insert( ByVal testId As Int32,  ByVal scriptId As Int32)  as ICollection(Of Test_Script)
+        Function Insert(ByVal test_Script as Test_Script)  as ICollection(Of Test_Script)
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Test_Script)
+        Function GetRowCount()  as Int32
+        Function GetDataByTestIdScriptId( ByVal testId As Int32,  ByVal scriptId As Int32)  as ICollection(Of Test_Script)
+        Function GetDataByScriptId( ByVal scriptId As Int32)  as ICollection(Of Test_Script)
+        Function GetDataByScriptIdPageable( ByVal scriptId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Test_Script)
+        Function GetDataByScriptIdRowCount( ByVal scriptId As Int32)  as Int32
+        Function GetDataByTestId( ByVal testId As Int32)  as ICollection(Of Test_Script)
+        Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Test_Script)
+        Function GetDataByTestIdRowCount( ByVal testId As Int32)  as Int32
+    End Interface 
+End NameSpace
+  

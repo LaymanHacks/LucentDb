@@ -16,10 +16,10 @@ namespace LucentDb.Domain.Entities.Extensions
   {
    
      
-      public static Connection IncludeProject_ConnectionConnection(this Connection connection, IProjectRepository projectRepository) 
+      public static Connection IncludeProjects(this Connection connection, IProjectRepository projectRepository) 
       {
-         if (connection.Project_ConnectionConnection != null) return  connection;   
-               connection.Project_ConnectionConnection = (ProjectList)projectRepository.GetProjectsByConnectionId(connection.ConnectionId);
+         if (connection.Projects != null) return  connection;   
+               connection.Projects = (ProjectList)projectRepository.GetProjectsForConnectionByConnectionId(connection.ConnectionId);
          return  connection;      
       }
      

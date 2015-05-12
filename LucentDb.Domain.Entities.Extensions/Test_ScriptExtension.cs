@@ -16,18 +16,18 @@ namespace LucentDb.Domain.Entities.Extensions
   {
    
      
-      public static Test_Script IncludeScriptScript(this Test_Script test_Script, IScriptRepository scriptRepository) 
+      public static Test_Script IncludeScript(this Test_Script test_Script, IScriptRepository scriptRepository) 
       {
-         if (test_Script.ScriptScript != null) return  test_Script;   
-               test_Script.ScriptScript = scriptRepository.GetDataById(test_Script.ScriptId).ToList().First();
+         if (test_Script.Script != null) return  test_Script;   
+               test_Script.Script = scriptRepository.GetDataById(test_Script.ScriptId).ToList().First();
          return  test_Script;      
       }
   
      
-      public static Test_Script IncludeTestTest(this Test_Script test_Script, ITestRepository testRepository) 
+      public static Test_Script IncludeTest(this Test_Script test_Script, ITestRepository testRepository) 
       {
-         if (test_Script.TestTest != null) return  test_Script;   
-               test_Script.TestTest = testRepository.GetDataById(test_Script.TestId).ToList().First();
+         if (test_Script.Test != null) return  test_Script;   
+               test_Script.Test = testRepository.GetDataById(test_Script.TestId).ToList().First();
          return  test_Script;      
       }
      

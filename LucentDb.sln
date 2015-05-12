@@ -44,6 +44,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DCFC40
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Domain.Entities.Extensions", "LucentDb.Domain.Entities.Extensions\LucentDb.Domain.Entities.Extensions.csproj", "{5DD5E69B-33E9-4684-B441-4C54756167FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{ECF69A55-449E-47D1-B28C-FC9B2694FEBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECF69A55-449E-47D1-B28C-FC9B2694FEBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECF69A55-449E-47D1-B28C-FC9B2694FEBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DD5E69B-33E9-4684-B441-4C54756167FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DD5E69B-33E9-4684-B441-4C54756167FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DD5E69B-33E9-4684-B441-4C54756167FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DD5E69B-33E9-4684-B441-4C54756167FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,5 +96,6 @@ Global
 		{8871AB07-09F2-4ACC-9360-E4F4B6BF9F06} = {5A0A37CF-CF62-4E78-9699-D132E7AC54F5}
 		{BD10736B-F479-4DBE-9BEB-F60ADF83EE65} = {5A0A37CF-CF62-4E78-9699-D132E7AC54F5}
 		{BBC47428-F02A-4E6A-BF8E-E3F81448923F} = {5A0A37CF-CF62-4E78-9699-D132E7AC54F5}
+		{5DD5E69B-33E9-4684-B441-4C54756167FA} = {8871AB07-09F2-4ACC-9360-E4F4B6BF9F06}
 	EndGlobalSection
 EndGlobal

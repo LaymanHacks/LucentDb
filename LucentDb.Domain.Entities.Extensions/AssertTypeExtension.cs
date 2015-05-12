@@ -16,10 +16,10 @@ namespace LucentDb.Domain.Entities.Extensions
   {
    
      
-      public static AssertType IncludeExpectedResultsAssertType(this AssertType assertType, IExpectedResultRepository expectedResultRepository) 
+      public static AssertType IncludeExpectedResults(this AssertType assertType, IExpectedResultRepository expectedResultRepository) 
       {
-         if (assertType.ExpectedResultsAssertType != null) return  assertType;   
-               assertType.ExpectedResultsAssertType = (ExpectedResultList)expectedResultRepository.GetDataByAssertTypeId(assertType.AssertTypeId);
+         if (assertType.ExpectedResults != null) return  assertType;   
+               assertType.ExpectedResults = (ExpectedResultList)expectedResultRepository.GetDataByAssertTypeId(assertType.Id);
          return  assertType;      
       }
      

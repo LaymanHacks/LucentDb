@@ -25,7 +25,7 @@
 
         vm.pageableResults = [];
         vm.title = "ScriptList";
-        vm.sortExpression = "";
+        vm.sortExpression = "Id";
         vm.currentPage = 1;
         vm.pageSize = 10;
         vm.deleteScript = deleteScript;
