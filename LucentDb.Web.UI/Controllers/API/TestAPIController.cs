@@ -27,7 +27,7 @@ namespace LucentDb.Web.UI.Controllers.Api
             _dbRepository = dbRepository;
         }
    
-                [Route("api/tests/all", Name = "TestsGetDataRoute")]
+        [Route("api/tests/all", Name = "TestsGetDataRoute")]
         [HttpGet]
         public IQueryable<Test> GetData() 
         {
@@ -75,11 +75,11 @@ namespace LucentDb.Web.UI.Controllers.Api
             return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
         }
 
-        [Route("api/testTypes/{testTypeId}/tests/all", Name = "TestsGetDataByIdRoute")]
+        [Route("api/tests/{Id}", Name = "TestsGetDataByIdRoute")]
         [HttpGet]
-        public IQueryable<Test> GetDataById(Int32 id) 
+        public Test GetDataById(Int32 id) 
         {
-            return _dbRepository.GetDataById(id).AsQueryable();
+            return _dbRepository.GetDataById(id).FirstOrDefault();
         }
 
         [Route("api/tests/all/active", Name = "TestsGetActiveDataRoute")]
@@ -107,6 +107,8 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             return _dbRepository.GetTestsForScriptByScriptId(scriptId).AsQueryable();
         }
+
+        
 
         [Route("api/projects/{projectId}/tests/all", Name = "TestsGetDataByProjectIdRoute")]
         [HttpGet]

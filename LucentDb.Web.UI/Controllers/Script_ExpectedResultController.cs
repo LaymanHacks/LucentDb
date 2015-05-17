@@ -85,7 +85,7 @@ namespace LucentDb.Web.UI.Controllers
         {
             try
             {
-                _dbScript_ExpectedResultRepository.Update(script_ExpectedResult);
+                _dbScript_ExpectedResultRepository.Update(script_ExpectedResult, scriptId,expectedResultId);
                 return RedirectToAction("Index");
             }
             catch

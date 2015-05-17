@@ -36,9 +36,9 @@ namespace LucentDb.Web.UI.Controllers.Api
 
         [Route("api/test_Script", Name = "Test_ScriptUpdateRoute")]
         [HttpPut]
-        public void Update(Test_Script test_Script)
+        public void Update(Test_Script test_Script, Int32 Original_TestId, Int32 Original_ScriptId)
         {
-            _dbRepository.Update( (Int32)test_Script.TestId,  (Int32)test_Script.ScriptId,  (Int32)test_Script.Original_TestId,  (Int32)test_Script.Original_ScriptId);
+            _dbRepository.Update( (Int32)test_Script.TestId,  (Int32)test_Script.ScriptId, Original_TestId,  Original_ScriptId);
           }
 
         [Route("api/test_Script", Name = "Test_ScriptDeleteRoute")]
@@ -60,7 +60,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPost]
         public IQueryable<Test_Script>  Insert(Test_Script test_Script)
         {
-             return _dbRepository.Insert( (Int32)test_Script.TestId,  (Int32)test_Script.ScriptId);
+             return _dbRepository.Insert( (Int32)test_Script.TestId,  (Int32)test_Script.ScriptId).AsQueryable();
           }
 
         [Route("api/test_Script", Name = "Test_ScriptGetDataPageableRoute")]

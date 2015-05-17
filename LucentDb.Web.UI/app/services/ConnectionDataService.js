@@ -44,7 +44,7 @@
             });
         };
 
-        this.getDataById = function(id) {
+        this.getDataById = function (assertTypeId) {
             return $http.get("/api/expectedResults/" + assertTypeId + "/connections/all");
         };
 

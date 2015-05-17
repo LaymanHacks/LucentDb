@@ -270,6 +270,7 @@
     <Content Include="app\services\TestTypeDataService.js" />
     <Content Include="app\services\Test_ScriptDataService.js" />
     <Content Include="app\TestType\Index.js" />
+    <Content Include="app\Test\details.js" />
     <Content Include="app\Test\Index.js" />
     <Content Include="app\Test_Script\Index.js" />
     <Content Include="App_Data\LucentDb.mdf" />

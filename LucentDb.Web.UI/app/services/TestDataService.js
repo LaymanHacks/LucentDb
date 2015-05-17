@@ -44,7 +44,7 @@
             });
         };
 
-        this.getDataById = function(id) {
+        this.getDataById = function (projectId) {
             return $http.get("/api/projects/" + projectId + "/tests/all");
         };
 
