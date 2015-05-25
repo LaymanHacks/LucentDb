@@ -1,10 +1,12 @@
 CodeMirror.defineMode("jinja2", function() {
-    var keywords = ["block", "endblock", "for", "endfor", "in", "true", "false", 
-                    "loop", "none", "self", "super", "if", "as", "not", "and",
-                    "else", "import", "with", "without", "context"];
+    var keywords = [
+        "block", "endblock", "for", "endfor", "in", "true", "false",
+        "loop", "none", "self", "super", "if", "as", "not", "and",
+        "else", "import", "with", "without", "context"
+    ];
     keywords = new RegExp("^((" + keywords.join(")|(") + "))\\b");
 
-    function tokenBase (stream, state) {
+    function tokenBase(stream, state) {
         var ch = stream.next();
         if (ch == "{") {
             if (ch = stream.eat(/\{|%|#/)) {
@@ -14,11 +16,12 @@ CodeMirror.defineMode("jinja2", function() {
             }
         }
     }
-    function inTag (close) {
+
+    function inTag(close) {
         if (close == "{") {
             close = "}";
         }
-        return function (stream, state) {
+        return function(stream, state) {
             var ch = stream.next();
             if ((ch == close || (ch == "-" && stream.eat(close)))
                 && stream.eat("}")) {
@@ -31,12 +34,13 @@ CodeMirror.defineMode("jinja2", function() {
             return close == "#" ? "comment" : "string";
         };
     }
+
     return {
-        startState: function () {
-            return {tokenize: tokenBase};
+        startState: function() {
+            return { tokenize: tokenBase };
         },
-        token: function (stream, state) {
+        token: function(stream, state) {
             return state.tokenize(stream, state);
         }
-    }; 
+    };
 });

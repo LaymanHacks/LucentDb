@@ -1,4 +1,4 @@
-CodeMirror.defineMode('rst', function(config, options) {
+CodeMirror.defineMode("rst", function(config, options) {
     function setState(state, fn, ctx) {
         state.fn = fn;
         setCtx(state, ctx);
@@ -9,12 +9,12 @@ CodeMirror.defineMode('rst', function(config, options) {
     }
 
     function setNormal(state, ch) {
-        if (ch && (typeof ch !== 'string')) {
+        if (ch && (typeof ch !== "string")) {
             var str = ch.current();
-            ch = str[str.length-1];
+            ch = str[str.length - 1];
         }
 
-        setState(state, normal, {back: ch});
+        setState(state, normal, { back: ch });
     }
 
     function hasMode(mode) {
@@ -30,7 +30,7 @@ CodeMirror.defineMode('rst', function(config, options) {
     }
 
     var verbatimMode = getMode(options.verbatim);
-    var pythonMode = getMode('python');
+    var pythonMode = getMode("python");
 
     var reSection = /^[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/;
     var reDirective = /^\s*\w([-:.\w]*\w)?::(\s|$)/;
@@ -61,7 +61,7 @@ CodeMirror.defineMode('rst', function(config, options) {
 
             if (i >= 3 && stream.match(/^\s*$/)) {
                 setNormal(state, null);
-                return 'header';
+                return "header";
             } else {
                 stream.backUp(i + 1);
             }
@@ -71,7 +71,7 @@ CodeMirror.defineMode('rst', function(config, options) {
             if (!stream.eol()) {
                 setState(state, directive);
             }
-            return 'meta';
+            return "meta";
         }
 
         if (stream.match(reVerbatimMarker)) {
@@ -85,13 +85,13 @@ CodeMirror.defineMode('rst', function(config, options) {
                     local: mode.startState()
                 });
             }
-            return 'meta';
+            return "meta";
         }
 
         if (sol && stream.match(reExamples, false)) {
             if (!pythonMode) {
                 setState(state, verbatim);
-                return 'meta';
+                return "meta";
             } else {
                 var mode = pythonMode;
 
@@ -118,24 +118,24 @@ CodeMirror.defineMode('rst', function(config, options) {
 
         if (testInline(reFootnoteRef)) {
             setNormal(state, stream);
-            return 'footnote';
+            return "footnote";
         }
 
         if (testInline(reCitationRef)) {
             setNormal(state, stream);
-            return 'citation';
+            return "citation";
         }
 
         ch = stream.next();
 
         if (testBackward(rePreInline)) {
-            if ((ch === ':' || ch === '|') && stream.eat(/\S/)) {
+            if ((ch === ":" || ch === "|") && stream.eat(/\S/)) {
                 var token;
 
-                if (ch === ':') {
-                    token = 'builtin';
+                if (ch === ":") {
+                    token = "builtin";
                 } else {
-                    token = 'atom';
+                    token = "atom";
                 }
 
                 setState(state, inline, {
@@ -148,7 +148,7 @@ CodeMirror.defineMode('rst', function(config, options) {
                 return token;
             }
 
-            if (ch === '*' || ch === '`') {
+            if (ch === "*" || ch === "`") {
                 var orig = ch,
                     wide = false;
 
@@ -162,17 +162,17 @@ CodeMirror.defineMode('rst', function(config, options) {
                 if (ch && !/\s/.test(ch)) {
                     var token;
 
-                    if (orig === '*') {
-                        token = wide ? 'strong' : 'em';
+                    if (orig === "*") {
+                        token = wide ? "strong" : "em";
                     } else {
-                        token = wide ? 'string' : 'string-2';
+                        token = wide ? "string" : "string-2";
                     }
 
                     setState(state, inline, {
-                        ch: orig,               // inline() has to know what to search for
-                        wide: wide,             // are we looking for `ch` or `chch`
-                        prev: null,             // terminator must not be preceeded with whitespace
-                        token: token            // I don't want to recompute this all the time
+                        ch: orig, // inline() has to know what to search for
+                        wide: wide, // are we looking for `ch` or `chch`
+                        prev: null, // terminator must not be preceeded with whitespace
+                        token: token // I don't want to recompute this all the time
                     });
 
                     return token;
@@ -227,13 +227,13 @@ CodeMirror.defineMode('rst', function(config, options) {
         var token = null;
 
         if (stream.match(reDirective)) {
-            token = 'attribute';
+            token = "attribute";
         } else if (stream.match(reHyperlink)) {
-            token = 'link';
+            token = "link";
         } else if (stream.match(reFootnote)) {
-            token = 'quote';
+            token = "quote";
         } else if (stream.match(reCitation)) {
-            token = 'quote';
+            token = "quote";
         } else {
             stream.eatSpace();
 
@@ -243,17 +243,17 @@ CodeMirror.defineMode('rst', function(config, options) {
             } else {
                 stream.skipToEnd();
                 setState(state, comment);
-                return 'comment';
+                return "comment";
             }
         }
 
         // FIXME this is unreachable
-        setState(state, body, {start: true});
+        setState(state, body, { start: true });
         return token;
     }
 
     function body(stream, state) {
-        var token = 'body';
+        var token = "body";
 
         if (!state.ctx.start || stream.sol()) {
             return block(stream, state, token);
@@ -266,12 +266,12 @@ CodeMirror.defineMode('rst', function(config, options) {
     }
 
     function comment(stream, state) {
-        return block(stream, state, 'comment');
+        return block(stream, state, "comment");
     }
 
     function verbatim(stream, state) {
         if (!verbatimMode) {
-            return block(stream, state, 'meta');
+            return block(stream, state, "meta");
         } else {
             if (stream.sol()) {
                 if (!stream.eatSpace()) {
@@ -297,11 +297,11 @@ CodeMirror.defineMode('rst', function(config, options) {
 
     return {
         startState: function() {
-            return {fn: normal, ctx: {}};
+            return { fn: normal, ctx: {} };
         },
 
         copyState: function(state) {
-            return {fn: state.fn, ctx: state.ctx};
+            return { fn: state.fn, ctx: state.ctx };
         },
 
         token: function(stream, state) {

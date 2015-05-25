@@ -9,32 +9,39 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
-Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-  
- Namespace LucentDb.Data.Repository     
+
+Namespace LucentDb.Data.Repository
     Public Interface IScriptRepository
-        Function GetData()  as ICollection(Of Script)
-        Sub Update( ByVal scriptTypeId As Int32,  ByVal name As String,  ByVal scriptValue As String,  ByVal isActive As Boolean,  ByVal id As Int32) 
-        Sub Update(ByVal script as Script) 
-        Sub Delete( ByVal id As Int32) 
-        Sub Delete(ByVal script as Script) 
-        Function Insert( ByVal scriptTypeId As Int32,  ByVal name As String,  ByVal scriptValue As String,  ByVal isActive As Boolean)  as Int32
-        Function Insert(ByVal script as Script)  as Int32
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Script)
-        Function GetRowCount()  as Int32
-        Function GetDataById( ByVal id As Int32)  as ICollection(Of Script)
-        Function GetActiveData()  as ICollection(Of Script)
-        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Script)
-        Function GetActiveDataRowCount()  as Int32
-        Function GetScriptsForTestByTestId( ByVal testId As Int32)  as ICollection(Of Script)
-        Function GetDataByScriptTypeId( ByVal scriptTypeId As Int32)  as ICollection(Of Script)
-        Function GetDataByScriptTypeIdPageable( ByVal scriptTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Script)
-        Function GetDataByScriptTypeIdRowCount( ByVal scriptTypeId As Int32)  as Int32
-        Function GetActiveDataByScriptTypeId( ByVal scriptTypeId As Int32)  as ICollection(Of Script)
-        Function GetActiveDataByScriptTypeIdPageable( ByVal scriptTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Script)
-        Function GetActiveDataByScriptTypeIdRowCount( ByVal scriptTypeId As Int32)  as Int32
-    End Interface 
+        Function GetData() as ICollection(Of Script)
+        Sub Update(scriptTypeId As Int32, name As String, scriptValue As String, isActive As Boolean, id As Int32)
+        Sub Update(script as Script)
+        Sub Delete(id As Int32)
+        Sub Delete(script as Script)
+        Function Insert(scriptTypeId As Int32, name As String, scriptValue As String, isActive As Boolean) as Int32
+        Function Insert(script as Script) as Int32
+        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) as ICollection(Of Script)
+        Function GetRowCount() as Int32
+        Function GetDataById(id As Int32) as ICollection(Of Script)
+        Function GetActiveData() as ICollection(Of Script)
+
+        Function GetActiveDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
+            as ICollection(Of Script)
+
+        Function GetActiveDataRowCount() as Int32
+        Function GetScriptsForTestByTestId(testId As Int32) as ICollection(Of Script)
+        Function GetDataByScriptTypeId(scriptTypeId As Int32) as ICollection(Of Script)
+
+        Function GetDataByScriptTypeIdPageable(scriptTypeId As Int32, sortExpression As String, page As Int32,
+                                               pageSize As Int32) as ICollection(Of Script)
+
+        Function GetDataByScriptTypeIdRowCount(scriptTypeId As Int32) as Int32
+        Function GetActiveDataByScriptTypeId(scriptTypeId As Int32) as ICollection(Of Script)
+
+        Function GetActiveDataByScriptTypeIdPageable(scriptTypeId As Int32, sortExpression As String, page As Int32,
+                                                     pageSize As Int32) as ICollection(Of Script)
+
+        Function GetActiveDataByScriptTypeIdRowCount(scriptTypeId As Int32) as Int32
+    End Interface
 End NameSpace
-  

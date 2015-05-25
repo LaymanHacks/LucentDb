@@ -6,9 +6,9 @@ CodeMirror.defineMode("velocity", function() {
     }
 
     var keywords = parseWords("#end #else #break #stop #[[ #]] " +
-                              "#{end} #{else} #{break} #{stop}");
+        "#{end} #{else} #{break} #{stop}");
     var functions = parseWords("#if #elseif #foreach #set #include #parse #macro #define #evaluate " +
-                               "#{if} #{elseif} #{foreach} #{set} #{include} #{parse} #{macro} #{define} #{evaluate}");
+        "#{if} #{elseif} #{foreach} #{set} #{include} #{parse} #{macro} #{define} #{evaluate}");
     var specials = parseWords("$foreach.count $foreach.hasNext $foreach.first $foreach.last $foreach.topmost $foreach.parent $velocityCount");
     var isOperatorChar = /[+\-*&%=<>!?:\/|]/;
 
@@ -16,12 +16,13 @@ CodeMirror.defineMode("velocity", function() {
         state.tokenize = f;
         return f(stream, state);
     }
+
     function tokenBase(stream, state) {
         var beforeParams = state.beforeParams;
         state.beforeParams = false;
         var ch = stream.next();
         // start of string?
-        if ((ch == '"' || ch == "'") && state.inParams)
+        if ((ch == "\"" || ch == "'") && state.inParams)
             return chain(stream, state, tokenString(ch));
         // is it one of the special signs []{}().,;? Seperator?
         else if (/[\[\]{}\(\),;\.]/.test(ch)) {
@@ -53,8 +54,7 @@ CodeMirror.defineMode("velocity", function() {
             // is it one of the specials?
             if (specials && specials.propertyIsEnumerable(stream.current().toLowerCase())) {
                 return "keyword";
-            }
-            else {
+            } else {
                 state.beforeParams = true;
                 return "builtin";
             }
@@ -63,8 +63,7 @@ CodeMirror.defineMode("velocity", function() {
         else if (isOperatorChar.test(ch)) {
             stream.eatWhile(isOperatorChar);
             return "operator";
-        }
-        else {
+        } else {
             // get the whole word
             stream.eatWhile(/[\w\$_{}]/);
             var word = stream.current().toLowerCase();
@@ -73,7 +72,7 @@ CodeMirror.defineMode("velocity", function() {
                 return "keyword";
             // is it one of the listed functions?
             if (functions && functions.propertyIsEnumerable(word) ||
-                stream.current().match(/^#[a-z0-9_]+ *$/i) && stream.peek()=="(") {
+                stream.current().match(/^#[a-z0-9_]+ *$/i) && stream.peek() == "(") {
                 state.beforeParams = true;
                 return "keyword";
             }
@@ -123,7 +122,8 @@ CodeMirror.defineMode("velocity", function() {
         }
         return "meta";
     }
-    // Interface
+
+// Interface
 
     return {
         startState: function() {

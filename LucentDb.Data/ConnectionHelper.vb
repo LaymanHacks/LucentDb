@@ -65,7 +65,7 @@ Namespace LucentDb.Data
             Get
                 Return _dbConnection
             End Get
-            Set(value As DbConnection)
+            Set
                 _dbConnection = value
             End Set
         End Property

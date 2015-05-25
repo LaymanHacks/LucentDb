@@ -3,7 +3,7 @@
     "use strict";
 
     var controllerId = "testDetailsCtrl";
-    angular.module("app").controller(controllerId, ["common", "lucentDbDataContext","$scope", testDetailsCtrl]);
+    angular.module("app").controller(controllerId, ["common", "lucentDbDataContext", "$scope", testDetailsCtrl]);
 
     function testDetailsCtrl(common, lucentDbDataContext, $scope) {
 
@@ -16,37 +16,38 @@
         vm.title = "Test Details";
 
         activate();
-       
+
         function activate() {
             var promises = [getTestById(1), getValidationScriptsByTestId(1), getAssertTypes()];
             common.activateController(promises, controllerId)
-                .then(function () {
+                .then(function() {
                     if (!$scope.$$phase) {
                         scope.$apply();
                     }
                 });
         }
-       // getDataById
+
+// getDataById
         function getTestById(id) {
-           
-            return lucentDbDataContext.testDS.getDataById(id).then(function (results) {
+
+            return lucentDbDataContext.testDS.getDataById(id).then(function(results) {
                 return vm.test = results.data;
-                
+
             });
         }
 
         function getAssertTypes() {
-            return lucentDbDataContext.assertTypeDS.getData().then(function (results) {
+            return lucentDbDataContext.assertTypeDS.getData().then(function(results) {
                 return vm.assertTypes = results.data;
-              
+
             });
         };
 
         function getValidationScriptsByTestId(id) {
-       
-            return lucentDbDataContext.scriptDS.getDataByTestId(id).then(function (results) {
+
+            return lucentDbDataContext.scriptDS.getDataByTestId(id).then(function(results) {
                 return vm.test.validationScripts = results.data;
-               
+
             });
         }
     }

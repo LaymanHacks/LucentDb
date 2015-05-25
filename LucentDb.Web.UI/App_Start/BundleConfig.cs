@@ -23,7 +23,7 @@ namespace LucentDb.Web.UI
                 "~/app/services/Test_ScriptDataService.js",
                 "~/app/services/TestDataService.js",
                 "~/app/services/TestTypeDataService.js",
-                "~/app/services/LucentDbDataContext.js")); 
+                "~/app/services/LucentDbDataContext.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

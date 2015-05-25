@@ -12,21 +12,29 @@ Imports System.Data
 
 Namespace LucentDb.Data.DbCommandProvider
     Public Interface IDbTest_ScriptCommandProvider
-        ReadOnly Property Test_ScriptDbConnectionHolder() As DbConnectionHolder
+        ReadOnly Property Test_ScriptDbConnectionHolder As DbConnectionHolder
         ReadOnly Property DbConnectionName As String
         Function GetGetDataDbCommand() As IDbCommand
-        Function GetUpdateDbCommand( ByVal testId As Int32,  ByVal scriptId As Int32,  ByVal original_TestId As Int32,  ByVal original_ScriptId As Int32) As IDbCommand
-        Function GetDeleteDbCommand( ByVal testId As Int32,  ByVal scriptId As Int32) As IDbCommand
-        Function GetInsertDbCommand( ByVal testId As Int32,  ByVal scriptId As Int32) As IDbCommand
-        Function GetGetDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
-        Function GetGetRowCountDbCommand() As IDbCommand
-        Function GetGetDataByTestIdScriptIdDbCommand( ByVal testId As Int32,  ByVal scriptId As Int32) As IDbCommand
-        Function GetGetDataByScriptIdDbCommand( ByVal scriptId As Int32) As IDbCommand
-        Function GetGetDataByScriptIdPageableDbCommand( ByVal scriptId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
-        Function GetGetDataByScriptIdRowCountDbCommand( ByVal scriptId As Int32) As IDbCommand
-        Function GetGetDataByTestIdDbCommand( ByVal testId As Int32) As IDbCommand
-        Function GetGetDataByTestIdPageableDbCommand( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
-        Function GetGetDataByTestIdRowCountDbCommand( ByVal testId As Int32) As IDbCommand
 
+        Function GetUpdateDbCommand(testId As Int32, scriptId As Int32, original_TestId As Int32,
+                                    original_ScriptId As Int32) As IDbCommand
+
+        Function GetDeleteDbCommand(testId As Int32, scriptId As Int32) As IDbCommand
+        Function GetInsertDbCommand(testId As Int32, scriptId As Int32) As IDbCommand
+        Function GetGetDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) As IDbCommand
+        Function GetGetRowCountDbCommand() As IDbCommand
+        Function GetGetDataByTestIdScriptIdDbCommand(testId As Int32, scriptId As Int32) As IDbCommand
+        Function GetGetDataByScriptIdDbCommand(scriptId As Int32) As IDbCommand
+
+        Function GetGetDataByScriptIdPageableDbCommand(scriptId As Int32, sortExpression As String, page As Int32,
+                                                       pageSize As Int32) As IDbCommand
+
+        Function GetGetDataByScriptIdRowCountDbCommand(scriptId As Int32) As IDbCommand
+        Function GetGetDataByTestIdDbCommand(testId As Int32) As IDbCommand
+
+        Function GetGetDataByTestIdPageableDbCommand(testId As Int32, sortExpression As String, page As Int32,
+                                                     pageSize As Int32) As IDbCommand
+
+        Function GetGetDataByTestIdRowCountDbCommand(testId As Int32) As IDbCommand
     End Interface
 End Namespace

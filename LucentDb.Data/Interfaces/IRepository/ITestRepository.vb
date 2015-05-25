@@ -9,38 +9,51 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
-Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-  
- Namespace LucentDb.Data.Repository     
+
+Namespace LucentDb.Data.Repository
     Public Interface ITestRepository
-        Function GetData()  as ICollection(Of Test)
-        Sub Update( ByVal projectId As Int32,  ByVal testTypeId As Int32,  ByVal name As String,  ByVal isActive As Boolean,  ByVal id As Int32) 
-        Sub Update(ByVal test as Test) 
-        Sub Delete( ByVal id As Int32) 
-        Sub Delete(ByVal test as Test) 
-        Function Insert( ByVal projectId As Int32,  ByVal testTypeId As Int32,  ByVal name As String,  ByVal isActive As Boolean)  as Int32
-        Function Insert(ByVal test as Test)  as Int32
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Test)
-        Function GetRowCount()  as Int32
-        Function GetDataById( ByVal id As Int32)  as ICollection(Of Test)
-        Function GetActiveData()  as ICollection(Of Test)
-        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Test)
-        Function GetActiveDataRowCount()  as Int32
-        Function GetTestsForScriptByScriptId( ByVal scriptId As Int32)  as ICollection(Of Test)
-        Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Test)
-        Function GetDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Test)
-        Function GetDataByProjectIdRowCount( ByVal projectId As Int32)  as Int32
-        Function GetActiveDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Test)
-        Function GetActiveDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Test)
-        Function GetActiveDataByProjectIdRowCount( ByVal projectId As Int32)  as Int32
-        Function GetDataByTestTypeId( ByVal testTypeId As Int32)  as ICollection(Of Test)
-        Function GetDataByTestTypeIdPageable( ByVal testTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Test)
-        Function GetDataByTestTypeIdRowCount( ByVal testTypeId As Int32)  as Int32
-        Function GetActiveDataByTestTypeId( ByVal testTypeId As Int32)  as ICollection(Of Test)
-        Function GetActiveDataByTestTypeIdPageable( ByVal testTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Test)
-        Function GetActiveDataByTestTypeIdRowCount( ByVal testTypeId As Int32)  as Int32
-    End Interface 
+        Function GetData() as ICollection(Of Test)
+        Sub Update(projectId As Int32, testTypeId As Int32, name As String, isActive As Boolean, id As Int32)
+        Sub Update(test as Test)
+        Sub Delete(id As Int32)
+        Sub Delete(test as Test)
+        Function Insert(projectId As Int32, testTypeId As Int32, name As String, isActive As Boolean) as Int32
+        Function Insert(test as Test) as Int32
+        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) as ICollection(Of Test)
+        Function GetRowCount() as Int32
+        Function GetDataById(id As Int32) as ICollection(Of Test)
+        Function GetActiveData() as ICollection(Of Test)
+
+        Function GetActiveDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
+            as ICollection(Of Test)
+
+        Function GetActiveDataRowCount() as Int32
+        Function GetTestsForScriptByScriptId(scriptId As Int32) as ICollection(Of Test)
+        Function GetDataByProjectId(projectId As Int32) as ICollection(Of Test)
+
+        Function GetDataByProjectIdPageable(projectId As Int32, sortExpression As String, page As Int32,
+                                            pageSize As Int32) as ICollection(Of Test)
+
+        Function GetDataByProjectIdRowCount(projectId As Int32) as Int32
+        Function GetActiveDataByProjectId(projectId As Int32) as ICollection(Of Test)
+
+        Function GetActiveDataByProjectIdPageable(projectId As Int32, sortExpression As String, page As Int32,
+                                                  pageSize As Int32) as ICollection(Of Test)
+
+        Function GetActiveDataByProjectIdRowCount(projectId As Int32) as Int32
+        Function GetDataByTestTypeId(testTypeId As Int32) as ICollection(Of Test)
+
+        Function GetDataByTestTypeIdPageable(testTypeId As Int32, sortExpression As String, page As Int32,
+                                             pageSize As Int32) as ICollection(Of Test)
+
+        Function GetDataByTestTypeIdRowCount(testTypeId As Int32) as Int32
+        Function GetActiveDataByTestTypeId(testTypeId As Int32) as ICollection(Of Test)
+
+        Function GetActiveDataByTestTypeIdPageable(testTypeId As Int32, sortExpression As String, page As Int32,
+                                                   pageSize As Int32) as ICollection(Of Test)
+
+        Function GetActiveDataByTestTypeIdRowCount(testTypeId As Int32) as Int32
+    End Interface
 End NameSpace
-  

@@ -10,36 +10,36 @@
 @model LucentDb.Domain.Entities.Test_Script
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Test_Script</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
-       <div class="form-group">
-            @Html.LabelFor(model => model.TestId, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TestId, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TestId, (SelectList)ViewBag.Tests, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TestId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.TestId, (SelectList) ViewBag.Tests, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.TestId, "", new {@class = "text-danger"})
             </div>
         </div>
 
-       <div class="form-group">
-            @Html.LabelFor(model => model.ScriptId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ScriptId, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.ScriptId, (SelectList)ViewBag.Scripts, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ScriptId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.ScriptId, (SelectList) ViewBag.Scripts, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.ScriptId, "", new {@class = "text-danger"})
             </div>
         </div>
-        
-       
+
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default"/>
             </div>
         </div>
     </div>

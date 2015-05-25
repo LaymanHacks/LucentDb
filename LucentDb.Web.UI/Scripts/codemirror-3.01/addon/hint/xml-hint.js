@@ -5,10 +5,10 @@
 
     CodeMirror.xmlHint = function(cm, simbol) {
 
-        if(simbol.length > 0) {
+        if (simbol.length > 0) {
             var cursor = cm.getCursor();
             cm.replaceSelection(simbol);
-            cursor = {line: cursor.line, ch: cursor.ch + 1};
+            cursor = { line: cursor.line, ch: cursor.ch + 1 };
             cm.setCursor(cursor);
         }
 
@@ -21,15 +21,14 @@
 
         if (cursor.ch > 0) {
 
-            var text = cm.getRange({line: 0, ch: 0}, cursor);
-            var typed = '';
-            var simbol = '';
-            for(var i = text.length - 1; i >= 0; i--) {
-                if(text[i] == ' ' || text[i] == '<') {
+            var text = cm.getRange({ line: 0, ch: 0 }, cursor);
+            var typed = "";
+            var simbol = "";
+            for (var i = text.length - 1; i >= 0; i--) {
+                if (text[i] == " " || text[i] == "<") {
                     simbol = text[i];
                     break;
-                }
-                else {
+                } else {
                     typed = text[i] + typed;
                 }
             }
@@ -39,12 +38,12 @@
             var path = getActiveElement(text) + simbol;
             var hints = CodeMirror.xmlHints[path];
 
-            if(typeof hints === 'undefined')
-                hints = [''];
+            if (typeof hints === "undefined")
+                hints = [""];
             else {
                 hints = hints.slice(0);
                 for (var i = hints.length - 1; i >= 0; i--) {
-                    if(hints[i].indexOf(typed) != 0)
+                    if (hints[i].indexOf(typed) != 0)
                         hints.splice(i, 1);
                 }
             }
@@ -59,18 +58,18 @@
 
     var getActiveElement = function(text) {
 
-        var element = '';
+        var element = "";
 
-        if(text.length >= 0) {
+        if (text.length >= 0) {
 
-            var regex = new RegExp('<([^!?][^\\s/>]*).*?>', 'g');
+            var regex = new RegExp("<([^!?][^\\s/>]*).*?>", "g");
 
             var matches = [];
             var match;
             while ((match = regex.exec(text)) != null) {
                 matches.push({
                     tag: match[1],
-                    selfclose: (match[0].slice(match[0].length - 2) === '/>')
+                    selfclose: (match[0].slice(match[0].length - 2) === "/>")
                 });
             }
 
@@ -78,19 +77,13 @@
 
                 var item = matches[i];
 
-                if (item.tag[0] == '/')
-                {
+                if (item.tag[0] == "/") {
                     skip++;
-                }
-                else if (item.selfclose == false)
-                {
-                    if (skip > 0)
-                    {
+                } else if (item.selfclose == false) {
+                    if (skip > 0) {
                         skip--;
-                    }
-                    else
-                    {
-                        element = '<' + item.tag + '>' + element;
+                    } else {
+                        element = "<" + item.tag + ">" + element;
                     }
                 }
             }
@@ -103,20 +96,19 @@
 
     var getOpenTag = function(text) {
 
-        var open = text.lastIndexOf('<');
-        var close = text.lastIndexOf('>');
+        var open = text.lastIndexOf("<");
+        var close = text.lastIndexOf(">");
 
-        if (close < open)
-        {
+        if (close < open) {
             text = text.slice(open);
 
-            if(text != '<') {
+            if (text != "<") {
 
-                var space = text.indexOf(' ');
-                if(space < 0)
-                    space = text.indexOf('\t');
-                if(space < 0)
-                    space = text.indexOf('\n');
+                var space = text.indexOf(" ");
+                if (space < 0)
+                    space = text.indexOf("\t");
+                if (space < 0)
+                    space = text.indexOf("\n");
 
                 if (space < 0)
                     space = text.length;
@@ -125,7 +117,7 @@
             }
         }
 
-        return '';
+        return "";
     };
 
 })();

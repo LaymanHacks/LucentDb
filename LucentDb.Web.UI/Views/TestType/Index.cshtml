@@ -27,46 +27,54 @@
             <span class="sr-only">Split button!</span>
         </button>
         <ul class="dropdown-menu" role="menu">
-            <li><a href="#" ng-click="vm.pageSize=10;vm.pageChanged()">10</a></li>
-            <li><a href="#" ng-click="vm.pageSize=20;vm.pageChanged()">20</a></li>
-            <li><a href="#" ng-click="vm.pageSize=50;vm.pageChanged()">50</a></li>
+            <li>
+                <a href="#" ng-click="vm.pageSize=10;vm.pageChanged()">10</a>
+            </li>
+            <li>
+                <a href="#" ng-click="vm.pageSize=20;vm.pageChanged()">20</a>
+            </li>
+            <li>
+                <a href="#" ng-click="vm.pageSize=50;vm.pageChanged()">50</a>
+            </li>
         </ul>
     </div>
     <table class="table">
         <tr>
 
-          <th>
+            <th>
                 Id
-          </th>     
+            </th>
 
-          <th>
+            <th>
                 Name
-          </th>     
+            </th>
 
-          <th>
+            <th>
                 Is Active
-          </th>     
+            </th>
 
-          <th></th>
+            <th></th>
         </tr>
 
 
         <tr ng-repeat="item in vm.pageableResults.results">
 
-          <td>
+            <td>
                 {{item.id}}
-          </td>     
+            </td>
 
-          <td>
+            <td>
                 {{item.name}}
-          </td>     
+            </td>
 
-          <td>
+            <td>
                 {{item.isActive}}
-          </td>     
+            </td>
 
-          <td>
-                <a href="" ng-click="vm.deleteTestType(item.id)"><i class="fa fa-trash-o"></i></a>
+            <td>
+                <a href="" ng-click="vm.deleteTestType(item.id)">
+                    <i class="fa fa-trash-o"></i>
+                </a>
                 <a href="/TestType/Edit/{{item.id}}">Edit</a>
             </td>
         </tr>

@@ -27,46 +27,54 @@
             <span class="sr-only">Split button!</span>
         </button>
         <ul class="dropdown-menu" role="menu">
-            <li><a href="#" ng-click="vm.pageSize=10;vm.pageChanged()">10</a></li>
-            <li><a href="#" ng-click="vm.pageSize=20;vm.pageChanged()">20</a></li>
-            <li><a href="#" ng-click="vm.pageSize=50;vm.pageChanged()">50</a></li>
+            <li>
+                <a href="#" ng-click="vm.pageSize=10;vm.pageChanged()">10</a>
+            </li>
+            <li>
+                <a href="#" ng-click="vm.pageSize=20;vm.pageChanged()">20</a>
+            </li>
+            <li>
+                <a href="#" ng-click="vm.pageSize=50;vm.pageChanged()">50</a>
+            </li>
         </ul>
     </div>
     <table class="table">
         <tr>
 
-          <th>
+            <th>
                 Script Id
-          </th>     
+            </th>
 
-          <th>
+            <th>
                 Expected Result Id
-          </th>     
+            </th>
 
-          <th>
+            <th>
                 Result Index
-          </th>     
+            </th>
 
-          <th></th>
+            <th></th>
         </tr>
 
 
         <tr ng-repeat="item in vm.pageableResults.results">
 
-          <td>
+            <td>
                 {{item.scriptId}}
-          </td>     
+            </td>
 
-          <td>
+            <td>
                 {{item.expectedResultId}}
-          </td>     
+            </td>
 
-          <td>
+            <td>
                 {{item.resultIndex}}
-          </td>     
+            </td>
 
-          <td>
-                <a href="" ng-click="vm.deleteScript_ExpectedResult(item.scriptId, item.expectedResultId)"><i class="fa fa-trash-o"></i></a>
+            <td>
+                <a href="" ng-click="vm.deleteScript_ExpectedResult(item.scriptId, item.expectedResultId)">
+                    <i class="fa fa-trash-o"></i>
+                </a>
                 <a href="/Script_ExpectedResult/Edit/{{item.scriptId}}/{{item.expectedResultId}}">Edit</a>
             </td>
         </tr>

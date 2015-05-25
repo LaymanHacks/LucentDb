@@ -9,370 +9,393 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Data
-Imports System.Data.Common
 Imports System.Data.SqlClient
 Imports LucentDb.Data.DbCommandProvider
 
-Namespace LucentDb.Data.SqlDbCommandProvider 
+Namespace LucentDb.Data.SqlDbCommandProvider
+    Public Class SqlDbScriptCommandProvider
+        Implements IDbScriptCommandProvider
 
-  
-Public Class SqlDbScriptCommandProvider
-      Implements IDbScriptCommandProvider
-    
-      ReadOnly _dbConnHolder As DbConnectionHolder
+        ReadOnly _dbConnHolder As DbConnectionHolder
 
-      Public Sub New()
-          _dbConnHolder = New DbConnectionHolder(DbConnectionName)
-      End Sub
+        Public Sub New()
+            _dbConnHolder = New DbConnectionHolder(DbConnectionName)
+        End Sub
 
-      Public ReadOnly Property DbConnectionName() As String Implements IDbScriptCommandProvider.DbConnectionName
-          Get
-              Return "LucentDbConnection"
-          End Get
-      End Property
+        Public ReadOnly Property DbConnectionName As String Implements IDbScriptCommandProvider.DbConnectionName
+            Get
+                Return "LucentDbConnection"
+            End Get
+        End Property
 
-      Public ReadOnly Property ScriptDbConnectionHolder() As DbConnectionHolder Implements IDbScriptCommandProvider.ScriptDbConnectionHolder
-          Get
-              Return _dbConnHolder
-          End Get
-      End Property
-      
-    
+        Public ReadOnly Property ScriptDbConnectionHolder As DbConnectionHolder _
+            Implements IDbScriptCommandProvider.ScriptDbConnectionHolder
+            Get
+                Return _dbConnHolder
+            End Get
+        End Property
+
+
         ''' <summary>
-        ''' Selects one or more records from the Script table 
+        '''     Selects one or more records from the Script table
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
+        ''' <remarks></remarks>
         Public Function GetGetDataDbCommand() As IDbCommand Implements IDbScriptCommandProvider.GetGetDataDbCommand
-            
+
             Dim command As New SqlCommand("Script_Select")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Updates one or more records from the Script table 
+        '''     Updates one or more records from the Script table
         ''' </summary>
-      ''' <param name="scriptTypeId" />
-      ''' <param name="name" />
-      ''' <param name="scriptValue" />
-      ''' <param name="isActive" />
-      ''' <param name="id" />
+        ''' <param name="scriptTypeId" />
+        ''' <param name="name" />
+        ''' <param name="scriptValue" />
+        ''' <param name="isActive" />
+        ''' <param name="id" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetUpdateDbCommand( ByVal scriptTypeId As Int32,  ByVal name As String,  ByVal scriptValue As String,  ByVal isActive As Boolean,  ByVal id As Int32) As IDbCommand Implements IDbScriptCommandProvider.GetUpdateDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetUpdateDbCommand(scriptTypeId As Int32, name As String, scriptValue As String,
+                                           isActive As Boolean, id As Int32) As IDbCommand _
+            Implements IDbScriptCommandProvider.GetUpdateDbCommand
+
             Dim command As New SqlCommand("Script_Update")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
-      
-            If (Not name  Is Nothing ) Then
-                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
-      Else
-                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, global.System.DBNull.Value))
-      End If
-        
-            If (Not scriptValue  Is Nothing ) Then
-                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptValue", SqlDbType.text, scriptValue))
-      Else
-                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptValue", SqlDbType.text, global.System.DBNull.Value))
-      End If
-                    command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsActive", SqlDbType.bit, isActive))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
+
+            If (Not name Is Nothing) Then
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
+            Else
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, DBNull.Value))
+            End If
+
+            If (Not scriptValue Is Nothing) Then
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptValue", SqlDbType.text,
+                                                                                scriptValue))
+            Else
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptValue", SqlDbType.text,
+                                                                                DBNull.Value))
+            End If
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsActive", SqlDbType.bit, isActive))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Deletes one or more records from the Script table 
+        '''     Deletes one or more records from the Script table
         ''' </summary>
-      ''' <param name="id" />
+        ''' <param name="id" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetDeleteDbCommand( ByVal id As Int32) As IDbCommand Implements IDbScriptCommandProvider.GetDeleteDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetDeleteDbCommand(id As Int32) As IDbCommand _
+            Implements IDbScriptCommandProvider.GetDeleteDbCommand
+
             Dim command As New SqlCommand("Script_Delete")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Inserts a record into the Script table on the database.
+        '''     Inserts a record into the Script table on the database.
         ''' </summary>
-      ''' <param name="scriptTypeId" />
-      ''' <param name="name" />
-      ''' <param name="scriptValue" />
-      ''' <param name="isActive" />
+        ''' <param name="scriptTypeId" />
+        ''' <param name="name" />
+        ''' <param name="scriptValue" />
+        ''' <param name="isActive" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetInsertDbCommand( ByVal scriptTypeId As Int32,  ByVal name As String,  ByVal scriptValue As String,  ByVal isActive As Boolean) As IDbCommand Implements IDbScriptCommandProvider.GetInsertDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetInsertDbCommand(scriptTypeId As Int32, name As String, scriptValue As String,
+                                           isActive As Boolean) As IDbCommand _
+            Implements IDbScriptCommandProvider.GetInsertDbCommand
+
             Dim command As New SqlCommand("Script_Insert")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
-      
-            If (Not name  Is Nothing ) Then
-                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
-      Else
-                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, global.System.DBNull.Value))
-      End If
-        
-            If (Not scriptValue  Is Nothing ) Then
-                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptValue", SqlDbType.text, scriptValue))
-      Else
-                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptValue", SqlDbType.text, global.System.DBNull.Value))
-      End If
-                    command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsActive", SqlDbType.bit, isActive))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
+
+            If (Not name Is Nothing) Then
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
+            Else
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, DBNull.Value))
+            End If
+
+            If (Not scriptValue Is Nothing) Then
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptValue", SqlDbType.text,
+                                                                                scriptValue))
+            Else
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptValue", SqlDbType.text,
+                                                                                DBNull.Value))
+            End If
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsActive", SqlDbType.bit, isActive))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetDataPageable returns a IDataReader populated with a subset of data from Script
+        '''     Function GetDataPageable returns a IDataReader populated with a subset of data from Script
         ''' </summary>
-      ''' <param name="sortExpression" />
-      ''' <param name="page" />
-      ''' <param name="pageSize" />
+        ''' <param name="sortExpression" />
+        ''' <param name="page" />
+        ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand Implements IDbScriptCommandProvider.GetGetDataPageableDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) _
+            As IDbCommand Implements IDbScriptCommandProvider.GetGetDataPageableDbCommand
+
             Dim command As New SqlCommand("Script_GetDataPageable")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetRowCount returns the row count for Script
+        '''     Function GetRowCount returns the row count for Script
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetRowCountDbCommand() As IDbCommand Implements IDbScriptCommandProvider.GetGetRowCountDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetRowCountDbCommand() As IDbCommand _
+            Implements IDbScriptCommandProvider.GetGetRowCountDbCommand
+
             Dim command As New SqlCommand("Script_GetRowCount")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function  GetDataById returns a IDataReader for Script
+        '''     Function  GetDataById returns a IDataReader for Script
         ''' </summary>
-      ''' <param name="id" />
+        ''' <param name="id" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByIdDbCommand( ByVal id As Int32) As IDbCommand Implements IDbScriptCommandProvider.GetGetDataByIdDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataByIdDbCommand(id As Int32) As IDbCommand _
+            Implements IDbScriptCommandProvider.GetGetDataByIdDbCommand
+
             Dim command As New SqlCommand("Script_GetDataById")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveData returns a IDataReader for Script with records that are marked as active
+        '''     Function GetActiveData returns a IDataReader for Script with records that are marked as active
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataDbCommand() As IDbCommand Implements IDbScriptCommandProvider.GetGetActiveDataDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataDbCommand() As IDbCommand _
+            Implements IDbScriptCommandProvider.GetGetActiveDataDbCommand
+
             Dim command As New SqlCommand("Script_GetActiveData")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveDataPageable returns a IDataReader populated with paged active records from Script
+        '''     Function GetActiveDataPageable returns a IDataReader populated with paged active records from Script
         ''' </summary>
-      ''' <param name="sortExpression" />
-      ''' <param name="page" />
-      ''' <param name="pageSize" />
+        ''' <param name="sortExpression" />
+        ''' <param name="page" />
+        ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand Implements IDbScriptCommandProvider.GetGetActiveDataPageableDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) _
+            As IDbCommand Implements IDbScriptCommandProvider.GetGetActiveDataPageableDbCommand
+
             Dim command As New SqlCommand("Script_GetActiveDataPageable")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@PageSize", SqlDbType.Int, pageSize))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@PageSize", SqlDbType.Int, pageSize))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveDataRowCount returns the row count for Script
+        '''     Function GetActiveDataRowCount returns the row count for Script
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataRowCountDbCommand() As IDbCommand Implements IDbScriptCommandProvider.GetGetActiveDataRowCountDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataRowCountDbCommand() As IDbCommand _
+            Implements IDbScriptCommandProvider.GetGetActiveDataRowCountDbCommand
+
             Dim command As New SqlCommand("Script_GetActiveDataRowCount")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetScriptsForTestByTestId returns a IDataReader for Script
+        '''     Function GetScriptsForTestByTestId returns a IDataReader for Script
         ''' </summary>
-      ''' <param name="testId" />
+        ''' <param name="testId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetScriptsForTestByTestIdDbCommand( ByVal testId As Int32) As IDbCommand Implements IDbScriptCommandProvider.GetGetScriptsForTestByTestIdDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetScriptsForTestByTestIdDbCommand(testId As Int32) As IDbCommand _
+            Implements IDbScriptCommandProvider.GetGetScriptsForTestByTestIdDbCommand
+
             Dim command As New SqlCommand("Script_GetScriptsForTestByTestId")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TestId", SqlDbType.int, testId))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TestId", SqlDbType.int, testId))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetDataByScriptTypeId returns a IDataReader for Script
+        '''     Function GetDataByScriptTypeId returns a IDataReader for Script
         ''' </summary>
-      ''' <param name="scriptTypeId" />
+        ''' <param name="scriptTypeId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByScriptTypeIdDbCommand( ByVal scriptTypeId As Int32) As IDbCommand Implements IDbScriptCommandProvider.GetGetDataByScriptTypeIdDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataByScriptTypeIdDbCommand(scriptTypeId As Int32) As IDbCommand _
+            Implements IDbScriptCommandProvider.GetGetDataByScriptTypeIdDbCommand
+
             Dim command As New SqlCommand("Script_GetDataByScriptTypeId")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetDataByScriptTypeIdPageable returns a IDataReader populated with a subset of data from Script
+        '''     Function GetDataByScriptTypeIdPageable returns a IDataReader populated with a subset of data from Script
         ''' </summary>
-      ''' <param name="scriptTypeId" />
-      ''' <param name="sortExpression" />
-      ''' <param name="page" />
-      ''' <param name="pageSize" />
+        ''' <param name="scriptTypeId" />
+        ''' <param name="sortExpression" />
+        ''' <param name="page" />
+        ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByScriptTypeIdPageableDbCommand( ByVal scriptTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand Implements IDbScriptCommandProvider.GetGetDataByScriptTypeIdPageableDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataByScriptTypeIdPageableDbCommand(scriptTypeId As Int32, sortExpression As String,
+                                                                  page As Int32, pageSize As Int32) As IDbCommand _
+            Implements IDbScriptCommandProvider.GetGetDataByScriptTypeIdPageableDbCommand
+
             Dim command As New SqlCommand("Script_GetDataByScriptTypeIdPageable")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetRowCount returns the row count for Script
+        '''     Function GetRowCount returns the row count for Script
         ''' </summary>
-      ''' <param name="scriptTypeId" />
+        ''' <param name="scriptTypeId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByScriptTypeIdRowCountDbCommand( ByVal scriptTypeId As Int32) As IDbCommand Implements IDbScriptCommandProvider.GetGetDataByScriptTypeIdRowCountDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataByScriptTypeIdRowCountDbCommand(scriptTypeId As Int32) As IDbCommand _
+            Implements IDbScriptCommandProvider.GetGetDataByScriptTypeIdRowCountDbCommand
+
             Dim command As New SqlCommand("Script_GetDataByScriptTypeIdRowCount")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveDataByScriptTypeId returns a IDataReader for Script
+        '''     Function GetActiveDataByScriptTypeId returns a IDataReader for Script
         ''' </summary>
-      ''' <param name="scriptTypeId" />
+        ''' <param name="scriptTypeId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataByScriptTypeIdDbCommand( ByVal scriptTypeId As Int32) As IDbCommand Implements IDbScriptCommandProvider.GetGetActiveDataByScriptTypeIdDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataByScriptTypeIdDbCommand(scriptTypeId As Int32) As IDbCommand _
+            Implements IDbScriptCommandProvider.GetGetActiveDataByScriptTypeIdDbCommand
+
             Dim command As New SqlCommand("Script_GetActiveDataByScriptTypeId")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveDataByScriptTypeIdPageable returns a IDataReader populated with a subset of data from Script
+        '''     Function GetActiveDataByScriptTypeIdPageable returns a IDataReader populated with a subset of data from Script
         ''' </summary>
-      ''' <param name="scriptTypeId" />
-      ''' <param name="sortExpression" />
-      ''' <param name="page" />
-      ''' <param name="pageSize" />
+        ''' <param name="scriptTypeId" />
+        ''' <param name="sortExpression" />
+        ''' <param name="page" />
+        ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataByScriptTypeIdPageableDbCommand( ByVal scriptTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand Implements IDbScriptCommandProvider.GetGetActiveDataByScriptTypeIdPageableDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataByScriptTypeIdPageableDbCommand(scriptTypeId As Int32, sortExpression As String,
+                                                                        page As Int32, pageSize As Int32) As IDbCommand _
+            Implements IDbScriptCommandProvider.GetGetActiveDataByScriptTypeIdPageableDbCommand
+
             Dim command As New SqlCommand("Script_GetActiveDataByScriptTypeIdPageable")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@PageSize", SqlDbType.Int, pageSize))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@PageSize", SqlDbType.Int, pageSize))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetRowCount returns the row count for Script
+        '''     Function GetRowCount returns the row count for Script
         ''' </summary>
-      ''' <param name="scriptTypeId" />
+        ''' <param name="scriptTypeId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataByScriptTypeIdRowCountDbCommand( ByVal scriptTypeId As Int32) As IDbCommand Implements IDbScriptCommandProvider.GetGetActiveDataByScriptTypeIdRowCountDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataByScriptTypeIdRowCountDbCommand(scriptTypeId As Int32) As IDbCommand _
+            Implements IDbScriptCommandProvider.GetGetActiveDataByScriptTypeIdRowCountDbCommand
+
             Dim command As New SqlCommand("Script_GetActiveDataByScriptTypeIdRowCount")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ScriptTypeId", SqlDbType.int, scriptTypeId))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
-  End Class
- End Namespace
-  
+        End Function
+    End Class
+End Namespace

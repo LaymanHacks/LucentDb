@@ -10,36 +10,36 @@
 @model LucentDb.Domain.Entities.Project_Connection
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Project_Connection</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
-       <div class="form-group">
-            @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectId, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-            	@Html.DropDownListFor(model => model.ProjectId, (SelectList)ViewBag.Projects, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.ProjectId, (SelectList) ViewBag.Projects, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.ProjectId, "", new {@class = "text-danger"})
             </div>
         </div>
 
-       <div class="form-group">
-            @Html.LabelFor(model => model.ConnectionId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConnectionId, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-            	@Html.DropDownListFor(model => model.ConnectionId, (SelectList)ViewBag.Connections, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ConnectionId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.ConnectionId, (SelectList) ViewBag.Connections, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.ConnectionId, "", new {@class = "text-danger"})
             </div>
         </div>
-        
-       
+
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default"/>
             </div>
         </div>
     </div>

@@ -1,7 +1,5 @@
 ﻿using System.Web.Http;
-using System.Web.UI.WebControls;
 using Microsoft.Owin.Security.OAuth;
-using RouteParameter = System.Web.Http.RouteParameter;
 
 namespace LucentDb.Web.UI
 {
