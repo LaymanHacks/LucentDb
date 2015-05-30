@@ -40,7 +40,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LucentDb.Data.Repository\LucentDb.Data.Repository.vbproj">
+      <Project>{a0c74624-564b-4b23-a21c-ca3ead34187f}</Project>
+      <Name>LucentDb.Data.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LucentDb.Data.SQLClient\LucentDb.Data.SqlClient.vbproj">
+      <Project>{46C3E43A-B955-4F85-BE09-E06E7B0C45E9}</Project>
+      <Name>LucentDb.Data.SqlClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LucentDb.Data\LucentDb.Data.vbproj">
+      <Project>{97e07ab1-aadd-4a17-bd14-1d876ccab30a}</Project>
+      <Name>LucentDb.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LucentDb.Domain.Entities.Extensions\LucentDb.Domain.Entities.Extensions.csproj">
+      <Project>{5dd5e69b-33e9-4684-b441-4c54756167fa}</Project>
+      <Name>LucentDb.Domain.Entities.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LucentDb.Domain.Entities\LucentDb.Domain.Entities.csproj">
+      <Project>{4adcf3cb-049f-4be2-b421-7875dc51301b}</Project>
+      <Name>LucentDb.Domain.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
