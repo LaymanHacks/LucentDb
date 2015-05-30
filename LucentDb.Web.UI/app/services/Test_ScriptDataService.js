@@ -17,24 +17,24 @@
         var urlBase = '/api/test_Script';            
 
         this.getData = function () {
-            return $http.get('/api/test_Script'/all');
+            return $http.get(urlBase + '/all');
         };
 
          this.updateTest_Script = function(test_Script) {
-            return $http.put('/api/test_Script'', test_Script);
+            return $http.put(urlBase, test_Script);
         };
 
          this.deleteTest_Script = function(testId, scriptId) {
-            return $http.Delete('/api/test_Script'', testId, scriptId);
+            return $http.Delete(urlBase, testId, scriptId);
         };
 
          this.insertTest_Script = function(test_Script) {
-            return $http.post('/api/test_Script'', test_Script);
+            return $http.post(urlBase, test_Script);
         };
 
         this.getDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/test_Script'',
+                 url: urlBase,
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -45,16 +45,16 @@
         };
 
         this.getDataByTestIdScriptId = function (testId, scriptId) {
-            return $http.get('/api/test_Script'/all');
+            return $http.get(urlBase + '/all');
         };
 
         this.getDataByScriptId = function (scriptId) {
-            return $http.get('/api/test_Script'/all');
+            return $http.get(urlBase + '/all');
         };
 
         this.getDataByScriptIdPageable = function (scriptId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/test_Script'',
+                 url: urlBase,
                  method: 'GET',
                  params: {
                      scriptId : scriptId || '', 
@@ -66,12 +66,12 @@
         };
 
         this.getDataByTestId = function (testId) {
-            return $http.get('/api/test_Script'/all');
+            return $http.get(urlBase + '/all');
         };
 
         this.getDataByTestIdPageable = function (testId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/test_Script'',
+                 url: urlBase,
                  method: 'GET',
                  params: {
                      testId : testId || '', 

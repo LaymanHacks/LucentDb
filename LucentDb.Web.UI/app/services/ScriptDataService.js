@@ -17,24 +17,24 @@
         var urlBase = '/api/scripts';            
 
         this.getData = function () {
-            return $http.get('/api/scripts'/all');
+            return $http.get(urlBase + '/all');
         };
 
          this.updateScript = function(script) {
-            return $http.put('/api/scripts'', script);
+            return $http.put(urlBase, script);
         };
 
          this.deleteScript = function(id) {
-            return $http.Delete('/api/scripts'', id);
+            return $http.Delete(urlBase, id);
         };
 
          this.insertScript = function(script) {
-            return $http.post('/api/scripts'', script);
+            return $http.post(urlBase, script);
         };
 
         this.getDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/scripts'',
+                 url: urlBase,
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -45,16 +45,16 @@
         };
 
         this.getDataById = function (id) {
-            return $http.get('/api/scripts/' + id + '');
+            return $http.get('/api/scripts/' + id);
         };
 
         this.getActiveData = function () {
-            return $http.get('/api/scripts'/all/active');
+            return $http.get(urlBase + '/all/active');
         };
 
         this.getActiveDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/scripts'/active',
+                 url: urlBase + '/active',
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -64,17 +64,17 @@
             });
         };
 
-        this.getScriptsForTestByTestId = function (id) {
-            return $http.get('/api/tests/' + testId + '/scripts/all');
+        this.getScriptsForTestByTestId = function (testId) {
+            return $http.get('/api/tests/' + testId  + '/scripts/all');
         };
 
         this.getDataByScriptTypeId = function (scriptTypeId) {
-            return $http.get('/api/scriptTypes/' + scriptTypeId + '/scripts/all');
+            return $http.get('/api/scriptTypes/' + scriptTypeId  + '/scripts/all');
         };
 
         this.getDataByScriptTypeIdPageable = function (scriptTypeId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/scriptTypes/' + scriptTypeId + '/scripts',
+                 url: '/api/scriptTypes/' + scriptTypeId  + '/scripts',
                  method: 'GET',
                  params: {
                      scriptTypeId : scriptTypeId || '', 
@@ -86,12 +86,12 @@
         };
 
         this.getActiveDataByScriptTypeId = function (scriptTypeId) {
-            return $http.get('/api/scriptTypes/' + scriptTypeId + '/scripts/all/active');
+            return $http.get('/api/scriptTypes/' + scriptTypeId  + '/scripts/all/active');
         };
 
         this.getActiveDataByScriptTypeIdPageable = function (scriptTypeId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/scriptTypes/' + scriptTypeId + '/scripts/active',
+                 url: '/api/scriptTypes/' + scriptTypeId  + '/scripts/active',
                  method: 'GET',
                  params: {
                      scriptTypeId : scriptTypeId || '', 

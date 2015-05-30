@@ -17,24 +17,24 @@
         var urlBase = '/api/expectedResults';            
 
         this.getData = function () {
-            return $http.get('/api/expectedResults'/all');
+            return $http.get(urlBase + '/all');
         };
 
          this.updateExpectedResult = function(expectedResult) {
-            return $http.put('/api/expectedResults'', expectedResult);
+            return $http.put(urlBase, expectedResult);
         };
 
          this.deleteExpectedResult = function(id) {
-            return $http.Delete('/api/expectedResults'', id);
+            return $http.Delete(urlBase, id);
         };
 
          this.insertExpectedResult = function(expectedResult) {
-            return $http.post('/api/expectedResults'', expectedResult);
+            return $http.post(urlBase, expectedResult);
         };
 
         this.getDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/expectedResults'',
+                 url: urlBase,
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -45,16 +45,16 @@
         };
 
         this.getDataById = function (id) {
-            return $http.get('/api/expectedResults/' + id + '');
+            return $http.get('/api/expectedResults/' + id);
         };
 
         this.getDataByAssertTypeId = function (assertTypeId) {
-            return $http.get('/api/assertTypes/' + assertTypeId + '/expectedResults/all');
+            return $http.get('/api/assertTypes/' + assertTypeId  + '/expectedResults/all');
         };
 
         this.getDataByAssertTypeIdPageable = function (assertTypeId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/assertTypes/' + assertTypeId + '/expectedResults',
+                 url: '/api/assertTypes/' + assertTypeId  + '/expectedResults',
                  method: 'GET',
                  params: {
                      assertTypeId : assertTypeId || '', 

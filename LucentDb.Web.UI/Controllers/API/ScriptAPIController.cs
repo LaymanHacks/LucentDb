@@ -29,10 +29,8 @@ namespace LucentDb.Web.UI.Controllers.Api
    
         [Route("api/scripts/all", Name = "ScriptsGetDataRoute")]
         [HttpGet]
-        public IQueryable<Script> GetData()
+        public IQueryable<Script> GetData() 
         {
-            var returnScripts = _dbRepository.GetData();
-           
             return _dbRepository.GetData().AsQueryable();
         }
 
@@ -79,9 +77,9 @@ namespace LucentDb.Web.UI.Controllers.Api
 
         [Route("api/scripts/{id}", Name = "ScriptsGetDataByIdRoute")]
         [HttpGet]
-        public Script GetDataById(Int32 id) 
+        public IQueryable<Script> GetDataById(Int32 id) 
         {
-            return _dbRepository.GetDataById(id).FirstOrDefault();
+            return _dbRepository.GetDataById(id).AsQueryable();
         }
 
         [Route("api/scripts/all/active", Name = "ScriptsGetActiveDataRoute")]
@@ -105,9 +103,9 @@ namespace LucentDb.Web.UI.Controllers.Api
 
         [Route("api/tests/{testId}/scripts/all", Name = "ScriptsGetScriptsForTestByTestIdRoute")]
         [HttpGet]
-        public IQueryable<Script> GetScriptsForTestByTestId(Int32 id) 
+        public IQueryable<Script> GetScriptsForTestByTestId(Int32 testId) 
         {
-            return _dbRepository.GetScriptsForTestByTestId(id).AsQueryable();
+            return _dbRepository.GetScriptsForTestByTestId(testId).AsQueryable();
         }
 
         [Route("api/scriptTypes/{scriptTypeId}/scripts/all", Name = "ScriptsGetDataByScriptTypeIdRoute")]

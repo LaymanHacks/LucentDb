@@ -17,24 +17,24 @@
         var urlBase = '/api/script_ExpectedResult';            
 
         this.getData = function () {
-            return $http.get('/api/script_ExpectedResult'/all');
+            return $http.get(urlBase + '/all');
         };
 
          this.updateScript_ExpectedResult = function(script_ExpectedResult) {
-            return $http.put('/api/script_ExpectedResult'', script_ExpectedResult);
+            return $http.put(urlBase, script_ExpectedResult);
         };
 
          this.deleteScript_ExpectedResult = function(scriptId, expectedResultId) {
-            return $http.Delete('/api/script_ExpectedResult'', scriptId, expectedResultId);
+            return $http.Delete(urlBase, scriptId, expectedResultId);
         };
 
          this.insertScript_ExpectedResult = function(script_ExpectedResult) {
-            return $http.post('/api/script_ExpectedResult'', script_ExpectedResult);
+            return $http.post(urlBase, script_ExpectedResult);
         };
 
         this.getDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/script_ExpectedResult'',
+                 url: urlBase,
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -45,16 +45,16 @@
         };
 
         this.getDataByScriptIdExpectedResultId = function (scriptId, expectedResultId) {
-            return $http.get('/api/script_ExpectedResult'/all');
+            return $http.get(urlBase + '/all');
         };
 
         this.getDataByExpectedResultId = function (expectedResultId) {
-            return $http.get('/api/expectedResults/' + expectedResultId + '/script_ExpectedResult/all');
+            return $http.get('/api/expectedResults/' + expectedResultId  + '/script_ExpectedResult/all');
         };
 
         this.getDataByExpectedResultIdPageable = function (expectedResultId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/expectedResults/' + expectedResultId + '/script_ExpectedResult',
+                 url: '/api/expectedResults/' + expectedResultId  + '/script_ExpectedResult',
                  method: 'GET',
                  params: {
                      expectedResultId : expectedResultId || '', 
@@ -66,12 +66,12 @@
         };
 
         this.getDataByScriptId = function (scriptId) {
-            return $http.get('/api/scripts/' + scriptId + '/script_ExpectedResult/all');
+            return $http.get('/api/scripts/' + scriptId  + '/script_ExpectedResult/all');
         };
 
         this.getDataByScriptIdPageable = function (scriptId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/scripts/' + scriptId + '/script_ExpectedResult',
+                 url: '/api/scripts/' + scriptId  + '/script_ExpectedResult',
                  method: 'GET',
                  params: {
                      scriptId : scriptId || '', 

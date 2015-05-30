@@ -36,7 +36,7 @@ namespace LucentDb.Web.UI.Controllers.Api
 
         [Route("api/test_Script", Name = "Test_ScriptUpdateRoute")]
         [HttpPut]
-        public void Update(Test_Script test_Script, int Original_TestId, int Original_ScriptId)
+        public void Update(Test_Script test_Script, Int32 Original_TestId,  Int32 Original_ScriptId)
         {
             _dbRepository.Update( (Int32)test_Script.TestId,  (Int32)test_Script.ScriptId,  (Int32)Original_TestId,  (Int32)Original_ScriptId);
           }
@@ -60,7 +60,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPost]
         public Test_Script  Insert(Test_Script test_Script)
         {
-             return _dbRepository.Insert( (Int32)test_Script.TestId,  (Int32)test_Script.ScriptId).FirstOrDefault();
+            return _dbRepository.Insert((Int32)test_Script.TestId, (Int32)test_Script.ScriptId).FirstOrDefault();
           }
 
         [Route("api/test_Script", Name = "Test_ScriptGetDataPageableRoute")]

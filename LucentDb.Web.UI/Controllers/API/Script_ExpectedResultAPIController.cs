@@ -36,10 +36,10 @@ namespace LucentDb.Web.UI.Controllers.Api
 
         [Route("api/script_ExpectedResult", Name = "Script_ExpectedResultUpdateRoute")]
         [HttpPut]
-        public void Update(Script_ExpectedResult script_ExpectedResult, int Original_ScriptId,int Original_ExpectedResultId)
+        public void Update(Script_ExpectedResult script_ExpectedResult, Int32 Original_ScriptId,  Int32 Original_ExpectedResultId)
         {
             _dbRepository.Update( (Int32)script_ExpectedResult.ScriptId,  (Int32)script_ExpectedResult.ExpectedResultId,  (Int32)script_ExpectedResult.ResultIndex,  (Int32)Original_ScriptId,  (Int32)Original_ExpectedResultId);
-        }
+          }
 
         [Route("api/script_ExpectedResult", Name = "Script_ExpectedResultDeleteRoute")]
         [HttpDelete]
@@ -58,9 +58,9 @@ namespace LucentDb.Web.UI.Controllers.Api
 
         [Route("api/script_ExpectedResult", Name = "Script_ExpectedResultInsertRoute")]
         [HttpPost]
-        public Script_ExpectedResult Insert(Script_ExpectedResult script_ExpectedResult)
+        public Script_ExpectedResult  Insert(Script_ExpectedResult script_ExpectedResult)
         {
-             return _dbRepository.Insert( (Int32)script_ExpectedResult.ScriptId,  (Int32)script_ExpectedResult.ExpectedResultId,  (Int32)script_ExpectedResult.ResultIndex).FirstOrDefault();
+            return _dbRepository.Insert((Int32)script_ExpectedResult.ScriptId, (Int32)script_ExpectedResult.ExpectedResultId, (Int32)script_ExpectedResult.ResultIndex).FirstOrDefault();
           }
 
         [Route("api/script_ExpectedResult", Name = "Script_ExpectedResultGetDataPageableRoute")]

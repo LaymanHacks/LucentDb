@@ -17,24 +17,24 @@
         var urlBase = '/api/tests';            
 
         this.getData = function () {
-            return $http.get('/api/tests'/all');
+            return $http.get(urlBase + '/all');
         };
 
          this.updateTest = function(test) {
-            return $http.put('/api/tests'', test);
+            return $http.put(urlBase, test);
         };
 
          this.deleteTest = function(id) {
-            return $http.Delete('/api/tests'', id);
+            return $http.Delete(urlBase, id);
         };
 
          this.insertTest = function(test) {
-            return $http.post('/api/tests'', test);
+            return $http.post(urlBase, test);
         };
 
         this.getDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/tests'',
+                 url: urlBase,
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -45,16 +45,16 @@
         };
 
         this.getDataById = function (id) {
-            return $http.get('/api/tests/' + id + '');
+            return $http.get('/api/tests/' + id);
         };
 
         this.getActiveData = function () {
-            return $http.get('/api/tests'/all/active');
+            return $http.get(urlBase + '/all/active');
         };
 
         this.getActiveDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/tests'/active',
+                 url: urlBase + '/active',
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -64,17 +64,17 @@
             });
         };
 
-        this.getTestsForScriptByScriptId = function (id) {
-            return $http.get('/api/scripts/' + scriptId + '/tests/all');
+        this.getTestsForScriptByScriptId = function (scriptId) {
+            return $http.get('/api/scripts/' + scriptId  + '/tests/all');
         };
 
         this.getDataByProjectId = function (projectId) {
-            return $http.get('/api/projects/' + projectId + '/tests/all');
+            return $http.get('/api/projects/' + projectId  + '/tests/all');
         };
 
         this.getDataByProjectIdPageable = function (projectId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/projects/' + projectId + '/tests',
+                 url: '/api/projects/' + projectId  + '/tests',
                  method: 'GET',
                  params: {
                      projectId : projectId || '', 
@@ -86,12 +86,12 @@
         };
 
         this.getActiveDataByProjectId = function (projectId) {
-            return $http.get('/api/projects/' + projectId + '/tests/all/active');
+            return $http.get('/api/projects/' + projectId  + '/tests/all/active');
         };
 
         this.getActiveDataByProjectIdPageable = function (projectId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/projects/' + projectId + '/tests/active',
+                 url: '/api/projects/' + projectId  + '/tests/active',
                  method: 'GET',
                  params: {
                      projectId : projectId || '', 
@@ -103,12 +103,12 @@
         };
 
         this.getDataByTestTypeId = function (testTypeId) {
-            return $http.get('/api/testTypes/' + testTypeId + '/tests/all');
+            return $http.get('/api/testTypes/' + testTypeId  + '/tests/all');
         };
 
         this.getDataByTestTypeIdPageable = function (testTypeId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/testTypes/' + testTypeId + '/tests',
+                 url: '/api/testTypes/' + testTypeId  + '/tests',
                  method: 'GET',
                  params: {
                      testTypeId : testTypeId || '', 
@@ -120,12 +120,12 @@
         };
 
         this.getActiveDataByTestTypeId = function (testTypeId) {
-            return $http.get('/api/testTypes/' + testTypeId + '/tests/all/active');
+            return $http.get('/api/testTypes/' + testTypeId  + '/tests/all/active');
         };
 
         this.getActiveDataByTestTypeIdPageable = function (testTypeId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/testTypes/' + testTypeId + '/tests/active',
+                 url: '/api/testTypes/' + testTypeId  + '/tests/active',
                  method: 'GET',
                  params: {
                      testTypeId : testTypeId || '', 

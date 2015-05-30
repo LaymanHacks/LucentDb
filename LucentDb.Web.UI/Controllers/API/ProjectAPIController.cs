@@ -75,7 +75,7 @@ namespace LucentDb.Web.UI.Controllers.Api
             return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
         }
 
-        [Route("api/projects/{projectId}/projects", Name = "ProjectsGetDataByProjectIdRoute")]
+        [Route("api/projects/{projectId}", Name = "ProjectsGetDataByProjectIdRoute")]
         [HttpGet]
         public IQueryable<Project> GetDataByProjectId(Int32 projectId) 
         {

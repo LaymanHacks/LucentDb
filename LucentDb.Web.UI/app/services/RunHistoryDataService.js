@@ -17,24 +17,24 @@
         var urlBase = '/api/runHistories';            
 
         this.getData = function () {
-            return $http.get('/api/runHistories'/all');
+            return $http.get(urlBase + '/all');
         };
 
          this.updateRunHistory = function(runHistory) {
-            return $http.put('/api/runHistories'', runHistory);
+            return $http.put(urlBase, runHistory);
         };
 
          this.deleteRunHistory = function(id) {
-            return $http.Delete('/api/runHistories'', id);
+            return $http.Delete(urlBase, id);
         };
 
          this.insertRunHistory = function(runHistory) {
-            return $http.post('/api/runHistories'', runHistory);
+            return $http.post(urlBase, runHistory);
         };
 
         this.getDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/runHistories'',
+                 url: urlBase,
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -45,16 +45,16 @@
         };
 
         this.getDataById = function (id) {
-            return $http.get('/api/runHistories'/all');
+            return $http.get(urlBase + '/all');
         };
 
         this.getDataByScriptId = function (scriptId) {
-            return $http.get('/api/scripts/' + scriptId + '/runHistories/all');
+            return $http.get('/api/scripts/' + scriptId  + '/runHistories/all');
         };
 
         this.getDataByScriptIdPageable = function (scriptId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/scripts/' + scriptId + '/runHistories',
+                 url: '/api/scripts/' + scriptId  + '/runHistories',
                  method: 'GET',
                  params: {
                      scriptId : scriptId || '', 

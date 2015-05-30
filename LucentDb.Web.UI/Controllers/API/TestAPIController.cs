@@ -103,9 +103,9 @@ namespace LucentDb.Web.UI.Controllers.Api
 
         [Route("api/scripts/{scriptId}/tests/all", Name = "TestsGetTestsForScriptByScriptIdRoute")]
         [HttpGet]
-        public IQueryable<Test> GetTestsForScriptByScriptId(Int32 id) 
+        public IQueryable<Test> GetTestsForScriptByScriptId(Int32 scriptId) 
         {
-            return _dbRepository.GetTestsForScriptByScriptId(id).AsQueryable();
+            return _dbRepository.GetTestsForScriptByScriptId(scriptId).AsQueryable();
         }
 
         [Route("api/projects/{projectId}/tests/all", Name = "TestsGetDataByProjectIdRoute")]

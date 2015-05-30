@@ -75,7 +75,7 @@ namespace LucentDb.Web.UI.Controllers.Api
             return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
         }
 
-        [Route("api/scriptTypes/{id}/scriptTypes", Name = "ScriptTypesGetDataByIdRoute")]
+        [Route("api/scriptTypes/{id}", Name = "ScriptTypesGetDataByIdRoute")]
         [HttpGet]
         public IQueryable<ScriptType> GetDataById(Int32 id) 
         {

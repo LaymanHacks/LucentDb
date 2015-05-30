@@ -17,24 +17,24 @@
         var urlBase = '/api/scriptTypes';            
 
         this.getData = function () {
-            return $http.get('/api/scriptTypes'/all');
+            return $http.get(urlBase + '/all');
         };
 
          this.updateScriptType = function(scriptType) {
-            return $http.put('/api/scriptTypes'', scriptType);
+            return $http.put(urlBase, scriptType);
         };
 
          this.deleteScriptType = function(id) {
-            return $http.Delete('/api/scriptTypes'', id);
+            return $http.Delete(urlBase, id);
         };
 
          this.insertScriptType = function(scriptType) {
-            return $http.post('/api/scriptTypes'', scriptType);
+            return $http.post(urlBase, scriptType);
         };
 
         this.getDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/scriptTypes'',
+                 url: urlBase,
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -45,16 +45,16 @@
         };
 
         this.getDataById = function (id) {
-            return $http.get('/api/scriptTypes/' + id + '/scriptTypes');
+            return $http.get('/api/scriptTypes/' + id);
         };
 
         this.getActiveData = function () {
-            return $http.get('/api/scriptTypes'/all/active');
+            return $http.get(urlBase + '/all/active');
         };
 
         this.getActiveDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/scriptTypes'/active',
+                 url: urlBase + '/active',
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 

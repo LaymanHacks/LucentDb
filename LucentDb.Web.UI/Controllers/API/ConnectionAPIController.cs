@@ -75,7 +75,7 @@ namespace LucentDb.Web.UI.Controllers.Api
             return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
         }
 
-        [Route("api/connections/{connectionId}/connections", Name = "ConnectionsGetDataByConnectionIdRoute")]
+        [Route("api/connections/{connectionId}", Name = "ConnectionsGetDataByConnectionIdRoute")]
         [HttpGet]
         public IQueryable<Connection> GetDataByConnectionId(Int32 connectionId) 
         {

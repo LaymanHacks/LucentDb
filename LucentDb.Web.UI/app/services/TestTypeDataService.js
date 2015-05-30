@@ -17,24 +17,24 @@
         var urlBase = '/api/testTypes';            
 
         this.getData = function () {
-            return $http.get('/api/testTypes'/all');
+            return $http.get(urlBase + '/all');
         };
 
          this.updateTestType = function(testType) {
-            return $http.put('/api/testTypes'', testType);
+            return $http.put(urlBase, testType);
         };
 
          this.deleteTestType = function(id) {
-            return $http.Delete('/api/testTypes'', id);
+            return $http.Delete(urlBase, id);
         };
 
          this.insertTestType = function(testType) {
-            return $http.post('/api/testTypes'', testType);
+            return $http.post(urlBase, testType);
         };
 
         this.getDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/testTypes'',
+                 url: urlBase,
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -45,16 +45,16 @@
         };
 
         this.getDataById = function (id) {
-            return $http.get('/api/testTypes/' + id + '/testTypes');
+            return $http.get('/api/testTypes/' + id);
         };
 
         this.getActiveData = function () {
-            return $http.get('/api/testTypes'/all/active');
+            return $http.get(urlBase + '/all/active');
         };
 
         this.getActiveDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/testTypes'/active',
+                 url: urlBase + '/active',
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 

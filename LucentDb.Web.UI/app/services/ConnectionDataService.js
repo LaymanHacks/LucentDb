@@ -17,24 +17,24 @@
         var urlBase = '/api/connections';            
 
         this.getData = function () {
-            return $http.get('/api/connections'/all');
+            return $http.get(urlBase + '/all');
         };
 
          this.updateConnection = function(connection) {
-            return $http.put('/api/connections'', connection);
+            return $http.put(urlBase, connection);
         };
 
          this.deleteConnection = function(connectionId) {
-            return $http.Delete('/api/connections'', connectionId);
+            return $http.Delete(urlBase, connectionId);
         };
 
          this.insertConnection = function(connection) {
-            return $http.post('/api/connections'', connection);
+            return $http.post(urlBase, connection);
         };
 
         this.getDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/connections'',
+                 url: urlBase,
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -45,16 +45,16 @@
         };
 
         this.getDataByConnectionId = function (connectionId) {
-            return $http.get('/api/connections/' + connectionId + '/connections');
+            return $http.get('/api/connections/' + connectionId);
         };
 
         this.getActiveData = function () {
-            return $http.get('/api/connections'/all/active');
+            return $http.get(urlBase + '/all/active');
         };
 
         this.getActiveDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/connections'/active',
+                 url: urlBase + '/active',
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -65,12 +65,12 @@
         };
 
         this.getConnectionsForProjectByProjectId = function (projectId) {
-            return $http.get('/api/projects/' + projectId + '/connections/all');
+            return $http.get('/api/projects/' + projectId  + '/connections/all');
         };
 
         this.getConnectionsForProjectByProjectIdPageable = function (projectId, sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/projects/' + projectId + '/connections',
+                 url: '/api/projects/' + projectId  + '/connections',
                  method: 'GET',
                  params: {
                      projectId : projectId || '', 

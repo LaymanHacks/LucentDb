@@ -17,24 +17,24 @@
         var urlBase = '/api/assertTypes';            
 
         this.getData = function () {
-            return $http.get('/api/assertTypes'/all');
+            return $http.get(urlBase + '/all');
         };
 
          this.updateAssertType = function(assertType) {
-            return $http.put('/api/assertTypes'', assertType);
+            return $http.put(urlBase, assertType);
         };
 
          this.deleteAssertType = function(id) {
-            return $http.Delete('/api/assertTypes'', id);
+            return $http.Delete(urlBase, id);
         };
 
          this.insertAssertType = function(assertType) {
-            return $http.post('/api/assertTypes'', assertType);
+            return $http.post(urlBase, assertType);
         };
 
         this.getDataPageable = function (sortExpression, page, pageSize) { 
             return $http({
-                 url: '/api/assertTypes'',
+                 url: urlBase,
                  method: 'GET',
                  params: {
                      sortExpression : sortExpression || '', 
@@ -45,7 +45,7 @@
         };
 
         this.getDataById = function (id) {
-            return $http.get('/api/assertTypes/' + id + '/assertTypes');
+            return $http.get('/api/assertTypes/' + id);
         };
 
 

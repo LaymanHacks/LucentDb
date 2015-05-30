@@ -75,7 +75,7 @@ namespace LucentDb.Web.UI.Controllers.Api
             return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
         }
 
-        [Route("api/assertTypes/{id}/assertTypes", Name = "AssertTypesGetDataByIdRoute")]
+        [Route("api/assertTypes/{id}", Name = "AssertTypesGetDataByIdRoute")]
         [HttpGet]
         public IQueryable<AssertType> GetDataById(Int32 id) 
         {

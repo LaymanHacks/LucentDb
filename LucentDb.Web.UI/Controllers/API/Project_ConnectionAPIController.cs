@@ -36,7 +36,7 @@ namespace LucentDb.Web.UI.Controllers.Api
 
         [Route("api/project_Connection", Name = "Project_ConnectionUpdateRoute")]
         [HttpPut]
-        public void Update(Project_Connection project_Connection, int Original_ProjectId, int Original_ConnectionId)
+        public void Update(Project_Connection project_Connection,  Int32 Original_ProjectId,  Int32 Original_ConnectionId)
         {
             _dbRepository.Update( (Int32)project_Connection.ProjectId,  (Int32)project_Connection.ConnectionId,  (Int32)Original_ProjectId,  (Int32)Original_ConnectionId);
           }
@@ -60,7 +60,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPost]
         public Project_Connection  Insert(Project_Connection project_Connection)
         {
-             return _dbRepository.Insert( (Int32)project_Connection.ProjectId,  (Int32)project_Connection.ConnectionId).FirstOrDefault();
+            return _dbRepository.Insert((Int32)project_Connection.ProjectId, (Int32)project_Connection.ConnectionId).FirstOrDefault();
           }
 
         [Route("api/project_Connection", Name = "Project_ConnectionGetDataPageableRoute")]
