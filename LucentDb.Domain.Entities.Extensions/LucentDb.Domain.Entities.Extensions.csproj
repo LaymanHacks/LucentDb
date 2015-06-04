@@ -7,7 +7,7 @@
     <ProjectGuid>{5DD5E69B-33E9-4684-B441-4C54756167FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace />
+    <RootNamespace>LucentDb.Domain.Entities.Extensions</RootNamespace>
     <AssemblyName>LucentDb.Domain.Entities.Extensions</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>

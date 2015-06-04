@@ -268,7 +268,7 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
             Dim command As New SqlCommand("Script_GetScriptsForTestByTestId")
             command.CommandType = CommandType.StoredProcedure
-            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TestId", SqlDbType.int, testId))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.Int, testId))
 
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
