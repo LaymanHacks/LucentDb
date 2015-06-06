@@ -43,7 +43,7 @@
             // 
             this.isActiveCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.isActiveCheckBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.isActiveCheckBox.Location = new System.Drawing.Point(621, 5);
+            this.isActiveCheckBox.Location = new System.Drawing.Point(644, 5);
             this.isActiveCheckBox.Name = "isActiveCheckBox";
             this.isActiveCheckBox.Size = new System.Drawing.Size(80, 24);
             this.isActiveCheckBox.TabIndex = 4;
@@ -69,7 +69,7 @@
             this.txtScriptValue.Location = new System.Drawing.Point(15, 39);
             this.txtScriptValue.Name = "txtScriptValue";
             this.txtScriptValue.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.txtScriptValue.Size = new System.Drawing.Size(675, 80);
+            this.txtScriptValue.Size = new System.Drawing.Size(698, 92);
             this.txtScriptValue.TabIndex = 88;
             // 
             // label1
@@ -116,7 +116,7 @@
             // 
             this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRun.BackColor = System.Drawing.SystemColors.Control;
-            this.btnRun.Location = new System.Drawing.Point(621, 130);
+            this.btnRun.Location = new System.Drawing.Point(644, 142);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(75, 23);
             this.btnRun.TabIndex = 92;
@@ -131,10 +131,10 @@
             this.flowLayoutPanel1.Controls.Add(this.label1);
             this.flowLayoutPanel1.Controls.Add(this.lblAssertType);
             this.flowLayoutPanel1.Controls.Add(this.lblAssertValue);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(15, 118);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(15, 130);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(483, 35);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(506, 35);
             this.flowLayoutPanel1.TabIndex = 94;
             // 
             // ViewScript
@@ -150,7 +150,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "ViewScript";
-            this.Size = new System.Drawing.Size(704, 164);
+            this.Size = new System.Drawing.Size(727, 176);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
