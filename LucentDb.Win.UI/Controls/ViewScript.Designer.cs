@@ -65,6 +65,7 @@
             this.txtScriptValue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtScriptValue.Enabled = false;
             this.txtScriptValue.IsReadOnly = false;
             this.txtScriptValue.Location = new System.Drawing.Point(15, 39);
             this.txtScriptValue.Name = "txtScriptValue";
@@ -76,7 +77,7 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 5);
+            this.label1.Location = new System.Drawing.Point(12, 138);
             this.label1.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(48, 23);
@@ -88,8 +89,8 @@
             // 
             this.lblAssertType.AutoSize = true;
             this.lblAssertType.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAssertType.Location = new System.Drawing.Point(51, 9);
-            this.lblAssertType.Margin = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.lblAssertType.Location = new System.Drawing.Point(0, 8);
+            this.lblAssertType.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
             this.lblAssertType.Name = "lblAssertType";
             this.lblAssertType.Size = new System.Drawing.Size(85, 16);
             this.lblAssertType.TabIndex = 90;
@@ -103,7 +104,7 @@
             this.lblAssertValue.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblAssertValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblAssertValue.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAssertValue.Location = new System.Drawing.Point(136, 5);
+            this.lblAssertValue.Location = new System.Drawing.Point(85, 5);
             this.lblAssertValue.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.lblAssertValue.Name = "lblAssertValue";
             this.lblAssertValue.Padding = new System.Windows.Forms.Padding(3);
@@ -128,13 +129,12 @@
             // 
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowLayoutPanel1.Controls.Add(this.label1);
             this.flowLayoutPanel1.Controls.Add(this.lblAssertType);
             this.flowLayoutPanel1.Controls.Add(this.lblAssertValue);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(15, 130);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(53, 134);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(506, 35);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(476, 31);
             this.flowLayoutPanel1.TabIndex = 94;
             // 
             // ViewScript
@@ -142,6 +142,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.txtScriptValue);

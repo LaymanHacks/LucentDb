@@ -50,6 +50,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Win.UI", "LucentDb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Domain", "LucentDb.Domain\LucentDb.Domain.csproj", "{35F11A61-843B-4E97-B992-BF22FB50F1EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Validator", "LucentDb.Validator\LucentDb.Validator.csproj", "{4A33135E-3A6A-4A9A-9E20-8D8613BF4785}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{35F11A61-843B-4E97-B992-BF22FB50F1EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35F11A61-843B-4E97-B992-BF22FB50F1EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35F11A61-843B-4E97-B992-BF22FB50F1EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A33135E-3A6A-4A9A-9E20-8D8613BF4785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A33135E-3A6A-4A9A-9E20-8D8613BF4785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A33135E-3A6A-4A9A-9E20-8D8613BF4785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A33135E-3A6A-4A9A-9E20-8D8613BF4785}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,5 +117,6 @@ Global
 		{5DD5E69B-33E9-4684-B441-4C54756167FA} = {2FBCD085-5BD3-402F-B07B-D96D7F04072D}
 		{75A8AB37-57CA-4B0B-8E91-0A4D726E694B} = {BBC47428-F02A-4E6A-BF8E-E3F81448923F}
 		{35F11A61-843B-4E97-B992-BF22FB50F1EA} = {2FBCD085-5BD3-402F-B07B-D96D7F04072D}
+		{4A33135E-3A6A-4A9A-9E20-8D8613BF4785} = {2FBCD085-5BD3-402F-B07B-D96D7F04072D}
 	EndGlobalSection
 EndGlobal

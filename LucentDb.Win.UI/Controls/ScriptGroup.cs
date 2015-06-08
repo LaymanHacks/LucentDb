@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ICSharpCode.TextEditor;
 using LucentDb.Domain.Entities;
 
 namespace LucentDb.Win.UI.Controls
@@ -34,16 +35,19 @@ namespace LucentDb.Win.UI.Controls
                 tlpScripts.RowCount = DataSource.Count;
                 var scriptViewer = new ViewScript(script)
                 {
+                   
                     Dock = DockStyle.Top,
-                    AutoSize = true
-                    //Anchor = ((AnchorStyles.Top | AnchorStyles.Bottom)
-                    //          | AnchorStyles.Left)
-                    //         | AnchorStyles.Right
+                    //AutoSize = true
+                    Anchor = ((AnchorStyles.Top | AnchorStyles.Bottom)
+                              | AnchorStyles.Left)
+                             | AnchorStyles.Right
                 };
                 tlpScripts.Controls.Add(scriptViewer, 1, row++);
-                
-            }
-           
+              }
+          
+
         }
+
+       
     }
 }

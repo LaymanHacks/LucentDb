@@ -23,8 +23,6 @@ namespace LucentDb.Domain
         }
 
         public IScript_ExpectedResultRepository ScriptExpectedResultRepository { get; set; }
-
-
         public IAssertTypeRepository AssertTypeRepository { get; set; }
         public ITest_ScriptRepository TestScriptRepository { get; set; }
         public ITestTypeRepository TestTypeRepository { get; set; }
