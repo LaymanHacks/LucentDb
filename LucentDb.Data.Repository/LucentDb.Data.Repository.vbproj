@@ -53,12 +53,9 @@
     <Compile Include="DbProjectRepository.vb" />
     <Compile Include="DbProject_ConnectionRepository.vb" />
     <Compile Include="DbRunHistoryRepository.vb" />
-    <Compile Include="DbScriptRepository.vb" />
-    <Compile Include="DbScriptTypeRepository.vb" />
-    <Compile Include="DbScript_ExpectedResultRepository.vb" />
+    <Compile Include="DbTestGroupRepository.vb" />
     <Compile Include="DbTestRepository.vb" />
     <Compile Include="DbTestTypeRepository.vb" />
-    <Compile Include="DbTest_ScriptRepository.vb" />
     <Compile Include="SafeDataReader.vb" />
   </ItemGroup>
   <ItemGroup>

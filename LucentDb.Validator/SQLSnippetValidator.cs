@@ -22,7 +22,7 @@ namespace LucentDb.Validator
                     conn.Open();
                     using (var cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = testCondition.SqlSnippet;
+                        cmd.CommandText = test.TestValue;
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandTimeout = 600;
                         using (var reader = cmd.ExecuteReader())
@@ -34,8 +34,8 @@ namespace LucentDb.Validator
                         }
                     }
                 }
-                IsValid = (ExpectedResult.ExpectedValue == actual);
-                if (!IsValid) ErrorMessage = string.Format("expected: {0} \n but was: {1}", ExpectedResult.ExpectedValue, actual);
+                IsValid = (test.ExpectedResults[0].ExpectedValue == actual);
+                if (!IsValid) ErrorMessage = string.Format("expected: {0} \n but was: {1}", test.ExpectedResults[0].ExpectedValue, actual);
             }
             catch (Exception e)
             {

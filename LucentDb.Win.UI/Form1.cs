@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using LucentDb.Domain;
 using LucentDb.Domain.Entities;
@@ -42,32 +37,27 @@ namespace LucentDb.Win.UI
 
         private void cboTests_SelectedIndexChanged(object sender, EventArgs e)
         {
+            _selectedProject.Tests = (Collection<Test>)_dataRepository.TestRepository.GetActiveDataByProjectId((int)_selectedProject.ProjectId);
 
-            var selectedTest = (Test) cboTests.SelectedItem;
-            selectedTest.Project = (Project) cboProjects.SelectedItem;
-            selectedTest.Scripts =  (Collection<Script>) _dataRepository.ScriptRepository.GetScriptsForTestByTestId((int)selectedTest.Id);
-
-            foreach (var script in selectedTest.Scripts)
+            foreach (var test in _selectedProject.Tests)
             {
-                script.ScriptType =
-                    _dataRepository.ScriptTypeRepository.GetDataById(script.ScriptTypeId).FirstOrDefault();
-                script.RunHistories = (Collection<RunHistory>) _dataRepository.RunHistoryRepository.GetDataByScriptIdPageable(script.Id,
+                test.TestType =
+                    _dataRepository.TestTypeRepository.GetDataById(test.TestTypeId).FirstOrDefault();
+                test.RunHistories = (Collection<RunHistory>) _dataRepository.RunHistoryRepository.GetDataByTestIdPageable(test.Id,
                     "Id Desc", 1, 5);
-                script.Script_ExpectedResult =
-                    (Collection<Script_ExpectedResult>) _dataRepository.ScriptExpectedResultRepository.GetDataByScriptId(script.Id);
+                test.ExpectedResults =
+                    (Collection<ExpectedResult>) _dataRepository.ExpectedResultRepository.GetDataByTestId(test.Id);
 
-                foreach (var scrExpResult in script.Script_ExpectedResult)
+                foreach (var expResult in test.ExpectedResults)
                 {
-                    scrExpResult.ExpectedResult =
-                        _dataRepository.ExpectedResultRepository.GetDataById(scrExpResult.ExpectedResultId)
-                            .FirstOrDefault();
-                    if (scrExpResult.ExpectedResult == null) continue;
-                    if (scrExpResult.ExpectedResult.AssertTypeId != null)
-                        scrExpResult.ExpectedResult.AssertType =
-                            _dataRepository.AssertTypeRepository.GetDataById((int) scrExpResult.ExpectedResult.AssertTypeId).FirstOrDefault();
+                   
+                    if (expResult == null) continue;
+                    if (expResult.AssertTypeId != null)
+                        expResult.AssertType =
+                            _dataRepository.AssertTypeRepository.GetDataById((int) expResult.AssertTypeId).FirstOrDefault();
                 }
             }
-            viewProjectTest1.DataSource = selectedTest;
+            viewProjectTest1.DataSource = _selectedProject;
             // scriptDataGridView.DataSource = selectedTest.Scripts;
             //scriptBindingSource.DataSource = selectedTest.Scripts.FirstOrDefault();
 

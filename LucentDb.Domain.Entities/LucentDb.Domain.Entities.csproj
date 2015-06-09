@@ -57,12 +57,9 @@
     <Compile Include="Project.cs" />
     <Compile Include="Project_Connection.cs" />
     <Compile Include="RunHistory.cs" />
-    <Compile Include="Script.cs" />
-    <Compile Include="ScriptType.cs" />
-    <Compile Include="Script_ExpectedResult.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="TestGroup.cs" />
     <Compile Include="TestType.cs" />
-    <Compile Include="Test_Script.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

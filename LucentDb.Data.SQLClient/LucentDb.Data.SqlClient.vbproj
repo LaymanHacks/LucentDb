@@ -53,12 +53,9 @@
     <Compile Include="SqlDbProjectCommandProvider.vb" />
     <Compile Include="SqlDbProject_ConnectionCommandProvider.vb" />
     <Compile Include="SqlDbRunHistoryCommandProvider.vb" />
-    <Compile Include="SqlDbScriptCommandProvider.vb" />
-    <Compile Include="SqlDbScriptTypeCommandProvider.vb" />
-    <Compile Include="SqlDbScript_ExpectedResultCommandProvider.vb" />
     <Compile Include="SqlDbTestCommandProvider.vb" />
+    <Compile Include="SqlDbTestGroupCommandProvider.vb" />
     <Compile Include="SqlDbTestTypeCommandProvider.vb" />
-    <Compile Include="SqlDbTest_ScriptCommandProvider.vb" />
     <Compile Include="SqlParameterFactory.vb" />
   </ItemGroup>
   <ItemGroup>

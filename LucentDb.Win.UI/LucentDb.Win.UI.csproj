@@ -49,23 +49,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ScriptGroup.cs">
+    <Compile Include="Controls\TestGroup.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ScriptGroup.Designer.cs">
-      <DependentUpon>ScriptGroup.cs</DependentUpon>
+    <Compile Include="Controls\TestGroup.Designer.cs">
+      <DependentUpon>TestGroup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ViewScript.cs">
+    <Compile Include="Controls\ViewTest.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ViewScript.Designer.cs">
-      <DependentUpon>ViewScript.cs</DependentUpon>
+    <Compile Include="Controls\ViewTest.Designer.cs">
+      <DependentUpon>ViewTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ViewProjectTest.cs">
+    <Compile Include="Controls\ViewProject.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ViewProjectTest.Designer.cs">
-      <DependentUpon>ViewProjectTest.cs</DependentUpon>
+    <Compile Include="Controls\ViewProject.Designer.cs">
+      <DependentUpon>ViewProject.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -75,14 +75,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Controls\ScriptGroup.resx">
-      <DependentUpon>ScriptGroup.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\TestGroup.resx">
+      <DependentUpon>TestGroup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ViewScript.resx">
-      <DependentUpon>ViewScript.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ViewTest.resx">
+      <DependentUpon>ViewTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ViewProjectTest.resx">
-      <DependentUpon>ViewProjectTest.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ViewProject.resx">
+      <DependentUpon>ViewProject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

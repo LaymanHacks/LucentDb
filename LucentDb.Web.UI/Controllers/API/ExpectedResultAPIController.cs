@@ -38,7 +38,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPut]
         public void Update(ExpectedResult expectedResult)
         {
-            _dbRepository.Update(expectedResult.ExpectedValue, expectedResult.AssertTypeId,  (Int32)expectedResult.Id);
+            _dbRepository.Update( (Int32)expectedResult.TestId, expectedResult.ExpectedValue, expectedResult.AssertTypeId,  (Int32)expectedResult.ResultIndex,  (Int32)expectedResult.Id);
           }
 
         [Route("api/expectedResults", Name = "ExpectedResultsDeleteRoute")]
@@ -60,7 +60,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPost]
         public Int32 Insert(ExpectedResult expectedResult)
         {
-             return _dbRepository.Insert(expectedResult.ExpectedValue, expectedResult.AssertTypeId);
+             return _dbRepository.Insert( (Int32)expectedResult.TestId, expectedResult.ExpectedValue, expectedResult.AssertTypeId,  (Int32)expectedResult.ResultIndex);
           }
 
         [Route("api/expectedResults", Name = "ExpectedResultsGetDataPageableRoute")]
@@ -75,7 +75,7 @@ namespace LucentDb.Web.UI.Controllers.Api
             return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
         }
 
-        [Route("api/expectedResults/{id}", Name = "ExpectedResultsGetDataByIdRoute")]
+        [Route("api/expectedResults/all", Name = "ExpectedResultsGetDataByIdRoute")]
         [HttpGet]
         public IQueryable<ExpectedResult> GetDataById(Int32 id) 
         {
@@ -97,6 +97,25 @@ namespace LucentDb.Web.UI.Controllers.Api
             var results =_dbRepository.GetDataByAssertTypeIdPageable(assertTypeId, sortExpression, page, pageSize);
             var totalCount = _dbRepository.GetDataByAssertTypeIdRowCount(assertTypeId);
             var pagedResults = PagedResultHelper.CreatePagedResult(Request, "ExpectedResultsGetDataByAssertTypeIdPageableRoute", page,
+                pageSize, totalCount, results);
+            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+        }
+
+        [Route("api/tests/{testId}/expectedResults/all", Name = "ExpectedResultsGetDataByTestIdRoute")]
+        [HttpGet]
+        public IQueryable<ExpectedResult> GetDataByTestId(Int32 testId) 
+        {
+            return _dbRepository.GetDataByTestId(testId).AsQueryable();
+        }
+
+        [Route("api/tests/{testId}/expectedResults", Name = "ExpectedResultsGetDataByTestIdPageableRoute")]
+        [HttpGet]
+        public  HttpResponseMessage  GetDataByTestIdPageable(Int32 testId, String sortExpression, Int32 page, Int32 pageSize) 
+        {
+            if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
+            var results =_dbRepository.GetDataByTestIdPageable(testId, sortExpression, page, pageSize);
+            var totalCount = _dbRepository.GetDataByTestIdRowCount(testId);
+            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "ExpectedResultsGetDataByTestIdPageableRoute", page,
                 pageSize, totalCount, results);
             return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
         }

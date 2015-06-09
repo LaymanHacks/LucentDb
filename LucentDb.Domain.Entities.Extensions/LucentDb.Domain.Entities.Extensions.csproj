@@ -56,12 +56,9 @@
     <Compile Include="ProjectExtension.cs" />
     <Compile Include="Project_ConnectionExtension.cs" />
     <Compile Include="RunHistoryExtension.cs" />
-    <Compile Include="ScriptExtension.cs" />
-    <Compile Include="ScriptTypeExtension.cs" />
-    <Compile Include="Script_ExpectedResultExtension.cs" />
     <Compile Include="TestExtension.cs" />
+    <Compile Include="TestGroupExtension.cs" />
     <Compile Include="TestTypeExtension.cs" />
-    <Compile Include="Test_ScriptExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LucentDb.Data.Repository\LucentDb.Data.Repository.vbproj">

@@ -54,24 +54,18 @@
     <Compile Include="Interfaces\IDbCommandProvider\IDbProjectCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbProject_ConnectionCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbRunHistoryCommandProvider.vb" />
-    <Compile Include="Interfaces\IDbCommandProvider\IDbScriptCommandProvider.vb" />
-    <Compile Include="Interfaces\IDbCommandProvider\IDbScriptTypeCommandProvider.vb" />
-    <Compile Include="Interfaces\IDbCommandProvider\IDbScript_ExpectedResultCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbTestCommandProvider.vb" />
+    <Compile Include="Interfaces\IDbCommandProvider\IDbTestGroupCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbTestTypeCommandProvider.vb" />
-    <Compile Include="Interfaces\IDbCommandProvider\IDbTest_ScriptCommandProvider.vb" />
     <Compile Include="Interfaces\IRepository\IAssertTypeRepository.vb" />
     <Compile Include="Interfaces\IRepository\IConnectionRepository.vb" />
     <Compile Include="Interfaces\IRepository\IExpectedResultRepository.vb" />
     <Compile Include="Interfaces\IRepository\IProjectRepository.vb" />
     <Compile Include="Interfaces\IRepository\IProject_ConnectionRepository.vb" />
     <Compile Include="Interfaces\IRepository\IRunHistoryRepository.vb" />
-    <Compile Include="Interfaces\IRepository\IScriptRepository.vb" />
-    <Compile Include="Interfaces\IRepository\IScriptTypeRepository.vb" />
-    <Compile Include="Interfaces\IRepository\IScript_ExpectedResultRepository.vb" />
+    <Compile Include="Interfaces\IRepository\ITestGroupRepository.vb" />
     <Compile Include="Interfaces\IRepository\ITestRepository.vb" />
     <Compile Include="Interfaces\IRepository\ITestTypeRepository.vb" />
-    <Compile Include="Interfaces\IRepository\ITest_ScriptRepository.vb" />
     <Compile Include="ConnectionHelper.vb" />
   </ItemGroup>
   <ItemGroup>

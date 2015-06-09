@@ -192,12 +192,8 @@
     <Compile Include="Controllers\API\ProjectAPIController.cs" />
     <Compile Include="Controllers\API\Project_ConnectionAPIController.cs" />
     <Compile Include="Controllers\API\RunHistoryAPIController.cs" />
-    <Compile Include="Controllers\API\ScriptAPIController.cs" />
-    <Compile Include="Controllers\API\ScriptTypeAPIController.cs" />
-    <Compile Include="Controllers\API\Script_ExpectedResultAPIController.cs" />
     <Compile Include="Controllers\API\TestAPIController.cs" />
     <Compile Include="Controllers\API\TestTypeAPIController.cs" />
-    <Compile Include="Controllers\API\Test_ScriptAPIController.cs" />
     <Compile Include="Controllers\AssertTypeController.cs" />
     <Compile Include="Controllers\ConnectionController.cs" />
     <Compile Include="Controllers\ExpectedResultController.cs" />
@@ -205,12 +201,8 @@
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\Project_ConnectionController.cs" />
     <Compile Include="Controllers\RunHistoryController.cs" />
-    <Compile Include="Controllers\ScriptController.cs" />
-    <Compile Include="Controllers\ScriptTypeController.cs" />
-    <Compile Include="Controllers\Script_ExpectedResultController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TestTypeController.cs" />
-    <Compile Include="Controllers\Test_ScriptController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

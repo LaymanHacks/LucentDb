@@ -38,7 +38,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPut]
         public void Update(TestType testType)
         {
-            _dbRepository.Update(testType.Name,  (bool)testType.IsActive,  (Int32)testType.Id);
+            _dbRepository.Update(testType.Name, testType.TestValidatorType,  (bool)testType.IsActive,  (Int32)testType.Id);
           }
 
         [Route("api/testTypes", Name = "TestTypesDeleteRoute")]
@@ -60,7 +60,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPost]
         public Int32 Insert(TestType testType)
         {
-             return _dbRepository.Insert(testType.Name,  (bool)testType.IsActive);
+             return _dbRepository.Insert(testType.Name, testType.TestValidatorType,  (bool)testType.IsActive);
           }
 
         [Route("api/testTypes", Name = "TestTypesGetDataPageableRoute")]

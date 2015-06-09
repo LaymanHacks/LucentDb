@@ -32,7 +32,7 @@
             this.cboProjects = new System.Windows.Forms.ComboBox();
             this.cboTests = new System.Windows.Forms.ComboBox();
             this.scriptBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.viewProjectTest1 = new LucentDb.Win.UI.Controls.ViewProjectTest();
+            this.viewProjectTest1 = new LucentDb.Win.UI.Controls.ViewProject();
             ((System.ComponentModel.ISupportInitialize)(this.scriptBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,7 +56,7 @@
             // 
             // scriptBindingSource
             // 
-            this.scriptBindingSource.DataSource = typeof(LucentDb.Domain.Entities.Script);
+            this.scriptBindingSource.DataSource = typeof(LucentDb.Domain.Entities.Test);
             // 
             // viewProjectTest1
             // 
@@ -89,7 +89,7 @@
         private System.Windows.Forms.ComboBox cboProjects;
         private System.Windows.Forms.BindingSource scriptBindingSource;
         private System.Windows.Forms.ComboBox cboTests;
-        private Controls.ViewProjectTest viewProjectTest1;
+        private Controls.ViewProject viewProjectTest1;
     }
 }
 

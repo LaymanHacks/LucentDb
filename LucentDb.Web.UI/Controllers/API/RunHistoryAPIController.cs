@@ -38,7 +38,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPut]
         public void Update(RunHistory runHistory)
         {
-            _dbRepository.Update( (Int32)runHistory.ScriptId,  (DateTime)runHistory.RunDateTime,  (bool)runHistory.IsPass, runHistory.ResultString, runHistory.Id);
+            _dbRepository.Update( (Int32)runHistory.TestId,  (DateTime)runHistory.RunDateTime,  (bool)runHistory.IsPass, runHistory.RunLog, runHistory.ResultString, runHistory.Id);
           }
 
         [Route("api/runHistories", Name = "RunHistoriesDeleteRoute")]
@@ -60,7 +60,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPost]
         public Int64 Insert(RunHistory runHistory)
         {
-             return _dbRepository.Insert( (Int32)runHistory.ScriptId,  (DateTime)runHistory.RunDateTime,  (bool)runHistory.IsPass, runHistory.ResultString);
+             return _dbRepository.Insert( (Int32)runHistory.TestId,  (DateTime)runHistory.RunDateTime,  (bool)runHistory.IsPass, runHistory.RunLog, runHistory.ResultString);
           }
 
         [Route("api/runHistories", Name = "RunHistoriesGetDataPageableRoute")]
@@ -82,21 +82,21 @@ namespace LucentDb.Web.UI.Controllers.Api
             return _dbRepository.GetDataById(id).AsQueryable();
         }
 
-        [Route("api/scripts/{scriptId}/runHistories/all", Name = "RunHistoriesGetDataByScriptIdRoute")]
+        [Route("api/tests/{testId}/runHistories/all", Name = "RunHistoriesGetDataByTestIdRoute")]
         [HttpGet]
-        public IQueryable<RunHistory> GetDataByScriptId(Int32 scriptId) 
+        public IQueryable<RunHistory> GetDataByTestId(Int32 testId) 
         {
-            return _dbRepository.GetDataByScriptId(scriptId).AsQueryable();
+            return _dbRepository.GetDataByTestId(testId).AsQueryable();
         }
 
-        [Route("api/scripts/{scriptId}/runHistories", Name = "RunHistoriesGetDataByScriptIdPageableRoute")]
+        [Route("api/tests/{testId}/runHistories", Name = "RunHistoriesGetDataByTestIdPageableRoute")]
         [HttpGet]
-        public  HttpResponseMessage  GetDataByScriptIdPageable(Int32 scriptId, String sortExpression, Int32 page, Int32 pageSize) 
+        public  HttpResponseMessage  GetDataByTestIdPageable(Int32 testId, String sortExpression, Int32 page, Int32 pageSize) 
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
-            var results =_dbRepository.GetDataByScriptIdPageable(scriptId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetDataByScriptIdRowCount(scriptId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "RunHistoriesGetDataByScriptIdPageableRoute", page,
+            var results =_dbRepository.GetDataByTestIdPageable(testId, sortExpression, page, pageSize);
+            var totalCount = _dbRepository.GetDataByTestIdRowCount(testId);
+            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "RunHistoriesGetDataByTestIdPageableRoute", page,
                 pageSize, totalCount, results);
             return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
         }
