@@ -9,8 +9,7 @@ namespace LucentDb.Win.UI.Controls
        
 
         public ViewProject()
-        {
-            
+        {            
             InitializeComponent();
         }
         public ViewProject(Project selectedProject)
@@ -28,11 +27,14 @@ namespace LucentDb.Win.UI.Controls
 
         private void DataBind()
         {
-            lblProjectName.Text = _selectedProject.Name;
+            if (_selectedProject != null)
+            {
+                lblProjectName.Text = _selectedProject.Name;
             
-                 //lblTestName.Text = _selectedProject.Name;
-                 scriptGroup.DataSource = _selectedProject.Tests;
-                 scriptGroup.DataBind();
+                //lblTestName.Text = _selectedProject.Name;
+                scriptGroup.DataSource = _selectedProject.Tests;
+            }
+            scriptGroup.DataBind();
             
         }
     }

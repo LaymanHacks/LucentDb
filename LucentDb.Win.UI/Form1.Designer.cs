@@ -52,6 +52,7 @@
             this.cboTests.Name = "cboTests";
             this.cboTests.Size = new System.Drawing.Size(154, 21);
             this.cboTests.TabIndex = 2;
+            this.cboTests.SelectedIndexChanged += new System.EventHandler(this.cboTests_SelectedIndexChanged_1);
             this.cboTests.SelectionChangeCommitted += new System.EventHandler(this.cboTests_SelectedIndexChanged);
             // 
             // scriptBindingSource
@@ -63,6 +64,7 @@
             this.viewProjectTest1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.viewProjectTest1.DataSource = null;
             this.viewProjectTest1.Location = new System.Drawing.Point(214, 3);
             this.viewProjectTest1.Name = "viewProjectTest1";
             this.viewProjectTest1.Size = new System.Drawing.Size(1007, 481);

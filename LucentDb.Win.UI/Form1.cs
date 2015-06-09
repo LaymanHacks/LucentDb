@@ -28,16 +28,13 @@ namespace LucentDb.Win.UI
         private void cboProjects_SelectedIndexChanged(object sender, EventArgs e)
         {
             _selectedProject = (Project) cboProjects.SelectedItem;
-            _selectedProject.Tests = (Collection<Test>) _dataRepository.TestRepository.GetActiveDataByProjectId(_selectedProject.ProjectId);
-            cboTests.DataSource = _selectedProject.Tests;
-            cboTests.DisplayMember = "Name";
-            cboTests.ValueMember = "Id";
-           
-        }
+            //_selectedProject.Tests = (Collection<Test>) _dataRepository.TestRepository.GetActiveDataByProjectId(_selectedProject.ProjectId);
+            //cboTests.DataSource = _selectedProject.Tests;
+            //cboTests.DisplayMember = "Name";
+            //cboTests.ValueMember = "Id";
 
-        private void cboTests_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _selectedProject.Tests = (Collection<Test>)_dataRepository.TestRepository.GetActiveDataByProjectId((int)_selectedProject.ProjectId);
+
+  _selectedProject.Tests = (Collection<Test>)_dataRepository.TestRepository.GetActiveDataByProjectId((int)_selectedProject.ProjectId);
 
             foreach (var test in _selectedProject.Tests)
             {
@@ -58,11 +55,22 @@ namespace LucentDb.Win.UI
                 }
             }
             viewProjectTest1.DataSource = _selectedProject;
+           
+        }
+
+        private void cboTests_SelectedIndexChanged(object sender, EventArgs e)
+        {
+          
             // scriptDataGridView.DataSource = selectedTest.Scripts;
             //scriptBindingSource.DataSource = selectedTest.Scripts.FirstOrDefault();
 
             //scriptGroup1.DataSource = selectedTest.Scripts;
             // scriptGroup1.DataBind();
+        }
+
+        private void cboTests_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
         }
 
        

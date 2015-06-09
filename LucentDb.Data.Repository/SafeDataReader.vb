@@ -225,7 +225,11 @@ Namespace LucentDb.Data
         End Function
 
         Public Function GetNullableInt32(name As String) As Nullable(Of Int32)
-            Return CType(_dr(name), Nullable(Of Int32))
+            If (Item(name) Is Nothing) Then
+                Return CType(Nothing, Nullable(Of Int32))
+            Else
+                Return CType(_dr(name), Nullable(Of Int32))
+            End If
         End Function
 
         Public Function GetNullableBoolean(name As String) As Nullable(Of Boolean)
