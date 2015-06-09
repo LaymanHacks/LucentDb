@@ -15,30 +15,35 @@ using System.Runtime.Serialization;
 namespace LucentDb.Domain.Entities
 {
     [Serializable]
-    public partial class AssertTypeList :  Collection<AssertType>
+    public partial class TestGroupList :  Collection<TestGroup>
     {
-        public AssertType First()
+        public TestGroup First()
         {
           return base.Count > 0 ? base[0] : null;
         }
     }
     
     [DataContract]
-    public partial class AssertType{
+    public partial class TestGroup{
       
         private Int32 _id;
+        private Int32 _projectId;
         private String _name;
-        private Collection<ExpectedResult> _expectedResults;  
+        private Boolean _isActive;
+        private Collection<Test> _tests; 
+        private Project _project;  
 
-      public AssertType() : base()
+      public TestGroup() : base()
       {
       }
 
-      public AssertType(Int32 id, String name) : base()
+      public TestGroup(Int32 id, Int32 projectId, String name, Boolean isActive) : base()
       {
           
            _id = id;
+           _projectId = projectId;
            _name = name;
+           _isActive = isActive;
       }
   
     
@@ -55,6 +60,18 @@ namespace LucentDb.Domain.Entities
         }
 
         /// <summary>
+        /// Public Property ProjectId
+        /// </summary>
+        /// <returns>ProjectId as Int32</returns>
+        /// <remarks></remarks>
+        [DataMember()]
+        public virtual Int32 ProjectId
+        {
+            get{return this._projectId;}
+            set{this._projectId = value;}
+        }
+
+        /// <summary>
         /// Public Property Name
         /// </summary>
         /// <returns>Name as String</returns>
@@ -66,11 +83,31 @@ namespace LucentDb.Domain.Entities
             set{this._name = value;}
         }
 
-        [DataMember]
-        public virtual Collection<ExpectedResult> ExpectedResults 
+        /// <summary>
+        /// Public Property IsActive
+        /// </summary>
+        /// <returns>IsActive as Boolean</returns>
+        /// <remarks></remarks>
+        [DataMember()]
+        public virtual Boolean IsActive
         {
-          get { return  _expectedResults;}
-          set { _expectedResults = value;}
+            get{return this._isActive;}
+            set{this._isActive = value;}
+        }
+
+        [DataMember]
+        public virtual Collection<Test> Tests 
+        {
+          get { return  _tests;}
+          set { _tests = value;}
+        }
+  
+      
+        [DataMember]
+        public virtual Project Project 
+        {
+          get { return  _project;}
+          set { _project = value;}
         }
   
       

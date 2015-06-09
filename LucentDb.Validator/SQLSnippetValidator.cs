@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using LucentDb.Domain.Entities;
 
 namespace LucentDb.Validator
 {
@@ -10,7 +11,7 @@ namespace LucentDb.Validator
         private readonly DbConnectionFactory _dbConnectionFactory = new DbConnectionFactory();
         public string ErrorMessage { get; set; }
         public bool IsValid { get; set; }
-       public void Validate(string connectionString, TestCondition testCondition)
+       public void Validate(string connectionString, Test test)
         {
             var actual = "NULL";
             IsValid = false;
@@ -33,8 +34,8 @@ namespace LucentDb.Validator
                         }
                     }
                 }
-                IsValid = (testCondition.ExpectedResult == actual);
-                if (!IsValid) ErrorMessage = string.Format("expected: {0} \n but was: {1}", testCondition.ExpectedResult, actual);
+                IsValid = (ExpectedResult.ExpectedValue == actual);
+                if (!IsValid) ErrorMessage = string.Format("expected: {0} \n but was: {1}", ExpectedResult.ExpectedValue, actual);
             }
             catch (Exception e)
             {

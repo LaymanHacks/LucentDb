@@ -9,29 +9,28 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface IExpectedResultRepository
-        Function GetData() as ICollection(Of ExpectedResult)
-        Sub Update(expectedValue As String, assertTypeId As Nullable(Of Int32), id As Int32)
-        Sub Update(expectedResult as ExpectedResult)
-        Sub Delete(id As Int32)
-        Sub Delete(expectedResult as ExpectedResult)
-        Function Insert(expectedValue As String, assertTypeId As Nullable(Of Int32)) as Int32
-        Function Insert(expectedResult as ExpectedResult) as Int32
-
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            as ICollection(Of ExpectedResult)
-
-        Function GetRowCount() as Int32
-        Function GetDataById(id As Int32) as ICollection(Of ExpectedResult)
-        Function GetDataByAssertTypeId(assertTypeId As Int32) as ICollection(Of ExpectedResult)
-
-        Function GetDataByAssertTypeIdPageable(assertTypeId As Int32, sortExpression As String, page As Int32,
-                                               pageSize As Int32) as ICollection(Of ExpectedResult)
-
-        Function GetDataByAssertTypeIdRowCount(assertTypeId As Int32) as Int32
-    End Interface
+        Function GetData()  as ICollection(Of ExpectedResult)
+        Sub Update( ByVal testId As Int32,  ByVal expectedValue As String,  ByVal assertTypeId As  Nullable(Of Int32) ,  ByVal resultIndex As Int32,  ByVal id As Int32) 
+        Sub Update(ByVal expectedResult as ExpectedResult) 
+        Sub Delete( ByVal id As Int32) 
+        Sub Delete(ByVal expectedResult as ExpectedResult) 
+        Function Insert( ByVal testId As Int32,  ByVal expectedValue As String,  ByVal assertTypeId As  Nullable(Of Int32) ,  ByVal resultIndex As Int32)  as Int32
+        Function Insert(ByVal expectedResult as ExpectedResult)  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ExpectedResult)
+        Function GetRowCount()  as Int32
+        Function GetDataById( ByVal id As Int32)  as ICollection(Of ExpectedResult)
+        Function GetDataByAssertTypeId( ByVal assertTypeId As Int32)  as ICollection(Of ExpectedResult)
+        Function GetDataByAssertTypeIdPageable( ByVal assertTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ExpectedResult)
+        Function GetDataByAssertTypeIdRowCount( ByVal assertTypeId As Int32)  as Int32
+        Function GetDataByTestId( ByVal testId As Int32)  as ICollection(Of ExpectedResult)
+        Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ExpectedResult)
+        Function GetDataByTestIdRowCount( ByVal testId As Int32)  as Int32
+    End Interface 
 End NameSpace
+  

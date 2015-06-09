@@ -67,17 +67,19 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         public void Update_Should_Update_A_TestType() 
         {
             _repository
-                 .Setup(it => it.Update(It.IsAny<String>(), It.IsAny<Boolean>(), It.IsAny<Int32>()))
-                 .Callback<String, Boolean, Int32>((name, isActive, id) => 
+                 .Setup(it => it.Update(It.IsAny<String>(), It.IsAny<String>(), It.IsAny<Boolean>(), It.IsAny<Int32>()))
+                 .Callback<String, String, Boolean, Int32>((name, testValidatorType, isActive, id) => 
             { 
                  var tTestType = _repositoryList.Find(x => x.Id==id);
                  tTestType.Name = name; 
+                 tTestType.TestValidatorType = testValidatorType; 
                  tTestType.IsActive = isActive; 
             });
             var tempTestType = _repositoryList.Find(x => x.Id==id);
             var testTestType = new TestType {
                  Id = tempTestType.Id, 
                  Name = tempTestType.Name, 
+                 TestValidatorType = tempTestType.TestValidatorType, 
                  IsActive = tempTestType.IsActive};
             
             //TODO change something on testTestType
@@ -108,14 +110,14 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         public void Insert_Should_Insert_A_TestType() 
         {
             _repository
-                 .Setup(it => it.Insert(It.IsAny<String>(), It.IsAny<Boolean>()))
-                 .Returns<String, Boolean>((name, isActive) => 
+                 .Setup(it => it.Insert(It.IsAny<String>(), It.IsAny<String>(), It.IsAny<Boolean>()))
+                 .Returns<String, String, Boolean>((name, testValidatorType, isActive) => 
             { 
-                 _repositoryList.Add(new  TestType (name, isActive));
+                 _repositoryList.Add(new  TestType (name, testValidatorType, isActive));
             });
             
             //TODO insert values 
-            _target.Insert(new TestType (name, isActive));
+            _target.Insert(new TestType (name, testValidatorType, isActive));
             //Assert.AreEqual(11, _repositoryList.Count());
             //TODO fail until we update the test above
             Assert.Fail();
@@ -138,6 +140,9 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                               break;
                           case  "Name":
                               query = new List<TestType>(query.OrderBy(q => q.Name));
+                              break;
+                          case  "TestValidatorType":
+                              query = new List<TestType>(query.OrderBy(q => q.TestValidatorType));
                               break;
                           case  "IsActive":
                               query = new List<TestType>(query.OrderBy(q => q.IsActive));
@@ -197,6 +202,9 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                               break;
                           case  "Name":
                               query = new List<TestType>(query.OrderBy(q => q.Name));
+                              break;
+                          case  "TestValidatorType":
+                              query = new List<TestType>(query.OrderBy(q => q.TestValidatorType));
                               break;
                           case  "IsActive":
                               query = new List<TestType>(query.OrderBy(q => q.IsActive));

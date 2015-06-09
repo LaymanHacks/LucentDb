@@ -67,18 +67,22 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         public void Update_Should_Update_A_ExpectedResult() 
         {
             _repository
-                 .Setup(it => it.Update(It.IsAny<String>(), It.IsAny<Int32?>(), It.IsAny<Int32>()))
-                 .Callback<String, Int32?, Int32>((expectedValue, assertTypeId, id) => 
+                 .Setup(it => it.Update(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Int32?>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
+                 .Callback<Int32, String, Int32?, Int32, Int32>((testId, expectedValue, assertTypeId, resultIndex, id) => 
             { 
                  var tExpectedResult = _repositoryList.Find(x => x.Id==id);
+                 tExpectedResult.TestId = testId; 
                  tExpectedResult.ExpectedValue = expectedValue; 
                  tExpectedResult.AssertTypeId = assertTypeId; 
+                 tExpectedResult.ResultIndex = resultIndex; 
             });
             var tempExpectedResult = _repositoryList.Find(x => x.Id==id);
             var testExpectedResult = new ExpectedResult {
                  Id = tempExpectedResult.Id, 
+                 TestId = tempExpectedResult.TestId, 
                  ExpectedValue = tempExpectedResult.ExpectedValue, 
-                 AssertTypeId = tempExpectedResult.AssertTypeId};
+                 AssertTypeId = tempExpectedResult.AssertTypeId, 
+                 ResultIndex = tempExpectedResult.ResultIndex};
             
             //TODO change something on testExpectedResult
             //testExpectedResult.oldValue = newValue; 
@@ -108,14 +112,14 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         public void Insert_Should_Insert_A_ExpectedResult() 
         {
             _repository
-                 .Setup(it => it.Insert(It.IsAny<String>(), It.IsAny<Int32?>()))
-                 .Returns<String, Int32?>((expectedValue, assertTypeId) => 
+                 .Setup(it => it.Insert(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Int32?>(), It.IsAny<Int32>()))
+                 .Returns<Int32, String, Int32?, Int32>((testId, expectedValue, assertTypeId, resultIndex) => 
             { 
-                 _repositoryList.Add(new  ExpectedResult (expectedValue, assertTypeId));
+                 _repositoryList.Add(new  ExpectedResult (testId, expectedValue, assertTypeId, resultIndex));
             });
             
             //TODO insert values 
-            _target.Insert(new ExpectedResult (expectedValue, assertTypeId));
+            _target.Insert(new ExpectedResult (testId, expectedValue, assertTypeId, resultIndex));
             //Assert.AreEqual(11, _repositoryList.Count());
             //TODO fail until we update the test above
             Assert.Fail();
@@ -136,11 +140,17 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                           case  "Id":
                               query = new List<ExpectedResult>(query.OrderBy(q => q.Id));
                               break;
+                          case  "TestId":
+                              query = new List<ExpectedResult>(query.OrderBy(q => q.TestId));
+                              break;
                           case  "ExpectedValue":
                               query = new List<ExpectedResult>(query.OrderBy(q => q.ExpectedValue));
                               break;
                           case  "AssertTypeId":
                               query = new List<ExpectedResult>(query.OrderBy(q => q.AssertTypeId));
+                              break;
+                          case  "ResultIndex":
+                              query = new List<ExpectedResult>(query.OrderBy(q => q.ResultIndex));
                               break;                      }
                       return query.Take(pageSize).Skip((page-1)*pageSize).ToList();
                  });
@@ -198,11 +208,17 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                           case  "Id":
                               query = new List<ExpectedResult>(query.OrderBy(q => q.Id));
                               break;
+                          case  "TestId":
+                              query = new List<ExpectedResult>(query.OrderBy(q => q.TestId));
+                              break;
                           case  "ExpectedValue":
                               query = new List<ExpectedResult>(query.OrderBy(q => q.ExpectedValue));
                               break;
                           case  "AssertTypeId":
                               query = new List<ExpectedResult>(query.OrderBy(q => q.AssertTypeId));
+                              break;
+                          case  "ResultIndex":
+                              query = new List<ExpectedResult>(query.OrderBy(q => q.ResultIndex));
                               break;                      }
                       return query.Take(pageSize).Skip((page-1)*pageSize).ToList();
                  });
@@ -215,6 +231,60 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
             Assert.IsTrue(result.TryGetContentValue(out expectedResult));
             Assert.AreEqual(_repositoryList.Where(x => x.AssertTypeId==assertTypeId).Take(2).ToList().Count, expectedResult.Results.Count);
             Assert.AreEqual(_repositoryList.Where(x => x.AssertTypeId==assertTypeId).OrderBy(q => q.Id).FirstOrDefault().Id, expectedResult.Results.FirstOrDefault().Id);
+        }
+
+        [TestMethod()]
+        public void GetDataByTestIdTest() 
+        {
+            _repository
+                 .Setup(it => it.GetDataByTestId(It.IsAny<Int32>()))
+                     .Returns<Int32>((testId) => 
+                 { 
+                      return _repositoryList.Where(x => x.TestId==testId).ToList();
+                 });
+                
+            var result = _target.GetDataByTestId(testIdValue).ToList();
+             Assert.AreEqual(_repositoryList.Where(x => x.TestId==testIdValue).ToList().Count, result.Count);
+        }
+
+        [TestMethod()]
+        public void GetDataByTestIdPageableTest()
+        {
+            PagedResult<ExpectedResult> expectedResult;
+
+            _repository
+                 .Setup(it => it.GetDataByTestIdPageable(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
+                 .Returns<Int32, String, Int32, Int32>((testId, sortExpression, page, pageSize) => 
+                 { 
+                      var query = _repositoryList.Where(x => x.TestId==testId);
+                      switch (sortExpression)
+                      {
+                          case  "Id":
+                              query = new List<ExpectedResult>(query.OrderBy(q => q.Id));
+                              break;
+                          case  "TestId":
+                              query = new List<ExpectedResult>(query.OrderBy(q => q.TestId));
+                              break;
+                          case  "ExpectedValue":
+                              query = new List<ExpectedResult>(query.OrderBy(q => q.ExpectedValue));
+                              break;
+                          case  "AssertTypeId":
+                              query = new List<ExpectedResult>(query.OrderBy(q => q.AssertTypeId));
+                              break;
+                          case  "ResultIndex":
+                              query = new List<ExpectedResult>(query.OrderBy(q => q.ResultIndex));
+                              break;                      }
+                      return query.Take(pageSize).Skip((page-1)*pageSize).ToList();
+                 });
+
+            _repository
+                 .Setup(it => it.GetDataByTestIdRowCount(testId))
+                 .Returns(_repositoryList.Count);
+
+            var result = _target.GetDataByTestIdPageable(TestIdValue, "Id", 1, 2);
+            Assert.IsTrue(result.TryGetContentValue(out expectedResult));
+            Assert.AreEqual(_repositoryList.Where(x => x.TestId==testId).Take(2).ToList().Count, expectedResult.Results.Count);
+            Assert.AreEqual(_repositoryList.Where(x => x.TestId==testId).OrderBy(q => q.Id).FirstOrDefault().Id, expectedResult.Results.FirstOrDefault().Id);
         }
 
 

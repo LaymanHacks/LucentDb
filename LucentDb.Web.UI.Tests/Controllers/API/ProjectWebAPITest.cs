@@ -68,22 +68,22 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         {
             _repository
                  .Setup(it => it.Update(It.IsAny<String>(), It.IsAny<Boolean>(), It.IsAny<Int32>()))
-                 .Callback<String, Boolean, Int32>((name, isActive, id) => 
+                 .Callback<String, Boolean, Int32>((name, isActive, projectId) => 
             { 
-                 var tProject = _repositoryList.Find(x => x.Id==id);
+                 var tProject = _repositoryList.Find(x => x.ProjectId==projectId);
                  tProject.Name = name; 
                  tProject.IsActive = isActive; 
             });
-            var tempProject = _repositoryList.Find(x => x.Id==id);
+            var tempProject = _repositoryList.Find(x => x.ProjectId==projectId);
             var testProject = new Project {
-                 Id = tempProject.Id, 
+                 ProjectId = tempProject.ProjectId, 
                  Name = tempProject.Name, 
                  IsActive = tempProject.IsActive};
             
             //TODO change something on testProject
             //testProject.oldValue = newValue; 
             _target.Update(testProject);
-            //Assert.AreEqual(newValue, _repositoryList.Find(x => x.Id==1).oldValue);
+            //Assert.AreEqual(newValue, _repositoryList.Find(x => x.ProjectId==1).oldValue);
             //TODO fail until we update the test above
             Assert.Fail();
         }
@@ -93,9 +93,9 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         {
             _repository
                  .Setup(it => it.Delete(It.IsAny<Int32>()))  
-                 .Callback<Int32>((id) => 
+                 .Callback<Int32>((projectId) => 
                  { 
-                      var i = _repositoryList.FindIndex(q => q.Id==id);
+                      var i = _repositoryList.FindIndex(q => q.ProjectId==projectId);
                       _repositoryList.RemoveAt(i);
                  });
             var iniCount = _repositoryList.Count();
@@ -133,8 +133,8 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                       var query = _repositoryList;
                       switch (sortExpression)
                       {
-                          case  "Id":
-                              query = new List<Project>(query.OrderBy(q => q.Id));
+                          case  "ProjectId":
+                              query = new List<Project>(query.OrderBy(q => q.ProjectId));
                               break;
                           case  "Name":
                               query = new List<Project>(query.OrderBy(q => q.Name));
@@ -149,24 +149,24 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                  .Setup(it => it.GetRowCount())
                  .Returns(_repositoryList.Count);
 
-            var result = _target.GetDataPageable("Id", 1, 2);
+            var result = _target.GetDataPageable("ProjectId", 1, 2);
             Assert.IsTrue(result.TryGetContentValue(out expectedResult));
             Assert.AreEqual(_repositoryList.Take(2).ToList().Count, expectedResult.Results.Count);
-            Assert.AreEqual(_repositoryList.OrderBy(q => q.Id).FirstOrDefault().Id, expectedResult.Results.FirstOrDefault().Id);
+            Assert.AreEqual(_repositoryList.OrderBy(q => q.ProjectId).FirstOrDefault().ProjectId, expectedResult.Results.FirstOrDefault().ProjectId);
         }
 
         [TestMethod()]
-        public void GetDataByIdTest() 
+        public void GetDataByProjectIdTest() 
         {
             _repository
-                 .Setup(it => it.GetDataById(It.IsAny<Int32>()))
-                     .Returns<Int32>((id) => 
+                 .Setup(it => it.GetDataByProjectId(It.IsAny<Int32>()))
+                     .Returns<Int32>((projectId) => 
                  { 
-                      return _repositoryList.Where(x => x.Id==id).ToList();
+                      return _repositoryList.Where(x => x.ProjectId==projectId).ToList();
                  });
                 
-            var result = _target.GetDataById(idValue).ToList();
-             Assert.AreEqual(_repositoryList.Where(x => x.Id==idValue).ToList().Count, result.Count);
+            var result = _target.GetDataByProjectId(projectIdValue).ToList();
+             Assert.AreEqual(_repositoryList.Where(x => x.ProjectId==projectIdValue).ToList().Count, result.Count);
         }
 
         [TestMethod()]
@@ -192,8 +192,8 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                       var query = _repositoryList;
                       switch (sortExpression)
                       {
-                          case  "Id":
-                              query = new List<Project>(query.OrderBy(q => q.Id));
+                          case  "ProjectId":
+                              query = new List<Project>(query.OrderBy(q => q.ProjectId));
                               break;
                           case  "Name":
                               query = new List<Project>(query.OrderBy(q => q.Name));
@@ -208,24 +208,58 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                  .Setup(it => it.GetActiveDataRowCount())
                  .Returns(_repositoryList.Count);
 
-            var result = _target.GetActiveDataPageable("Id", 1, PageSizeValue);
+            var result = _target.GetActiveDataPageable("ProjectId", 1, PageSizeValue);
             Assert.IsTrue(result.TryGetContentValue(out expectedResult));
             Assert.AreEqual(_repositoryList.Take(2).ToList().Count, expectedResult.Results.Count);
-            Assert.AreEqual(_repositoryList.OrderBy(q => q.Id).FirstOrDefault().Id, expectedResult.Results.FirstOrDefault().Id);
+            Assert.AreEqual(_repositoryList.OrderBy(q => q.ProjectId).FirstOrDefault().ProjectId, expectedResult.Results.FirstOrDefault().ProjectId);
         }
 
         [TestMethod()]
-        public void GetProjectsByConnectionIdTest() 
+        public void GetProjectsForConnectionByConnectionIdTest() 
         {
             _repository
-                 .Setup(it => it.GetProjectsByConnectionId(It.IsAny<Int32>()))
+                 .Setup(it => it.GetProjectsForConnectionByConnectionId(It.IsAny<Int32>()))
                      .Returns<Int32>((connectionId) => 
                  { 
                       return _repositoryList.Where(x => x.ConnectionId==connectionId).ToList();
                  });
                 
-            var result = _target.GetProjectsByConnectionId(connectionIdValue).ToList();
+            var result = _target.GetProjectsForConnectionByConnectionId(connectionIdValue).ToList();
              Assert.AreEqual(_repositoryList.Where(x => x.ConnectionId==connectionIdValue).ToList().Count, result.Count);
+        }
+
+        [TestMethod()]
+        public void GetProjectsForConnectionByConnectionIdPageableTest()
+        {
+            PagedResult<Project> expectedResult;
+
+            _repository
+                 .Setup(it => it.GetProjectsForConnectionByConnectionIdPageable(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
+                 .Returns<Int32, String, Int32, Int32>((connectionId, sortExpression, page, pageSize) => 
+                 { 
+                      var query = _repositoryList;
+                      switch (sortExpression)
+                      {
+                          case  "ProjectId":
+                              query = new List<Project>(query.OrderBy(q => q.ProjectId));
+                              break;
+                          case  "Name":
+                              query = new List<Project>(query.OrderBy(q => q.Name));
+                              break;
+                          case  "IsActive":
+                              query = new List<Project>(query.OrderBy(q => q.IsActive));
+                              break;                      }
+                      return query.Take(pageSize).Skip((page-1)*pageSize).ToList();
+                 });
+
+            _repository
+                 .Setup(it => it.GetProjectsForConnectionByConnectionIdRowCount(connectionId))
+                 .Returns(_repositoryList.Count);
+
+            var result = _target.GetProjectsForConnectionByConnectionIdPageable(ConnectionIdValue, "ProjectId", 1, PageSizeValue);
+            Assert.IsTrue(result.TryGetContentValue(out expectedResult));
+            Assert.AreEqual(_repositoryList.Take(2).ToList().Count, expectedResult.Results.Count);
+            Assert.AreEqual(_repositoryList.OrderBy(q => q.ProjectId).FirstOrDefault().ProjectId, expectedResult.Results.FirstOrDefault().ProjectId);
         }
 
 

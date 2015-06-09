@@ -22,26 +22,26 @@ using LucentDb.Web.UI.Controllers.Api;
 namespace LucentDb.Web.UI.Test.Controllers.Api
 {
     [TestClass()]
-    public class ScriptApiControllerTests
+    public class TestGroupApiControllerTests
     {
         
-        private Mock<IScriptRepository> _repository;
+        private Mock<ITestGroupRepository> _repository;
 
-        private List<Script> _repositoryList = new List<Script>
+        private List<TestGroup> _repositoryList = new List<TestGroup>
         {
         //TODO Initialize test data
-            new Script()
+            new TestGroup()
         };
 
-        private ScriptApiController _target;
+        private TestGroupApiController _target;
         
         [TestInitialize]
         public void Init()
         {
-            _repository = new Mock<IScriptRepository>();
-            _target = new ScriptApiController(_repository.Object)
+            _repository = new Mock<ITestGroupRepository>();
+            _target = new TestGroupApiController(_repository.Object)
             {
-                Request = new HttpRequestMessage { RequestUri = new Uri("http://localhost/api/Scripts") }
+                Request = new HttpRequestMessage { RequestUri = new Uri("http://localhost/api/TestGroups") }
             };
 
             var config = new HttpConfiguration();
@@ -64,38 +64,34 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         }
 
         [TestMethod()]
-        public void Update_Should_Update_A_Script() 
+        public void Update_Should_Update_A_TestGroup() 
         {
             _repository
-                 .Setup(it => it.Update(It.IsAny<Int32>(), It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<Boolean>(), It.IsAny<Int32>()))
-                 .Callback<Int32, Int32, String, String, Boolean, Int32>((testId, scriptTypeId, name, scriptValue, isActive, id) => 
+                 .Setup(it => it.Update(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Boolean>(), It.IsAny<Int32>()))
+                 .Callback<Int32, String, Boolean, Int32>((projectId, name, isActive, id) => 
             { 
-                 var tScript = _repositoryList.Find(x => x.Id==id);
-                 tScript.TestId = testId; 
-                 tScript.ScriptTypeId = scriptTypeId; 
-                 tScript.Name = name; 
-                 tScript.ScriptValue = scriptValue; 
-                 tScript.IsActive = isActive; 
+                 var tTestGroup = _repositoryList.Find(x => x.Id==id);
+                 tTestGroup.ProjectId = projectId; 
+                 tTestGroup.Name = name; 
+                 tTestGroup.IsActive = isActive; 
             });
-            var tempScript = _repositoryList.Find(x => x.Id==id);
-            var testScript = new Script {
-                 Id = tempScript.Id, 
-                 TestId = tempScript.TestId, 
-                 ScriptTypeId = tempScript.ScriptTypeId, 
-                 Name = tempScript.Name, 
-                 ScriptValue = tempScript.ScriptValue, 
-                 IsActive = tempScript.IsActive};
+            var tempTestGroup = _repositoryList.Find(x => x.Id==id);
+            var testTestGroup = new TestGroup {
+                 Id = tempTestGroup.Id, 
+                 ProjectId = tempTestGroup.ProjectId, 
+                 Name = tempTestGroup.Name, 
+                 IsActive = tempTestGroup.IsActive};
             
-            //TODO change something on testScript
-            //testScript.oldValue = newValue; 
-            _target.Update(testScript);
+            //TODO change something on testTestGroup
+            //testTestGroup.oldValue = newValue; 
+            _target.Update(testTestGroup);
             //Assert.AreEqual(newValue, _repositoryList.Find(x => x.Id==1).oldValue);
             //TODO fail until we update the test above
             Assert.Fail();
         }
 
         [TestMethod()]
-        public void Delete_Should_Delete_A_Script() 
+        public void Delete_Should_Delete_A_TestGroup() 
         {
             _repository
                  .Setup(it => it.Delete(It.IsAny<Int32>()))  
@@ -111,17 +107,17 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         }
 
         [TestMethod()]
-        public void Insert_Should_Insert_A_Script() 
+        public void Insert_Should_Insert_A_TestGroup() 
         {
             _repository
-                 .Setup(it => it.Insert(It.IsAny<Int32>(), It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<Boolean>()))
-                 .Returns<Int32, Int32, String, String, Boolean>((testId, scriptTypeId, name, scriptValue, isActive) => 
+                 .Setup(it => it.Insert(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Boolean>()))
+                 .Returns<Int32, String, Boolean>((projectId, name, isActive) => 
             { 
-                 _repositoryList.Add(new  Script (testId, scriptTypeId, name, scriptValue, isActive));
+                 _repositoryList.Add(new  TestGroup (projectId, name, isActive));
             });
             
             //TODO insert values 
-            _target.Insert(new Script (testId, scriptTypeId, name, scriptValue, isActive));
+            _target.Insert(new TestGroup (projectId, name, isActive));
             //Assert.AreEqual(11, _repositoryList.Count());
             //TODO fail until we update the test above
             Assert.Fail();
@@ -130,7 +126,7 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         [TestMethod()]
         public void GetDataPageableTest()
         {
-            PagedResult<Script> expectedResult;
+            PagedResult<TestGroup> expectedResult;
 
             _repository
                  .Setup(it => it.GetDataPageable(It.IsAny<String>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
@@ -140,22 +136,16 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                       switch (sortExpression)
                       {
                           case  "Id":
-                              query = new List<Script>(query.OrderBy(q => q.Id));
+                              query = new List<TestGroup>(query.OrderBy(q => q.Id));
                               break;
-                          case  "TestId":
-                              query = new List<Script>(query.OrderBy(q => q.TestId));
-                              break;
-                          case  "ScriptTypeId":
-                              query = new List<Script>(query.OrderBy(q => q.ScriptTypeId));
+                          case  "ProjectId":
+                              query = new List<TestGroup>(query.OrderBy(q => q.ProjectId));
                               break;
                           case  "Name":
-                              query = new List<Script>(query.OrderBy(q => q.Name));
-                              break;
-                          case  "ScriptValue":
-                              query = new List<Script>(query.OrderBy(q => q.ScriptValue));
+                              query = new List<TestGroup>(query.OrderBy(q => q.Name));
                               break;
                           case  "IsActive":
-                              query = new List<Script>(query.OrderBy(q => q.IsActive));
+                              query = new List<TestGroup>(query.OrderBy(q => q.IsActive));
                               break;                      }
                       return query.Take(pageSize).Skip((page-1)*pageSize).ToList();
                  });
@@ -198,7 +188,7 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         [TestMethod()]
         public void GetActiveDataPageableTest()
         {
-            PagedResult<Script> expectedResult;
+            PagedResult<TestGroup> expectedResult;
 
             _repository
                  .Setup(it => it.GetActiveDataPageable(It.IsAny<String>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
@@ -208,22 +198,16 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                       switch (sortExpression)
                       {
                           case  "Id":
-                              query = new List<Script>(query.OrderBy(q => q.Id));
+                              query = new List<TestGroup>(query.OrderBy(q => q.Id));
                               break;
-                          case  "TestId":
-                              query = new List<Script>(query.OrderBy(q => q.TestId));
-                              break;
-                          case  "ScriptTypeId":
-                              query = new List<Script>(query.OrderBy(q => q.ScriptTypeId));
+                          case  "ProjectId":
+                              query = new List<TestGroup>(query.OrderBy(q => q.ProjectId));
                               break;
                           case  "Name":
-                              query = new List<Script>(query.OrderBy(q => q.Name));
-                              break;
-                          case  "ScriptValue":
-                              query = new List<Script>(query.OrderBy(q => q.ScriptValue));
+                              query = new List<TestGroup>(query.OrderBy(q => q.Name));
                               break;
                           case  "IsActive":
-                              query = new List<Script>(query.OrderBy(q => q.IsActive));
+                              query = new List<TestGroup>(query.OrderBy(q => q.IsActive));
                               break;                      }
                       return query.Take(pageSize).Skip((page-1)*pageSize).ToList();
                  });
@@ -239,114 +223,102 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         }
 
         [TestMethod()]
-        public void GetDataByScriptTypeIdTest() 
+        public void GetDataByProjectIdTest() 
         {
             _repository
-                 .Setup(it => it.GetDataByScriptTypeId(It.IsAny<Int32>()))
-                     .Returns<Int32>((scriptTypeId) => 
+                 .Setup(it => it.GetDataByProjectId(It.IsAny<Int32>()))
+                     .Returns<Int32>((projectId) => 
                  { 
-                      return _repositoryList.Where(x => x.ScriptTypeId==scriptTypeId).ToList();
+                      return _repositoryList.Where(x => x.ProjectId==projectId).ToList();
                  });
                 
-            var result = _target.GetDataByScriptTypeId(scriptTypeIdValue).ToList();
-             Assert.AreEqual(_repositoryList.Where(x => x.ScriptTypeId==scriptTypeIdValue).ToList().Count, result.Count);
+            var result = _target.GetDataByProjectId(projectIdValue).ToList();
+             Assert.AreEqual(_repositoryList.Where(x => x.ProjectId==projectIdValue).ToList().Count, result.Count);
         }
 
         [TestMethod()]
-        public void GetDataByScriptTypeIdPageableTest()
+        public void GetDataByProjectIdPageableTest()
         {
-            PagedResult<Script> expectedResult;
+            PagedResult<TestGroup> expectedResult;
 
             _repository
-                 .Setup(it => it.GetDataByScriptTypeIdPageable(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
-                 .Returns<Int32, String, Int32, Int32>((scriptTypeId, sortExpression, page, pageSize) => 
+                 .Setup(it => it.GetDataByProjectIdPageable(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
+                 .Returns<Int32, String, Int32, Int32>((projectId, sortExpression, page, pageSize) => 
                  { 
-                      var query = _repositoryList.Where(x => x.ScriptTypeId==scriptTypeId);
+                      var query = _repositoryList.Where(x => x.ProjectId==projectId);
                       switch (sortExpression)
                       {
                           case  "Id":
-                              query = new List<Script>(query.OrderBy(q => q.Id));
+                              query = new List<TestGroup>(query.OrderBy(q => q.Id));
                               break;
-                          case  "TestId":
-                              query = new List<Script>(query.OrderBy(q => q.TestId));
-                              break;
-                          case  "ScriptTypeId":
-                              query = new List<Script>(query.OrderBy(q => q.ScriptTypeId));
+                          case  "ProjectId":
+                              query = new List<TestGroup>(query.OrderBy(q => q.ProjectId));
                               break;
                           case  "Name":
-                              query = new List<Script>(query.OrderBy(q => q.Name));
-                              break;
-                          case  "ScriptValue":
-                              query = new List<Script>(query.OrderBy(q => q.ScriptValue));
+                              query = new List<TestGroup>(query.OrderBy(q => q.Name));
                               break;
                           case  "IsActive":
-                              query = new List<Script>(query.OrderBy(q => q.IsActive));
+                              query = new List<TestGroup>(query.OrderBy(q => q.IsActive));
                               break;                      }
                       return query.Take(pageSize).Skip((page-1)*pageSize).ToList();
                  });
 
             _repository
-                 .Setup(it => it.GetDataByScriptTypeIdRowCount(scriptTypeId))
+                 .Setup(it => it.GetDataByProjectIdRowCount(projectId))
                  .Returns(_repositoryList.Count);
 
-            var result = _target.GetDataByScriptTypeIdPageable(ScriptTypeIdValue, "Id", 1, 2);
+            var result = _target.GetDataByProjectIdPageable(ProjectIdValue, "Id", 1, 2);
             Assert.IsTrue(result.TryGetContentValue(out expectedResult));
-            Assert.AreEqual(_repositoryList.Where(x => x.ScriptTypeId==scriptTypeId).Take(2).ToList().Count, expectedResult.Results.Count);
-            Assert.AreEqual(_repositoryList.Where(x => x.ScriptTypeId==scriptTypeId).OrderBy(q => q.Id).FirstOrDefault().Id, expectedResult.Results.FirstOrDefault().Id);
+            Assert.AreEqual(_repositoryList.Where(x => x.ProjectId==projectId).Take(2).ToList().Count, expectedResult.Results.Count);
+            Assert.AreEqual(_repositoryList.Where(x => x.ProjectId==projectId).OrderBy(q => q.Id).FirstOrDefault().Id, expectedResult.Results.FirstOrDefault().Id);
         }
 
         [TestMethod()]
-        public void GetActiveDataByScriptTypeIdTest() 
+        public void GetActiveDataByProjectIdTest() 
         {
             _repository
-                 .Setup(it => it.GetActiveDataByScriptTypeId(It.IsAny<Int32>()))
-                     .Returns<Int32>((scriptTypeId) => 
+                 .Setup(it => it.GetActiveDataByProjectId(It.IsAny<Int32>()))
+                     .Returns<Int32>((projectId) => 
                  { 
-                      return _repositoryList.Where(x => x.ScriptTypeId==scriptTypeId).ToList();
+                      return _repositoryList.Where(x => x.ProjectId==projectId).ToList();
                  });
                 
-            var result = _target.GetActiveDataByScriptTypeId(scriptTypeIdValue).ToList();
-             Assert.AreEqual(_repositoryList.Where(x => x.ScriptTypeId==scriptTypeIdValue).ToList().Count, result.Count);
+            var result = _target.GetActiveDataByProjectId(projectIdValue).ToList();
+             Assert.AreEqual(_repositoryList.Where(x => x.ProjectId==projectIdValue).ToList().Count, result.Count);
         }
 
         [TestMethod()]
-        public void GetActiveDataByScriptTypeIdPageableTest()
+        public void GetActiveDataByProjectIdPageableTest()
         {
-            PagedResult<Script> expectedResult;
+            PagedResult<TestGroup> expectedResult;
 
             _repository
-                 .Setup(it => it.GetActiveDataByScriptTypeIdPageable(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
-                 .Returns<Int32, String, Int32, Int32>((scriptTypeId, sortExpression, page, pageSize) => 
+                 .Setup(it => it.GetActiveDataByProjectIdPageable(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
+                 .Returns<Int32, String, Int32, Int32>((projectId, sortExpression, page, pageSize) => 
                  { 
                       var query = _repositoryList;
                       switch (sortExpression)
                       {
                           case  "Id":
-                              query = new List<Script>(query.OrderBy(q => q.Id));
+                              query = new List<TestGroup>(query.OrderBy(q => q.Id));
                               break;
-                          case  "TestId":
-                              query = new List<Script>(query.OrderBy(q => q.TestId));
-                              break;
-                          case  "ScriptTypeId":
-                              query = new List<Script>(query.OrderBy(q => q.ScriptTypeId));
+                          case  "ProjectId":
+                              query = new List<TestGroup>(query.OrderBy(q => q.ProjectId));
                               break;
                           case  "Name":
-                              query = new List<Script>(query.OrderBy(q => q.Name));
-                              break;
-                          case  "ScriptValue":
-                              query = new List<Script>(query.OrderBy(q => q.ScriptValue));
+                              query = new List<TestGroup>(query.OrderBy(q => q.Name));
                               break;
                           case  "IsActive":
-                              query = new List<Script>(query.OrderBy(q => q.IsActive));
+                              query = new List<TestGroup>(query.OrderBy(q => q.IsActive));
                               break;                      }
                       return query.Take(pageSize).Skip((page-1)*pageSize).ToList();
                  });
 
             _repository
-                 .Setup(it => it.GetActiveDataByScriptTypeIdRowCount(scriptTypeId))
+                 .Setup(it => it.GetActiveDataByProjectIdRowCount(projectId))
                  .Returns(_repositoryList.Count);
 
-            var result = _target.GetActiveDataByScriptTypeIdPageable(ScriptTypeIdValue, "Id", 1, PageSizeValue);
+            var result = _target.GetActiveDataByProjectIdPageable(ProjectIdValue, "Id", 1, PageSizeValue);
             Assert.IsTrue(result.TryGetContentValue(out expectedResult));
             Assert.AreEqual(_repositoryList.Take(2).ToList().Count, expectedResult.Results.Count);
             Assert.AreEqual(_repositoryList.OrderBy(q => q.Id).FirstOrDefault().Id, expectedResult.Results.FirstOrDefault().Id);

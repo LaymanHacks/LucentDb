@@ -67,21 +67,25 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         public void Update_Should_Update_A_Test() 
         {
             _repository
-                 .Setup(it => it.Update(It.IsAny<Int32>(), It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Boolean>(), It.IsAny<Int32>()))
-                 .Callback<Int32, Int32, String, Boolean, Int32>((projectId, testTypeId, name, isActive, id) => 
+                 .Setup(it => it.Update(It.IsAny<Int32>(), It.IsAny<Int32?>(), It.IsAny<Int32?>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<Boolean>(), It.IsAny<Int32>()))
+                 .Callback<Int32, Int32?, Int32?, String, String, Boolean, Int32>((testTypeId, projectId, groupId, name, testValue, isActive, id) => 
             { 
                  var tTest = _repositoryList.Find(x => x.Id==id);
-                 tTest.ProjectId = projectId; 
                  tTest.TestTypeId = testTypeId; 
+                 tTest.ProjectId = projectId; 
+                 tTest.GroupId = groupId; 
                  tTest.Name = name; 
+                 tTest.TestValue = testValue; 
                  tTest.IsActive = isActive; 
             });
             var tempTest = _repositoryList.Find(x => x.Id==id);
             var testTest = new Test {
                  Id = tempTest.Id, 
-                 ProjectId = tempTest.ProjectId, 
                  TestTypeId = tempTest.TestTypeId, 
+                 ProjectId = tempTest.ProjectId, 
+                 GroupId = tempTest.GroupId, 
                  Name = tempTest.Name, 
+                 TestValue = tempTest.TestValue, 
                  IsActive = tempTest.IsActive};
             
             //TODO change something on testTest
@@ -112,14 +116,14 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         public void Insert_Should_Insert_A_Test() 
         {
             _repository
-                 .Setup(it => it.Insert(It.IsAny<Int32>(), It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Boolean>()))
-                 .Returns<Int32, Int32, String, Boolean>((projectId, testTypeId, name, isActive) => 
+                 .Setup(it => it.Insert(It.IsAny<Int32>(), It.IsAny<Int32?>(), It.IsAny<Int32?>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<Boolean>()))
+                 .Returns<Int32, Int32?, Int32?, String, String, Boolean>((testTypeId, projectId, groupId, name, testValue, isActive) => 
             { 
-                 _repositoryList.Add(new  Test (projectId, testTypeId, name, isActive));
+                 _repositoryList.Add(new  Test (testTypeId, projectId, groupId, name, testValue, isActive));
             });
             
             //TODO insert values 
-            _target.Insert(new Test (projectId, testTypeId, name, isActive));
+            _target.Insert(new Test (testTypeId, projectId, groupId, name, testValue, isActive));
             //Assert.AreEqual(11, _repositoryList.Count());
             //TODO fail until we update the test above
             Assert.Fail();
@@ -140,14 +144,20 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                           case  "Id":
                               query = new List<Test>(query.OrderBy(q => q.Id));
                               break;
-                          case  "ProjectId":
-                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
-                              break;
                           case  "TestTypeId":
                               query = new List<Test>(query.OrderBy(q => q.TestTypeId));
                               break;
+                          case  "ProjectId":
+                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
+                              break;
+                          case  "GroupId":
+                              query = new List<Test>(query.OrderBy(q => q.GroupId));
+                              break;
                           case  "Name":
                               query = new List<Test>(query.OrderBy(q => q.Name));
+                              break;
+                          case  "TestValue":
+                              query = new List<Test>(query.OrderBy(q => q.TestValue));
                               break;
                           case  "IsActive":
                               query = new List<Test>(query.OrderBy(q => q.IsActive));
@@ -205,14 +215,20 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                           case  "Id":
                               query = new List<Test>(query.OrderBy(q => q.Id));
                               break;
-                          case  "ProjectId":
-                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
-                              break;
                           case  "TestTypeId":
                               query = new List<Test>(query.OrderBy(q => q.TestTypeId));
                               break;
+                          case  "ProjectId":
+                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
+                              break;
+                          case  "GroupId":
+                              query = new List<Test>(query.OrderBy(q => q.GroupId));
+                              break;
                           case  "Name":
                               query = new List<Test>(query.OrderBy(q => q.Name));
+                              break;
+                          case  "TestValue":
+                              query = new List<Test>(query.OrderBy(q => q.TestValue));
                               break;
                           case  "IsActive":
                               query = new List<Test>(query.OrderBy(q => q.IsActive));
@@ -259,14 +275,20 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                           case  "Id":
                               query = new List<Test>(query.OrderBy(q => q.Id));
                               break;
-                          case  "ProjectId":
-                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
-                              break;
                           case  "TestTypeId":
                               query = new List<Test>(query.OrderBy(q => q.TestTypeId));
                               break;
+                          case  "ProjectId":
+                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
+                              break;
+                          case  "GroupId":
+                              query = new List<Test>(query.OrderBy(q => q.GroupId));
+                              break;
                           case  "Name":
                               query = new List<Test>(query.OrderBy(q => q.Name));
+                              break;
+                          case  "TestValue":
+                              query = new List<Test>(query.OrderBy(q => q.TestValue));
                               break;
                           case  "IsActive":
                               query = new List<Test>(query.OrderBy(q => q.IsActive));
@@ -313,14 +335,20 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                           case  "Id":
                               query = new List<Test>(query.OrderBy(q => q.Id));
                               break;
-                          case  "ProjectId":
-                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
-                              break;
                           case  "TestTypeId":
                               query = new List<Test>(query.OrderBy(q => q.TestTypeId));
                               break;
+                          case  "ProjectId":
+                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
+                              break;
+                          case  "GroupId":
+                              query = new List<Test>(query.OrderBy(q => q.GroupId));
+                              break;
                           case  "Name":
                               query = new List<Test>(query.OrderBy(q => q.Name));
+                              break;
+                          case  "TestValue":
+                              query = new List<Test>(query.OrderBy(q => q.TestValue));
                               break;
                           case  "IsActive":
                               query = new List<Test>(query.OrderBy(q => q.IsActive));
@@ -333,6 +361,126 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                  .Returns(_repositoryList.Count);
 
             var result = _target.GetActiveDataByProjectIdPageable(ProjectIdValue, "Id", 1, PageSizeValue);
+            Assert.IsTrue(result.TryGetContentValue(out expectedResult));
+            Assert.AreEqual(_repositoryList.Take(2).ToList().Count, expectedResult.Results.Count);
+            Assert.AreEqual(_repositoryList.OrderBy(q => q.Id).FirstOrDefault().Id, expectedResult.Results.FirstOrDefault().Id);
+        }
+
+        [TestMethod()]
+        public void GetDataByGroupIdTest() 
+        {
+            _repository
+                 .Setup(it => it.GetDataByGroupId(It.IsAny<Int32>()))
+                     .Returns<Int32>((groupId) => 
+                 { 
+                      return _repositoryList.Where(x => x.GroupId==groupId).ToList();
+                 });
+                
+            var result = _target.GetDataByGroupId(groupIdValue).ToList();
+             Assert.AreEqual(_repositoryList.Where(x => x.GroupId==groupIdValue).ToList().Count, result.Count);
+        }
+
+        [TestMethod()]
+        public void GetDataByGroupIdPageableTest()
+        {
+            PagedResult<Test> expectedResult;
+
+            _repository
+                 .Setup(it => it.GetDataByGroupIdPageable(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
+                 .Returns<Int32, String, Int32, Int32>((groupId, sortExpression, page, pageSize) => 
+                 { 
+                      var query = _repositoryList.Where(x => x.GroupId==groupId);
+                      switch (sortExpression)
+                      {
+                          case  "Id":
+                              query = new List<Test>(query.OrderBy(q => q.Id));
+                              break;
+                          case  "TestTypeId":
+                              query = new List<Test>(query.OrderBy(q => q.TestTypeId));
+                              break;
+                          case  "ProjectId":
+                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
+                              break;
+                          case  "GroupId":
+                              query = new List<Test>(query.OrderBy(q => q.GroupId));
+                              break;
+                          case  "Name":
+                              query = new List<Test>(query.OrderBy(q => q.Name));
+                              break;
+                          case  "TestValue":
+                              query = new List<Test>(query.OrderBy(q => q.TestValue));
+                              break;
+                          case  "IsActive":
+                              query = new List<Test>(query.OrderBy(q => q.IsActive));
+                              break;                      }
+                      return query.Take(pageSize).Skip((page-1)*pageSize).ToList();
+                 });
+
+            _repository
+                 .Setup(it => it.GetDataByGroupIdRowCount(groupId))
+                 .Returns(_repositoryList.Count);
+
+            var result = _target.GetDataByGroupIdPageable(GroupIdValue, "Id", 1, 2);
+            Assert.IsTrue(result.TryGetContentValue(out expectedResult));
+            Assert.AreEqual(_repositoryList.Where(x => x.GroupId==groupId).Take(2).ToList().Count, expectedResult.Results.Count);
+            Assert.AreEqual(_repositoryList.Where(x => x.GroupId==groupId).OrderBy(q => q.Id).FirstOrDefault().Id, expectedResult.Results.FirstOrDefault().Id);
+        }
+
+        [TestMethod()]
+        public void GetActiveDataByGroupIdTest() 
+        {
+            _repository
+                 .Setup(it => it.GetActiveDataByGroupId(It.IsAny<Int32>()))
+                     .Returns<Int32>((groupId) => 
+                 { 
+                      return _repositoryList.Where(x => x.GroupId==groupId).ToList();
+                 });
+                
+            var result = _target.GetActiveDataByGroupId(groupIdValue).ToList();
+             Assert.AreEqual(_repositoryList.Where(x => x.GroupId==groupIdValue).ToList().Count, result.Count);
+        }
+
+        [TestMethod()]
+        public void GetActiveDataByGroupIdPageableTest()
+        {
+            PagedResult<Test> expectedResult;
+
+            _repository
+                 .Setup(it => it.GetActiveDataByGroupIdPageable(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
+                 .Returns<Int32, String, Int32, Int32>((groupId, sortExpression, page, pageSize) => 
+                 { 
+                      var query = _repositoryList;
+                      switch (sortExpression)
+                      {
+                          case  "Id":
+                              query = new List<Test>(query.OrderBy(q => q.Id));
+                              break;
+                          case  "TestTypeId":
+                              query = new List<Test>(query.OrderBy(q => q.TestTypeId));
+                              break;
+                          case  "ProjectId":
+                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
+                              break;
+                          case  "GroupId":
+                              query = new List<Test>(query.OrderBy(q => q.GroupId));
+                              break;
+                          case  "Name":
+                              query = new List<Test>(query.OrderBy(q => q.Name));
+                              break;
+                          case  "TestValue":
+                              query = new List<Test>(query.OrderBy(q => q.TestValue));
+                              break;
+                          case  "IsActive":
+                              query = new List<Test>(query.OrderBy(q => q.IsActive));
+                              break;                      }
+                      return query.Take(pageSize).Skip((page-1)*pageSize).ToList();
+                 });
+
+            _repository
+                 .Setup(it => it.GetActiveDataByGroupIdRowCount(groupId))
+                 .Returns(_repositoryList.Count);
+
+            var result = _target.GetActiveDataByGroupIdPageable(GroupIdValue, "Id", 1, PageSizeValue);
             Assert.IsTrue(result.TryGetContentValue(out expectedResult));
             Assert.AreEqual(_repositoryList.Take(2).ToList().Count, expectedResult.Results.Count);
             Assert.AreEqual(_repositoryList.OrderBy(q => q.Id).FirstOrDefault().Id, expectedResult.Results.FirstOrDefault().Id);
@@ -367,14 +515,20 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                           case  "Id":
                               query = new List<Test>(query.OrderBy(q => q.Id));
                               break;
-                          case  "ProjectId":
-                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
-                              break;
                           case  "TestTypeId":
                               query = new List<Test>(query.OrderBy(q => q.TestTypeId));
                               break;
+                          case  "ProjectId":
+                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
+                              break;
+                          case  "GroupId":
+                              query = new List<Test>(query.OrderBy(q => q.GroupId));
+                              break;
                           case  "Name":
                               query = new List<Test>(query.OrderBy(q => q.Name));
+                              break;
+                          case  "TestValue":
+                              query = new List<Test>(query.OrderBy(q => q.TestValue));
                               break;
                           case  "IsActive":
                               query = new List<Test>(query.OrderBy(q => q.IsActive));
@@ -421,14 +575,20 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                           case  "Id":
                               query = new List<Test>(query.OrderBy(q => q.Id));
                               break;
-                          case  "ProjectId":
-                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
-                              break;
                           case  "TestTypeId":
                               query = new List<Test>(query.OrderBy(q => q.TestTypeId));
                               break;
+                          case  "ProjectId":
+                              query = new List<Test>(query.OrderBy(q => q.ProjectId));
+                              break;
+                          case  "GroupId":
+                              query = new List<Test>(query.OrderBy(q => q.GroupId));
+                              break;
                           case  "Name":
                               query = new List<Test>(query.OrderBy(q => q.Name));
+                              break;
+                          case  "TestValue":
+                              query = new List<Test>(query.OrderBy(q => q.TestValue));
                               break;
                           case  "IsActive":
                               query = new List<Test>(query.OrderBy(q => q.IsActive));

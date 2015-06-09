@@ -47,6 +47,12 @@
     <Compile Include="ValidatorFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LucentDb.Domain.Entities\LucentDb.Domain.Entities.csproj">
+      <Project>{4ADCF3CB-049F-4BE2-B421-7875DC51301B}</Project>
+      <Name>LucentDb.Domain.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

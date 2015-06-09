@@ -67,21 +67,23 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         public void Update_Should_Update_A_RunHistory() 
         {
             _repository
-                 .Setup(it => it.Update(It.IsAny<Int64>(), It.IsAny<Int32>(), It.IsAny<DateTime>(), It.IsAny<Boolean>(), It.IsAny<String>(), It.IsAny<Int64>()))
-                 .Callback<Int64, Int32, DateTime, Boolean, String, Int64>((id, scriptId, runDateTime, isPass, resultString, original_Id) => 
+                 .Setup(it => it.Update(It.IsAny<Int32>(), It.IsAny<DateTime>(), It.IsAny<Boolean>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<Int64>()))
+                 .Callback<Int32, DateTime, Boolean, String, String, Int64>((testId, runDateTime, isPass, runLog, resultString, id) => 
             { 
                  var tRunHistory = _repositoryList.Find(x => x.Id==id);
-                 tRunHistory.ScriptId = scriptId; 
+                 tRunHistory.TestId = testId; 
                  tRunHistory.RunDateTime = runDateTime; 
                  tRunHistory.IsPass = isPass; 
+                 tRunHistory.RunLog = runLog; 
                  tRunHistory.ResultString = resultString; 
             });
             var tempRunHistory = _repositoryList.Find(x => x.Id==id);
             var testRunHistory = new RunHistory {
                  Id = tempRunHistory.Id, 
-                 ScriptId = tempRunHistory.ScriptId, 
+                 TestId = tempRunHistory.TestId, 
                  RunDateTime = tempRunHistory.RunDateTime, 
                  IsPass = tempRunHistory.IsPass, 
+                 RunLog = tempRunHistory.RunLog, 
                  ResultString = tempRunHistory.ResultString};
             
             //TODO change something on testRunHistory
@@ -112,14 +114,14 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         public void Insert_Should_Insert_A_RunHistory() 
         {
             _repository
-                 .Setup(it => it.Insert(It.IsAny<Int64>(), It.IsAny<Int32>(), It.IsAny<DateTime>(), It.IsAny<Boolean>(), It.IsAny<String>()))
-                 .Returns<Int64, Int32, DateTime, Boolean, String>((id, scriptId, runDateTime, isPass, resultString) => 
+                 .Setup(it => it.Insert(It.IsAny<Int32>(), It.IsAny<DateTime>(), It.IsAny<Boolean>(), It.IsAny<String>(), It.IsAny<String>()))
+                 .Returns<Int32, DateTime, Boolean, String, String>((testId, runDateTime, isPass, runLog, resultString) => 
             { 
-                 _repositoryList.Add(new  RunHistory (id, scriptId, runDateTime, isPass, resultString));
+                 _repositoryList.Add(new  RunHistory (testId, runDateTime, isPass, runLog, resultString));
             });
             
             //TODO insert values 
-            _target.Insert(new RunHistory (id, scriptId, runDateTime, isPass, resultString));
+            _target.Insert(new RunHistory (testId, runDateTime, isPass, runLog, resultString));
             //Assert.AreEqual(11, _repositoryList.Count());
             //TODO fail until we update the test above
             Assert.Fail();
@@ -140,14 +142,17 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                           case  "Id":
                               query = new List<RunHistory>(query.OrderBy(q => q.Id));
                               break;
-                          case  "ScriptId":
-                              query = new List<RunHistory>(query.OrderBy(q => q.ScriptId));
+                          case  "TestId":
+                              query = new List<RunHistory>(query.OrderBy(q => q.TestId));
                               break;
                           case  "RunDateTime":
                               query = new List<RunHistory>(query.OrderBy(q => q.RunDateTime));
                               break;
                           case  "IsPass":
                               query = new List<RunHistory>(query.OrderBy(q => q.IsPass));
+                              break;
+                          case  "RunLog":
+                              query = new List<RunHistory>(query.OrderBy(q => q.RunLog));
                               break;
                           case  "ResultString":
                               query = new List<RunHistory>(query.OrderBy(q => q.ResultString));
@@ -180,42 +185,45 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
         }
 
         [TestMethod()]
-        public void GetDataByScriptIdTest() 
+        public void GetDataByTestIdTest() 
         {
             _repository
-                 .Setup(it => it.GetDataByScriptId(It.IsAny<Int32>()))
-                     .Returns<Int32>((scriptId) => 
+                 .Setup(it => it.GetDataByTestId(It.IsAny<Int32>()))
+                     .Returns<Int32>((testId) => 
                  { 
-                      return _repositoryList.Where(x => x.ScriptId==scriptId).ToList();
+                      return _repositoryList.Where(x => x.TestId==testId).ToList();
                  });
                 
-            var result = _target.GetDataByScriptId(scriptIdValue).ToList();
-             Assert.AreEqual(_repositoryList.Where(x => x.ScriptId==scriptIdValue).ToList().Count, result.Count);
+            var result = _target.GetDataByTestId(testIdValue).ToList();
+             Assert.AreEqual(_repositoryList.Where(x => x.TestId==testIdValue).ToList().Count, result.Count);
         }
 
         [TestMethod()]
-        public void GetDataByScriptIdPageableTest()
+        public void GetDataByTestIdPageableTest()
         {
             PagedResult<RunHistory> expectedResult;
 
             _repository
-                 .Setup(it => it.GetDataByScriptIdPageable(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
-                 .Returns<Int32, String, Int32, Int32>((scriptId, sortExpression, page, pageSize) => 
+                 .Setup(it => it.GetDataByTestIdPageable(It.IsAny<Int32>(), It.IsAny<String>(), It.IsAny<Int32>(), It.IsAny<Int32>()))
+                 .Returns<Int32, String, Int32, Int32>((testId, sortExpression, page, pageSize) => 
                  { 
-                      var query = _repositoryList.Where(x => x.ScriptId==scriptId);
+                      var query = _repositoryList.Where(x => x.TestId==testId);
                       switch (sortExpression)
                       {
                           case  "Id":
                               query = new List<RunHistory>(query.OrderBy(q => q.Id));
                               break;
-                          case  "ScriptId":
-                              query = new List<RunHistory>(query.OrderBy(q => q.ScriptId));
+                          case  "TestId":
+                              query = new List<RunHistory>(query.OrderBy(q => q.TestId));
                               break;
                           case  "RunDateTime":
                               query = new List<RunHistory>(query.OrderBy(q => q.RunDateTime));
                               break;
                           case  "IsPass":
                               query = new List<RunHistory>(query.OrderBy(q => q.IsPass));
+                              break;
+                          case  "RunLog":
+                              query = new List<RunHistory>(query.OrderBy(q => q.RunLog));
                               break;
                           case  "ResultString":
                               query = new List<RunHistory>(query.OrderBy(q => q.ResultString));
@@ -224,13 +232,13 @@ namespace LucentDb.Web.UI.Test.Controllers.Api
                  });
 
             _repository
-                 .Setup(it => it.GetDataByScriptIdRowCount(scriptId))
+                 .Setup(it => it.GetDataByTestIdRowCount(testId))
                  .Returns(_repositoryList.Count);
 
-            var result = _target.GetDataByScriptIdPageable(ScriptIdValue, "Id", 1, 2);
+            var result = _target.GetDataByTestIdPageable(TestIdValue, "Id", 1, 2);
             Assert.IsTrue(result.TryGetContentValue(out expectedResult));
-            Assert.AreEqual(_repositoryList.Where(x => x.ScriptId==scriptId).Take(2).ToList().Count, expectedResult.Results.Count);
-            Assert.AreEqual(_repositoryList.Where(x => x.ScriptId==scriptId).OrderBy(q => q.Id).FirstOrDefault().Id, expectedResult.Results.FirstOrDefault().Id);
+            Assert.AreEqual(_repositoryList.Where(x => x.TestId==testId).Take(2).ToList().Count, expectedResult.Results.Count);
+            Assert.AreEqual(_repositoryList.Where(x => x.TestId==testId).OrderBy(q => q.Id).FirstOrDefault().Id, expectedResult.Results.FirstOrDefault().Id);
         }
 
 
