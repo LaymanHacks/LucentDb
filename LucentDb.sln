@@ -20,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{E88BB337-C77B-4357-A32A-BBA75D078C2D}"
 	ProjectSection(SolutionItems) = preProject
 		LucentDb_StoredProcedures.sql = LucentDb_StoredProcedures.sql
+		ProjectSummary.sql = ProjectSummary.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{5A0A37CF-CF62-4E78-9699-D132E7AC54F5}"
