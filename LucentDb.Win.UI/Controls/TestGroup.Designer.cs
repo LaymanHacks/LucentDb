@@ -37,6 +37,7 @@
             this.tlpScripts.AutoScrollMargin = new System.Drawing.Size(100, 100);
             this.tlpScripts.AutoSize = true;
             this.tlpScripts.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tlpScripts.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.tlpScripts.ColumnCount = 1;
             this.tlpScripts.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tlpScripts.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -44,16 +45,16 @@
             this.tlpScripts.Name = "tlpScripts";
             this.tlpScripts.RowCount = 1;
             this.tlpScripts.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpScripts.Size = new System.Drawing.Size(687, 155);
+            this.tlpScripts.Size = new System.Drawing.Size(687, 247);
             this.tlpScripts.TabIndex = 0;
             // 
-            // ScriptGroup
+            // TestGroup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tlpScripts);
-            this.Name = "ScriptGroup";
-            this.Size = new System.Drawing.Size(687, 155);
+            this.Name = "TestGroup";
+            this.Size = new System.Drawing.Size(687, 247);
             this.Load += new System.EventHandler(this.ScriptGroup_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

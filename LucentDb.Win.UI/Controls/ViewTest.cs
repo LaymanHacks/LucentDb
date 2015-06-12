@@ -42,7 +42,7 @@ namespace LucentDb.Win.UI.Controls
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Test Run!");
         }
     }
 }

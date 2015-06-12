@@ -75,7 +75,7 @@
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 138);
             this.label1.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -131,7 +131,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.Controls.Add(this.lblAssertType);
             this.flowLayoutPanel1.Controls.Add(this.lblAssertValue);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(53, 134);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(57, 133);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(476, 31);
@@ -141,6 +141,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.flowLayoutPanel1);
