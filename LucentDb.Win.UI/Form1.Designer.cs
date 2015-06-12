@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.cboProjects = new System.Windows.Forms.ComboBox();
-            this.cboTests = new System.Windows.Forms.ComboBox();
             this.scriptBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.viewProjectTest1 = new LucentDb.Win.UI.Controls.ViewProject();
             ((System.ComponentModel.ISupportInitialize)(this.scriptBindingSource)).BeginInit();
@@ -44,16 +43,6 @@
             this.cboProjects.Size = new System.Drawing.Size(155, 21);
             this.cboProjects.TabIndex = 0;
             this.cboProjects.SelectionChangeCommitted += new System.EventHandler(this.cboProjects_SelectedIndexChanged);
-            // 
-            // cboTests
-            // 
-            this.cboTests.FormattingEnabled = true;
-            this.cboTests.Location = new System.Drawing.Point(13, 62);
-            this.cboTests.Name = "cboTests";
-            this.cboTests.Size = new System.Drawing.Size(154, 21);
-            this.cboTests.TabIndex = 2;
-            this.cboTests.SelectedIndexChanged += new System.EventHandler(this.cboTests_SelectedIndexChanged_1);
-            this.cboTests.SelectionChangeCommitted += new System.EventHandler(this.cboTests_SelectedIndexChanged);
             // 
             // scriptBindingSource
             // 
@@ -76,7 +65,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1224, 484);
             this.Controls.Add(this.viewProjectTest1);
-            this.Controls.Add(this.cboTests);
             this.Controls.Add(this.cboProjects);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -90,7 +78,6 @@
 
         private System.Windows.Forms.ComboBox cboProjects;
         private System.Windows.Forms.BindingSource scriptBindingSource;
-        private System.Windows.Forms.ComboBox cboTests;
         private Controls.ViewProject viewProjectTest1;
     }
 }

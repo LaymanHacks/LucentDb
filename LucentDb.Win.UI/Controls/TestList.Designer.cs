@@ -1,6 +1,6 @@
 ﻿namespace LucentDb.Win.UI.Controls
 {
-    partial class TestGroup
+    partial class TestList
     {
         /// <summary> 
         /// Required designer variable.
@@ -45,7 +45,7 @@
             this.tlpScripts.Name = "tlpScripts";
             this.tlpScripts.RowCount = 1;
             this.tlpScripts.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpScripts.Size = new System.Drawing.Size(687, 247);
+            this.tlpScripts.Size = new System.Drawing.Size(200, 153);
             this.tlpScripts.TabIndex = 0;
             // 
             // TestGroup
@@ -54,7 +54,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tlpScripts);
             this.Name = "TestGroup";
-            this.Size = new System.Drawing.Size(687, 247);
+            this.Size = new System.Drawing.Size(200, 153);
             this.Load += new System.EventHandler(this.ScriptGroup_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

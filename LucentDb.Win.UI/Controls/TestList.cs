@@ -12,9 +12,9 @@ using LucentDb.Domain.Entities;
 
 namespace LucentDb.Win.UI.Controls
 {
-    public partial class TestGroup : UserControl
+    public partial class TestList : UserControl
     {
-        public TestGroup()
+        public TestList()
         {
             InitializeComponent();
         }

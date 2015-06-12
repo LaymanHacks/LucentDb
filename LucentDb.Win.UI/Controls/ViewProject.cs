@@ -32,9 +32,9 @@ namespace LucentDb.Win.UI.Controls
                 lblProjectName.Text = _selectedProject.Name;
             
                 //lblTestName.Text = _selectedProject.Name;
-                scriptGroup.DataSource = _selectedProject.Tests;
+                TestList.DataSource = _selectedProject.Tests;
             }
-            scriptGroup.DataBind();
+            TestList.DataBind();
             
         }
     }

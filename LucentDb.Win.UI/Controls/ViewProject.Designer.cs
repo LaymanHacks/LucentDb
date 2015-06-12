@@ -31,7 +31,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTestName = new System.Windows.Forms.Label();
             this.lblProjectName = new System.Windows.Forms.Label();
-            this.scriptGroup = new LucentDb.Win.UI.Controls.TestGroup();
+            this.TestList = new LucentDb.Win.UI.Controls.TestList();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,22 +65,22 @@
             this.lblProjectName.TabIndex = 0;
             this.lblProjectName.Text = "ProjectName";
             // 
-            // scriptGroup
+            // TestList
             // 
-            this.scriptGroup.DataSource = null;
-            this.scriptGroup.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scriptGroup.Location = new System.Drawing.Point(0, 59);
-            this.scriptGroup.Name = "scriptGroup";
-            this.scriptGroup.Size = new System.Drawing.Size(914, 405);
-            this.scriptGroup.TabIndex = 2;
+            this.TestList.DataSource = null;
+            this.TestList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TestList.Location = new System.Drawing.Point(0, 59);
+            this.TestList.Name = "TestList";
+            this.TestList.Size = new System.Drawing.Size(914, 405);
+            this.TestList.TabIndex = 2;
             // 
-            // ViewProjectTest
+            // ViewProject
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.scriptGroup);
+            this.Controls.Add(this.TestList);
             this.Controls.Add(this.panel1);
-            this.Name = "ViewProjectTest";
+            this.Name = "ViewProject";
             this.Size = new System.Drawing.Size(914, 464);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -93,6 +93,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblTestName;
         private System.Windows.Forms.Label lblProjectName;
-        private TestGroup scriptGroup;
+        private TestList TestList;
+       
     }
 }

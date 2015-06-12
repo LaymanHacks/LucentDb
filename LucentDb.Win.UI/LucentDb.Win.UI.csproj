@@ -49,11 +49,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\TestGroup.cs">
+    <Compile Include="Controls\ProjectSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\TestGroup.Designer.cs">
-      <DependentUpon>TestGroup.cs</DependentUpon>
+    <Compile Include="Controls\ProjectSelector.Designer.cs">
+      <DependentUpon>ProjectSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ViewTestGroup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ViewTestGroup.Designer.cs">
+      <DependentUpon>ViewTestGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TestList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TestList.Designer.cs">
+      <DependentUpon>TestList.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ViewTest.cs">
       <SubType>UserControl</SubType>
@@ -75,8 +87,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Controls\TestGroup.resx">
-      <DependentUpon>TestGroup.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ProjectSelector.resx">
+      <DependentUpon>ProjectSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ViewTestGroup.resx">
+      <DependentUpon>ViewTestGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TestList.resx">
+      <DependentUpon>TestList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ViewTest.resx">
       <DependentUpon>ViewTest.cs</DependentUpon>

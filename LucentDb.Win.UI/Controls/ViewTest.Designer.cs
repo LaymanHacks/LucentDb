@@ -43,11 +43,10 @@
             // 
             this.isActiveCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.isActiveCheckBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.isActiveCheckBox.Location = new System.Drawing.Point(644, 5);
+            this.isActiveCheckBox.Location = new System.Drawing.Point(627, 3);
             this.isActiveCheckBox.Name = "isActiveCheckBox";
-            this.isActiveCheckBox.Size = new System.Drawing.Size(80, 24);
+            this.isActiveCheckBox.Size = new System.Drawing.Size(14, 24);
             this.isActiveCheckBox.TabIndex = 4;
-            this.isActiveCheckBox.Text = "Active";
             this.isActiveCheckBox.UseVisualStyleBackColor = true;
             // 
             // lblName
