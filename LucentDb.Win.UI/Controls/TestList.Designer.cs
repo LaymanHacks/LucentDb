@@ -33,36 +33,29 @@
             // 
             // tlpScripts
             // 
-            this.tlpScripts.AutoScroll = true;
-            this.tlpScripts.AutoScrollMargin = new System.Drawing.Size(100, 100);
-            this.tlpScripts.AutoSize = true;
-            this.tlpScripts.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tlpScripts.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.tlpScripts.ColumnCount = 1;
-            this.tlpScripts.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpScripts.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpScripts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpScripts.Location = new System.Drawing.Point(0, 0);
             this.tlpScripts.Name = "tlpScripts";
             this.tlpScripts.RowCount = 1;
-            this.tlpScripts.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpScripts.Size = new System.Drawing.Size(200, 153);
+            this.tlpScripts.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpScripts.Size = new System.Drawing.Size(513, 288);
             this.tlpScripts.TabIndex = 0;
             // 
-            // TestGroup
+            // TestList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Controls.Add(this.tlpScripts);
-            this.Name = "TestGroup";
-            this.Size = new System.Drawing.Size(200, 153);
-            this.Load += new System.EventHandler(this.ScriptGroup_Load);
+            this.Name = "TestList";
+            this.Size = new System.Drawing.Size(513, 288);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tlpScripts;
+
     }
 }
