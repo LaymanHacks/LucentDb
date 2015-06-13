@@ -90,11 +90,11 @@
     <EmbeddedResource Include="Controls\ProjectSelector.resx">
       <DependentUpon>ProjectSelector.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ViewTestGroup.resx">
-      <DependentUpon>ViewTestGroup.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TestList.resx">
       <DependentUpon>TestList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ViewTestGroup.resx">
+      <DependentUpon>ViewTestGroup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ViewTest.resx">
       <DependentUpon>ViewTest.cs</DependentUpon>
@@ -116,6 +116,7 @@
     </Compile>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\LucentDb.Domain.Entities.Project.datasource" />
     <None Include="Properties\DataSources\LucentDb.Domain.Entities.Script.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
