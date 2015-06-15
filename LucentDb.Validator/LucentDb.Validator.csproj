@@ -44,6 +44,8 @@
     <Compile Include="LucentExtensions.cs" />
     <Compile Include="SQLSnippetValidator.cs" />
     <Compile Include="TestCondition.cs" />
+    <Compile Include="ValidationProcessor.cs" />
+    <Compile Include="ValidationResponse.cs" />
     <Compile Include="ValidatorFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

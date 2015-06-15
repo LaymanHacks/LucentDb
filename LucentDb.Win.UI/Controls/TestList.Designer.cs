@@ -33,6 +33,8 @@
             // 
             // tlpScripts
             // 
+            this.tlpScripts.AutoScroll = true;
+            this.tlpScripts.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tlpScripts.ColumnCount = 1;
             this.tlpScripts.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpScripts.Dock = System.Windows.Forms.DockStyle.Fill;

@@ -4,8 +4,6 @@ namespace LucentDb.Validator
 {
     public interface IValidator
     {
-        string ErrorMessage { get; set; }
-        bool IsValid { get; set; }
-        void Validate(string connectionString, Test test);
+       ValidationResponse Validate(string connectionString, Test test);
     }
 }
