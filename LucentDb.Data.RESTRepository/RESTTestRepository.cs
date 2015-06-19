@@ -16,17 +16,14 @@ namespace LucentDb.Data.RESTRepository
     {
 
         private string _urlBase = "/api/tests";
-        private string _baseAddress = "http://localhost:9000/";
+        //private string _baseAddress = "http://localhost:60205";
+        private HttpMessageHandler _messageHandler;
 
-        public  ICollection<Test> GetData()
+        public ICollection<Test> GetData()
         {
             ICollection<Test> testResult;
-            using (var client = new HttpClient())
+            using (var client = new HttpJsonClient(BaseAddress))
             {
-                client.BaseAddress = new Uri(_baseAddress);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
                 var response =  client.GetAsync(_urlBase + "/all").Result;
                 if (!response.IsSuccessStatusCode) return null;
                 var data =  response.Content.ReadAsStringAsync().Result;
@@ -34,6 +31,9 @@ namespace LucentDb.Data.RESTRepository
             }
             return testResult;
         }
+
+        public string BaseAddress { get; set; }
+
 
         public void Delete(Test test)
         {
@@ -184,5 +184,19 @@ namespace LucentDb.Data.RESTRepository
         {
             throw new NotImplementedException();
         }
+    }
+
+    public class HttpJsonClient : HttpClient
+    {
+        public HttpJsonClient(string baseAddress, HttpMessageHandler httpMessageHandler)
+        {
+            this.BaseAddress = new Uri(baseAddress);
+            this.DefaultRequestHeaders.Accept.Clear();
+            this.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+        public HttpJsonClient(string baseAddress):this(baseAddress, new HttpClientHandler())
+        {
+        }
+       
     }
 }
