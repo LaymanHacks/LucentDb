@@ -8,16 +8,14 @@ namespace LucentDb.Validator
     public class SqlSnippetValidator : IValidator
     {
         private readonly DbConnectionFactory _dbConnectionFactory = new DbConnectionFactory();
-        
 
         public ValidationResponse Validate(string connectionString, Test test)
         {
-            var valResponse = new ValidationResponse();
-            valResponse.RunDateTime = DateTime.Now;
+            var valResponse = new ValidationResponse {RunDateTime = DateTime.Now};
             var watch = new Stopwatch();
             watch.Start();
             var actual = "NULL";
-            
+
             try
             {
                 using (var conn = _dbConnectionFactory.GetConnection(connectionString))

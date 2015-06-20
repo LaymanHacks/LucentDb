@@ -42,6 +42,8 @@
     <Compile Include="DbConnectionFactory.cs" />
     <Compile Include="IValidator.cs" />
     <Compile Include="LucentExtensions.cs" />
+    <Compile Include="SqlScriptTest.cs" />
+    <Compile Include="SQLScriptValidator.cs" />
     <Compile Include="SQLSnippetValidator.cs" />
     <Compile Include="TestCondition.cs" />
     <Compile Include="ValidationProcessor.cs" />
