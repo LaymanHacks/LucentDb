@@ -1,3 +1,4 @@
+using LucentDb.Domain;
 using LucentDb.Domain.Entities;
 
 namespace LucentDb.Validator

@@ -1,4 +1,4 @@
-﻿namespace LucentDb.Validator
+﻿namespace LucentDb.Domain
 {
     public class TestCondition
     {

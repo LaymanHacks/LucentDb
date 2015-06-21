@@ -1,80 +1,38 @@
-﻿using System;
-using System.Data;
-using System.Diagnostics;
-using System.Text;
+﻿using LucentDb.Common;
+using LucentDb.Data;
+using LucentDb.Domain;
 using LucentDb.Domain.Entities;
 
 namespace LucentDb.Validator
 {
-    public class SqlScriptValidator : IValidator
+    public class SqlScriptValidator : SqlScriptValidatorBase, IValidator
     {
-        private readonly DbConnectionFactory _dbConnectionFactory = new DbConnectionFactory();
+        private readonly SqlScriptRunner _sqlScriptRunner;
+        private IScriptResolver _scriptResolver;
+
+        public SqlScriptValidator()
+        {
+            _sqlScriptRunner = new SqlScriptRunner();
+        }
 
         public ValidationResponse Validate(string connectionString, Test test)
         {
+            _scriptResolver = new ScriptResolverFactory(test).GetScriptResolver();
+
             var sqlScriptTest = new SqlScriptTest
             {
-                ConnectionString = connectionString,
-                ScriptValue = test.TestValue
+                DbConnectionHolder = new DbConnectionHolder(DbConnectionFactory.GetConnection(connectionString)),
+                ScriptValue = _scriptResolver.GetSqlScript(),
+                ExpectedResults = test.ExpectedResults.Clone()
             };
-
             
-
-            var valResponse = new ValidationResponse {RunDateTime = DateTime.Now};
-            var watch = new Stopwatch();
-            watch.Start();
-            var response = ValidateSqlScript(valResponse, sqlScriptTest);
-            watch.Stop();
-            valResponse.Duration = watch.Elapsed.TotalMilliseconds;
+            RunTimer.Start();
+            var response = _sqlScriptRunner.ValidateSqlScript(ValResponse, sqlScriptTest);
+            RunTimer.Stop();
+            ValResponse.Duration = RunTimer.Elapsed.TotalMilliseconds;
 
             return response;
         }
-
-        private ValidationResponse ValidateSqlScript(ValidationResponse valResponse, SqlScriptTest sqlScriptTest)
-        {
-            var resultMessage = new StringBuilder();
-
-            try
-            {
-                using (var conn = _dbConnectionFactory.GetConnection(sqlScriptTest.ConnectionString))
-                {
-                    conn.Open();
-                    using (var cmd = conn.CreateCommand())
-                    {
-                        cmd.CommandText = sqlScriptTest.ScriptValue;
-                        cmd.CommandType = CommandType.Text;
-                        cmd.CommandTimeout = 600;
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                foreach (var expResult in sqlScriptTest.ExpectedResults)
-                                {
-                                    if (reader[expResult.ResultIndex].IsNullOrDbNull()) continue;
-                                    var actual = reader[expResult.ResultIndex].ToString();
-                                    valResponse.IsValid = (expResult.ExpectedValue == actual);
-                                    if (valResponse.IsValid) continue;
-                                    resultMessage.AppendFormat("expected: {0} \n but was: {1}",
-                                        expResult.ExpectedValue, actual);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                valResponse.IsValid = false;
-                resultMessage.AppendFormat("Error occurred while trying to run check {0} : {1}",
-                    e.Message,
-                    e.StackTrace);
-            }
-            finally
-            {
-                valResponse.ResultMessage = resultMessage.ToString();
-            }
-            return valResponse;
-        }
     }
 }
+
