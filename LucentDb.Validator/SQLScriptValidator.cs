@@ -5,7 +5,7 @@ using LucentDb.Domain.Entities;
 
 namespace LucentDb.Validator
 {
-    public class SqlScriptValidator : SqlScriptValidatorBase, IValidator
+    public class SqlScriptValidator : LucentDbValidatorBase, IValidator
     {
         private readonly SqlScriptRunner _sqlScriptRunner;
         private IScriptResolver _scriptResolver;

@@ -52,10 +52,8 @@
     <Compile Include="SqlScriptRunner.cs" />
     <Compile Include="SqlScriptTest.cs" />
     <Compile Include="SqlScriptValidator.cs" />
-    <Compile Include="SqlScriptValidatorBase.cs" />
-    <Compile Include="TestCondition.cs" />
+    <Compile Include="LucentDbValidatorBase.cs" />
     <Compile Include="ValidationProcessor.cs" />
-    <Compile Include="ValidationResponse.cs" />
     <Compile Include="ValidatorFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -71,6 +69,10 @@
     <ProjectReference Include="..\LucentDb.Domain.Entities\LucentDb.Domain.Entities.csproj">
       <Project>{4ADCF3CB-049F-4BE2-B421-7875DC51301B}</Project>
       <Name>LucentDb.Domain.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LucentDb.Domain\LucentDb.Domain.csproj">
+      <Project>{35F11A61-843B-4E97-B992-BF22FB50F1EA}</Project>
+      <Name>LucentDb.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
