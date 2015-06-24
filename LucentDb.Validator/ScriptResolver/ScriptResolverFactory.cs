@@ -13,6 +13,7 @@ namespace LucentDb.Validator
 
         public IScriptResolver GetScriptResolver()
         {
+            if (_test.TestType == null) return null;
             switch (_test.TestType.Name.ToLower())
             {
                 case "filesystem":
@@ -24,6 +25,7 @@ namespace LucentDb.Validator
                 default:
                     return new SqlSnippetResolver(_test.TestValue);
             }
+            
         }
     }
 }

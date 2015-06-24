@@ -4,6 +4,7 @@ using System.Text;
 using LucentDb.Common;
 using LucentDb.Data;
 using LucentDb.Domain;
+using LucentDb.Domain.Entities;
 
 namespace LucentDb.Validator
 {
@@ -31,7 +32,7 @@ namespace LucentDb.Validator
                             {
                                 foreach (var expResult in sqlScriptTest.ExpectedResults)
                                 {
-                                    if (reader[expResult.ResultIndex].IsNullOrDbNull()) continue;
+                                     if (reader[expResult.ResultIndex].IsNullOrDbNull()) continue;
                                     var actual = reader[expResult.ResultIndex].ToString();
                                     valResponse.IsValid = (expResult.ExpectedValue == actual);
                                     if (valResponse.IsValid) continue;
@@ -47,13 +48,16 @@ namespace LucentDb.Validator
             catch (Exception e)
             {
                 valResponse.IsValid = false;
-                resultMessage.AppendFormat("Error occurred while trying to run check {0} : {1}",
+                resultMessage.AppendFormat("Error occurred while trying to run validation {0}. \n \n {1} : {2}", 
+                    sqlScriptTest.ScriptValue,
                     e.Message,
                     e.StackTrace);
+                
             }
             finally
             {
                 valResponse.ResultMessage = resultMessage.ToString();
+                
             }
             return valResponse;
         }

@@ -15,13 +15,14 @@ namespace LucentDb.Validator
             _sqlScriptRunner = new SqlScriptRunner();
         }
 
-        public ValidationResponse Validate(string connectionString, Test test)
+        public ValidationResponse Validate(Connection testConnection, Test test)
         {
+            if (test == null) return null;
             _scriptResolver = new ScriptResolverFactory(test).GetScriptResolver();
-
+            if (_scriptResolver == null) return null;
             var sqlScriptTest = new SqlScriptTest
             {
-                DbConnectionHolder = new DbConnectionHolder(DbConnectionFactory.GetConnection(connectionString)),
+                DbConnectionHolder = new DbConnectionHolder(DbConnectionFactory.GetConnection(testConnection)),
                 ScriptValue = _scriptResolver.GetSqlScript(),
                 ExpectedResults = test.ExpectedResults.Clone()
             };
