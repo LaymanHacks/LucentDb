@@ -19,13 +19,15 @@ namespace LucentDb.Web.UI.Controllers
     {
         private readonly IExpectedResultRepository _dbExpectedResultRepository;
         private readonly ITestRepository _dbTestRepository;
+        private readonly IExpectedResultTypeRepository _dbExpectedResultTypeRepository;
         private readonly IAssertTypeRepository _dbAssertTypeRepository;
         
 
-        public ExpectedResultController(IExpectedResultRepository dbExpectedResultRepository, ITestRepository dbTestRepository, IAssertTypeRepository dbAssertTypeRepository)
+        public ExpectedResultController(IExpectedResultRepository dbExpectedResultRepository, ITestRepository dbTestRepository, IExpectedResultTypeRepository dbExpectedResultTypeRepository, IAssertTypeRepository dbAssertTypeRepository)
         {
             _dbExpectedResultRepository = dbExpectedResultRepository;
             _dbTestRepository = dbTestRepository; 
+            _dbExpectedResultTypeRepository = dbExpectedResultTypeRepository; 
             _dbAssertTypeRepository = dbAssertTypeRepository; 
             
         }
@@ -47,6 +49,7 @@ namespace LucentDb.Web.UI.Controllers
         public ActionResult Create()
         {
             ViewBag.Tests = new SelectList(_dbTestRepository.GetData(), "Id", "Id");
+            ViewBag.ExpectedResultTypes = new SelectList(_dbExpectedResultTypeRepository.GetData(), "Id", "Id");
             ViewBag.AssertTypes = new SelectList(_dbAssertTypeRepository.GetData(), "Id", "Id");
             
             return View();
@@ -73,6 +76,7 @@ namespace LucentDb.Web.UI.Controllers
         {
         	var expectedResult = _dbExpectedResultRepository.GetDataById(id).FirstOrDefault();    
             if (expectedResult != null) ViewBag.Tests = new SelectList(_dbTestRepository.GetData(), "Id", "Id", expectedResult.TestId);
+            if (expectedResult != null) ViewBag.ExpectedResultTypes = new SelectList(_dbExpectedResultTypeRepository.GetData(), "Id", "Id", expectedResult.ExpectedResultTypeId);
             if (expectedResult != null) ViewBag.AssertTypes = new SelectList(_dbAssertTypeRepository.GetData(), "Id", "Id", expectedResult.AssertTypeId);
             
             return View(expectedResult);

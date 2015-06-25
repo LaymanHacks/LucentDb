@@ -18,10 +18,17 @@ namespace LucentDb.Domain.Entities.Extensions
      
       public static ExpectedResult IncludeAssertType(this ExpectedResult expectedResult, IAssertTypeRepository assertTypeRepository) 
       {
-         if (expectedResult.AssertType != null) return  expectedResult;
-          if (expectedResult.AssertTypeId != null)
-              expectedResult.AssertType = assertTypeRepository.GetDataById((int) expectedResult.AssertTypeId).ToList().First();
-          return  expectedResult;      
+         if (expectedResult.AssertType != null) return  expectedResult;   
+               expectedResult.AssertType = assertTypeRepository.GetDataById((int) expectedResult.AssertTypeId).ToList().First();
+         return  expectedResult;      
+      }
+  
+     
+      public static ExpectedResult IncludeExpectedResultType(this ExpectedResult expectedResult, IExpectedResultTypeRepository expectedResultTypeRepository) 
+      {
+         if (expectedResult.ExpectedResultType != null) return  expectedResult;   
+               expectedResult.ExpectedResultType = expectedResultTypeRepository.GetDataById((int) expectedResult.ExpectedResultTypeId).ToList().First();
+         return  expectedResult;      
       }
   
      

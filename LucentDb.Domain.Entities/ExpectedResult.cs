@@ -28,23 +28,26 @@ namespace LucentDb.Domain.Entities
       
         private Int32 _id;
         private Int32 _testId;
-        private String _expectedValue;
+        private Nullable<Int32> _expectedResultTypeId;
         private Nullable<Int32> _assertTypeId;
+        private String _expectedValue;
         private Int32 _resultIndex; 
         private AssertType _assertType; 
+        private ExpectedResultType _expectedResultType; 
         private Test _test;  
 
       public ExpectedResult() : base()
       {
       }
 
-      public ExpectedResult(Int32 id, Int32 testId, String expectedValue, Nullable<Int32> assertTypeId, Int32 resultIndex) : base()
+      public ExpectedResult(Int32 id, Int32 testId, Nullable<Int32> expectedResultTypeId, Nullable<Int32> assertTypeId, String expectedValue, Int32 resultIndex) : base()
       {
           
            _id = id;
            _testId = testId;
-           _expectedValue = expectedValue;
+           _expectedResultTypeId = expectedResultTypeId;
            _assertTypeId = assertTypeId;
+           _expectedValue = expectedValue;
            _resultIndex = resultIndex;
       }
   
@@ -74,15 +77,15 @@ namespace LucentDb.Domain.Entities
         }
 
         /// <summary>
-        /// Public Property ExpectedValue
+        /// Public Property ExpectedResultTypeId
         /// </summary>
-        /// <returns>ExpectedValue as String</returns>
+        /// <returns>ExpectedResultTypeId as Nullable<Int32></returns>
         /// <remarks></remarks>
         [DataMember()]
-        public virtual String ExpectedValue
+        public virtual Nullable<Int32> ExpectedResultTypeId
         {
-            get{return this._expectedValue;}
-            set{this._expectedValue = value;}
+            get{return this._expectedResultTypeId;}
+            set{this._expectedResultTypeId = value;}
         }
 
         /// <summary>
@@ -95,6 +98,18 @@ namespace LucentDb.Domain.Entities
         {
             get{return this._assertTypeId;}
             set{this._assertTypeId = value;}
+        }
+
+        /// <summary>
+        /// Public Property ExpectedValue
+        /// </summary>
+        /// <returns>ExpectedValue as String</returns>
+        /// <remarks></remarks>
+        [DataMember()]
+        public virtual String ExpectedValue
+        {
+            get{return this._expectedValue;}
+            set{this._expectedValue = value;}
         }
 
         /// <summary>
@@ -114,6 +129,14 @@ namespace LucentDb.Domain.Entities
         {
           get { return  _assertType;}
           set { _assertType = value;}
+        }
+  
+      
+        [DataMember]
+        public virtual ExpectedResultType ExpectedResultType 
+        {
+          get { return  _expectedResultType;}
+          set { _expectedResultType = value;}
         }
   
       

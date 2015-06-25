@@ -5,6 +5,7 @@ using LucentDb.Common;
 using LucentDb.Data;
 using LucentDb.Domain;
 using LucentDb.Domain.Entities;
+using LucentDb.Domain.Model;
 
 namespace LucentDb.Validator
 {

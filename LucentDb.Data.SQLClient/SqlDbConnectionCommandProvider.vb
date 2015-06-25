@@ -56,17 +56,24 @@ Public Class SqlDbConnectionCommandProvider
         ''' <summary>
         ''' Updates one or more records from the Connection table 
         ''' </summary>
+      ''' <param name="connectionProviderId" />
       ''' <param name="name" />
       ''' <param name="connectionString" />
       ''' <param name="isActive" />
       ''' <param name="connectionId" />
         ''' <returns></returns>
         ''' <remarks></remarks> 
-        Public Function GetUpdateDbCommand( ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean,  ByVal connectionId As Int32) As IDbCommand Implements IDbConnectionCommandProvider.GetUpdateDbCommand
+        Public Function GetUpdateDbCommand( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean,  ByVal connectionId As Int32) As IDbCommand Implements IDbConnectionCommandProvider.GetUpdateDbCommand
             
             Dim command As New SqlCommand("Connection_Update")
             command.CommandType = CommandType.StoredProcedure
     
+            If (ConnectionProviderId.HasValue = true ) Then
+                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ConnectionProviderId", SqlDbType.int, connectionProviderId))
+      Else
+                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ConnectionProviderId", SqlDbType.int, global.System.DBNull.Value))
+      End If
+        
             If (Not name  Is Nothing ) Then
                             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
       Else
@@ -106,16 +113,23 @@ Public Class SqlDbConnectionCommandProvider
         ''' <summary>
         ''' Inserts a record into the Connection table on the database.
         ''' </summary>
+      ''' <param name="connectionProviderId" />
       ''' <param name="name" />
       ''' <param name="connectionString" />
       ''' <param name="isActive" />
         ''' <returns></returns>
         ''' <remarks></remarks> 
-        Public Function GetInsertDbCommand( ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean) As IDbCommand Implements IDbConnectionCommandProvider.GetInsertDbCommand
+        Public Function GetInsertDbCommand( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean) As IDbCommand Implements IDbConnectionCommandProvider.GetInsertDbCommand
             
             Dim command As New SqlCommand("Connection_Insert")
             command.CommandType = CommandType.StoredProcedure
     
+            If (ConnectionProviderId.HasValue = true ) Then
+                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ConnectionProviderId", SqlDbType.int, connectionProviderId))
+      Else
+                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ConnectionProviderId", SqlDbType.int, global.System.DBNull.Value))
+      End If
+        
             If (Not name  Is Nothing ) Then
                             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
       Else

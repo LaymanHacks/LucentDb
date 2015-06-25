@@ -85,7 +85,7 @@ namespace LucentDb.Web.UI.Controllers
         {
             try
             {
-                _dbProject_ConnectionRepository.Update(project_Connection, projectId, connectionId);
+                _dbProject_ConnectionRepository.Update(project_Connection, projectId,  connectionId);
                 return RedirectToAction("Index");
             }
             catch

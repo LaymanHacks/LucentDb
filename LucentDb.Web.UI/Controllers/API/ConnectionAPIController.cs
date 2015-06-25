@@ -38,7 +38,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPut]
         public void Update(Connection connection)
         {
-            _dbRepository.Update(connection.Name, connection.ConnectionString,  (bool)connection.IsActive,  (Int32)connection.ConnectionId);
+            _dbRepository.Update(connection.ConnectionProviderId, connection.Name, connection.ConnectionString,  (bool)connection.IsActive,  (Int32)connection.ConnectionId);
           }
 
         [Route("api/connections", Name = "ConnectionsDeleteRoute")]
@@ -60,7 +60,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPost]
         public Int32 Insert(Connection connection)
         {
-             return _dbRepository.Insert(connection.Name, connection.ConnectionString,  (bool)connection.IsActive);
+             return _dbRepository.Insert(connection.ConnectionProviderId, connection.Name, connection.ConnectionString,  (bool)connection.IsActive);
           }
 
         [Route("api/connections", Name = "ConnectionsGetDataPageableRoute")]

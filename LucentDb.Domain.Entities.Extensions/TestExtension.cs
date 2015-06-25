@@ -34,19 +34,17 @@ namespace LucentDb.Domain.Entities.Extensions
      
       public static Test IncludeProject(this Test test, IProjectRepository projectRepository) 
       {
-         if (test.Project != null) return  test;
-          if (test.ProjectId != null)
-              test.Project = projectRepository.GetDataByProjectId((int) test.ProjectId).ToList().First();
-          return  test;      
+         if (test.Project != null) return  test;   
+               test.Project = projectRepository.GetDataByProjectId((int) test.ProjectId).ToList().First();
+         return  test;      
       }
   
      
       public static Test IncludeTestGroup(this Test test, ITestGroupRepository testGroupRepository) 
       {
-         if (test.TestGroup != null) return  test;
-          if (test.GroupId != null)
-              test.TestGroup = testGroupRepository.GetDataById((int) test.GroupId).ToList().First();
-          return  test;      
+         if (test.TestGroup != null) return  test;   
+               test.TestGroup = testGroupRepository.GetDataById((int) test.GroupId).ToList().First();
+         return  test;      
       }
   
      

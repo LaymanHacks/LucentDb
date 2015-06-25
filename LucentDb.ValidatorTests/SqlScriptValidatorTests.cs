@@ -18,11 +18,11 @@ namespace LucentDb.Validator.Tests
             {
                 Name = "someTest",
                 TestValue = "Select 1",
-                ExpectedResults = new ExpectedResultList {new ExpectedResult(1, 1, "1", 1, 0)},
+                ExpectedResults = new ExpectedResultList {new ExpectedResult(1, 1,1,1, "1",  0)},
                 TestType = new TestType(1, "sqlsnippet", "", true)
             };
             var sqlVal = new SqlScriptValidator();
-            var valResult = sqlVal.Validate(new Connection(1,"Chinook", @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), test);
+            var valResult = sqlVal.Validate(new Connection(1,1,"Chinook", @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), test);
            Assert.IsTrue(valResult.IsValid);
            Console.WriteLine(valResult.ResultMessage);
         }
@@ -34,11 +34,11 @@ namespace LucentDb.Validator.Tests
             {
                 Name = "someTest",
                 TestValue = "Select 1",
-                ExpectedResults = new ExpectedResultList { new ExpectedResult(1, 1, "0", 1, 0) },
+                ExpectedResults = new ExpectedResultList { new ExpectedResult(1, 1, 1, 1, "0", 0) },
                 TestType = new TestType(1, "sqlsnippet", "", true)
             };
             var sqlVal = new SqlScriptValidator();
-            var valResult = sqlVal.Validate(new Connection(1, "Chinook", @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), test);
+            var valResult = sqlVal.Validate(new Connection(1,1, "Chinook", @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), test);
             Assert.IsFalse(valResult.IsValid);
             Console.WriteLine(valResult.ResultMessage);
         }
@@ -50,11 +50,11 @@ namespace LucentDb.Validator.Tests
             {
                 Name = "someTest",
                 TestValue = "Gibberish",
-                ExpectedResults = new ExpectedResultList { new ExpectedResult(1, 1, "0", 1, 0) },
+                ExpectedResults = new ExpectedResultList { new ExpectedResult(1, 1, 1, 1, "0", 0) },
                 TestType = new TestType(1, "sqlsnippet", "", true)
             };
             var sqlVal = new SqlScriptValidator();
-            var valResult = sqlVal.Validate(new Connection(1, "Chinook", @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), test);
+            var valResult = sqlVal.Validate(new Connection(1,1, "Chinook", @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), test);
             Assert.IsFalse(valResult.IsValid);
             Console.WriteLine(valResult.ResultMessage);
         }

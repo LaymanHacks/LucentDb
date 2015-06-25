@@ -11,11 +11,11 @@ namespace LucentDb.Win.UI
     {
         public Form1()
         {
-            _dataRepository = new DataRepository();
+            _dataRepository = new RepositoryContext();
             InitializeComponent();
         }
 
-        private DataRepository _dataRepository;
+        private RepositoryContext _dataRepository;
         private Project _selectedProject;
         private void Form1_Load(object sender, EventArgs e)
         {

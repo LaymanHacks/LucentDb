@@ -41,8 +41,8 @@
   <ItemGroup>
     <Compile Include="DataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestCondition.cs" />
-    <Compile Include="ValidationResponse.cs" />
+    <Compile Include="Model\TestCondition.cs" />
+    <Compile Include="Model\ValidationResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LucentDb.Data.Repository\LucentDb.Data.Repository.vbproj">

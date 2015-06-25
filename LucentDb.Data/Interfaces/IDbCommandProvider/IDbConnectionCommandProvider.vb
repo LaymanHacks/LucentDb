@@ -15,9 +15,9 @@ Namespace LucentDb.Data.DbCommandProvider
         ReadOnly Property ConnectionDbConnectionHolder() As DbConnectionHolder
         ReadOnly Property DbConnectionName As String
         Function GetGetDataDbCommand() As IDbCommand
-        Function GetUpdateDbCommand( ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean,  ByVal connectionId As Int32) As IDbCommand
+        Function GetUpdateDbCommand( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean,  ByVal connectionId As Int32) As IDbCommand
         Function GetDeleteDbCommand( ByVal connectionId As Int32) As IDbCommand
-        Function GetInsertDbCommand( ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean) As IDbCommand
+        Function GetInsertDbCommand( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean) As IDbCommand
         Function GetGetDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
         Function GetGetRowCountDbCommand() As IDbCommand
         Function GetGetDataByConnectionIdDbCommand( ByVal connectionId As Int32) As IDbCommand

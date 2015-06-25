@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using LucentDb.Domain;
+using LucentDb.Domain.Model;
 
 namespace LucentDb.Validator
 {

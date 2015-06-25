@@ -53,7 +53,9 @@
   <ItemGroup>
     <Compile Include="AssertType.cs" />
     <Compile Include="Connection.cs" />
+    <Compile Include="ConnectionProvider.cs" />
     <Compile Include="ExpectedResult.cs" />
+    <Compile Include="ExpectedResultType.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Project_Connection.cs" />
     <Compile Include="RunHistory.cs" />
