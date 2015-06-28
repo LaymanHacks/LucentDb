@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using LucentDb.Data.Repository;
 using LucentDb.Domain.Entities;
 using Newtonsoft.Json;
@@ -14,7 +15,7 @@ namespace LucentDb.Data.WebApiClient
         private readonly string _baseAddress;
         private readonly HttpMessageHandler _messageHandler;
 
-        public WebApiTestRepository(string baseAddress, HttpMessageHandler messageHandler = null)
+        public  WebApiTestRepository(string baseAddress, HttpMessageHandler messageHandler = null)
         {
             _baseAddress = !baseAddress.EndsWith("/") ? baseAddress + "/" : baseAddress;
             _messageHandler = messageHandler ?? new HttpClientHandler();
