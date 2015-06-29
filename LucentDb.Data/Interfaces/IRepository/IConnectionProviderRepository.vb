@@ -22,8 +22,7 @@ Imports LucentDb.Domain.Entities
         Sub Delete(ByVal connectionProvider as ConnectionProvider) 
         Function Insert( ByVal name As String,  ByVal value As String)  as Int32
         Function Insert(ByVal connectionProvider as ConnectionProvider)  as Int32
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ConnectionProvider)
-        Function GetRowCount()  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ConnectionProvider)
         Function GetDataById( ByVal id As Int32)  as ICollection(Of ConnectionProvider)
     End Interface 
 End NameSpace

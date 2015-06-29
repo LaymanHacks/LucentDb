@@ -31,14 +31,8 @@ Namespace LucentDb.Data.Repository
             _dbConnHolder =_dbProjectCommandProvider.ProjectDbConnectionHolder
         End Sub
 
-      
-    ''' <summary>
-    ''' Selects one or more records from the Project table 
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, true)> _ 
-    Public Function GetData()  as ICollection(Of Project) Implements IProjectRepository.GetData
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetGetDataDbCommand()
+              Public Function GetData()  as ICollection(Of Project) Implements IProjectRepository.GetData
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetGetDataDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project)
@@ -47,76 +41,40 @@ Namespace LucentDb.Data.Repository
                  Dim tempEntity As New Project( reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Updates one or more records from the Project table 
-    ''' </summary>
-   ''' <param name="Name"></param>
-   ''' <param name="IsActive"></param>
-   ''' <param name="ProjectId"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)> _ 
-    Public Sub Update( ByVal name As String,  ByVal isActive As Boolean,  ByVal projectId As Int32)  Implements IProjectRepository.Update
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetUpdateDbCommand(Name, IsActive, ProjectId)
+          Public Sub Update( ByVal name As String,  ByVal isActive As Boolean,  ByVal projectId As Int32)  Implements IProjectRepository.Update
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetUpdateDbCommand(Name, IsActive, ProjectId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
           Command.ExecuteNonQuery
             _dbConnHolder.Close()
     End Sub
   
-    ''' <summary>
-    ''' Updates one or more records from the Project table 
-    ''' </summary>
-    ''' <param name="Project"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, False)> _ 
     Public Sub Update(ByVal project as Project)  Implements IProjectRepository.Update
              With Project
 Update(.Name,  CBool(.IsActive),  CInt(.ProjectId))
        End With
 
     End Sub
-  
-    ''' <summary>
-    ''' Deletes one or more records from the Project table 
-    ''' </summary>
-   ''' <param name="ProjectId"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, true)> _ 
-    Public Sub Delete( ByVal projectId As Int32)  Implements IProjectRepository.Delete
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetDeleteDbCommand(ProjectId)
+          Public Sub Delete( ByVal projectId As Int32)  Implements IProjectRepository.Delete
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetDeleteDbCommand(ProjectId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
           Command.ExecuteNonQuery
             _dbConnHolder.Close()
     End Sub
   
-    ''' <summary>
-    ''' Deletes one or more records from the Project table 
-    ''' </summary>
-    ''' <param name="Project"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, False)> _ 
     Public Sub Delete(ByVal project as Project)  Implements IProjectRepository.Delete
              With Project
 Delete( CInt(.ProjectId))
        End With
 
     End Sub
-  
-    ''' <summary>
-    ''' Inserts an entity of Project into the database.
-    ''' </summary>
-   ''' <param name="Name"></param>
-   ''' <param name="IsActive"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)> _ 
-    Public Function Insert( ByVal name As String,  ByVal isActive As Boolean)  as Int32 Implements IProjectRepository.Insert
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetInsertDbCommand(Name, IsActive)
+          Public Function Insert( ByVal name As String,  ByVal isActive As Boolean)  as Int32 Implements IProjectRepository.Insert
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetInsertDbCommand(Name, IsActive)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -125,30 +83,14 @@ Delete( CInt(.ProjectId))
 
     End Function
   
-    ''' <summary>
-    ''' Inserts an entity of Project into the database.
-    ''' </summary>
-    ''' <param name="Project"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, False)> _ 
     Public Function Insert(ByVal project as Project)  as Int32 Implements IProjectRepository.Insert
              With Project
  Return Insert(.Name,  CBool(.IsActive))
        End With
 
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataPageable returns a IDataReader populated with a subset of data from Project
-    ''' </summary>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project) Implements IProjectRepository.GetDataPageable
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
+          Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Project) Implements IProjectRepository.GetDataPageable
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project)
@@ -157,18 +99,14 @@ Delete( CInt(.ProjectId))
                  Dim tempEntity As New Project( reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetRowCount()
+            Dim pagedResults as PagedResult(Of Project) = New PagedResult(Of Project)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for Project
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetRowCount()  as Int32 Implements IProjectRepository.GetRowCount
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetGetRowCountDbCommand()
+          Public Function GetRowCount()  as Int32
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetGetRowCountDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -176,15 +114,8 @@ Delete( CInt(.ProjectId))
             Return returnValue 
 
     End Function
-  
-    ''' <summary>
-    ''' Function  GetDataByProjectId returns a IDataReader for Project
-    ''' </summary>
-   ''' <param name="ProjectId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Project) Implements IProjectRepository.GetDataByProjectId
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetGetDataByProjectIdDbCommand(ProjectId)
+          Public Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Project) Implements IProjectRepository.GetDataByProjectId
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetGetDataByProjectIdDbCommand(ProjectId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project)
@@ -193,18 +124,12 @@ Delete( CInt(.ProjectId))
                  Dim tempEntity As New Project( reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetActiveData returns a ProjectList for Project with records that are marked as active
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, true)> _ 
-    Public Function GetActiveData()  as ICollection(Of Project) Implements IProjectRepository.GetActiveData
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetGetActiveDataDbCommand()
+          Public Function GetActiveData()  as ICollection(Of Project) Implements IProjectRepository.GetActiveData
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetGetActiveDataDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project)
@@ -213,21 +138,12 @@ Delete( CInt(.ProjectId))
                  Dim tempEntity As New Project( reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetActiveDataPageable returns a ProjectList populated with paged active records from Project
-    ''' </summary>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="PageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project) Implements IProjectRepository.GetActiveDataPageable
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetGetActiveDataPageableDbCommand(sortExpression, page, PageSize)
+          Public Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Project) Implements IProjectRepository.GetActiveDataPageable
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetGetActiveDataPageableDbCommand(sortExpression, page, PageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project)
@@ -236,18 +152,14 @@ Delete( CInt(.ProjectId))
                  Dim tempEntity As New Project( reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetActiveDataRowCount()
+            Dim pagedResults as PagedResult(Of Project) = New PagedResult(Of Project)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetActiveDataRowCount returns the row count for Project
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetActiveDataRowCount()  as Int32 Implements IProjectRepository.GetActiveDataRowCount
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetGetActiveDataRowCountDbCommand()
+          Public Function GetActiveDataRowCount()  as Int32
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetGetActiveDataRowCountDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -255,15 +167,8 @@ Delete( CInt(.ProjectId))
             Return returnValue 
 
     End Function
-  
-    ''' <summary>
-    ''' Function GetProjectsForConnectionByConnectionId returns a Connection
-    ''' </summary>
-   ''' <param name="ConnectionId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetProjectsForConnectionByConnectionId( ByVal connectionId As Int32)  as ICollection(Of Project) Implements IProjectRepository.GetProjectsForConnectionByConnectionId
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetGetProjectsForConnectionByConnectionIdDbCommand(ConnectionId)
+          Public Function GetProjectsForConnectionByConnectionId( ByVal connectionId As Int32)  as ICollection(Of Project) Implements IProjectRepository.GetProjectsForConnectionByConnectionId
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetGetProjectsForConnectionByConnectionIdDbCommand(ConnectionId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project)
@@ -272,22 +177,12 @@ Delete( CInt(.ProjectId))
                  Dim tempEntity As New Project( reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetProjectsForConnectionByConnectionId returns a Connection
-    ''' </summary>
-   ''' <param name="ConnectionId"></param>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="PageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetProjectsForConnectionByConnectionIdPageable( ByVal connectionId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project) Implements IProjectRepository.GetProjectsForConnectionByConnectionIdPageable
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetGetProjectsForConnectionByConnectionIdPageableDbCommand(ConnectionId, sortExpression, page, PageSize)
+          Public Function GetProjectsForConnectionByConnectionIdPageable( ByVal connectionId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Project) Implements IProjectRepository.GetProjectsForConnectionByConnectionIdPageable
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetGetProjectsForConnectionByConnectionIdPageableDbCommand(ConnectionId, sortExpression, page, PageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project)
@@ -296,19 +191,14 @@ Delete( CInt(.ProjectId))
                  Dim tempEntity As New Project( reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetProjectsForConnectionByConnectionIdRowCount(connectionId)
+            Dim pagedResults as PagedResult(Of Project) = New PagedResult(Of Project)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetProjectsForConnectionByConnectionIdRowCount returns the row count for Project
-    ''' </summary>
-   ''' <param name="ConnectionId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetProjectsForConnectionByConnectionIdRowCount( ByVal connectionId As Int32)  as Int32 Implements IProjectRepository.GetProjectsForConnectionByConnectionIdRowCount
-        Dim command As IDbCommand = _dbProjectCommandProvider.GetGetProjectsForConnectionByConnectionIdRowCountDbCommand(ConnectionId)
+          Public Function GetProjectsForConnectionByConnectionIdRowCount( ByVal connectionId As Int32)  as Int32
+            Dim command As IDbCommand = _dbProjectCommandProvider.GetGetProjectsForConnectionByConnectionIdRowCountDbCommand(ConnectionId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())

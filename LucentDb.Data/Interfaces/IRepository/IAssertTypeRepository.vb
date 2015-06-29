@@ -22,8 +22,7 @@ Imports LucentDb.Domain.Entities
         Sub Delete(ByVal assertType as AssertType) 
         Function Insert( ByVal name As String)  as Int32
         Function Insert(ByVal assertType as AssertType)  as Int32
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of AssertType)
-        Function GetRowCount()  as Int32
+        Function GetDataPageable(ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of AssertType)
         Function GetDataById( ByVal id As Int32)  as ICollection(Of AssertType)
     End Interface 
 End NameSpace

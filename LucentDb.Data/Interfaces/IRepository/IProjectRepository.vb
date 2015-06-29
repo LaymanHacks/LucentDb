@@ -22,15 +22,12 @@ Imports LucentDb.Domain.Entities
         Sub Delete(ByVal project as Project) 
         Function Insert( ByVal name As String,  ByVal isActive As Boolean)  as Int32
         Function Insert(ByVal project as Project)  as Int32
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project)
-        Function GetRowCount()  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Project)
         Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Project)
         Function GetActiveData()  as ICollection(Of Project)
-        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project)
-        Function GetActiveDataRowCount()  as Int32
+        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Project)
         Function GetProjectsForConnectionByConnectionId( ByVal connectionId As Int32)  as ICollection(Of Project)
-        Function GetProjectsForConnectionByConnectionIdPageable( ByVal connectionId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project)
-        Function GetProjectsForConnectionByConnectionIdRowCount( ByVal connectionId As Int32)  as Int32
+        Function GetProjectsForConnectionByConnectionIdPageable( ByVal connectionId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Project)
     End Interface 
 End NameSpace
   

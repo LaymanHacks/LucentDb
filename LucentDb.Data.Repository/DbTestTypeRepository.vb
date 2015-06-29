@@ -31,232 +31,142 @@ Namespace LucentDb.Data.Repository
             _dbConnHolder =_dbTestTypeCommandProvider.TestTypeDbConnectionHolder
         End Sub
 
-      
-    ''' <summary>
-    ''' Selects one or more records from the TestType table 
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, true)> _ 
-    Public Function GetData()  as ICollection(Of TestType) Implements ITestTypeRepository.GetData
-        Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetDataDbCommand()
+        Public Function GetData() As ICollection(Of TestType) Implements ITestTypeRepository.GetData
+            Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetDataDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of TestType)
+            Dim entList As New Collection(Of TestType)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New TestType( reader.GetInt32("Id"),  reader.GetString("Name") ,  reader.GetString("TestValidatorType") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
+                Dim tempEntity As New TestType(reader.GetInt32("Id"), reader.GetString("Name"), reader.GetString("TestValidatorType"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close
+            reader.Close()
             Return entList
-    
-    End Function
-  
-    ''' <summary>
-    ''' Updates one or more records from the TestType table 
-    ''' </summary>
-   ''' <param name="Name"></param>
-   ''' <param name="TestValidatorType"></param>
-   ''' <param name="IsActive"></param>
-   ''' <param name="Id"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)> _ 
-    Public Sub Update( ByVal name As String,  ByVal testValidatorType As String,  ByVal isActive As Boolean,  ByVal id As Int32)  Implements ITestTypeRepository.Update
-        Dim command As IDbCommand = _dbTestTypeCommandProvider.GetUpdateDbCommand(Name, TestValidatorType, IsActive, Id)
+
+        End Function
+        Public Sub Update(ByVal name As String, ByVal testValidatorType As String, ByVal isActive As Boolean, ByVal id As Int32) Implements ITestTypeRepository.Update
+            Dim command As IDbCommand = _dbTestTypeCommandProvider.GetUpdateDbCommand(Name, TestValidatorType, IsActive, Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-          Command.ExecuteNonQuery
+            Command.ExecuteNonQuery()
             _dbConnHolder.Close()
-    End Sub
-  
-    ''' <summary>
-    ''' Updates one or more records from the TestType table 
-    ''' </summary>
-    ''' <param name="TestType"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, False)> _ 
-    Public Sub Update(ByVal testType as TestType)  Implements ITestTypeRepository.Update
-             With TestType
-Update(.Name, .TestValidatorType,  CBool(.IsActive),  CInt(.Id))
-       End With
+        End Sub
 
-    End Sub
-  
-    ''' <summary>
-    ''' Deletes one or more records from the TestType table 
-    ''' </summary>
-   ''' <param name="Id"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, true)> _ 
-    Public Sub Delete( ByVal id As Int32)  Implements ITestTypeRepository.Delete
-        Dim command As IDbCommand = _dbTestTypeCommandProvider.GetDeleteDbCommand(Id)
+        Public Sub Update(ByVal testType As TestType) Implements ITestTypeRepository.Update
+            With TestType
+                Update(.Name, .TestValidatorType, CBool(.IsActive), CInt(.Id))
+            End With
+
+        End Sub
+        Public Sub Delete(ByVal id As Int32) Implements ITestTypeRepository.Delete
+            Dim command As IDbCommand = _dbTestTypeCommandProvider.GetDeleteDbCommand(Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-          Command.ExecuteNonQuery
+            Command.ExecuteNonQuery()
             _dbConnHolder.Close()
-    End Sub
-  
-    ''' <summary>
-    ''' Deletes one or more records from the TestType table 
-    ''' </summary>
-    ''' <param name="TestType"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, False)> _ 
-    Public Sub Delete(ByVal testType as TestType)  Implements ITestTypeRepository.Delete
-             With TestType
-Delete( CInt(.Id))
-       End With
+        End Sub
 
-    End Sub
-  
-    ''' <summary>
-    ''' Inserts an entity of TestType into the database.
-    ''' </summary>
-   ''' <param name="Name"></param>
-   ''' <param name="TestValidatorType"></param>
-   ''' <param name="IsActive"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)> _ 
-    Public Function Insert( ByVal name As String,  ByVal testValidatorType As String,  ByVal isActive As Boolean)  as Int32 Implements ITestTypeRepository.Insert
-        Dim command As IDbCommand = _dbTestTypeCommandProvider.GetInsertDbCommand(Name, TestValidatorType, IsActive)
+        Public Sub Delete(ByVal testType As TestType) Implements ITestTypeRepository.Delete
+            With TestType
+                Delete(CInt(.Id))
+            End With
+
+        End Sub
+        Public Function Insert(ByVal name As String, ByVal testValidatorType As String, ByVal isActive As Boolean) As Int32 Implements ITestTypeRepository.Insert
+            Dim command As IDbCommand = _dbTestTypeCommandProvider.GetInsertDbCommand(Name, TestValidatorType, IsActive)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
+            Dim returnValue As Int32 = Convert.ToInt32(Command.ExecuteScalar())
             _dbConnHolder.Close()
-            Return returnValue 
+            Return returnValue
 
-    End Function
-  
-    ''' <summary>
-    ''' Inserts an entity of TestType into the database.
-    ''' </summary>
-    ''' <param name="TestType"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, False)> _ 
-    Public Function Insert(ByVal testType as TestType)  as Int32 Implements ITestTypeRepository.Insert
-             With TestType
- Return Insert(.Name, .TestValidatorType,  CBool(.IsActive))
-       End With
+        End Function
 
-    End Function
-  
-    ''' <summary>
-    ''' Function GetDataPageable returns a IDataReader populated with a subset of data from TestType
-    ''' </summary>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of TestType) Implements ITestTypeRepository.GetDataPageable
-        Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
+        Public Function Insert(ByVal testType As TestType) As Int32 Implements ITestTypeRepository.Insert
+            With TestType
+                Return Insert(.Name, .TestValidatorType, CBool(.IsActive))
+            End With
+
+        End Function
+        Public Function GetDataPageable(ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of TestType) Implements ITestTypeRepository.GetDataPageable
+            Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of TestType)
+            Dim entList As New Collection(Of TestType)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New TestType( reader.GetInt32("Id"),  reader.GetString("Name") ,  reader.GetString("TestValidatorType") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
+                Dim tempEntity As New TestType(reader.GetInt32("Id"), reader.GetString("Name"), reader.GetString("TestValidatorType"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
-    End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for TestType
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetRowCount()  as Int32 Implements ITestTypeRepository.GetRowCount
-        Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetRowCountDbCommand()
-            command.Connection = _dbConnHolder.Connection
-            _dbConnHolder.Open()
-              Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
-            _dbConnHolder.Close()
-            Return returnValue 
+            reader.Close()
+            Dim totalCount As Int64 = GetRowCount()
+            Dim pagedResults As PagedResult(Of TestType) = New PagedResult(Of TestType)(page, pageSize, totalCount, entList)
+            Return pagedResults
 
-    End Function
-  
-    ''' <summary>
-    ''' Function  GetDataById returns a IDataReader for TestType
-    ''' </summary>
-   ''' <param name="Id"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataById( ByVal id As Int32)  as ICollection(Of TestType) Implements ITestTypeRepository.GetDataById
-        Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetDataByIdDbCommand(Id)
+        End Function
+        Public Function GetRowCount() As Int32
+            Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetRowCountDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of TestType)
-            Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
-            Do While (reader.Read())
-                 Dim tempEntity As New TestType( reader.GetInt32("Id"),  reader.GetString("Name") ,  reader.GetString("TestValidatorType") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
-            Loop
-            reader.Close
-            Return entList
-    
-    End Function
-  
-    ''' <summary>
-    ''' Function GetActiveData returns a TestTypeList for TestType with records that are marked as active
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, true)> _ 
-    Public Function GetActiveData()  as ICollection(Of TestType) Implements ITestTypeRepository.GetActiveData
-        Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetActiveDataDbCommand()
-            command.Connection = _dbConnHolder.Connection
-            _dbConnHolder.Open()
-              Dim entList as new Collection(Of TestType)
-            Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
-            Do While (reader.Read())
-                 Dim tempEntity As New TestType( reader.GetInt32("Id"),  reader.GetString("Name") ,  reader.GetString("TestValidatorType") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
-            Loop
-            reader.Close
-            Return entList
-    
-    End Function
-  
-    ''' <summary>
-    ''' Function GetActiveDataPageable returns a TestTypeList populated with paged active records from TestType
-    ''' </summary>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="PageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of TestType) Implements ITestTypeRepository.GetActiveDataPageable
-        Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetActiveDataPageableDbCommand(sortExpression, page, PageSize)
-            command.Connection = _dbConnHolder.Connection
-            _dbConnHolder.Open()
-              Dim entList as new Collection(Of TestType)
-            Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
-            Do While (reader.Read())
-                 Dim tempEntity As New TestType( reader.GetInt32("Id"),  reader.GetString("Name") ,  reader.GetString("TestValidatorType") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
-            Loop
-            reader.Close
-            Return entList
-    
-    End Function
-  
-    ''' <summary>
-    ''' Function GetActiveDataRowCount returns the row count for TestType
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetActiveDataRowCount()  as Int32 Implements ITestTypeRepository.GetActiveDataRowCount
-        Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetActiveDataRowCountDbCommand()
-            command.Connection = _dbConnHolder.Connection
-            _dbConnHolder.Open()
-              Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
+            Dim returnValue As Int32 = Convert.ToInt32(Command.ExecuteScalar())
             _dbConnHolder.Close()
-            Return returnValue 
+            Return returnValue
 
-    End Function
+        End Function
+        Public Function GetDataById(ByVal id As Int32) As ICollection(Of TestType) Implements ITestTypeRepository.GetDataById
+            Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetDataByIdDbCommand(Id)
+            command.Connection = _dbConnHolder.Connection
+            _dbConnHolder.Open()
+            Dim entList As New Collection(Of TestType)
+            Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
+            Do While (reader.Read())
+                Dim tempEntity As New TestType(reader.GetInt32("Id"), reader.GetString("Name"), reader.GetString("TestValidatorType"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
+            Loop
+            reader.Close()
+            Return entList
+
+        End Function
+        Public Function GetActiveData() As ICollection(Of TestType) Implements ITestTypeRepository.GetActiveData
+            Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetActiveDataDbCommand()
+            command.Connection = _dbConnHolder.Connection
+            _dbConnHolder.Open()
+            Dim entList As New Collection(Of TestType)
+            Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
+            Do While (reader.Read())
+                Dim tempEntity As New TestType(reader.GetInt32("Id"), reader.GetString("Name"), reader.GetString("TestValidatorType"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
+            Loop
+            reader.Close()
+            Return entList
+
+        End Function
+        Public Function GetActiveDataPageable(ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of TestType) Implements ITestTypeRepository.GetActiveDataPageable
+            Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetActiveDataPageableDbCommand(sortExpression, page, PageSize)
+            command.Connection = _dbConnHolder.Connection
+            _dbConnHolder.Open()
+            Dim entList As New Collection(Of TestType)
+            Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
+            Do While (reader.Read())
+                Dim tempEntity As New TestType(reader.GetInt32("Id"), reader.GetString("Name"), reader.GetString("TestValidatorType"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
+            Loop
+            reader.Close()
+            Dim totalCount As Int64 = GetActiveDataRowCount()
+            Dim pagedResults As PagedResult(Of TestType) = New PagedResult(Of TestType)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
+        End Function
+        Public Function GetActiveDataRowCount() As Int32
+            Dim command As IDbCommand = _dbTestTypeCommandProvider.GetGetActiveDataRowCountDbCommand()
+            command.Connection = _dbConnHolder.Connection
+            _dbConnHolder.Open()
+            Dim returnValue As Int32 = Convert.ToInt32(Command.ExecuteScalar())
+            _dbConnHolder.Close()
+            Return returnValue
+
+        End Function
    
   
 #Region "IDisposable Support"

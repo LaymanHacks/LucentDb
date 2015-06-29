@@ -70,8 +70,7 @@ namespace LucentDb.Web.UI.Controllers.Api
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataPageable(sortExpression, page, pageSize);
             var totalCount = _dbRepository.GetRowCount();
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "TestTypesGetDataPageableRoute", page,
-                pageSize, totalCount, results);
+            var pagedResults = new PagedResult<Test>(page, pageSize, totalCount, results);
             return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
         }
 

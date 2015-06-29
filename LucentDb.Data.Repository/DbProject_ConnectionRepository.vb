@@ -31,14 +31,8 @@ Namespace LucentDb.Data.Repository
             _dbConnHolder =_dbProject_ConnectionCommandProvider.Project_ConnectionDbConnectionHolder
         End Sub
 
-      
-    ''' <summary>
-    ''' Selects one or more records from the Project_Connection table 
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, true)> _ 
-    Public Function GetData()  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.GetData
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataDbCommand()
+              Public Function GetData()  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.GetData
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project_Connection)
@@ -47,78 +41,40 @@ Namespace LucentDb.Data.Repository
                  Dim tempEntity As New Project_Connection( reader.GetInt32("ProjectId"),  reader.GetInt32("ConnectionId"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Updates one or more records from the Project_Connection table 
-    ''' </summary>
-   ''' <param name="ProjectId"></param>
-   ''' <param name="ConnectionId"></param>
-   ''' <param name="Original_ProjectId"></param>
-   ''' <param name="Original_ConnectionId"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)> _ 
-    Public Sub Update( ByVal projectId As Int32,  ByVal connectionId As Int32,  ByVal original_ProjectId As Int32,  ByVal original_ConnectionId As Int32)  Implements IProject_ConnectionRepository.Update
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetUpdateDbCommand(ProjectId, ConnectionId, Original_ProjectId, Original_ConnectionId)
+          Public Sub Update( ByVal projectId As Int32,  ByVal connectionId As Int32,  ByVal original_ProjectId As Int32,  ByVal original_ConnectionId As Int32)  Implements IProject_ConnectionRepository.Update
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetUpdateDbCommand(ProjectId, ConnectionId, Original_ProjectId, Original_ConnectionId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
           Command.ExecuteNonQuery
             _dbConnHolder.Close()
     End Sub
   
-    ''' <summary>
-    ''' Updates one or more records from the Project_Connection table 
-    ''' </summary>
-    ''' <param name="Project_Connection"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, False)> _ 
     Public Sub Update(ByVal project_Connection as Project_Connection,  ByVal original_ProjectId As Int32,  ByVal original_ConnectionId As Int32)  Implements IProject_ConnectionRepository.Update
              With Project_Connection
 Update( CInt(.ProjectId),  CInt(.ConnectionId),  CInt(Original_ProjectId),  CInt(Original_ConnectionId))
        End With
 
     End Sub
-  
-    ''' <summary>
-    ''' Deletes one or more records from the Project_Connection table 
-    ''' </summary>
-   ''' <param name="ProjectId"></param>
-   ''' <param name="ConnectionId"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, true)> _ 
-    Public Sub Delete( ByVal projectId As Int32,  ByVal connectionId As Int32)  Implements IProject_ConnectionRepository.Delete
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetDeleteDbCommand(ProjectId, ConnectionId)
+          Public Sub Delete( ByVal projectId As Int32,  ByVal connectionId As Int32)  Implements IProject_ConnectionRepository.Delete
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetDeleteDbCommand(ProjectId, ConnectionId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
           Command.ExecuteNonQuery
             _dbConnHolder.Close()
     End Sub
   
-    ''' <summary>
-    ''' Deletes one or more records from the Project_Connection table 
-    ''' </summary>
-    ''' <param name="Project_Connection"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, False)> _ 
     Public Sub Delete(ByVal project_Connection as Project_Connection)  Implements IProject_ConnectionRepository.Delete
              With Project_Connection
 Delete( CInt(.ProjectId),  CInt(.ConnectionId))
        End With
 
     End Sub
-  
-    ''' <summary>
-    ''' Inserts an entity of Project_Connection into the database.
-    ''' </summary>
-   ''' <param name="ProjectId"></param>
-   ''' <param name="ConnectionId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)> _ 
-    Public Function Insert( ByVal projectId As Int32,  ByVal connectionId As Int32)  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.Insert
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetInsertDbCommand(ProjectId, ConnectionId)
+          Public Function Insert( ByVal projectId As Int32,  ByVal connectionId As Int32)  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.Insert
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetInsertDbCommand(ProjectId, ConnectionId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project_Connection)
@@ -127,35 +83,19 @@ Delete( CInt(.ProjectId),  CInt(.ConnectionId))
                  Dim tempEntity As New Project_Connection( reader.GetInt32("ProjectId"),  reader.GetInt32("ConnectionId"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
   
-    ''' <summary>
-    ''' Inserts an entity of Project_Connection into the database.
-    ''' </summary>
-    ''' <param name="Project_Connection"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, False)> _ 
     Public Function Insert(ByVal project_Connection as Project_Connection)  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.Insert
              With Project_Connection
  Return Insert( CInt(.ProjectId),  CInt(.ConnectionId))
        End With
 
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataPageable returns a IDataReader populated with a subset of data from Project_Connection
-    ''' </summary>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.GetDataPageable
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
+          Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Project_Connection) Implements IProject_ConnectionRepository.GetDataPageable
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project_Connection)
@@ -164,18 +104,14 @@ Delete( CInt(.ProjectId),  CInt(.ConnectionId))
                  Dim tempEntity As New Project_Connection( reader.GetInt32("ProjectId"),  reader.GetInt32("ConnectionId"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetRowCount()
+            Dim pagedResults as PagedResult(Of Project_Connection) = New PagedResult(Of Project_Connection)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for Project_Connection
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetRowCount()  as Int32 Implements IProject_ConnectionRepository.GetRowCount
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetRowCountDbCommand()
+          Public Function GetRowCount()  as Int32
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetRowCountDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -183,16 +119,8 @@ Delete( CInt(.ProjectId),  CInt(.ConnectionId))
             Return returnValue 
 
     End Function
-  
-    ''' <summary>
-    ''' Function  GetDataByProjectIdConnectionId returns a IDataReader for Project_Connection
-    ''' </summary>
-   ''' <param name="ProjectId"></param>
-   ''' <param name="ConnectionId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByProjectIdConnectionId( ByVal projectId As Int32,  ByVal connectionId As Int32)  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.GetDataByProjectIdConnectionId
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByProjectIdConnectionIdDbCommand(ProjectId, ConnectionId)
+          Public Function GetDataByProjectIdConnectionId( ByVal projectId As Int32,  ByVal connectionId As Int32)  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.GetDataByProjectIdConnectionId
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByProjectIdConnectionIdDbCommand(ProjectId, ConnectionId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project_Connection)
@@ -201,19 +129,12 @@ Delete( CInt(.ProjectId),  CInt(.ConnectionId))
                  Dim tempEntity As New Project_Connection( reader.GetInt32("ProjectId"),  reader.GetInt32("ConnectionId"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByConnectionId returns a IDataReader for Project_Connection
-    ''' </summary>
-   ''' <param name="ConnectionId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByConnectionId( ByVal connectionId As Int32)  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.GetDataByConnectionId
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByConnectionIdDbCommand(ConnectionId)
+          Public Function GetDataByConnectionId( ByVal connectionId As Int32)  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.GetDataByConnectionId
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByConnectionIdDbCommand(ConnectionId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project_Connection)
@@ -222,22 +143,12 @@ Delete( CInt(.ProjectId),  CInt(.ConnectionId))
                  Dim tempEntity As New Project_Connection( reader.GetInt32("ProjectId"),  reader.GetInt32("ConnectionId"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByConnectionIdPageable returns a IDataReader populated with a subset of data from Project_Connection
-    ''' </summary>
-   ''' <param name="ConnectionId"></param>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByConnectionIdPageable( ByVal connectionId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.GetDataByConnectionIdPageable
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByConnectionIdPageableDbCommand(ConnectionId, sortExpression, page, pageSize)
+          Public Function GetDataByConnectionIdPageable( ByVal connectionId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Project_Connection) Implements IProject_ConnectionRepository.GetDataByConnectionIdPageable
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByConnectionIdPageableDbCommand(ConnectionId, sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project_Connection)
@@ -246,19 +157,14 @@ Delete( CInt(.ProjectId),  CInt(.ConnectionId))
                  Dim tempEntity As New Project_Connection( reader.GetInt32("ProjectId"),  reader.GetInt32("ConnectionId"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetDataByConnectionIdRowCount(connectionId)
+            Dim pagedResults as PagedResult(Of Project_Connection) = New PagedResult(Of Project_Connection)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for Project_Connection
-    ''' </summary>
-   ''' <param name="ConnectionId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByConnectionIdRowCount( ByVal connectionId As Int32)  as Int32 Implements IProject_ConnectionRepository.GetDataByConnectionIdRowCount
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByConnectionIdRowCountDbCommand(ConnectionId)
+          Public Function GetDataByConnectionIdRowCount( ByVal connectionId As Int32)  as Int32
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByConnectionIdRowCountDbCommand(ConnectionId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -266,15 +172,8 @@ Delete( CInt(.ProjectId),  CInt(.ConnectionId))
             Return returnValue 
 
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByProjectId returns a IDataReader for Project_Connection
-    ''' </summary>
-   ''' <param name="ProjectId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.GetDataByProjectId
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByProjectIdDbCommand(ProjectId)
+          Public Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.GetDataByProjectId
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByProjectIdDbCommand(ProjectId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project_Connection)
@@ -283,22 +182,12 @@ Delete( CInt(.ProjectId),  CInt(.ConnectionId))
                  Dim tempEntity As New Project_Connection( reader.GetInt32("ProjectId"),  reader.GetInt32("ConnectionId"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByProjectIdPageable returns a IDataReader populated with a subset of data from Project_Connection
-    ''' </summary>
-   ''' <param name="ProjectId"></param>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project_Connection) Implements IProject_ConnectionRepository.GetDataByProjectIdPageable
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByProjectIdPageableDbCommand(ProjectId, sortExpression, page, pageSize)
+          Public Function GetDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Project_Connection) Implements IProject_ConnectionRepository.GetDataByProjectIdPageable
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByProjectIdPageableDbCommand(ProjectId, sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of Project_Connection)
@@ -307,19 +196,14 @@ Delete( CInt(.ProjectId),  CInt(.ConnectionId))
                  Dim tempEntity As New Project_Connection( reader.GetInt32("ProjectId"),  reader.GetInt32("ConnectionId"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetDataByProjectIdRowCount(projectId)
+            Dim pagedResults as PagedResult(Of Project_Connection) = New PagedResult(Of Project_Connection)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for Project_Connection
-    ''' </summary>
-   ''' <param name="ProjectId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByProjectIdRowCount( ByVal projectId As Int32)  as Int32 Implements IProject_ConnectionRepository.GetDataByProjectIdRowCount
-        Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByProjectIdRowCountDbCommand(ProjectId)
+          Public Function GetDataByProjectIdRowCount( ByVal projectId As Int32)  as Int32
+            Dim command As IDbCommand = _dbProject_ConnectionCommandProvider.GetGetDataByProjectIdRowCountDbCommand(ProjectId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())

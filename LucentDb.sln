@@ -53,9 +53,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Domain", "LucentDb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Validator", "LucentDb.Validator\LucentDb.Validator.csproj", "{4A33135E-3A6A-4A9A-9E20-8D8613BF4785}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Data.WebApiClient", "LucentDb.Data.RESTRepository\LucentDb.Data.WebApiClient.csproj", "{33E9C079-3F0B-4F3F-ABE5-5A72B9D73DA6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Data.WebApiRepository", "LucentDb.Data.WebApiRepository\LucentDb.Data.WebApiRepository.csproj", "{33E9C079-3F0B-4F3F-ABE5-5A72B9D73DA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Data.WebApiClientTests", "LucentDb.Data.RESTRepositoryTests\LucentDb.Data.WebApiClientTests.csproj", "{233E4E73-B260-4385-813A-4B244B7C40F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Data.WebApiClientTests", "LucentDb.Data.WebApiRepositoryTests\LucentDb.Data.WebApiClientTests.csproj", "{233E4E73-B260-4385-813A-4B244B7C40F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Common", "LucentDb.Common\LucentDb.Common.csproj", "{1D525ABE-3DDA-4A89-8BDF-2724F3B29ECE}"
 EndProject

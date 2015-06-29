@@ -22,15 +22,12 @@ Imports LucentDb.Domain.Entities
         Sub Delete(ByVal project_Connection as Project_Connection) 
         Function Insert( ByVal projectId As Int32,  ByVal connectionId As Int32)  as ICollection(Of Project_Connection)
         Function Insert(ByVal project_Connection as Project_Connection)  as ICollection(Of Project_Connection)
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project_Connection)
-        Function GetRowCount()  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Project_Connection)
         Function GetDataByProjectIdConnectionId( ByVal projectId As Int32,  ByVal connectionId As Int32)  as ICollection(Of Project_Connection)
         Function GetDataByConnectionId( ByVal connectionId As Int32)  as ICollection(Of Project_Connection)
-        Function GetDataByConnectionIdPageable( ByVal connectionId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project_Connection)
-        Function GetDataByConnectionIdRowCount( ByVal connectionId As Int32)  as Int32
+        Function GetDataByConnectionIdPageable( ByVal connectionId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Project_Connection)
         Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Project_Connection)
-        Function GetDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Project_Connection)
-        Function GetDataByProjectIdRowCount( ByVal projectId As Int32)  as Int32
+        Function GetDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Project_Connection)
     End Interface 
 End NameSpace
   

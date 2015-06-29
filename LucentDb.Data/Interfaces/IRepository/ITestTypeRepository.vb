@@ -22,12 +22,10 @@ Imports LucentDb.Domain.Entities
         Sub Delete(ByVal testType as TestType) 
         Function Insert( ByVal name As String,  ByVal testValidatorType As String,  ByVal isActive As Boolean)  as Int32
         Function Insert(ByVal testType as TestType)  as Int32
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of TestType)
-        Function GetRowCount()  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestType)
         Function GetDataById( ByVal id As Int32)  as ICollection(Of TestType)
         Function GetActiveData()  as ICollection(Of TestType)
-        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of TestType)
-        Function GetActiveDataRowCount()  as Int32
+        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestType)
     End Interface 
 End NameSpace
   

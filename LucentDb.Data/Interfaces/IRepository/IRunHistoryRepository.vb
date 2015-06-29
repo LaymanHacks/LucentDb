@@ -22,12 +22,10 @@ Imports LucentDb.Domain.Entities
         Sub Delete(ByVal runHistory as RunHistory) 
         Function Insert( ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isPass As Boolean,  ByVal runLog As String,  ByVal resultString As String)  as Int64
         Function Insert(ByVal runHistory as RunHistory)  as Int64
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of RunHistory)
-        Function GetRowCount()  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of RunHistory)
         Function GetDataById( ByVal id As Int64)  as ICollection(Of RunHistory)
         Function GetDataByTestId( ByVal testId As Int32)  as ICollection(Of RunHistory)
-        Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of RunHistory)
-        Function GetDataByTestIdRowCount( ByVal testId As Int32)  as Int32
+        Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of RunHistory)
     End Interface 
 End NameSpace
   

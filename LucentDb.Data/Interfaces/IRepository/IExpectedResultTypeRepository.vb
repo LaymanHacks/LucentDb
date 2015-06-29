@@ -22,8 +22,7 @@ Imports LucentDb.Domain.Entities
         Sub Delete(ByVal expectedResultType as ExpectedResultType) 
         Function Insert( ByVal name As String)  as Int32
         Function Insert(ByVal expectedResultType as ExpectedResultType)  as Int32
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ExpectedResultType)
-        Function GetRowCount()  as Int32
+        Function GetDataPageable(ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of ExpectedResultType)
         Function GetDataById( ByVal id As Int32)  as ICollection(Of ExpectedResultType)
     End Interface 
 End NameSpace

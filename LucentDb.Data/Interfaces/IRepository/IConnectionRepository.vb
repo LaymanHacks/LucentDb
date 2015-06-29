@@ -22,15 +22,12 @@ Imports LucentDb.Domain.Entities
         Sub Delete(ByVal connection as Connection) 
         Function Insert( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean)  as Int32
         Function Insert(ByVal connection as Connection)  as Int32
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Connection)
-        Function GetRowCount()  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
         Function GetDataByConnectionId( ByVal connectionId As Int32)  as ICollection(Of Connection)
         Function GetActiveData()  as ICollection(Of Connection)
-        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Connection)
-        Function GetActiveDataRowCount()  as Int32
+        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
         Function GetConnectionsForProjectByProjectId( ByVal projectId As Int32)  as ICollection(Of Connection)
-        Function GetConnectionsForProjectByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of Connection)
-        Function GetConnectionsForProjectByProjectIdRowCount( ByVal projectId As Int32)  as Int32
+        Function GetConnectionsForProjectByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
     End Interface 
 End NameSpace
   

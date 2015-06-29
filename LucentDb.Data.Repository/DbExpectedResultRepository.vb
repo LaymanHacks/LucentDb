@@ -31,14 +31,8 @@ Namespace LucentDb.Data.Repository
             _dbConnHolder =_dbExpectedResultCommandProvider.ExpectedResultDbConnectionHolder
         End Sub
 
-      
-    ''' <summary>
-    ''' Selects one or more records from the ExpectedResult table 
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, true)> _ 
-    Public Function GetData()  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetData
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataDbCommand()
+              Public Function GetData()  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetData
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of ExpectedResult)
@@ -47,82 +41,40 @@ Namespace LucentDb.Data.Repository
                  Dim tempEntity As New ExpectedResult( reader.GetInt32("Id"),  reader.GetInt32("TestId"),  reader.GetNullableInt32("ExpectedResultTypeId"),  reader.GetNullableInt32("AssertTypeId"),  reader.GetString("ExpectedValue") ,  reader.GetInt32("ResultIndex"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Updates one or more records from the ExpectedResult table 
-    ''' </summary>
-   ''' <param name="TestId"></param>
-   ''' <param name="ExpectedResultTypeId"></param>
-   ''' <param name="AssertTypeId"></param>
-   ''' <param name="ExpectedValue"></param>
-   ''' <param name="ResultIndex"></param>
-   ''' <param name="Id"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)> _ 
-    Public Sub Update( ByVal testId As Int32,  ByVal expectedResultTypeId As  Nullable(Of Int32) ,  ByVal assertTypeId As  Nullable(Of Int32) ,  ByVal expectedValue As String,  ByVal resultIndex As Int32,  ByVal id As Int32)  Implements IExpectedResultRepository.Update
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetUpdateDbCommand(TestId, ExpectedResultTypeId, AssertTypeId, ExpectedValue, ResultIndex, Id)
+          Public Sub Update( ByVal testId As Int32,  ByVal expectedResultTypeId As  Nullable(Of Int32) ,  ByVal assertTypeId As  Nullable(Of Int32) ,  ByVal expectedValue As String,  ByVal resultIndex As Int32,  ByVal id As Int32)  Implements IExpectedResultRepository.Update
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetUpdateDbCommand(TestId, ExpectedResultTypeId, AssertTypeId, ExpectedValue, ResultIndex, Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
           Command.ExecuteNonQuery
             _dbConnHolder.Close()
     End Sub
   
-    ''' <summary>
-    ''' Updates one or more records from the ExpectedResult table 
-    ''' </summary>
-    ''' <param name="ExpectedResult"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, False)> _ 
     Public Sub Update(ByVal expectedResult as ExpectedResult)  Implements IExpectedResultRepository.Update
              With ExpectedResult
 Update( CInt(.TestId), .ExpectedResultTypeId, .AssertTypeId, .ExpectedValue,  CInt(.ResultIndex),  CInt(.Id))
        End With
 
     End Sub
-  
-    ''' <summary>
-    ''' Deletes one or more records from the ExpectedResult table 
-    ''' </summary>
-   ''' <param name="Id"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, true)> _ 
-    Public Sub Delete( ByVal id As Int32)  Implements IExpectedResultRepository.Delete
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetDeleteDbCommand(Id)
+          Public Sub Delete( ByVal id As Int32)  Implements IExpectedResultRepository.Delete
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetDeleteDbCommand(Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
           Command.ExecuteNonQuery
             _dbConnHolder.Close()
     End Sub
   
-    ''' <summary>
-    ''' Deletes one or more records from the ExpectedResult table 
-    ''' </summary>
-    ''' <param name="ExpectedResult"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, False)> _ 
     Public Sub Delete(ByVal expectedResult as ExpectedResult)  Implements IExpectedResultRepository.Delete
              With ExpectedResult
 Delete( CInt(.Id))
        End With
 
     End Sub
-  
-    ''' <summary>
-    ''' Inserts an entity of ExpectedResult into the database.
-    ''' </summary>
-   ''' <param name="TestId"></param>
-   ''' <param name="ExpectedResultTypeId"></param>
-   ''' <param name="AssertTypeId"></param>
-   ''' <param name="ExpectedValue"></param>
-   ''' <param name="ResultIndex"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)> _ 
-    Public Function Insert( ByVal testId As Int32,  ByVal expectedResultTypeId As  Nullable(Of Int32) ,  ByVal assertTypeId As  Nullable(Of Int32) ,  ByVal expectedValue As String,  ByVal resultIndex As Int32)  as Int32 Implements IExpectedResultRepository.Insert
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetInsertDbCommand(TestId, ExpectedResultTypeId, AssertTypeId, ExpectedValue, ResultIndex)
+          Public Function Insert( ByVal testId As Int32,  ByVal expectedResultTypeId As  Nullable(Of Int32) ,  ByVal assertTypeId As  Nullable(Of Int32) ,  ByVal expectedValue As String,  ByVal resultIndex As Int32)  as Int32 Implements IExpectedResultRepository.Insert
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetInsertDbCommand(TestId, ExpectedResultTypeId, AssertTypeId, ExpectedValue, ResultIndex)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -131,30 +83,14 @@ Delete( CInt(.Id))
 
     End Function
   
-    ''' <summary>
-    ''' Inserts an entity of ExpectedResult into the database.
-    ''' </summary>
-    ''' <param name="ExpectedResult"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, False)> _ 
     Public Function Insert(ByVal expectedResult as ExpectedResult)  as Int32 Implements IExpectedResultRepository.Insert
              With ExpectedResult
  Return Insert( CInt(.TestId), .ExpectedResultTypeId, .AssertTypeId, .ExpectedValue,  CInt(.ResultIndex))
        End With
 
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataPageable returns a IDataReader populated with a subset of data from ExpectedResult
-    ''' </summary>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetDataPageable
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
+          Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResult) Implements IExpectedResultRepository.GetDataPageable
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of ExpectedResult)
@@ -163,18 +99,14 @@ Delete( CInt(.Id))
                  Dim tempEntity As New ExpectedResult( reader.GetInt32("Id"),  reader.GetInt32("TestId"),  reader.GetNullableInt32("ExpectedResultTypeId"),  reader.GetNullableInt32("AssertTypeId"),  reader.GetString("ExpectedValue") ,  reader.GetInt32("ResultIndex"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetRowCount()
+            Dim pagedResults as PagedResult(Of ExpectedResult) = New PagedResult(Of ExpectedResult)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for ExpectedResult
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetRowCount()  as Int32 Implements IExpectedResultRepository.GetRowCount
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetRowCountDbCommand()
+          Public Function GetRowCount()  as Int32
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetRowCountDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -182,15 +114,8 @@ Delete( CInt(.Id))
             Return returnValue 
 
     End Function
-  
-    ''' <summary>
-    ''' Function  GetDataById returns a IDataReader for ExpectedResult
-    ''' </summary>
-   ''' <param name="Id"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataById( ByVal id As Int32)  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetDataById
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByIdDbCommand(Id)
+          Public Function GetDataById( ByVal id As Int32)  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetDataById
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByIdDbCommand(Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of ExpectedResult)
@@ -199,19 +124,12 @@ Delete( CInt(.Id))
                  Dim tempEntity As New ExpectedResult( reader.GetInt32("Id"),  reader.GetInt32("TestId"),  reader.GetNullableInt32("ExpectedResultTypeId"),  reader.GetNullableInt32("AssertTypeId"),  reader.GetString("ExpectedValue") ,  reader.GetInt32("ResultIndex"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByAssertTypeId returns a IDataReader for ExpectedResult
-    ''' </summary>
-   ''' <param name="AssertTypeId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByAssertTypeId( ByVal assertTypeId As Int32)  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetDataByAssertTypeId
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByAssertTypeIdDbCommand(AssertTypeId)
+          Public Function GetDataByAssertTypeId( ByVal assertTypeId As Int32)  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetDataByAssertTypeId
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByAssertTypeIdDbCommand(AssertTypeId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of ExpectedResult)
@@ -220,22 +138,12 @@ Delete( CInt(.Id))
                  Dim tempEntity As New ExpectedResult( reader.GetInt32("Id"),  reader.GetInt32("TestId"),  reader.GetNullableInt32("ExpectedResultTypeId"),  reader.GetNullableInt32("AssertTypeId"),  reader.GetString("ExpectedValue") ,  reader.GetInt32("ResultIndex"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByAssertTypeIdPageable returns a IDataReader populated with a subset of data from ExpectedResult
-    ''' </summary>
-   ''' <param name="AssertTypeId"></param>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByAssertTypeIdPageable( ByVal assertTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetDataByAssertTypeIdPageable
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByAssertTypeIdPageableDbCommand(AssertTypeId, sortExpression, page, pageSize)
+          Public Function GetDataByAssertTypeIdPageable( ByVal assertTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResult) Implements IExpectedResultRepository.GetDataByAssertTypeIdPageable
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByAssertTypeIdPageableDbCommand(AssertTypeId, sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of ExpectedResult)
@@ -244,19 +152,14 @@ Delete( CInt(.Id))
                  Dim tempEntity As New ExpectedResult( reader.GetInt32("Id"),  reader.GetInt32("TestId"),  reader.GetNullableInt32("ExpectedResultTypeId"),  reader.GetNullableInt32("AssertTypeId"),  reader.GetString("ExpectedValue") ,  reader.GetInt32("ResultIndex"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetDataByAssertTypeIdRowCount(assertTypeId)
+            Dim pagedResults as PagedResult(Of ExpectedResult) = New PagedResult(Of ExpectedResult)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for ExpectedResult
-    ''' </summary>
-   ''' <param name="AssertTypeId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByAssertTypeIdRowCount( ByVal assertTypeId As Int32)  as Int32 Implements IExpectedResultRepository.GetDataByAssertTypeIdRowCount
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByAssertTypeIdRowCountDbCommand(AssertTypeId)
+          Public Function GetDataByAssertTypeIdRowCount( ByVal assertTypeId As Int32)  as Int32
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByAssertTypeIdRowCountDbCommand(AssertTypeId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -264,15 +167,8 @@ Delete( CInt(.Id))
             Return returnValue 
 
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByExpectedResultTypeId returns a IDataReader for ExpectedResult
-    ''' </summary>
-   ''' <param name="ExpectedResultTypeId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByExpectedResultTypeId( ByVal expectedResultTypeId As Int32)  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetDataByExpectedResultTypeId
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByExpectedResultTypeIdDbCommand(ExpectedResultTypeId)
+          Public Function GetDataByExpectedResultTypeId( ByVal expectedResultTypeId As Int32)  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetDataByExpectedResultTypeId
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByExpectedResultTypeIdDbCommand(ExpectedResultTypeId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of ExpectedResult)
@@ -281,22 +177,12 @@ Delete( CInt(.Id))
                  Dim tempEntity As New ExpectedResult( reader.GetInt32("Id"),  reader.GetInt32("TestId"),  reader.GetNullableInt32("ExpectedResultTypeId"),  reader.GetNullableInt32("AssertTypeId"),  reader.GetString("ExpectedValue") ,  reader.GetInt32("ResultIndex"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByExpectedResultTypeIdPageable returns a IDataReader populated with a subset of data from ExpectedResult
-    ''' </summary>
-   ''' <param name="ExpectedResultTypeId"></param>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByExpectedResultTypeIdPageable( ByVal expectedResultTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetDataByExpectedResultTypeIdPageable
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByExpectedResultTypeIdPageableDbCommand(ExpectedResultTypeId, sortExpression, page, pageSize)
+          Public Function GetDataByExpectedResultTypeIdPageable( ByVal expectedResultTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResult) Implements IExpectedResultRepository.GetDataByExpectedResultTypeIdPageable
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByExpectedResultTypeIdPageableDbCommand(ExpectedResultTypeId, sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of ExpectedResult)
@@ -305,19 +191,14 @@ Delete( CInt(.Id))
                  Dim tempEntity As New ExpectedResult( reader.GetInt32("Id"),  reader.GetInt32("TestId"),  reader.GetNullableInt32("ExpectedResultTypeId"),  reader.GetNullableInt32("AssertTypeId"),  reader.GetString("ExpectedValue") ,  reader.GetInt32("ResultIndex"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetDataByExpectedResultTypeIdRowCount(expectedResultTypeId)
+            Dim pagedResults as PagedResult(Of ExpectedResult) = New PagedResult(Of ExpectedResult)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for ExpectedResult
-    ''' </summary>
-   ''' <param name="ExpectedResultTypeId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByExpectedResultTypeIdRowCount( ByVal expectedResultTypeId As Int32)  as Int32 Implements IExpectedResultRepository.GetDataByExpectedResultTypeIdRowCount
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByExpectedResultTypeIdRowCountDbCommand(ExpectedResultTypeId)
+          Public Function GetDataByExpectedResultTypeIdRowCount( ByVal expectedResultTypeId As Int32)  as Int32
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByExpectedResultTypeIdRowCountDbCommand(ExpectedResultTypeId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -325,15 +206,8 @@ Delete( CInt(.Id))
             Return returnValue 
 
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByTestId returns a IDataReader for ExpectedResult
-    ''' </summary>
-   ''' <param name="TestId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByTestId( ByVal testId As Int32)  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetDataByTestId
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByTestIdDbCommand(TestId)
+          Public Function GetDataByTestId( ByVal testId As Int32)  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetDataByTestId
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByTestIdDbCommand(TestId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of ExpectedResult)
@@ -342,22 +216,12 @@ Delete( CInt(.Id))
                  Dim tempEntity As New ExpectedResult( reader.GetInt32("Id"),  reader.GetInt32("TestId"),  reader.GetNullableInt32("ExpectedResultTypeId"),  reader.GetNullableInt32("AssertTypeId"),  reader.GetString("ExpectedValue") ,  reader.GetInt32("ResultIndex"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByTestIdPageable returns a IDataReader populated with a subset of data from ExpectedResult
-    ''' </summary>
-   ''' <param name="TestId"></param>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ExpectedResult) Implements IExpectedResultRepository.GetDataByTestIdPageable
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByTestIdPageableDbCommand(TestId, sortExpression, page, pageSize)
+          Public Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResult) Implements IExpectedResultRepository.GetDataByTestIdPageable
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByTestIdPageableDbCommand(TestId, sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of ExpectedResult)
@@ -366,19 +230,14 @@ Delete( CInt(.Id))
                  Dim tempEntity As New ExpectedResult( reader.GetInt32("Id"),  reader.GetInt32("TestId"),  reader.GetNullableInt32("ExpectedResultTypeId"),  reader.GetNullableInt32("AssertTypeId"),  reader.GetString("ExpectedValue") ,  reader.GetInt32("ResultIndex"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetDataByTestIdRowCount(testId)
+            Dim pagedResults as PagedResult(Of ExpectedResult) = New PagedResult(Of ExpectedResult)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for ExpectedResult
-    ''' </summary>
-   ''' <param name="TestId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByTestIdRowCount( ByVal testId As Int32)  as Int32 Implements IExpectedResultRepository.GetDataByTestIdRowCount
-        Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByTestIdRowCountDbCommand(TestId)
+          Public Function GetDataByTestIdRowCount( ByVal testId As Int32)  as Int32
+            Dim command As IDbCommand = _dbExpectedResultCommandProvider.GetGetDataByTestIdRowCountDbCommand(TestId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())

@@ -22,18 +22,14 @@ Imports LucentDb.Domain.Entities
         Sub Delete(ByVal expectedResult as ExpectedResult) 
         Function Insert( ByVal testId As Int32,  ByVal expectedResultTypeId As  Nullable(Of Int32) ,  ByVal assertTypeId As  Nullable(Of Int32) ,  ByVal expectedValue As String,  ByVal resultIndex As Int32)  as Int32
         Function Insert(ByVal expectedResult as ExpectedResult)  as Int32
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ExpectedResult)
-        Function GetRowCount()  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResult)
         Function GetDataById( ByVal id As Int32)  as ICollection(Of ExpectedResult)
         Function GetDataByAssertTypeId( ByVal assertTypeId As Int32)  as ICollection(Of ExpectedResult)
-        Function GetDataByAssertTypeIdPageable( ByVal assertTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ExpectedResult)
-        Function GetDataByAssertTypeIdRowCount( ByVal assertTypeId As Int32)  as Int32
+        Function GetDataByAssertTypeIdPageable( ByVal assertTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResult)
         Function GetDataByExpectedResultTypeId( ByVal expectedResultTypeId As Int32)  as ICollection(Of ExpectedResult)
-        Function GetDataByExpectedResultTypeIdPageable( ByVal expectedResultTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ExpectedResult)
-        Function GetDataByExpectedResultTypeIdRowCount( ByVal expectedResultTypeId As Int32)  as Int32
+        Function GetDataByExpectedResultTypeIdPageable( ByVal expectedResultTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResult)
         Function GetDataByTestId( ByVal testId As Int32)  as ICollection(Of ExpectedResult)
-        Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of ExpectedResult)
-        Function GetDataByTestIdRowCount( ByVal testId As Int32)  as Int32
+        Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResult)
     End Interface 
 End NameSpace
   

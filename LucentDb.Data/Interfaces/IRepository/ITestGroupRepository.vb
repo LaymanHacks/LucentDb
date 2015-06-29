@@ -22,18 +22,14 @@ Imports LucentDb.Domain.Entities
         Sub Delete(ByVal testGroup as TestGroup) 
         Function Insert( ByVal projectId As Int32,  ByVal name As String,  ByVal isActive As Boolean)  as Int32
         Function Insert(ByVal testGroup as TestGroup)  as Int32
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of TestGroup)
-        Function GetRowCount()  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestGroup)
         Function GetDataById( ByVal id As Int32)  as ICollection(Of TestGroup)
         Function GetActiveData()  as ICollection(Of TestGroup)
-        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of TestGroup)
-        Function GetActiveDataRowCount()  as Int32
+        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestGroup)
         Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of TestGroup)
-        Function GetDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of TestGroup)
-        Function GetDataByProjectIdRowCount( ByVal projectId As Int32)  as Int32
+        Function GetDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestGroup)
         Function GetActiveDataByProjectId( ByVal projectId As Int32)  as ICollection(Of TestGroup)
-        Function GetActiveDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of TestGroup)
-        Function GetActiveDataByProjectIdRowCount( ByVal projectId As Int32)  as Int32
+        Function GetActiveDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestGroup)
     End Interface 
 End NameSpace
   

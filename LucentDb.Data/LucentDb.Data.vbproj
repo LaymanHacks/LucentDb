@@ -71,6 +71,7 @@
     <Compile Include="Interfaces\IRepository\ITestRepository.vb" />
     <Compile Include="Interfaces\IRepository\ITestTypeRepository.vb" />
     <Compile Include="ConnectionHelper.vb" />
+    <Compile Include="PagedResult.vb" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="My Project\" />

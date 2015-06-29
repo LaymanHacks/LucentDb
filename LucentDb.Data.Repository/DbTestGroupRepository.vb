@@ -31,14 +31,8 @@ Namespace LucentDb.Data.Repository
             _dbConnHolder =_dbTestGroupCommandProvider.TestGroupDbConnectionHolder
         End Sub
 
-      
-    ''' <summary>
-    ''' Selects one or more records from the TestGroup table 
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, true)> _ 
-    Public Function GetData()  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetData
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetDataDbCommand()
+              Public Function GetData()  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetData
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetDataDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of TestGroup)
@@ -47,78 +41,40 @@ Namespace LucentDb.Data.Repository
                  Dim tempEntity As New TestGroup( reader.GetInt32("Id"),  reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Updates one or more records from the TestGroup table 
-    ''' </summary>
-   ''' <param name="ProjectId"></param>
-   ''' <param name="Name"></param>
-   ''' <param name="IsActive"></param>
-   ''' <param name="Id"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)> _ 
-    Public Sub Update( ByVal projectId As Int32,  ByVal name As String,  ByVal isActive As Boolean,  ByVal id As Int32)  Implements ITestGroupRepository.Update
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetUpdateDbCommand(ProjectId, Name, IsActive, Id)
+          Public Sub Update( ByVal projectId As Int32,  ByVal name As String,  ByVal isActive As Boolean,  ByVal id As Int32)  Implements ITestGroupRepository.Update
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetUpdateDbCommand(ProjectId, Name, IsActive, Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
           Command.ExecuteNonQuery
             _dbConnHolder.Close()
     End Sub
   
-    ''' <summary>
-    ''' Updates one or more records from the TestGroup table 
-    ''' </summary>
-    ''' <param name="TestGroup"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, False)> _ 
     Public Sub Update(ByVal testGroup as TestGroup)  Implements ITestGroupRepository.Update
              With TestGroup
 Update( CInt(.ProjectId),  CStr(.Name),  CBool(.IsActive),  CInt(.Id))
        End With
 
     End Sub
-  
-    ''' <summary>
-    ''' Deletes one or more records from the TestGroup table 
-    ''' </summary>
-   ''' <param name="Id"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, true)> _ 
-    Public Sub Delete( ByVal id As Int32)  Implements ITestGroupRepository.Delete
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetDeleteDbCommand(Id)
+          Public Sub Delete( ByVal id As Int32)  Implements ITestGroupRepository.Delete
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetDeleteDbCommand(Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
           Command.ExecuteNonQuery
             _dbConnHolder.Close()
     End Sub
   
-    ''' <summary>
-    ''' Deletes one or more records from the TestGroup table 
-    ''' </summary>
-    ''' <param name="TestGroup"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, False)> _ 
     Public Sub Delete(ByVal testGroup as TestGroup)  Implements ITestGroupRepository.Delete
              With TestGroup
 Delete( CInt(.Id))
        End With
 
     End Sub
-  
-    ''' <summary>
-    ''' Inserts an entity of TestGroup into the database.
-    ''' </summary>
-   ''' <param name="ProjectId"></param>
-   ''' <param name="Name"></param>
-   ''' <param name="IsActive"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)> _ 
-    Public Function Insert( ByVal projectId As Int32,  ByVal name As String,  ByVal isActive As Boolean)  as Int32 Implements ITestGroupRepository.Insert
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetInsertDbCommand(ProjectId, Name, IsActive)
+          Public Function Insert( ByVal projectId As Int32,  ByVal name As String,  ByVal isActive As Boolean)  as Int32 Implements ITestGroupRepository.Insert
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetInsertDbCommand(ProjectId, Name, IsActive)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -127,30 +83,14 @@ Delete( CInt(.Id))
 
     End Function
   
-    ''' <summary>
-    ''' Inserts an entity of TestGroup into the database.
-    ''' </summary>
-    ''' <param name="TestGroup"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, False)> _ 
     Public Function Insert(ByVal testGroup as TestGroup)  as Int32 Implements ITestGroupRepository.Insert
              With TestGroup
  Return Insert( CInt(.ProjectId),  CStr(.Name),  CBool(.IsActive))
        End With
 
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataPageable returns a IDataReader populated with a subset of data from TestGroup
-    ''' </summary>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetDataPageable
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
+          Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestGroup) Implements ITestGroupRepository.GetDataPageable
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of TestGroup)
@@ -159,18 +99,14 @@ Delete( CInt(.Id))
                  Dim tempEntity As New TestGroup( reader.GetInt32("Id"),  reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetRowCount()
+            Dim pagedResults as PagedResult(Of TestGroup) = New PagedResult(Of TestGroup)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for TestGroup
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetRowCount()  as Int32 Implements ITestGroupRepository.GetRowCount
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetRowCountDbCommand()
+          Public Function GetRowCount()  as Int32
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetRowCountDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -178,15 +114,8 @@ Delete( CInt(.Id))
             Return returnValue 
 
     End Function
-  
-    ''' <summary>
-    ''' Function  GetDataById returns a IDataReader for TestGroup
-    ''' </summary>
-   ''' <param name="Id"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataById( ByVal id As Int32)  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetDataById
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetDataByIdDbCommand(Id)
+          Public Function GetDataById( ByVal id As Int32)  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetDataById
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetDataByIdDbCommand(Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of TestGroup)
@@ -195,18 +124,12 @@ Delete( CInt(.Id))
                  Dim tempEntity As New TestGroup( reader.GetInt32("Id"),  reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetActiveData returns a TestGroupList for TestGroup with records that are marked as active
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, true)> _ 
-    Public Function GetActiveData()  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetActiveData
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetActiveDataDbCommand()
+          Public Function GetActiveData()  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetActiveData
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetActiveDataDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of TestGroup)
@@ -215,21 +138,12 @@ Delete( CInt(.Id))
                  Dim tempEntity As New TestGroup( reader.GetInt32("Id"),  reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetActiveDataPageable returns a TestGroupList populated with paged active records from TestGroup
-    ''' </summary>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="PageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetActiveDataPageable
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetActiveDataPageableDbCommand(sortExpression, page, PageSize)
+          Public Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestGroup) Implements ITestGroupRepository.GetActiveDataPageable
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetActiveDataPageableDbCommand(sortExpression, page, PageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of TestGroup)
@@ -238,18 +152,14 @@ Delete( CInt(.Id))
                  Dim tempEntity As New TestGroup( reader.GetInt32("Id"),  reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetActiveDataRowCount()
+            Dim pagedResults as PagedResult(Of TestGroup) = New PagedResult(Of TestGroup)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetActiveDataRowCount returns the row count for TestGroup
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetActiveDataRowCount()  as Int32 Implements ITestGroupRepository.GetActiveDataRowCount
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetActiveDataRowCountDbCommand()
+          Public Function GetActiveDataRowCount()  as Int32
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetActiveDataRowCountDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -257,15 +167,8 @@ Delete( CInt(.Id))
             Return returnValue 
 
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByProjectId returns a IDataReader for TestGroup
-    ''' </summary>
-   ''' <param name="ProjectId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetDataByProjectId
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetDataByProjectIdDbCommand(ProjectId)
+          Public Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetDataByProjectId
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetDataByProjectIdDbCommand(ProjectId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of TestGroup)
@@ -274,22 +177,12 @@ Delete( CInt(.Id))
                  Dim tempEntity As New TestGroup( reader.GetInt32("Id"),  reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByProjectIdPageable returns a IDataReader populated with a subset of data from TestGroup
-    ''' </summary>
-   ''' <param name="ProjectId"></param>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetDataByProjectIdPageable
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetDataByProjectIdPageableDbCommand(ProjectId, sortExpression, page, pageSize)
+          Public Function GetDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestGroup) Implements ITestGroupRepository.GetDataByProjectIdPageable
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetDataByProjectIdPageableDbCommand(ProjectId, sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of TestGroup)
@@ -298,19 +191,14 @@ Delete( CInt(.Id))
                  Dim tempEntity As New TestGroup( reader.GetInt32("Id"),  reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetDataByProjectIdRowCount(projectId)
+            Dim pagedResults as PagedResult(Of TestGroup) = New PagedResult(Of TestGroup)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for TestGroup
-    ''' </summary>
-   ''' <param name="ProjectId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByProjectIdRowCount( ByVal projectId As Int32)  as Int32 Implements ITestGroupRepository.GetDataByProjectIdRowCount
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetDataByProjectIdRowCountDbCommand(ProjectId)
+          Public Function GetDataByProjectIdRowCount( ByVal projectId As Int32)  as Int32
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetDataByProjectIdRowCountDbCommand(ProjectId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -318,15 +206,8 @@ Delete( CInt(.Id))
             Return returnValue 
 
     End Function
-  
-    ''' <summary>
-    ''' Function GetActiveDataByProjectId returns a TestGroupList for TestGroup
-    ''' </summary>
-   ''' <param name="ProjectId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetActiveDataByProjectId( ByVal projectId As Int32)  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetActiveDataByProjectId
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetActiveDataByProjectIdDbCommand(ProjectId)
+          Public Function GetActiveDataByProjectId( ByVal projectId As Int32)  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetActiveDataByProjectId
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetActiveDataByProjectIdDbCommand(ProjectId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of TestGroup)
@@ -335,22 +216,12 @@ Delete( CInt(.Id))
                  Dim tempEntity As New TestGroup( reader.GetInt32("Id"),  reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetActiveDataByProjectIdPageable returns a TestGroupList populated with a subset of data from TestGroup
-    ''' </summary>
-   ''' <param name="ProjectId"></param>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="PageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetActiveDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of TestGroup) Implements ITestGroupRepository.GetActiveDataByProjectIdPageable
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetActiveDataByProjectIdPageableDbCommand(ProjectId, sortExpression, page, PageSize)
+          Public Function GetActiveDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestGroup) Implements ITestGroupRepository.GetActiveDataByProjectIdPageable
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetActiveDataByProjectIdPageableDbCommand(ProjectId, sortExpression, page, PageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of TestGroup)
@@ -359,19 +230,14 @@ Delete( CInt(.Id))
                  Dim tempEntity As New TestGroup( reader.GetInt32("Id"),  reader.GetInt32("ProjectId"),  reader.GetString("Name") ,  reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetActiveDataByProjectIdRowCount(projectId)
+            Dim pagedResults as PagedResult(Of TestGroup) = New PagedResult(Of TestGroup)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for TestGroup
-    ''' </summary>
-   ''' <param name="ProjectId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetActiveDataByProjectIdRowCount( ByVal projectId As Int32)  as Int32 Implements ITestGroupRepository.GetActiveDataByProjectIdRowCount
-        Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetActiveDataByProjectIdRowCountDbCommand(ProjectId)
+          Public Function GetActiveDataByProjectIdRowCount( ByVal projectId As Int32)  as Int32
+            Dim command As IDbCommand = _dbTestGroupCommandProvider.GetGetActiveDataByProjectIdRowCountDbCommand(ProjectId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())

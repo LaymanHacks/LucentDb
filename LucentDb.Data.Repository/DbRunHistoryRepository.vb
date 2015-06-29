@@ -31,14 +31,8 @@ Namespace LucentDb.Data.Repository
             _dbConnHolder =_dbRunHistoryCommandProvider.RunHistoryDbConnectionHolder
         End Sub
 
-      
-    ''' <summary>
-    ''' Selects one or more records from the RunHistory table 
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, true)> _ 
-    Public Function GetData()  as ICollection(Of RunHistory) Implements IRunHistoryRepository.GetData
-        Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetDataDbCommand()
+              Public Function GetData()  as ICollection(Of RunHistory) Implements IRunHistoryRepository.GetData
+            Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetDataDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of RunHistory)
@@ -47,82 +41,40 @@ Namespace LucentDb.Data.Repository
                  Dim tempEntity As New RunHistory( reader.GetInt64("Id"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetBoolean("IsPass"),  reader.GetString("RunLog") ,  reader.GetString("ResultString") )
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Updates one or more records from the RunHistory table 
-    ''' </summary>
-   ''' <param name="TestId"></param>
-   ''' <param name="RunDateTime"></param>
-   ''' <param name="IsPass"></param>
-   ''' <param name="RunLog"></param>
-   ''' <param name="ResultString"></param>
-   ''' <param name="Id"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)> _ 
-    Public Sub Update( ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isPass As Boolean,  ByVal runLog As String,  ByVal resultString As String,  ByVal id As Int64)  Implements IRunHistoryRepository.Update
-        Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetUpdateDbCommand(TestId, RunDateTime, IsPass, RunLog, ResultString, Id)
+          Public Sub Update( ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isPass As Boolean,  ByVal runLog As String,  ByVal resultString As String,  ByVal id As Int64)  Implements IRunHistoryRepository.Update
+            Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetUpdateDbCommand(TestId, RunDateTime, IsPass, RunLog, ResultString, Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
           Command.ExecuteNonQuery
             _dbConnHolder.Close()
     End Sub
   
-    ''' <summary>
-    ''' Updates one or more records from the RunHistory table 
-    ''' </summary>
-    ''' <param name="RunHistory"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, False)> _ 
     Public Sub Update(ByVal runHistory as RunHistory)  Implements IRunHistoryRepository.Update
              With RunHistory
 Update( CInt(.TestId),  CDate(.RunDateTime),  CBool(.IsPass), .RunLog, .ResultString,  CLng(.Id))
        End With
 
     End Sub
-  
-    ''' <summary>
-    ''' Deletes one or more records from the RunHistory table 
-    ''' </summary>
-   ''' <param name="Id"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, true)> _ 
-    Public Sub Delete( ByVal id As Int64)  Implements IRunHistoryRepository.Delete
-        Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetDeleteDbCommand(Id)
+          Public Sub Delete( ByVal id As Int64)  Implements IRunHistoryRepository.Delete
+            Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetDeleteDbCommand(Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
           Command.ExecuteNonQuery
             _dbConnHolder.Close()
     End Sub
   
-    ''' <summary>
-    ''' Deletes one or more records from the RunHistory table 
-    ''' </summary>
-    ''' <param name="RunHistory"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, False)> _ 
     Public Sub Delete(ByVal runHistory as RunHistory)  Implements IRunHistoryRepository.Delete
              With RunHistory
 Delete( CLng(.Id))
        End With
 
     End Sub
-  
-    ''' <summary>
-    ''' Inserts an entity of RunHistory into the database.
-    ''' </summary>
-   ''' <param name="TestId"></param>
-   ''' <param name="RunDateTime"></param>
-   ''' <param name="IsPass"></param>
-   ''' <param name="RunLog"></param>
-   ''' <param name="ResultString"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)> _ 
-    Public Function Insert( ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isPass As Boolean,  ByVal runLog As String,  ByVal resultString As String)  as Int64 Implements IRunHistoryRepository.Insert
-        Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetInsertDbCommand(TestId, RunDateTime, IsPass, RunLog, ResultString)
+          Public Function Insert( ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isPass As Boolean,  ByVal runLog As String,  ByVal resultString As String)  as Int64 Implements IRunHistoryRepository.Insert
+            Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetInsertDbCommand(TestId, RunDateTime, IsPass, RunLog, ResultString)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int64  = Convert.ToInt64(Command.ExecuteScalar())
@@ -131,30 +83,14 @@ Delete( CLng(.Id))
 
     End Function
   
-    ''' <summary>
-    ''' Inserts an entity of RunHistory into the database.
-    ''' </summary>
-    ''' <param name="RunHistory"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, False)> _ 
     Public Function Insert(ByVal runHistory as RunHistory)  as Int64 Implements IRunHistoryRepository.Insert
              With RunHistory
  Return Insert( CInt(.TestId),  CDate(.RunDateTime),  CBool(.IsPass), .RunLog, .ResultString)
        End With
 
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataPageable returns a IDataReader populated with a subset of data from RunHistory
-    ''' </summary>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of RunHistory) Implements IRunHistoryRepository.GetDataPageable
-        Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
+          Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of RunHistory) Implements IRunHistoryRepository.GetDataPageable
+            Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of RunHistory)
@@ -163,18 +99,14 @@ Delete( CLng(.Id))
                  Dim tempEntity As New RunHistory( reader.GetInt64("Id"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetBoolean("IsPass"),  reader.GetString("RunLog") ,  reader.GetString("ResultString") )
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetRowCount()
+            Dim pagedResults as PagedResult(Of RunHistory) = New PagedResult(Of RunHistory)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for RunHistory
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetRowCount()  as Int32 Implements IRunHistoryRepository.GetRowCount
-        Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetRowCountDbCommand()
+          Public Function GetRowCount()  as Int32
+            Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetRowCountDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
@@ -182,15 +114,8 @@ Delete( CLng(.Id))
             Return returnValue 
 
     End Function
-  
-    ''' <summary>
-    ''' Function  GetDataById returns a IDataReader for RunHistory
-    ''' </summary>
-   ''' <param name="Id"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataById( ByVal id As Int64)  as ICollection(Of RunHistory) Implements IRunHistoryRepository.GetDataById
-        Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetDataByIdDbCommand(Id)
+          Public Function GetDataById( ByVal id As Int64)  as ICollection(Of RunHistory) Implements IRunHistoryRepository.GetDataById
+            Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetDataByIdDbCommand(Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of RunHistory)
@@ -199,19 +124,12 @@ Delete( CLng(.Id))
                  Dim tempEntity As New RunHistory( reader.GetInt64("Id"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetBoolean("IsPass"),  reader.GetString("RunLog") ,  reader.GetString("ResultString") )
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByTestId returns a IDataReader for RunHistory
-    ''' </summary>
-   ''' <param name="TestId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByTestId( ByVal testId As Int32)  as ICollection(Of RunHistory) Implements IRunHistoryRepository.GetDataByTestId
-        Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetDataByTestIdDbCommand(TestId)
+          Public Function GetDataByTestId( ByVal testId As Int32)  as ICollection(Of RunHistory) Implements IRunHistoryRepository.GetDataByTestId
+            Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetDataByTestIdDbCommand(TestId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of RunHistory)
@@ -220,22 +138,12 @@ Delete( CLng(.Id))
                  Dim tempEntity As New RunHistory( reader.GetInt64("Id"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetBoolean("IsPass"),  reader.GetString("RunLog") ,  reader.GetString("ResultString") )
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Return entList 
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetDataByTestIdPageable returns a IDataReader populated with a subset of data from RunHistory
-    ''' </summary>
-   ''' <param name="TestId"></param>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of RunHistory) Implements IRunHistoryRepository.GetDataByTestIdPageable
-        Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetDataByTestIdPageableDbCommand(TestId, sortExpression, page, pageSize)
+          Public Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of RunHistory) Implements IRunHistoryRepository.GetDataByTestIdPageable
+            Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetDataByTestIdPageableDbCommand(TestId, sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim entList as new Collection(Of RunHistory)
@@ -244,19 +152,14 @@ Delete( CLng(.Id))
                  Dim tempEntity As New RunHistory( reader.GetInt64("Id"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetBoolean("IsPass"),  reader.GetString("RunLog") ,  reader.GetString("ResultString") )
                  entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
+            reader.Close 
+            Dim totalCount as Int64 = GetDataByTestIdRowCount(testId)
+            Dim pagedResults as PagedResult(Of RunHistory) = New PagedResult(Of RunHistory)(page, pageSize, totalCount, entList)
+            Return pagedResults
+
     End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for RunHistory
-    ''' </summary>
-   ''' <param name="TestId"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataByTestIdRowCount( ByVal testId As Int32)  as Int32 Implements IRunHistoryRepository.GetDataByTestIdRowCount
-        Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetDataByTestIdRowCountDbCommand(TestId)
+          Public Function GetDataByTestIdRowCount( ByVal testId As Int32)  as Int32
+            Dim command As IDbCommand = _dbRunHistoryCommandProvider.GetGetDataByTestIdRowCountDbCommand(TestId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())

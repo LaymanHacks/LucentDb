@@ -57,10 +57,6 @@
       <Project>{97e07ab1-aadd-4a17-bd14-1d876ccab30a}</Project>
       <Name>LucentDb.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LucentDb.Domain.Entities.Extensions\LucentDb.Domain.Entities.Extensions.csproj">
-      <Project>{5dd5e69b-33e9-4684-b441-4c54756167fa}</Project>
-      <Name>LucentDb.Domain.Entities.Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LucentDb.Domain.Entities\LucentDb.Domain.Entities.csproj">
       <Project>{4adcf3cb-049f-4be2-b421-7875dc51301b}</Project>
       <Name>LucentDb.Domain.Entities</Name>

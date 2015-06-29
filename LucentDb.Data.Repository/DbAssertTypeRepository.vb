@@ -31,170 +31,103 @@ Namespace LucentDb.Data.Repository
             _dbConnHolder =_dbAssertTypeCommandProvider.AssertTypeDbConnectionHolder
         End Sub
 
-      
-    ''' <summary>
-    ''' Selects one or more records from the AssertType table 
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, true)> _ 
-    Public Function GetData()  as ICollection(Of AssertType) Implements IAssertTypeRepository.GetData
-        Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetGetDataDbCommand()
+        Public Function GetData() As ICollection(Of AssertType) Implements IAssertTypeRepository.GetData
+            Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetGetDataDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of AssertType)
+            Dim entList As New Collection(Of AssertType)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New AssertType( reader.GetInt32("Id"),  reader.GetString("Name") )
-                 entList.Add(tempEntity)
+                Dim tempEntity As New AssertType(reader.GetInt32("Id"), reader.GetString("Name"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close
+            reader.Close()
             Return entList
-    
-    End Function
-  
-    ''' <summary>
-    ''' Updates one or more records from the AssertType table 
-    ''' </summary>
-   ''' <param name="Name"></param>
-   ''' <param name="Id"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)> _ 
-    Public Sub Update( ByVal name As String,  ByVal id As Int32)  Implements IAssertTypeRepository.Update
-        Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetUpdateDbCommand(Name, Id)
+
+        End Function
+        Public Sub Update(ByVal name As String, ByVal id As Int32) Implements IAssertTypeRepository.Update
+            Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetUpdateDbCommand(Name, Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-          Command.ExecuteNonQuery
+            Command.ExecuteNonQuery()
             _dbConnHolder.Close()
-    End Sub
-  
-    ''' <summary>
-    ''' Updates one or more records from the AssertType table 
-    ''' </summary>
-    ''' <param name="AssertType"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, False)> _ 
-    Public Sub Update(ByVal assertType as AssertType)  Implements IAssertTypeRepository.Update
-             With AssertType
-Update(.Name,  CInt(.Id))
-       End With
+        End Sub
 
-    End Sub
-  
-    ''' <summary>
-    ''' Deletes one or more records from the AssertType table 
-    ''' </summary>
-   ''' <param name="Id"></param>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, true)> _ 
-    Public Sub Delete( ByVal id As Int32)  Implements IAssertTypeRepository.Delete
-        Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetDeleteDbCommand(Id)
+        Public Sub Update(ByVal assertType As AssertType) Implements IAssertTypeRepository.Update
+            With AssertType
+                Update(.Name, CInt(.Id))
+            End With
+
+        End Sub
+        Public Sub Delete(ByVal id As Int32) Implements IAssertTypeRepository.Delete
+            Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetDeleteDbCommand(Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-          Command.ExecuteNonQuery
+            Command.ExecuteNonQuery()
             _dbConnHolder.Close()
-    End Sub
-  
-    ''' <summary>
-    ''' Deletes one or more records from the AssertType table 
-    ''' </summary>
-    ''' <param name="AssertType"></param>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, False)> _ 
-    Public Sub Delete(ByVal assertType as AssertType)  Implements IAssertTypeRepository.Delete
-             With AssertType
-Delete( CInt(.Id))
-       End With
+        End Sub
 
-    End Sub
-  
-    ''' <summary>
-    ''' Inserts an entity of AssertType into the database.
-    ''' </summary>
-   ''' <param name="Name"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)> _ 
-    Public Function Insert( ByVal name As String)  as Int32 Implements IAssertTypeRepository.Insert
-        Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetInsertDbCommand(Name)
+        Public Sub Delete(ByVal assertType As AssertType) Implements IAssertTypeRepository.Delete
+            With AssertType
+                Delete(CInt(.Id))
+            End With
+
+        End Sub
+        Public Function Insert(ByVal name As String) As Int32 Implements IAssertTypeRepository.Insert
+            Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetInsertDbCommand(Name)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
+            Dim returnValue As Int32 = Convert.ToInt32(Command.ExecuteScalar())
             _dbConnHolder.Close()
-            Return returnValue 
+            Return returnValue
 
-    End Function
-  
-    ''' <summary>
-    ''' Inserts an entity of AssertType into the database.
-    ''' </summary>
-    ''' <param name="AssertType"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, False)> _ 
-    Public Function Insert(ByVal assertType as AssertType)  as Int32 Implements IAssertTypeRepository.Insert
-             With AssertType
- Return Insert(.Name)
-       End With
+        End Function
 
-    End Function
-  
-    ''' <summary>
-    ''' Function GetDataPageable returns a IDataReader populated with a subset of data from AssertType
-    ''' </summary>
-   ''' <param name="sortExpression"></param>
-   ''' <param name="page"></param>
-   ''' <param name="pageSize"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as ICollection(Of AssertType) Implements IAssertTypeRepository.GetDataPageable
-        Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
+        Public Function Insert(ByVal assertType As AssertType) As Int32 Implements IAssertTypeRepository.Insert
+            With AssertType
+                Return Insert(.Name)
+            End With
+
+        End Function
+        Public Function GetDataPageable(ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of AssertType) Implements IAssertTypeRepository.GetDataPageable
+            Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of AssertType)
+            Dim entList As New Collection(Of AssertType)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New AssertType( reader.GetInt32("Id"),  reader.GetString("Name") )
-                 entList.Add(tempEntity)
+                Dim tempEntity As New AssertType(reader.GetInt32("Id"), reader.GetString("Name"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close
-            Return entList
-    
-    End Function
-  
-    ''' <summary>
-    ''' Function GetRowCount returns the row count for AssertType
-    ''' </summary>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetRowCount()  as Int32 Implements IAssertTypeRepository.GetRowCount
-        Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetGetRowCountDbCommand()
-            command.Connection = _dbConnHolder.Connection
-            _dbConnHolder.Open()
-              Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
-            _dbConnHolder.Close()
-            Return returnValue 
+            reader.Close()
+            Dim totalCount As Int64 = GetRowCount()
+            Dim pagedResults As PagedResult(Of AssertType) = New PagedResult(Of AssertType)(page, pageSize, totalCount, entList)
+            Return pagedResults
 
-    End Function
-  
-    ''' <summary>
-    ''' Function  GetDataById returns a IDataReader for AssertType
-    ''' </summary>
-   ''' <param name="Id"></param>''' <returns></returns>
-   ''' <remarks></remarks> 
-  <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Select, false)> _ 
-    Public Function GetDataById( ByVal id As Int32)  as ICollection(Of AssertType) Implements IAssertTypeRepository.GetDataById
-        Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetGetDataByIdDbCommand(Id)
+        End Function
+        Public Function GetRowCount() As Int32
+            Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetGetRowCountDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of AssertType)
+            Dim returnValue As Int32 = Convert.ToInt32(Command.ExecuteScalar())
+            _dbConnHolder.Close()
+            Return returnValue
+
+        End Function
+        Public Function GetDataById(ByVal id As Int32) As ICollection(Of AssertType) Implements IAssertTypeRepository.GetDataById
+            Dim command As IDbCommand = _dbAssertTypeCommandProvider.GetGetDataByIdDbCommand(Id)
+            command.Connection = _dbConnHolder.Connection
+            _dbConnHolder.Open()
+            Dim entList As New Collection(Of AssertType)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New AssertType( reader.GetInt32("Id"),  reader.GetString("Name") )
-                 entList.Add(tempEntity)
+                Dim tempEntity As New AssertType(reader.GetInt32("Id"), reader.GetString("Name"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close
+            reader.Close()
             Return entList
-    
-    End Function
+
+        End Function
    
   
 #Region "IDisposable Support"
