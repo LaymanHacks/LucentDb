@@ -63,12 +63,11 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public void Update(Project_Connection project_Connection)
+        public void Update(Project_Connection project_Connection, int original_ProjectId, int original_ConnectionId)
         {
-            Update(project_Connection.ProjectId, project_Connection.ConnectionId, project_Connection.Original_ProjectId, project_Connection.Original_ConnectionId);
+            Update(project_Connection.ProjectId, project_Connection.ConnectionId, original_ProjectId, original_ConnectionId);
         }
-
-
+        
         public void Delete(Int32 projectId, Int32 connectionId)
         {
             using (var client = new HttpClient(_messageHandler))

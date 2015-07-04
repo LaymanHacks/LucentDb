@@ -50,7 +50,7 @@ namespace LucentDb.Web.UI.Controllers.Api
                  _dbRepository.Delete(id);
                  return Request.CreateResponse(HttpStatusCode.OK);
             }
-                 catch (Exception)
+            catch (Exception)
             {
                  return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
@@ -69,10 +69,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataPageable(sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetRowCount();
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "TestsGetDataPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/tests/{id}", Name = "TestsGetDataByIdRoute")]
@@ -95,10 +92,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetActiveDataPageable(sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetActiveDataRowCount();
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "TestsGetActiveDataPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/projects/{projectId}/tests/all", Name = "TestsGetDataByProjectIdRoute")]
@@ -114,10 +108,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataByProjectIdPageable(projectId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetDataByProjectIdRowCount(projectId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "TestsGetDataByProjectIdPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/projects/{projectId}/tests/all/active", Name = "TestsGetActiveDataByProjectIdRoute")]
@@ -133,10 +124,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetActiveDataByProjectIdPageable(projectId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetActiveDataByProjectIdRowCount(projectId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "TestsGetActiveDataByProjectIdPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/testGroups/{groupId}/tests/all", Name = "TestsGetDataByGroupIdRoute")]
@@ -152,10 +140,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataByGroupIdPageable(groupId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetDataByGroupIdRowCount(groupId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "TestsGetDataByGroupIdPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/testGroups/{groupId}/tests/all/active", Name = "TestsGetActiveDataByGroupIdRoute")]
@@ -171,10 +156,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetActiveDataByGroupIdPageable(groupId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetActiveDataByGroupIdRowCount(groupId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "TestsGetActiveDataByGroupIdPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/testTypes/{testTypeId}/tests/all", Name = "TestsGetDataByTestTypeIdRoute")]
@@ -190,10 +172,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataByTestTypeIdPageable(testTypeId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetDataByTestTypeIdRowCount(testTypeId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "TestsGetDataByTestTypeIdPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/testTypes/{testTypeId}/tests/all/active", Name = "TestsGetActiveDataByTestTypeIdRoute")]
@@ -209,10 +188,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetActiveDataByTestTypeIdPageable(testTypeId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetActiveDataByTestTypeIdRowCount(testTypeId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "TestsGetActiveDataByTestTypeIdPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
 

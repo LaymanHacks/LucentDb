@@ -40,8 +40,8 @@ namespace LucentDb.Win.UI
             {
                 test.TestType =
                     _dataRepository.TestTypeRepository.GetDataById(test.TestTypeId).FirstOrDefault();
-                test.RunHistories = (Collection<RunHistory>) _dataRepository.RunHistoryRepository.GetDataByTestIdPageable(test.Id,
-                    "Id Desc", 1, 5);
+                test.RunHistories = (Collection<RunHistory>) _dataRepository.RunHistoryRepository.GetDataByTestIdPageable(test.Id, "Id Desc", 1,
+                    5).Results;
                 test.ExpectedResults =
                     (Collection<ExpectedResult>) _dataRepository.ExpectedResultRepository.GetDataByTestId(test.Id);
 

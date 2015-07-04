@@ -96,8 +96,8 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase).Result;
                 response.EnsureSuccessStatusCode();
-                var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue  = Convert.ToInt64(resultString);
+                var strResult = response.Content.ReadAsStringAsync().Result;
+                var returnValue = Convert.ToInt64(strResult);
                 return returnValue;
             }
         }

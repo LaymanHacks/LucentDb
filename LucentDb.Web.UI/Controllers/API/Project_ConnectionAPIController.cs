@@ -36,9 +36,9 @@ namespace LucentDb.Web.UI.Controllers.Api
 
         [Route("api/project_Connection", Name = "Project_ConnectionUpdateRoute")]
         [HttpPut]
-        public void Update(Project_Connection project_Connection, Int32 Original_ProjectId,   Int32 Original_ConnectionId)
+        public void Update(Project_Connection projectConnection, Int32 originalProjectId,  Int32 originalConnectionId)
         {
-            _dbRepository.Update( (Int32)project_Connection.ProjectId,  (Int32)project_Connection.ConnectionId,  (Int32)Original_ProjectId,  (Int32)Original_ConnectionId);
+            _dbRepository.Update( (Int32)projectConnection.ProjectId,  (Int32)projectConnection.ConnectionId,  originalProjectId,  originalConnectionId);
           }
 
         [Route("api/project_Connection", Name = "Project_ConnectionDeleteRoute")]
@@ -50,7 +50,7 @@ namespace LucentDb.Web.UI.Controllers.Api
                  _dbRepository.Delete(projectId, connectionId);
                  return Request.CreateResponse(HttpStatusCode.OK);
             }
-                 catch (Exception)
+            catch (Exception)
             {
                  return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
@@ -58,7 +58,7 @@ namespace LucentDb.Web.UI.Controllers.Api
 
         [Route("api/project_Connection", Name = "Project_ConnectionInsertRoute")]
         [HttpPost]
-        public Project_Connection  Insert(Project_Connection project_Connection)
+        public Project_Connection Insert(Project_Connection project_Connection)
         {
              return _dbRepository.Insert( (Int32)project_Connection.ProjectId,  (Int32)project_Connection.ConnectionId).FirstOrDefault();
           }
@@ -69,10 +69,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataPageable(sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetRowCount();
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "Project_ConnectionGetDataPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/project_Connection/all", Name = "Project_ConnectionGetDataByProjectIdConnectionIdRoute")]
@@ -95,10 +92,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataByConnectionIdPageable(connectionId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetDataByConnectionIdRowCount(connectionId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "Project_ConnectionGetDataByConnectionIdPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/2projects/2{projectId}/project_Connection/all", Name = "Project_ConnectionGetDataByProjectIdRoute")]
@@ -114,10 +108,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataByProjectIdPageable(projectId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetDataByProjectIdRowCount(projectId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "Project_ConnectionGetDataByProjectIdPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
 

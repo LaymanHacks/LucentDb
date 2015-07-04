@@ -50,7 +50,7 @@ namespace LucentDb.Web.UI.Controllers.Api
                  _dbRepository.Delete(id);
                  return Request.CreateResponse(HttpStatusCode.OK);
             }
-                 catch (Exception)
+            catch (Exception)
             {
                  return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
@@ -69,10 +69,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataPageable(sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetRowCount();
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "ExpectedResultsGetDataPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/expectedResults/all", Name = "ExpectedResultsGetDataByIdRoute")]
@@ -95,10 +92,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataByAssertTypeIdPageable(assertTypeId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetDataByAssertTypeIdRowCount(assertTypeId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "ExpectedResultsGetDataByAssertTypeIdPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/expectedResultTypes/{expectedResultTypeId}/expectedResults/all", Name = "ExpectedResultsGetDataByExpectedResultTypeIdRoute")]
@@ -114,10 +108,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataByExpectedResultTypeIdPageable(expectedResultTypeId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetDataByExpectedResultTypeIdRowCount(expectedResultTypeId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "ExpectedResultsGetDataByExpectedResultTypeIdPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/tests/{testId}/expectedResults/all", Name = "ExpectedResultsGetDataByTestIdRoute")]
@@ -133,10 +124,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataByTestIdPageable(testId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetDataByTestIdRowCount(testId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "ExpectedResultsGetDataByTestIdPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
 

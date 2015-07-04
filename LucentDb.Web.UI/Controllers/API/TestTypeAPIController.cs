@@ -50,7 +50,7 @@ namespace LucentDb.Web.UI.Controllers.Api
                  _dbRepository.Delete(id);
                  return Request.CreateResponse(HttpStatusCode.OK);
             }
-                 catch (Exception)
+            catch (Exception)
             {
                  return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
@@ -69,9 +69,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataPageable(sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetRowCount();
-            var pagedResults = new PagedResult<Test>(page, pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/testTypes/{id}", Name = "TestTypesGetDataByIdRoute")]
@@ -94,10 +92,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetActiveDataPageable(sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetActiveDataRowCount();
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "TestTypesGetActiveDataPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
 

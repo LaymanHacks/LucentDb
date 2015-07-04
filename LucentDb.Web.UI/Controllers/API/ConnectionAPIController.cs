@@ -50,7 +50,7 @@ namespace LucentDb.Web.UI.Controllers.Api
                  _dbRepository.Delete(connectionId);
                  return Request.CreateResponse(HttpStatusCode.OK);
             }
-                 catch (Exception)
+            catch (Exception)
             {
                  return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
@@ -69,10 +69,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataPageable(sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetRowCount();
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "ConnectionsGetDataPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/connections/{connectionId}", Name = "ConnectionsGetDataByConnectionIdRoute")]
@@ -95,10 +92,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetActiveDataPageable(sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetActiveDataRowCount();
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "ConnectionsGetActiveDataPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/projects/{projectId}/connections/all", Name = "ConnectionsGetConnectionsForProjectByProjectIdRoute")]
@@ -114,10 +108,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetConnectionsForProjectByProjectIdPageable(projectId, sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetConnectionsForProjectByProjectIdRowCount(projectId);
-            var pagedResults = PagedResultHelper.CreatePagedResult(Request, "ConnectionsGetConnectionsForProjectByProjectIdPageableRoute", page,
-                pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
 
