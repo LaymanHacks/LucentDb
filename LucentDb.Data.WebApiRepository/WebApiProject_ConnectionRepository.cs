@@ -28,7 +28,7 @@ namespace LucentDb.Data.WebApiRepository
 
         private const string UrlBase = "/api/project_Connection";
         private readonly string _baseAddress;
-        private readonly HttpMessageHandler _messageHandler;
+        private HttpMessageHandler _messageHandler;
 
         public WebApiProject_ConnectionRepository(string baseAddress, HttpMessageHandler messageHandler = null)
         {
@@ -58,20 +58,15 @@ namespace LucentDb.Data.WebApiRepository
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //TODO
+                var project_Connection = new Project_Connection(projectId, connectionId);
+                var response = client.PutAsync(UrlBase, project_Connection, new JsonMediaTypeFormatter()).Result;
+                response.EnsureSuccessStatusCode();
             }
         }
 
         public void Update(Project_Connection project_Connection)
         {
-            using (var client = new HttpClient(_messageHandler))
-            {
-                client.BaseAddress = new Uri(_baseAddress);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.PutAsync(UrlBase, project_Connection, new JsonMediaTypeFormatter()).Result;
-                response.EnsureSuccessStatusCode();
-            }
+            Update((Int32)project_Connection.ProjectId, (Int32)project_Connection.ConnectionId, (Int32)project_Connection.Original_ProjectId, (Int32)project_Connection.Original_ConnectionId);
         }
 
 
@@ -82,20 +77,14 @@ namespace LucentDb.Data.WebApiRepository
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //TODO
+                var response = client.DeleteAsync(UrlBase + "?projectId=" + projectId + "&connectionId=" + connectionId).Result;
+                response.EnsureSuccessStatusCode();
             }
         }
 
         public void Delete(Project_Connection project_Connection)
         {
-            using (var client = new HttpClient(_messageHandler))
-            {
-                client.BaseAddress = new Uri(_baseAddress);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.DeleteAsync(UrlBase).Result;
-                response.EnsureSuccessStatusCode();
-            }
+            Delete((Int32)project_Connection.ProjectId, (Int32)project_Connection.ConnectionId);
         }
 
 
@@ -116,18 +105,11 @@ namespace LucentDb.Data.WebApiRepository
 
         public ICollection<Project_Connection> Insert(Project_Connection project_Connection)
         {
-            using (var client = new HttpClient(_messageHandler))
-            {
-                client.BaseAddress = new Uri(_baseAddress);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.PostAsync(UrlBase, project_Connection, new JsonMediaTypeFormatter()).Result;
-                response.EnsureSuccessStatusCode();
-            }
+            return Insert((Int32)project_Connection.ProjectId, (Int32)project_Connection.ConnectionId);
         }
 
 
-        public ICollection<Project_Connection> GetDataPageable(string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<Project_Connection> GetDataPageable(string sortExpression, Int32 page, Int32 pageSize)
         {
             using (var client = new HttpClient(_messageHandler))
             {
@@ -137,7 +119,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
                 if (!response.IsSuccessStatusCode) return null;
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Project_Connection>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<PagedResult<Project_Connection>>(resultString);
                 return returnValue;
             }
         }
@@ -173,7 +155,7 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public ICollection<Project_Connection> GetDataByConnectionIdPageable(Int32 connectionId, string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<Project_Connection> GetDataByConnectionIdPageable(Int32 connectionId, string sortExpression, Int32 page, Int32 pageSize)
         {
             using (var client = new HttpClient(_messageHandler))
             {
@@ -183,7 +165,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync(UrlBase + "/project_Connection" + "?connectionId=" + connectionId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
                 if (!response.IsSuccessStatusCode) return null;
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Project_Connection>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<PagedResult<Project_Connection>>(resultString);
                 return returnValue;
             }
         }
@@ -204,7 +186,7 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public ICollection<Project_Connection> GetDataByProjectIdPageable(Int32 projectId, string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<Project_Connection> GetDataByProjectIdPageable(Int32 projectId, string sortExpression, Int32 page, Int32 pageSize)
         {
             using (var client = new HttpClient(_messageHandler))
             {
@@ -214,7 +196,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync(UrlBase + "/project_Connection" + "?projectId=" + projectId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
                 if (!response.IsSuccessStatusCode) return null;
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Project_Connection>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<PagedResult<Project_Connection>>(resultString);
                 return returnValue;
             }
         }
