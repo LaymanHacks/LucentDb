@@ -15,7 +15,6 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using LucentDb.Data.Repository;
 using LucentDb.Domain.Entities;
-using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 
 
@@ -44,7 +43,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase + "/all").Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Project_Connection>>(resultString);
                 return returnValue;
@@ -66,7 +65,7 @@ namespace LucentDb.Data.WebApiRepository
 
         public void Update(Project_Connection project_Connection)
         {
-            Update((Int32)project_Connection.ProjectId, (Int32)project_Connection.ConnectionId, (Int32)project_Connection.Original_ProjectId, (Int32)project_Connection.Original_ConnectionId);
+            Update(project_Connection.ProjectId, project_Connection.ConnectionId, project_Connection.Original_ProjectId, project_Connection.Original_ConnectionId);
         }
 
 
@@ -84,7 +83,7 @@ namespace LucentDb.Data.WebApiRepository
 
         public void Delete(Project_Connection project_Connection)
         {
-            Delete((Int32)project_Connection.ProjectId, (Int32)project_Connection.ConnectionId);
+            Delete(project_Connection.ProjectId, project_Connection.ConnectionId);
         }
 
 
@@ -96,7 +95,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Project_Connection>>(resultString);
                 return returnValue;
@@ -105,7 +104,7 @@ namespace LucentDb.Data.WebApiRepository
 
         public ICollection<Project_Connection> Insert(Project_Connection project_Connection)
         {
-            return Insert((Int32)project_Connection.ProjectId, (Int32)project_Connection.ConnectionId);
+            return Insert(project_Connection.ProjectId, project_Connection.ConnectionId);
         }
 
 
@@ -117,7 +116,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<Project_Connection>>(resultString);
                 return returnValue;
@@ -133,7 +132,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase + "/all").Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Project_Connection>>(resultString);
                 return returnValue;
@@ -148,7 +147,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase + "/project_Connection/all").Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Project_Connection>>(resultString);
                 return returnValue;
@@ -163,7 +162,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase + "/project_Connection" + "?connectionId=" + connectionId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<Project_Connection>>(resultString);
                 return returnValue;
@@ -179,7 +178,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase + "/project_Connection/all").Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Project_Connection>>(resultString);
                 return returnValue;
@@ -194,7 +193,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase + "/project_Connection" + "?projectId=" + projectId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<Project_Connection>>(resultString);
                 return returnValue;
@@ -202,18 +201,17 @@ namespace LucentDb.Data.WebApiRepository
         }
 
 
-        #region "IDisposable Support"
-        private bool disposedValue;
+        private bool _disposedValue;
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposedValue)
+            if (!this._disposedValue)
             {
                 if (disposing)
                 {
                     _messageHandler = null;
                 }
             }
-            this.disposedValue = true;
+            this._disposedValue = true;
         }
 
         public void Dispose()
@@ -221,7 +219,6 @@ namespace LucentDb.Data.WebApiRepository
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        #endregion
 
     }
 }

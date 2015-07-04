@@ -7,7 +7,7 @@
     <ProjectGuid>{33E9C079-3F0B-4F3F-ABE5-5A72B9D73DA6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LucentDb.Data.Repository</RootNamespace>
+    <RootNamespace>LucentDb.Data.WebApiRepository</RootNamespace>
     <AssemblyName>LucentDb.Data.WebApiRepository</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

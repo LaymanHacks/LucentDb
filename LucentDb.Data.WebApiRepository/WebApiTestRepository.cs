@@ -15,7 +15,6 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using LucentDb.Data.Repository;
 using LucentDb.Domain.Entities;
-using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 
 
@@ -44,7 +43,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase + "/all").Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
                 return returnValue;
@@ -66,7 +65,7 @@ namespace LucentDb.Data.WebApiRepository
 
         public void Update(Test test)
         {
-            Update((Int32)test.TestTypeId, test.ProjectId, test.GroupId, test.Name, test.TestValue, (bool)test.IsActive, (Int32)test.Id);
+            Update(test.TestTypeId, test.ProjectId, test.GroupId, test.Name, test.TestValue, test.IsActive, test.Id);
         }
 
 
@@ -84,7 +83,7 @@ namespace LucentDb.Data.WebApiRepository
 
         public void Delete(Test test)
         {
-            Delete((Int32)test.Id);
+            Delete(test.Id);
         }
 
 
@@ -96,7 +95,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue  = Convert.ToInt32(resultString);
                 return returnValue;
@@ -105,7 +104,7 @@ namespace LucentDb.Data.WebApiRepository
 
         public Int32 Insert(Test test)
         {
-            return Insert((Int32)test.TestTypeId, test.ProjectId, test.GroupId, test.Name, test.TestValue, (bool)test.IsActive);
+            return Insert(test.TestTypeId, test.ProjectId, test.GroupId, test.Name, test.TestValue, test.IsActive);
         }
 
 
@@ -117,7 +116,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<Test>>(resultString);
                 return returnValue;
@@ -133,7 +132,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/tests/" + id).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
                 return returnValue;
@@ -148,7 +147,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase + "/all/active").Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
                 return returnValue;
@@ -163,7 +162,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase + "/active" + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<Test>>(resultString);
                 return returnValue;
@@ -179,7 +178,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/projects/" + projectId  + "/tests/all").Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
                 return returnValue;
@@ -194,7 +193,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/projects/" + projectId  + "/tests" + "?projectId=" + projectId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<Test>>(resultString);
                 return returnValue;
@@ -210,7 +209,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/projects/" + projectId  + "/tests/all/active").Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
                 return returnValue;
@@ -225,7 +224,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/projects/" + projectId  + "/tests/active" + "?projectId=" + projectId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<Test>>(resultString);
                 return returnValue;
@@ -241,7 +240,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/testGroups/" + groupId  + "/tests/all").Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
                 return returnValue;
@@ -256,7 +255,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/testGroups/" + groupId  + "/tests" + "?groupId=" + groupId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<Test>>(resultString);
                 return returnValue;
@@ -272,7 +271,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/testGroups/" + groupId  + "/tests/all/active").Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
                 return returnValue;
@@ -287,7 +286,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/testGroups/" + groupId  + "/tests/active" + "?groupId=" + groupId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<Test>>(resultString);
                 return returnValue;
@@ -303,7 +302,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/testTypes/" + testTypeId  + "/tests/all").Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
                 return returnValue;
@@ -318,7 +317,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/testTypes/" + testTypeId  + "/tests" + "?testTypeId=" + testTypeId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<Test>>(resultString);
                 return returnValue;
@@ -334,7 +333,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/testTypes/" + testTypeId  + "/tests/all/active").Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
                 return returnValue;
@@ -349,7 +348,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync("/api/testTypes/" + testTypeId  + "/tests/active" + "?testTypeId=" + testTypeId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<Test>>(resultString);
                 return returnValue;
@@ -357,18 +356,17 @@ namespace LucentDb.Data.WebApiRepository
         }
 
 
-        #region "IDisposable Support"
-        private bool disposedValue;
+        private bool _disposedValue;
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposedValue)
+            if (!this._disposedValue)
             {
                 if (disposing)
                 {
                     _messageHandler = null;
                 }
             }
-            this.disposedValue = true;
+            this._disposedValue = true;
         }
 
         public void Dispose()
@@ -376,7 +374,6 @@ namespace LucentDb.Data.WebApiRepository
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        #endregion
 
     }
 }
