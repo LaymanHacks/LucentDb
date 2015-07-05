@@ -9,7 +9,6 @@ namespace LucentDb.Validator
         public HttpScriptResolver(string testValue)
         {
             _testValue = testValue;
-            
         }
 
         public string GetSqlScript()

@@ -3,8 +3,9 @@ Imports System.Collections.Generic
 
 Public Class PagedResult (Of T)
 
-    Public Sub New(requestedPage As Integer, requestedPageSize As Integer, recordCount As Int64, data As ICollection(Of T))
-        Dim totalPages As Int32 = CInt(Math.Ceiling(CDbl(recordCount) / requestedPageSize))
+    Public Sub New(requestedPage As Integer, requestedPageSize As Integer, recordCount As Int64,
+                   data As ICollection(Of T))
+        Dim totalPages As Int32 = CInt(Math.Ceiling(CDbl(recordCount)/requestedPageSize))
         TotalCount = recordCount
         PageCount = totalPages
         PageSize = requestedPageSize

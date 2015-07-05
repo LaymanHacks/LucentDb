@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
 using System.Reflection;
-using System.Text;
 using LucentDb.Domain.Entities;
 
 namespace LucentDb.Validator
@@ -18,10 +14,8 @@ namespace LucentDb.Validator
             IValidator validator = Activator.CreateInstance(tempType,
                 new object[]
                 {
-                    
                 });
             return validator;
         }
-
     }
 }

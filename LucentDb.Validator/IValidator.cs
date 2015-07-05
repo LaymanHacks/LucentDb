@@ -1,4 +1,3 @@
-using LucentDb.Domain;
 using LucentDb.Domain.Entities;
 using LucentDb.Domain.Model;
 

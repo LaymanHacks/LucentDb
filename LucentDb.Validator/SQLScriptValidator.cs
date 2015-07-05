@@ -1,6 +1,5 @@
 ﻿using LucentDb.Common;
 using LucentDb.Data;
-using LucentDb.Domain;
 using LucentDb.Domain.Entities;
 using LucentDb.Domain.Model;
 
@@ -27,7 +26,7 @@ namespace LucentDb.Validator
                 ScriptValue = _scriptResolver.GetSqlScript(),
                 ExpectedResults = test.ExpectedResults.Clone()
             };
-            
+
             RunTimer.Start();
             var response = _sqlScriptRunner.ValidateSqlScript(ValResponse, sqlScriptTest);
             RunTimer.Stop();
@@ -37,4 +36,3 @@ namespace LucentDb.Validator
         }
     }
 }
-

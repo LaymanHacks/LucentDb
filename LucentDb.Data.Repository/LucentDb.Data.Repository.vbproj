@@ -48,8 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbAssertTypeRepository.vb" />
+    <Compile Include="DbConnectionProviderRepository.vb" />
     <Compile Include="DbConnectionRepository.vb" />
     <Compile Include="DbExpectedResultRepository.vb" />
+    <Compile Include="DbExpectedResultTypeRepository.vb" />
     <Compile Include="DbProjectRepository.vb" />
     <Compile Include="DbProject_ConnectionRepository.vb" />
     <Compile Include="DbRunHistoryRepository.vb" />

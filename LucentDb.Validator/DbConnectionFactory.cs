@@ -1,7 +1,4 @@
-using System;
-using System.Data;
 using System.Data.Common;
-using System.Linq;
 using LucentDb.Domain.Entities;
 
 namespace LucentDb.Validator
@@ -11,7 +8,7 @@ namespace LucentDb.Validator
         public DbConnection GetConnection(Connection testConnection)
         {
             var providerName = "";
-            var csb = new DbConnectionStringBuilder { ConnectionString = testConnection.ConnectionString };
+            var csb = new DbConnectionStringBuilder {ConnectionString = testConnection.ConnectionString};
 
             //if (!csb.ContainsKey("provider")) throw new Exception("ConnectionString does not contain a provider");
 

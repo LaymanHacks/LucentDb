@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using ICSharpCode.TextEditor;
 using LucentDb.Domain.Entities;
 
 namespace LucentDb.Win.UI.Controls
@@ -23,7 +16,6 @@ namespace LucentDb.Win.UI.Controls
 
         private void ScriptGroup_Load(object sender, EventArgs e)
         {
-           
         }
 
         public void DataBind()
@@ -35,7 +27,6 @@ namespace LucentDb.Win.UI.Controls
                 tlpScripts.RowCount = DataSource.Count;
                 var scriptViewer = new ViewTest(script)
                 {
-                   
                     Dock = DockStyle.Top,
                     //AutoSize = true
                     Anchor = ((AnchorStyles.Top | AnchorStyles.Bottom)
@@ -43,11 +34,7 @@ namespace LucentDb.Win.UI.Controls
                              | AnchorStyles.Right
                 };
                 tlpScripts.Controls.Add(scriptViewer, 1, row++);
-              }
-          
-
+            }
         }
-
-       
     }
 }

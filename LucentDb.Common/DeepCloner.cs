@@ -1,6 +1,4 @@
-using System;
 using Newtonsoft.Json;
-
 
 namespace LucentDb.Common
 {
@@ -8,7 +6,9 @@ namespace LucentDb.Common
     {
         public static T Clone<T>(this T source)
         {
-            return object.ReferenceEquals(source, null) ? default(T) : JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source));
+            return ReferenceEquals(source, null)
+                ? default(T)
+                : JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source));
         }
     }
 }

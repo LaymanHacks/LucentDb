@@ -7,7 +7,6 @@ namespace LucentDb.Validator
         public SqlSnippetResolver(string testValue)
         {
             _testValue = testValue;
-         
         }
 
         public string GetSqlScript()

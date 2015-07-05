@@ -9,25 +9,37 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
-Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-  
- Namespace LucentDb.Data.Repository     
+
+Namespace LucentDb.Data.Repository
     Public Interface IConnectionRepository
-        Function GetData()  as ICollection(Of Connection)
-        Sub Update( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean,  ByVal connectionId As Int32) 
-        Sub Update(ByVal connection as Connection) 
-        Sub Delete( ByVal connectionId As Int32) 
-        Sub Delete(ByVal connection as Connection) 
-        Function Insert( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean)  as Int32
-        Function Insert(ByVal connection as Connection)  as Int32
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
-        Function GetDataByConnectionId( ByVal connectionId As Int32)  as ICollection(Of Connection)
-        Function GetActiveData()  as ICollection(Of Connection)
-        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
-        Function GetConnectionsForProjectByProjectId( ByVal projectId As Int32)  as ICollection(Of Connection)
-        Function GetConnectionsForProjectByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
-    End Interface 
+        Function GetData() as ICollection(Of Connection)
+
+        Sub Update(connectionProviderId As Nullable(Of Int32), name As String, connectionString As String,
+                   isActive As Boolean, connectionId As Int32)
+
+        Sub Update(connection as Connection)
+        Sub Delete(connectionId As Int32)
+        Sub Delete(connection as Connection)
+
+        Function Insert(connectionProviderId As Nullable(Of Int32), name As String, connectionString As String,
+                        isActive As Boolean) as Int32
+
+        Function Insert(connection as Connection) as Int32
+
+        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
+            as PagedResult(Of Connection)
+
+        Function GetDataByConnectionId(connectionId As Int32) as ICollection(Of Connection)
+        Function GetActiveData() as ICollection(Of Connection)
+
+        Function GetActiveDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
+            as PagedResult(Of Connection)
+
+        Function GetConnectionsForProjectByProjectId(projectId As Int32) as ICollection(Of Connection)
+
+        Function GetConnectionsForProjectByProjectIdPageable(projectId As Int32, sortExpression As String, page As Int32,
+                                                             pageSize As Int32) as PagedResult(Of Connection)
+    End Interface
 End NameSpace
-  

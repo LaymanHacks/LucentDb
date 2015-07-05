@@ -6,7 +6,7 @@ namespace LucentDb.Validator
 {
     internal sealed class SqlScriptTest
     {
-       public string ScriptValue { get; set; }
+        public string ScriptValue { get; set; }
         public Collection<ExpectedResult> ExpectedResults { get; set; }
         public DbConnectionHolder DbConnectionHolder { get; set; }
     }

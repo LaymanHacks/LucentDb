@@ -25,7 +25,6 @@ namespace LucentDb.Validator
                 default:
                     return new SqlSnippetResolver(_test.TestValue);
             }
-            
         }
     }
 }

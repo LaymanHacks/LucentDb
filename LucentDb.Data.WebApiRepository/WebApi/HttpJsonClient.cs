@@ -6,11 +6,16 @@ namespace LucentDb.Data.Repository.WebApi
 {
     public class HttpJsonClient : HttpClient
     {
-        public HttpJsonClient(string baseAddress, HttpMessageHandler httpMessageHandler)
+        public HttpJsonClient(HttpMessageHandler messageHandler)
         {
-            BaseAddress = new Uri(baseAddress);
             DefaultRequestHeaders.Accept.Clear();
             DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        public HttpJsonClient(string baseAddress, HttpMessageHandler httpMessageHandler)
+            : this(httpMessageHandler)
+        {
+            BaseAddress = new Uri(baseAddress);
         }
 
         public HttpJsonClient(string baseAddress) : this(baseAddress, new HttpClientHandler())
