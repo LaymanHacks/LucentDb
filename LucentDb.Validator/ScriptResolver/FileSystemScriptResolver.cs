@@ -5,27 +5,28 @@ namespace LucentDb.Validator
 {
     public class FileSystemScriptResolver : IScriptResolver
     {
-        private readonly string _testValue;
+        private readonly string _scriptFilePath;
         private readonly IFileService _fileInfo;
 
-        public FileSystemScriptResolver(string testValue) : this(testValue, new DefaultFileService())
+        public FileSystemScriptResolver(string testValue)
+            : this(testValue, new DefaultFileService(testValue))
         {
         }
 
-        public FileSystemScriptResolver(string testValue, IFileService fileInfo)
+        public FileSystemScriptResolver(string scriptFilePath, IFileService fileInfo)
         {
-            if (string.IsNullOrEmpty(_testValue)) throw new ArgumentNullException("testValue");
-            _testValue = testValue;
+            if (string.IsNullOrEmpty(scriptFilePath)) throw new ArgumentNullException("scriptFilePath");
+            _scriptFilePath = scriptFilePath;
             _fileInfo = fileInfo;
         }
 
         public string GetSqlScript()
         {
-            if (!_fileInfo.FileExists(_testValue))
+            if (!_fileInfo.Exists())
             {
-                throw new FileNotFoundException("The file was not found.", _testValue);
+                throw new FileNotFoundException("The file was not found.", _scriptFilePath);
             }
-            return _fileInfo.OpenTextReadToEnd(_testValue);
+            return _fileInfo.OpenText().ReadToEnd();
         }
     }
 }

@@ -43,10 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbConnectionFactory.cs" />
-    <Compile Include="ScriptResolver\DefaultFileService.cs" />
     <Compile Include="ScriptResolver\FileSystemScriptResolver.cs" />
     <Compile Include="ScriptResolver\HttpScriptResolver.cs" />
-    <Compile Include="ScriptResolver\IFileService.cs" />
     <Compile Include="ScriptResolver\IScriptResolver.cs" />
     <Compile Include="IValidator.cs" />
     <Compile Include="ScriptResolver\ScriptResolverFactory.cs" />
