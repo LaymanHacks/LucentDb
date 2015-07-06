@@ -52,12 +52,18 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="FakeResponseHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebApiTestRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LucentDb.Data.WebApiRepository\LucentDb.Data.WebApiRepository.csproj">
+      <Project>{33E9C079-3F0B-4F3F-ABE5-5A72B9D73DA6}</Project>
+      <Name>LucentDb.Data.WebApiRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LucentDb.Data\LucentDb.Data.vbproj">
       <Project>{97E07AB1-AADD-4A17-BD14-1D876CCAB30A}</Project>
       <Name>LucentDb.Data</Name>
