@@ -1,32 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace LucentDb.ValidatorTests
+namespace LucentDb.Data.WebApiClientTests
 {
     public class FakeResponseHandler : DelegatingHandler
     {
+        private readonly Dictionary<Uri, HttpResponseMessage> _fakeResponses = new Dictionary<Uri, HttpResponseMessage>();
 
-        private readonly HttpResponseMessage _response;
-
-        public  FakeResponseHandler(HttpResponseMessage response)
+        public void AddFakeResponse(Uri uri, HttpResponseMessage responseMessage)
         {
-            if (response == null)
-                throw new ArgumentNullException("response", "response is null.");
-            _response = response;
+            _fakeResponses.Add(uri, responseMessage);
         }
 
-        protected  override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
         {
-            var tcs = new TaskCompletionSource<HttpResponseMessage>();
-            _response.RequestMessage = request;
-            tcs.SetResult(_response);
-            return tcs.Task;
-
+            if (_fakeResponses.ContainsKey(request.RequestUri))
+            {
+                return _fakeResponses[request.RequestUri];
+            }
+            return new HttpResponseMessage(HttpStatusCode.NotFound) { RequestMessage = request };
         }
     }
 }

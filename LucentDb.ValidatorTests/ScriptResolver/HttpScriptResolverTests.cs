@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using LucentDb.Validator;
-using LucentDb.ValidatorTests;
+using LucentDb.Data.WebApiClientTests;
 using NUnit.Framework;
+
 namespace LucentDb.Validator.Tests
 {
     [TestFixture()]
     public class HttpScriptResolverTests
     {
-       
         [Test()]
         public void GetSqlScriptTest()
         {
@@ -22,13 +17,13 @@ namespace LucentDb.Validator.Tests
             {
                 Content = new StringContent(scriptValue)
             };
-            var fakeResponseHandler = new FakeResponseHandler(rMessage);
+            var fakeResponseHandler = new FakeResponseHandler();
+            fakeResponseHandler.AddFakeResponse(new Uri("http://LucentDb.com/test.sql"), rMessage);
 
             var httpScriptResolver = new HttpScriptResolver("http://LucentDb.com/test.sql", fakeResponseHandler);
             var response = httpScriptResolver.GetSqlScript();
 
             Assert.AreEqual(scriptValue, response);
-
         }
     }
 }

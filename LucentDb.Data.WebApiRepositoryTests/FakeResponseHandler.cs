@@ -23,11 +23,7 @@ namespace LucentDb.Data.WebApiClientTests
             {
                 return _fakeResponses[request.RequestUri];
             }
-            else
-            {
-                return new HttpResponseMessage(HttpStatusCode.NotFound) { RequestMessage = request };
-            }
-
+            return new HttpResponseMessage(HttpStatusCode.NotFound) { RequestMessage = request };
         }
     }
 }
