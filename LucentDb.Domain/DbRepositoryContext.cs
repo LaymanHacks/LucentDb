@@ -3,9 +3,9 @@ using LucentDb.Data.SqlDbCommandProvider;
 
 namespace LucentDb.Domain
 {
-    public class RepositoryContext
+    public class DbRepositoryContext : IRepositoryContext
     {
-        public RepositoryContext()
+        public DbRepositoryContext()
         {
             ConnectionRepository = new DbConnectionRepository(new SqlDbConnectionCommandProvider());
             ExpectedResultRepository = new DbExpectedResultRepository(new SqlDbExpectedResultCommandProvider());
