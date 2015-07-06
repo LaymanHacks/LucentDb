@@ -6,10 +6,10 @@ using NUnit.Framework;
 
 namespace LucentDb.Validator.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class HttpScriptResolverTests
     {
-        [Test()]
+        [Test]
         public void GetSqlScriptTest()
         {
             var scriptValue = "Select 1 from SomeTable";

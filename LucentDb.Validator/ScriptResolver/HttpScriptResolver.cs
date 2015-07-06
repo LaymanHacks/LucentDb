@@ -4,8 +4,8 @@ namespace LucentDb.Validator
 {
     public class HttpScriptResolver : IScriptResolver
     {
+        private readonly HttpMessageHandler _messageHandler;
         private readonly string _testValue;
-        private HttpMessageHandler _messageHandler;
 
         public HttpScriptResolver(string testValue, HttpMessageHandler messageHandler)
         {
@@ -13,7 +13,7 @@ namespace LucentDb.Validator
             _messageHandler = messageHandler;
         }
 
-        public HttpScriptResolver(string testValue): this(testValue, new HttpClientHandler())
+        public HttpScriptResolver(string testValue) : this(testValue, new HttpClientHandler())
         {
             _testValue = testValue;
         }

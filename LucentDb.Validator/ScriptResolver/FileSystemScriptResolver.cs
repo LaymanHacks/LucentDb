@@ -5,8 +5,8 @@ namespace LucentDb.Validator
 {
     public class FileSystemScriptResolver : IScriptResolver
     {
-        private readonly string _scriptFilePath;
         private readonly IFileService _fileInfo;
+        private readonly string _scriptFilePath;
 
         public FileSystemScriptResolver(string testValue)
             : this(testValue, new DefaultFileService(testValue))
