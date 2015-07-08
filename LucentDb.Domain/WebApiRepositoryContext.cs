@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using LucentDb.Data.Repository;
@@ -8,19 +9,20 @@ using LucentDb.Data.WebApiRepository;
 
 namespace LucentDb.Domain
 {
-    class WebApiRepositoryContext: IRepositoryContext
+    public class WebApiRepositoryContext: IRepositoryContext
     {
-        public WebApiRepositoryContext()
+        public WebApiRepositoryContext(string baseWebApiAddress)
         {
-            ConnectionRepository = new WebApiConnectionRepository("");
-            ExpectedResultRepository = new WebApiExpectedResultRepository("");
-            ProjectRepository = new WebApiProjectRepository("");
+            
+            ConnectionRepository = new WebApiConnectionRepository(baseWebApiAddress);
+            ExpectedResultRepository = new WebApiExpectedResultRepository(baseWebApiAddress);
+            ProjectRepository = new WebApiProjectRepository(baseWebApiAddress);
             //ProjectConnectionRepository =
             //    new DbProject_ConnectionRepository(new SqlDbProject_ConnectionCommandProvider());
-            RunHistoryRepository = new WebApiRunHistoryRepository("");
-            TestRepository = new WebApiTestRepository("");
-            TestTypeRepository = new WebApiTestTypeRepository("");
-            AssertTypeRepository = new WebApiAssertTypeRepository("");
+            RunHistoryRepository = new WebApiRunHistoryRepository(baseWebApiAddress);
+            TestRepository = new WebApiTestRepository(baseWebApiAddress);
+            TestTypeRepository = new WebApiTestTypeRepository(baseWebApiAddress);
+            AssertTypeRepository = new WebApiAssertTypeRepository(baseWebApiAddress);
         }
 
         public IAssertTypeRepository AssertTypeRepository { get; set; }

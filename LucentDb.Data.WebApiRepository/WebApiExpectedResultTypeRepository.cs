@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -50,7 +51,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync(UrlBase + "/all").Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<ExpectedResultType>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<ExpectedResultType>>(resultString);
                 return returnValue;
             }
         }
@@ -137,7 +138,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync("/api/expectedResultTypes/" + id).Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<ExpectedResultType>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<ExpectedResultType>>(resultString);
                 return returnValue;
             }
         }

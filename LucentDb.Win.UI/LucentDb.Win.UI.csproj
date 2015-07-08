@@ -133,6 +133,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LucentDb.Data.WebApiRepository\LucentDb.Data.WebApiRepository.csproj">
+      <Project>{33e9c079-3f0b-4f3f-abe5-5a72b9d73da6}</Project>
+      <Name>LucentDb.Data.WebApiRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LucentDb.Data\LucentDb.Data.vbproj">
       <Project>{97E07AB1-AADD-4A17-BD14-1D876CCAB30A}</Project>
       <Name>LucentDb.Data</Name>

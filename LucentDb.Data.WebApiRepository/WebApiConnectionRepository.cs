@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -44,7 +45,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync(UrlBase + "/all").Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Connection>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Connection>>(resultString);
                 return returnValue;
             }
         }
@@ -134,7 +135,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync("/api/connections/" + connectionId).Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Connection>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Connection>>(resultString);
                 return returnValue;
             }
         }
@@ -149,7 +150,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync(UrlBase + "/all/active").Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Connection>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Connection>>(resultString);
                 return returnValue;
             }
         }
@@ -181,7 +182,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync("/api/projects/" + projectId + "/connections/all").Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Connection>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Connection>>(resultString);
                 return returnValue;
             }
         }

@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
@@ -137,7 +138,7 @@ namespace LucentDb.Domain.Entities
         public virtual Collection<ExpectedResult> ExpectedResults { get; set; }
 
         [DataMember]
-        public virtual Collection<RunHistory> RunHistories { get; set; }
+        public virtual ICollection<RunHistory> RunHistories { get; set; }
 
         [DataMember]
         public virtual Project Project { get; set; }

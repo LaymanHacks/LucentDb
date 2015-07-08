@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -51,7 +52,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync(UrlBase + "/all").Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Test>>(resultString);
                 return returnValue;
             }
         }
@@ -137,7 +138,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync("/api/tests/" + id).Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Test>>(resultString);
                 return returnValue;
             }
         }
@@ -152,7 +153,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync(UrlBase + "/all/active").Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Test>>(resultString);
                 return returnValue;
             }
         }
@@ -184,7 +185,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync("/api/projects/" + projectId + "/tests/all").Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Test>>(resultString);
                 return returnValue;
             }
         }
@@ -217,7 +218,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync("/api/projects/" + projectId + "/tests/all/active").Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Test>>(resultString);
                 return returnValue;
             }
         }
@@ -251,7 +252,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync("/api/testGroups/" + groupId + "/tests/all").Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Test>>(resultString);
                 return returnValue;
             }
         }
@@ -283,7 +284,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync("/api/testGroups/" + groupId + "/tests/all/active").Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Test>>(resultString);
                 return returnValue;
             }
         }
@@ -317,7 +318,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync("/api/testTypes/" + testTypeId + "/tests/all").Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Test>>(resultString);
                 return returnValue;
             }
         }
@@ -351,7 +352,7 @@ namespace LucentDb.Data.WebApiRepository
                 var response = client.GetAsync("/api/testTypes/" + testTypeId + "/tests/all/active").Result;
                 response.EnsureSuccessStatusCode();
                 var resultString = response.Content.ReadAsStringAsync().Result;
-                var returnValue = JsonConvert.DeserializeObject<ICollection<Test>>(resultString);
+                var returnValue = JsonConvert.DeserializeObject<Collection<Test>>(resultString);
                 return returnValue;
             }
         }

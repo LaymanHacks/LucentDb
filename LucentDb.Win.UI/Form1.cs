@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Forms;
@@ -9,12 +10,12 @@ namespace LucentDb.Win.UI
 {
     public partial class Form1 : Form
     {
-        private readonly DbRepositoryContext _dataRepository;
+        private readonly IRepositoryContext _dataRepository;
         private Project _selectedProject;
 
         public Form1()
         {
-            _dataRepository = new DbRepositoryContext();
+            _dataRepository = new WebApiRepositoryContext("http://localhost:60205/");
             InitializeComponent();
         }
 
@@ -35,15 +36,14 @@ namespace LucentDb.Win.UI
             //cboTests.ValueMember = "Id";
 
 
-            _selectedProject.Tests =
-                (Collection<Test>) _dataRepository.TestRepository.GetActiveDataByProjectId(_selectedProject.ProjectId);
+            _selectedProject.Tests = (Collection<Test>) _dataRepository.TestRepository.GetActiveDataByProjectId(_selectedProject.ProjectId);
 
             foreach (var test in _selectedProject.Tests)
             {
                 test.TestType =
                     _dataRepository.TestTypeRepository.GetDataById(test.TestTypeId).FirstOrDefault();
                 test.RunHistories =
-                    (Collection<RunHistory>)
+                    (ICollection<RunHistory>)
                         _dataRepository.RunHistoryRepository.GetDataByTestIdPageable(test.Id, "Id Desc", 1,
                             5).Results;
                 test.ExpectedResults =
