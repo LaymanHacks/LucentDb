@@ -9,22 +9,21 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface IConnectionProviderRepository
-        Function GetData() as ICollection(Of ConnectionProvider)
-        Sub Update(name As String, value As String, id As Int32)
-        Sub Update(connectionProvider as ConnectionProvider)
-        Sub Delete(id As Int32)
-        Sub Delete(connectionProvider as ConnectionProvider)
-        Function Insert(name As String, value As String) as Int32
-        Function Insert(connectionProvider as ConnectionProvider) as Int32
-
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of ConnectionProvider)
-
-        Function GetDataById(id As Int32) as ICollection(Of ConnectionProvider)
-    End Interface
+        Function GetData()  as ICollection(Of ConnectionProvider)
+        Sub Update( ByVal name As String,  ByVal value As String,  ByVal id As Int32) 
+        Sub Update(ByVal connectionProvider as ConnectionProvider) 
+        Sub Delete( ByVal id As Int32) 
+        Sub Delete(ByVal connectionProvider as ConnectionProvider) 
+        Function Insert( ByVal name As String,  ByVal value As String)  as Int32
+        Function Insert(ByVal connectionProvider as ConnectionProvider)  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ConnectionProvider)
+        Function GetDataById( ByVal id As Int32)  as ICollection(Of ConnectionProvider)
+    End Interface 
 End NameSpace
+  

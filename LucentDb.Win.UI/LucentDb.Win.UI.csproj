@@ -149,6 +149,10 @@
       <Project>{35f11a61-843b-4e97-b992-bf22fb50f1ea}</Project>
       <Name>LucentDb.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LucentDb.Validator\LucentDb.Validator.csproj">
+      <Project>{4A33135E-3A6A-4A9A-9E20-8D8613BF4785}</Project>
+      <Name>LucentDb.Validator</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

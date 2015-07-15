@@ -28,7 +28,6 @@ namespace LucentDb.Win.UI.Controls
                 var scriptViewer = new ViewTest(script)
                 {
                     Dock = DockStyle.Top,
-                    //AutoSize = true
                     Anchor = ((AnchorStyles.Top | AnchorStyles.Bottom)
                               | AnchorStyles.Left)
                              | AnchorStyles.Right

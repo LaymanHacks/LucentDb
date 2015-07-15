@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -29,9 +30,9 @@ namespace LucentDb.Web.UI.Controllers.Api
 
         [Route("api/tests/all", Name = "TestsGetDataRoute")]
         [HttpGet]
-        public IQueryable<Test> GetData()
+        public ICollection<Test> GetData()
         {
-            return _dbRepository.GetData().AsQueryable();
+            return _dbRepository.GetData();
         }
 
         [Route("api/tests", Name = "TestsUpdateRoute")]

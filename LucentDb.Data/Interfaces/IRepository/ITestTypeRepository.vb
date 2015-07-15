@@ -9,23 +9,23 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface ITestTypeRepository
-        Function GetData() as ICollection(Of TestType)
-        Sub Update(name As String, testValidatorType As String, isActive As Boolean, id As Int32)
-        Sub Update(testType as TestType)
-        Sub Delete(id As Int32)
-        Sub Delete(testType as TestType)
-        Function Insert(name As String, testValidatorType As String, isActive As Boolean) as Int32
-        Function Insert(testType as TestType) as Int32
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) as PagedResult(Of TestType)
-        Function GetDataById(id As Int32) as ICollection(Of TestType)
-        Function GetActiveData() as ICollection(Of TestType)
-
-        Function GetActiveDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of TestType)
-    End Interface
+        Function GetData()  as ICollection(Of TestType)
+        Sub Update( ByVal name As String,  ByVal testValidatorType As String,  ByVal isActive As Boolean,  ByVal id As Int32) 
+        Sub Update(ByVal testType as TestType) 
+        Sub Delete( ByVal id As Int32) 
+        Sub Delete(ByVal testType as TestType) 
+        Function Insert( ByVal name As String,  ByVal testValidatorType As String,  ByVal isActive As Boolean)  as Int32
+        Function Insert(ByVal testType as TestType)  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestType)
+        Function GetDataById( ByVal id As Int32)  as ICollection(Of TestType)
+        Function GetActiveData()  as ICollection(Of TestType)
+        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestType)
+    End Interface 
 End NameSpace
+  

@@ -9,22 +9,21 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface IAssertTypeRepository
-        Function GetData() as ICollection(Of AssertType)
-        Sub Update(name As String, id As Int32)
-        Sub Update(assertType as AssertType)
-        Sub Delete(id As Int32)
-        Sub Delete(assertType as AssertType)
-        Function Insert(name As String) as Int32
-        Function Insert(assertType as AssertType) as Int32
-
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            As PagedResult(Of AssertType)
-
-        Function GetDataById(id As Int32) as ICollection(Of AssertType)
-    End Interface
+        Function GetData()  as ICollection(Of AssertType)
+        Sub Update( ByVal name As String,  ByVal id As Int32) 
+        Sub Update(ByVal assertType as AssertType) 
+        Sub Delete( ByVal id As Int32) 
+        Sub Delete(ByVal assertType as AssertType) 
+        Function Insert( ByVal name As String)  as Int32
+        Function Insert(ByVal assertType as AssertType)  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of AssertType)
+        Function GetDataById( ByVal id As Int32)  as ICollection(Of AssertType)
+    End Interface 
 End NameSpace
+  

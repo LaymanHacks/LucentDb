@@ -9,43 +9,27 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface IExpectedResultRepository
-        Function GetData() as ICollection(Of ExpectedResult)
-
-        Sub Update(testId As Int32, expectedResultTypeId As Nullable(Of Int32), assertTypeId As Nullable(Of Int32),
-                   expectedValue As String, resultIndex As Int32, id As Int32)
-
-        Sub Update(expectedResult as ExpectedResult)
-        Sub Delete(id As Int32)
-        Sub Delete(expectedResult as ExpectedResult)
-
-        Function Insert(testId As Int32, expectedResultTypeId As Nullable(Of Int32), assertTypeId As Nullable(Of Int32),
-                        expectedValue As String, resultIndex As Int32) as Int32
-
-        Function Insert(expectedResult as ExpectedResult) as Int32
-
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of ExpectedResult)
-
-        Function GetDataById(id As Int32) as ICollection(Of ExpectedResult)
-        Function GetDataByAssertTypeId(assertTypeId As Int32) as ICollection(Of ExpectedResult)
-
-        Function GetDataByAssertTypeIdPageable(assertTypeId As Int32, sortExpression As String, page As Int32,
-                                               pageSize As Int32) as PagedResult(Of ExpectedResult)
-
-        Function GetDataByExpectedResultTypeId(expectedResultTypeId As Int32) as ICollection(Of ExpectedResult)
-
-        Function GetDataByExpectedResultTypeIdPageable(expectedResultTypeId As Int32, sortExpression As String,
-                                                       page As Int32, pageSize As Int32) _
-            as PagedResult(Of ExpectedResult)
-
-        Function GetDataByTestId(testId As Int32) as ICollection(Of ExpectedResult)
-
-        Function GetDataByTestIdPageable(testId As Int32, sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of ExpectedResult)
-    End Interface
+        Function GetData()  as ICollection(Of ExpectedResult)
+        Sub Update( ByVal testId As Int32,  ByVal expectedResultTypeId As  Nullable(Of Int32) ,  ByVal assertTypeId As  Nullable(Of Int32) ,  ByVal expectedValue As String,  ByVal resultIndex As Int32,  ByVal id As Int32) 
+        Sub Update(ByVal expectedResult as ExpectedResult) 
+        Sub Delete( ByVal id As Int32) 
+        Sub Delete(ByVal expectedResult as ExpectedResult) 
+        Function Insert( ByVal testId As Int32,  ByVal expectedResultTypeId As  Nullable(Of Int32) ,  ByVal assertTypeId As  Nullable(Of Int32) ,  ByVal expectedValue As String,  ByVal resultIndex As Int32)  as Int32
+        Function Insert(ByVal expectedResult as ExpectedResult)  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResult)
+        Function GetDataById( ByVal id As Int32)  as ICollection(Of ExpectedResult)
+        Function GetDataByAssertTypeId( ByVal assertTypeId As Int32)  as ICollection(Of ExpectedResult)
+        Function GetDataByAssertTypeIdPageable( ByVal assertTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResult)
+        Function GetDataByExpectedResultTypeId( ByVal expectedResultTypeId As Int32)  as ICollection(Of ExpectedResult)
+        Function GetDataByExpectedResultTypeIdPageable( ByVal expectedResultTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResult)
+        Function GetDataByTestId( ByVal testId As Int32)  as ICollection(Of ExpectedResult)
+        Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResult)
+    End Interface 
 End NameSpace
+  

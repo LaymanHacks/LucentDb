@@ -9,36 +9,27 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface ITestGroupRepository
-        Function GetData() as ICollection(Of TestGroup)
-        Sub Update(projectId As Int32, name As String, isActive As Boolean, id As Int32)
-        Sub Update(testGroup as TestGroup)
-        Sub Delete(id As Int32)
-        Sub Delete(testGroup as TestGroup)
-        Function Insert(projectId As Int32, name As String, isActive As Boolean) as Int32
-        Function Insert(testGroup as TestGroup) as Int32
-
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of TestGroup)
-
-        Function GetDataById(id As Int32) as ICollection(Of TestGroup)
-        Function GetActiveData() as ICollection(Of TestGroup)
-
-        Function GetActiveDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of TestGroup)
-
-        Function GetDataByProjectId(projectId As Int32) as ICollection(Of TestGroup)
-
-        Function GetDataByProjectIdPageable(projectId As Int32, sortExpression As String, page As Int32,
-                                            pageSize As Int32) as PagedResult(Of TestGroup)
-
-        Function GetActiveDataByProjectId(projectId As Int32) as ICollection(Of TestGroup)
-
-        Function GetActiveDataByProjectIdPageable(projectId As Int32, sortExpression As String, page As Int32,
-                                                  pageSize As Int32) as PagedResult(Of TestGroup)
-    End Interface
+        Function GetData()  as ICollection(Of TestGroup)
+        Sub Update( ByVal projectId As Int32,  ByVal name As String,  ByVal isActive As Boolean,  ByVal id As Int32) 
+        Sub Update(ByVal testGroup as TestGroup) 
+        Sub Delete( ByVal id As Int32) 
+        Sub Delete(ByVal testGroup as TestGroup) 
+        Function Insert( ByVal projectId As Int32,  ByVal name As String,  ByVal isActive As Boolean)  as Int32
+        Function Insert(ByVal testGroup as TestGroup)  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestGroup)
+        Function GetDataById( ByVal id As Int32)  as ICollection(Of TestGroup)
+        Function GetActiveData()  as ICollection(Of TestGroup)
+        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestGroup)
+        Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of TestGroup)
+        Function GetDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestGroup)
+        Function GetActiveDataByProjectId( ByVal projectId As Int32)  as ICollection(Of TestGroup)
+        Function GetActiveDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of TestGroup)
+    End Interface 
 End NameSpace
+  

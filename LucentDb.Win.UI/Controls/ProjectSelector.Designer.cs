@@ -80,7 +80,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblProjectName);
             this.Name = "ProjectSelector";
-            this.Size = new System.Drawing.Size(856, 88);
+            this.Size = new System.Drawing.Size(757, 79);
             this.ResumeLayout(false);
             this.PerformLayout();
 

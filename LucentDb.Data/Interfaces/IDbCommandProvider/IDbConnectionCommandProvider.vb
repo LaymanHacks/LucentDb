@@ -12,33 +12,21 @@ Imports System.Data
 
 Namespace LucentDb.Data.DbCommandProvider
     Public Interface IDbConnectionCommandProvider
-        ReadOnly Property ConnectionDbConnectionHolder As DbConnectionHolder
+        ReadOnly Property ConnectionDbConnectionHolder() As DbConnectionHolder
         ReadOnly Property DbConnectionName As String
         Function GetGetDataDbCommand() As IDbCommand
-
-        Function GetUpdateDbCommand(connectionProviderId As Nullable(Of Int32), name As String,
-                                    connectionString As String, isActive As Boolean, connectionId As Int32) _
-            As IDbCommand
-
-        Function GetDeleteDbCommand(connectionId As Int32) As IDbCommand
-
-        Function GetInsertDbCommand(connectionProviderId As Nullable(Of Int32), name As String,
-                                    connectionString As String, isActive As Boolean) As IDbCommand
-
-        Function GetGetDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) As IDbCommand
+        Function GetUpdateDbCommand( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean,  ByVal connectionId As Int32) As IDbCommand
+        Function GetDeleteDbCommand( ByVal connectionId As Int32) As IDbCommand
+        Function GetInsertDbCommand( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean) As IDbCommand
+        Function GetGetDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
         Function GetGetRowCountDbCommand() As IDbCommand
-        Function GetGetDataByConnectionIdDbCommand(connectionId As Int32) As IDbCommand
+        Function GetGetDataByConnectionIdDbCommand( ByVal connectionId As Int32) As IDbCommand
         Function GetGetActiveDataDbCommand() As IDbCommand
-
-        Function GetGetActiveDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) _
-            As IDbCommand
-
+        Function GetGetActiveDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
         Function GetGetActiveDataRowCountDbCommand() As IDbCommand
-        Function GetGetConnectionsForProjectByProjectIdDbCommand(projectId As Int32) As IDbCommand
+        Function GetGetConnectionsForProjectByProjectIdDbCommand( ByVal projectId As Int32) As IDbCommand
+        Function GetGetConnectionsForProjectByProjectIdPageableDbCommand( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
+        Function GetGetConnectionsForProjectByProjectIdRowCountDbCommand( ByVal projectId As Int32) As IDbCommand
 
-        Function GetGetConnectionsForProjectByProjectIdPageableDbCommand(projectId As Int32, sortExpression As String,
-                                                                         page As Int32, pageSize As Int32) As IDbCommand
-
-        Function GetGetConnectionsForProjectByProjectIdRowCountDbCommand(projectId As Int32) As IDbCommand
     End Interface
 End Namespace

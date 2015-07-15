@@ -42,7 +42,7 @@
             this.tlpScripts.Name = "tlpScripts";
             this.tlpScripts.RowCount = 1;
             this.tlpScripts.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpScripts.Size = new System.Drawing.Size(513, 288);
+            this.tlpScripts.Size = new System.Drawing.Size(563, 288);
             this.tlpScripts.TabIndex = 0;
             // 
             // TestList
@@ -50,7 +50,7 @@
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Controls.Add(this.tlpScripts);
             this.Name = "TestList";
-            this.Size = new System.Drawing.Size(513, 288);
+            this.Size = new System.Drawing.Size(563, 288);
             this.ResumeLayout(false);
 
         }

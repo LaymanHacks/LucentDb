@@ -12,41 +12,24 @@ Imports System.Data
 
 Namespace LucentDb.Data.DbCommandProvider
     Public Interface IDbExpectedResultCommandProvider
-        ReadOnly Property ExpectedResultDbConnectionHolder As DbConnectionHolder
+        ReadOnly Property ExpectedResultDbConnectionHolder() As DbConnectionHolder
         ReadOnly Property DbConnectionName As String
         Function GetGetDataDbCommand() As IDbCommand
-
-        Function GetUpdateDbCommand(testId As Int32, expectedResultTypeId As Nullable(Of Int32),
-                                    assertTypeId As Nullable(Of Int32), expectedValue As String, resultIndex As Int32,
-                                    id As Int32) As IDbCommand
-
-        Function GetDeleteDbCommand(id As Int32) As IDbCommand
-
-        Function GetInsertDbCommand(testId As Int32, expectedResultTypeId As Nullable(Of Int32),
-                                    assertTypeId As Nullable(Of Int32), expectedValue As String, resultIndex As Int32) _
-            As IDbCommand
-
-        Function GetGetDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) As IDbCommand
+        Function GetUpdateDbCommand( ByVal testId As Int32,  ByVal expectedResultTypeId As  Nullable(Of Int32) ,  ByVal assertTypeId As  Nullable(Of Int32) ,  ByVal expectedValue As String,  ByVal resultIndex As Int32,  ByVal id As Int32) As IDbCommand
+        Function GetDeleteDbCommand( ByVal id As Int32) As IDbCommand
+        Function GetInsertDbCommand( ByVal testId As Int32,  ByVal expectedResultTypeId As  Nullable(Of Int32) ,  ByVal assertTypeId As  Nullable(Of Int32) ,  ByVal expectedValue As String,  ByVal resultIndex As Int32) As IDbCommand
+        Function GetGetDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
         Function GetGetRowCountDbCommand() As IDbCommand
-        Function GetGetDataByIdDbCommand(id As Int32) As IDbCommand
-        Function GetGetDataByAssertTypeIdDbCommand(assertTypeId As Int32) As IDbCommand
+        Function GetGetDataByIdDbCommand( ByVal id As Int32) As IDbCommand
+        Function GetGetDataByAssertTypeIdDbCommand( ByVal assertTypeId As Int32) As IDbCommand
+        Function GetGetDataByAssertTypeIdPageableDbCommand( ByVal assertTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
+        Function GetGetDataByAssertTypeIdRowCountDbCommand( ByVal assertTypeId As Int32) As IDbCommand
+        Function GetGetDataByExpectedResultTypeIdDbCommand( ByVal expectedResultTypeId As Int32) As IDbCommand
+        Function GetGetDataByExpectedResultTypeIdPageableDbCommand( ByVal expectedResultTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
+        Function GetGetDataByExpectedResultTypeIdRowCountDbCommand( ByVal expectedResultTypeId As Int32) As IDbCommand
+        Function GetGetDataByTestIdDbCommand( ByVal testId As Int32) As IDbCommand
+        Function GetGetDataByTestIdPageableDbCommand( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
+        Function GetGetDataByTestIdRowCountDbCommand( ByVal testId As Int32) As IDbCommand
 
-        Function GetGetDataByAssertTypeIdPageableDbCommand(assertTypeId As Int32, sortExpression As String,
-                                                           page As Int32, pageSize As Int32) As IDbCommand
-
-        Function GetGetDataByAssertTypeIdRowCountDbCommand(assertTypeId As Int32) As IDbCommand
-        Function GetGetDataByExpectedResultTypeIdDbCommand(expectedResultTypeId As Int32) As IDbCommand
-
-        Function GetGetDataByExpectedResultTypeIdPageableDbCommand(expectedResultTypeId As Int32,
-                                                                   sortExpression As String, page As Int32,
-                                                                   pageSize As Int32) As IDbCommand
-
-        Function GetGetDataByExpectedResultTypeIdRowCountDbCommand(expectedResultTypeId As Int32) As IDbCommand
-        Function GetGetDataByTestIdDbCommand(testId As Int32) As IDbCommand
-
-        Function GetGetDataByTestIdPageableDbCommand(testId As Int32, sortExpression As String, page As Int32,
-                                                     pageSize As Int32) As IDbCommand
-
-        Function GetGetDataByTestIdRowCountDbCommand(testId As Int32) As IDbCommand
     End Interface
 End Namespace
