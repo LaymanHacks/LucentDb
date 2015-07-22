@@ -10,9 +10,14 @@ namespace LucentDb.Validator
         private readonly SqlScriptRunner _sqlScriptRunner;
         private IScriptResolver _scriptResolver;
 
-        public SqlScriptValidator()
+        public SqlScriptValidator(SqlScriptRunner sqlScriptRunner)
         {
-            _sqlScriptRunner = new SqlScriptRunner();
+            _sqlScriptRunner = sqlScriptRunner;
+        }
+
+        public SqlScriptValidator(): this(new SqlScriptRunner())
+        {
+           
         }
 
         public ValidationResponse Validate(Connection testConnection, Test test)

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LucentDb.Data.WebApiRepository;
+﻿using LucentDb.Data.WebApiRepository;
 using NUnit.Framework;
-namespace LucentDb.Data.WebApiRepository.Tests
+
+namespace LucentDb.Data.Web.Tests
 {
     [TestFixture()]
     public class WebApiTestRepositoryTests

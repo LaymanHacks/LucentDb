@@ -192,11 +192,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\AssertTypeAPIController.cs" />
     <Compile Include="Controllers\API\ConnectionAPIController.cs" />
+    <Compile Include="Controllers\API\ConnectionProviderAPIController.cs" />
     <Compile Include="Controllers\API\ExpectedResultAPIController.cs" />
+    <Compile Include="Controllers\API\ExpectedResultTypeAPIController.cs" />
     <Compile Include="Controllers\API\ProjectAPIController.cs" />
     <Compile Include="Controllers\API\Project_ConnectionAPIController.cs" />
     <Compile Include="Controllers\API\RunHistoryAPIController.cs" />
     <Compile Include="Controllers\API\TestAPIController.cs" />
+    <Compile Include="Controllers\API\TestGroupAPIController.cs" />
     <Compile Include="Controllers\API\TestTypeAPIController.cs" />
     <Compile Include="Controllers\AssertTypeController.cs" />
     <Compile Include="Controllers\ConnectionController.cs" />

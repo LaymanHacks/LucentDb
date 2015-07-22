@@ -51,6 +51,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbConnectionHolder.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbAssertTypeCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbConnectionCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbConnectionProviderCommandProvider.vb" />

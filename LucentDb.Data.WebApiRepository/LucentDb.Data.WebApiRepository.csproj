@@ -73,6 +73,10 @@
       <Project>{4ADCF3CB-049F-4BE2-B421-7875DC51301B}</Project>
       <Name>LucentDb.Domain.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LucentDb.Web\LucentDb.Web.csproj">
+      <Project>{ecf69a55-449e-47d1-b28c-fc9b2694febc}</Project>
+      <Name>LucentDb.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

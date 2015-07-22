@@ -19,7 +19,7 @@ namespace LucentDb.Validator
             //    .Rows.Cast<DataRow>()
             //    .Any(r => r[2].Equals(providerName));
             //if (!providerExists) return null;
-
+           // testConnection
             var factory = DbProviderFactories.GetFactory("System.Data.SqlClient");
             var dbConnection = factory.CreateConnection();
 

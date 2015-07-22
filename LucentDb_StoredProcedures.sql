@@ -244,7 +244,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_Select]
   AS
    SET NOCOUNT ON;
 SELECT 
-     [ConnectionId], [Name], [ConnectionString], [IsActive]
+     [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive]
 FROM [Connection]'
     END
   ELSE
@@ -254,7 +254,7 @@ FROM [Connection]'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [ConnectionId], [Name], [ConnectionString], [IsActive]
+     [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive]
 FROM [Connection]'
   END
 GO
@@ -267,6 +267,7 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Co
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_Update]
 (
+@ConnectionProviderId int, 
 @Name varchar(50), 
 @ConnectionString varchar(500), 
 @IsActive bit, 
@@ -275,7 +276,8 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_Update]
 
   AS
    SET NOCOUNT ON;
-UPDATE [Connection] SET [Name]=@Name
+UPDATE [Connection] SET [ConnectionProviderId]=@ConnectionProviderId
+     , [Name]=@Name
      , [ConnectionString]=@ConnectionString
      , [IsActive]=@IsActive
 WHERE [ConnectionId]=@ConnectionId'
@@ -284,6 +286,7 @@ WHERE [ConnectionId]=@ConnectionId'
   BEGIN
   EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Connection_Update]
 (
+@ConnectionProviderId int, 
 @Name varchar(50), 
 @ConnectionString varchar(500), 
 @IsActive bit, 
@@ -292,7 +295,8 @@ WHERE [ConnectionId]=@ConnectionId'
 
   AS
    SET NOCOUNT ON;
-   UPDATE [Connection] SET [Name]=@Name
+   UPDATE [Connection] SET [ConnectionProviderId]=@ConnectionProviderId
+     , [Name]=@Name
      , [ConnectionString]=@ConnectionString
      , [IsActive]=@IsActive
 WHERE [ConnectionId]=@ConnectionId'
@@ -339,6 +343,7 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Co
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_Insert]
 (
+@ConnectionProviderId int, 
 @Name varchar(50), 
 @ConnectionString varchar(500), 
 @IsActive bit
@@ -346,12 +351,13 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_Insert]
 
   AS
    SET NOCOUNT ON;
-INSERT INTO [Connection] ([Name], [ConnectionString], [IsActive]) VALUES (@Name, @ConnectionString, @IsActive);SELECT SCOPE_IDENTITY();'
+INSERT INTO [Connection] ([ConnectionProviderId], [Name], [ConnectionString], [IsActive]) VALUES (@ConnectionProviderId, @Name, @ConnectionString, @IsActive);SELECT SCOPE_IDENTITY();'
     END
   ELSE
   BEGIN
   EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Connection_Insert]
 (
+@ConnectionProviderId int, 
 @Name varchar(50), 
 @ConnectionString varchar(500), 
 @IsActive bit
@@ -359,7 +365,7 @@ INSERT INTO [Connection] ([Name], [ConnectionString], [IsActive]) VALUES (@Name,
 
   AS
    SET NOCOUNT ON;
-   INSERT INTO [Connection] ([Name], [ConnectionString], [IsActive]) VALUES (@Name, @ConnectionString, @IsActive);SELECT SCOPE_IDENTITY();'
+   INSERT INTO [Connection] ([ConnectionProviderId], [Name], [ConnectionString], [IsActive]) VALUES (@ConnectionProviderId, @Name, @ConnectionString, @IsActive);SELECT SCOPE_IDENTITY();'
   END
 GO
 
@@ -386,8 +392,8 @@ IF @page < 1 SET @page = 1
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [ConnectionId], [Name], [ConnectionString], [IsActive] FROM (
-    SELECT [ConnectionId], [Name], [ConnectionString], [IsActive],
+SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM (
+    SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM Connection) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
@@ -413,8 +419,8 @@ IF @page < 1 SET @page = 1
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [ConnectionId], [Name], [ConnectionString], [IsActive] FROM (
-    SELECT [ConnectionId], [Name], [ConnectionString], [IsActive],
+SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM (
+    SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM Connection) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
@@ -459,7 +465,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_GetData
   AS
    SET NOCOUNT ON;
 SELECT 
-     [ConnectionId], [Name], [ConnectionString], [IsActive]
+     [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive]
 FROM [Connection]
 WHERE [ConnectionId]=@ConnectionId'
     END
@@ -473,7 +479,7 @@ WHERE [ConnectionId]=@ConnectionId'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [ConnectionId], [Name], [ConnectionString], [IsActive]
+     [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive]
 FROM [Connection]
 WHERE [ConnectionId]=@ConnectionId'
   END
@@ -490,7 +496,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_GetActi
   AS
    SET NOCOUNT ON;
 SELECT 
-     [ConnectionId], [Name], [ConnectionString], [IsActive]
+     [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive]
 FROM [Connection] WHERE (IsActive = 1)'
     END
   ELSE
@@ -500,7 +506,7 @@ FROM [Connection] WHERE (IsActive = 1)'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [ConnectionId], [Name], [ConnectionString], [IsActive]
+     [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive]
 FROM [Connection] WHERE (IsActive = 1)'
   END
 GO
@@ -527,8 +533,8 @@ IF @page < 1 SET @page = 1
  IF @pageSize < 1 SET @pageSize = 10  
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId''  
  SET @startRowIndex = (@page -1) * @pageSize + 1  
- SET @sql = ''SELECT [ConnectionId], [Name], [ConnectionString], [IsActive] FROM ( 
-       SELECT [ConnectionId], [Name], [ConnectionString], [IsActive],
+ SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM ( 
+       SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
        FROM Connection WHERE (IsActive = 1)) AS PagedResults 
      WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
@@ -553,8 +559,8 @@ IF @page < 1 SET @page = 1
  IF @pageSize < 1 SET @pageSize = 10  
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId''  
  SET @startRowIndex = (@page -1) * @pageSize + 1  
- SET @sql = ''SELECT [ConnectionId], [Name], [ConnectionString], [IsActive] FROM ( 
-       SELECT [ConnectionId], [Name], [ConnectionString], [IsActive],
+ SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM ( 
+       SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
        FROM Connection WHERE (IsActive = 1)) AS PagedResults 
      WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
@@ -600,6 +606,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_GetConn
    SET NOCOUNT ON;
 SELECT 
 Connection.[ConnectionId], 
+Connection.[ConnectionProviderId], 
 Connection.[Name], 
 Connection.[ConnectionString], 
 Connection.[IsActive]
@@ -617,6 +624,7 @@ WHERE Project_Connection.[ProjectId] = @ProjectId'
    SET NOCOUNT ON;
    SELECT 
 Connection.[ConnectionId], 
+Connection.[ConnectionProviderId], 
 Connection.[Name], 
 Connection.[ConnectionString], 
 Connection.[IsActive]
@@ -650,11 +658,13 @@ IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId''
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT 
 [ConnectionId], 
+[ConnectionProviderId], 
 [Name], 
 [ConnectionString], 
 [IsActive] FROM (
 		   SELECT 
 Connection.[ConnectionId], 
+Connection.[ConnectionProviderId], 
 Connection.[Name], 
 Connection.[ConnectionString], 
 Connection.[IsActive], 
@@ -685,11 +695,13 @@ IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId''
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT 
 [ConnectionId], 
+[ConnectionProviderId], 
 [Name], 
 [ConnectionString], 
 [IsActive] FROM (
 		   SELECT 
 Connection.[ConnectionId], 
+Connection.[ConnectionProviderId], 
 Connection.[Name], 
 Connection.[ConnectionString], 
 Connection.[IsActive], 
@@ -741,6 +753,486 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Connection_GetDataByConnectionProviderId]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_GetDataByConnectionProviderId]
+(
+@ConnectionProviderId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT 
+     [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive]
+FROM [Connection]
+WHERE [ConnectionProviderId]=@ConnectionProviderId'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Connection_GetDataByConnectionProviderId]
+(
+@ConnectionProviderId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT 
+     [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive]
+FROM [Connection]
+WHERE [ConnectionProviderId]=@ConnectionProviderId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Connection_GetDataByConnectionProviderIdPageable]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_GetDataByConnectionProviderIdPageable]
+(
+@ConnectionProviderId int, 
+@sortExpression varchar(125), 
+@page Int, 
+@pageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+DECLARE @sql nvarchar(4000), 
+@startRowIndex int 
+
+IF @page < 1 SET @page = 1 
+IF @pageSize < 1 SET @pageSize = 10 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionProviderId'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM (
+		   SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+		   FROM Connection WHERE ConnectionProviderId = @INConnectionProviderId) AS PagedResults
+		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
+-- Execute the SQL query
+EXEC sp_executesql @sql, N''@INConnectionProviderId int,@inStartRowIndex Int,@inPageSize Int'', @INConnectionProviderId = @ConnectionProviderId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Connection_GetDataByConnectionProviderIdPageable]
+(
+@ConnectionProviderId int, 
+@sortExpression varchar(125), 
+@page Int, 
+@pageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   DECLARE @sql nvarchar(4000), 
+@startRowIndex int 
+
+IF @page < 1 SET @page = 1 
+IF @pageSize < 1 SET @pageSize = 10 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionProviderId'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM (
+		   SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+		   FROM Connection WHERE ConnectionProviderId = @INConnectionProviderId) AS PagedResults
+		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
+-- Execute the SQL query
+EXEC sp_executesql @sql, N''@INConnectionProviderId int,@inStartRowIndex Int,@inPageSize Int'', @INConnectionProviderId = @ConnectionProviderId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Connection_GetDataByConnectionProviderIdRowCount]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_GetDataByConnectionProviderIdRowCount]
+(
+@ConnectionProviderId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT COUNT(1) FROM Connection
+WHERE [ConnectionProviderId]=@ConnectionProviderId'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Connection_GetDataByConnectionProviderIdRowCount]
+(
+@ConnectionProviderId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT COUNT(1) FROM Connection
+WHERE [ConnectionProviderId]=@ConnectionProviderId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Connection_GetActiveDataByConnectionProviderId]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_GetActiveDataByConnectionProviderId]
+(
+@ConnectionProviderId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT 
+     [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive]
+FROM [Connection] WHERE [IsActive] = 1 and [ConnectionProviderId] = @ConnectionProviderId'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Connection_GetActiveDataByConnectionProviderId]
+(
+@ConnectionProviderId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT 
+     [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive]
+FROM [Connection] WHERE [IsActive] = 1 and [ConnectionProviderId] = @ConnectionProviderId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Connection_GetActiveDataByConnectionProviderIdPageable]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_GetActiveDataByConnectionProviderIdPageable]
+(
+@ConnectionProviderId int, 
+@sortExpression varchar(125), 
+@page Int, 
+@PageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+DECLARE @sql nvarchar(4000), 
+@startRowIndex int 
+
+IF @page < 1 SET @page = 1 
+IF @pageSize < 1 SET @pageSize = 10 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionProviderId'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM (
+     SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive], 
+      ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '' ) AS ResultSetRowNumber 
+      FROM Connection WHERE (IsActive = 1) and ConnectionProviderId = @INConnectionProviderId ) AS PagedResults  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
+ -- Execute the SQL query 
+EXEC sp_executesql @sql, N''@INConnectionProviderId int,@inStartRowIndex Int,@inPageSize Int'', @ConnectionProviderId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Connection_GetActiveDataByConnectionProviderIdPageable]
+(
+@ConnectionProviderId int, 
+@sortExpression varchar(125), 
+@page Int, 
+@PageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   DECLARE @sql nvarchar(4000), 
+@startRowIndex int 
+
+IF @page < 1 SET @page = 1 
+IF @pageSize < 1 SET @pageSize = 10 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionProviderId'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM (
+     SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive], 
+      ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '' ) AS ResultSetRowNumber 
+      FROM Connection WHERE (IsActive = 1) and ConnectionProviderId = @INConnectionProviderId ) AS PagedResults  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
+ -- Execute the SQL query 
+EXEC sp_executesql @sql, N''@INConnectionProviderId int,@inStartRowIndex Int,@inPageSize Int'', @ConnectionProviderId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Connection_GetActiveDataByConnectionProviderIdRowCount]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Connection_GetActiveDataByConnectionProviderIdRowCount]
+(
+@ConnectionProviderId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT COUNT(1) FROM Connection WHERE (IsActive = 1) and ConnectionProviderId = @ConnectionProviderId'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Connection_GetActiveDataByConnectionProviderIdRowCount]
+(
+@ConnectionProviderId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT COUNT(1) FROM Connection WHERE (IsActive = 1) and ConnectionProviderId = @ConnectionProviderId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ConnectionProvider_Select]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ConnectionProvider_Select]
+
+  AS
+   SET NOCOUNT ON;
+SELECT 
+     [Id], [Name], [Value]
+FROM [ConnectionProvider]'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ConnectionProvider_Select]
+
+  AS
+   SET NOCOUNT ON;
+   SELECT 
+     [Id], [Name], [Value]
+FROM [ConnectionProvider]'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ConnectionProvider_Update]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ConnectionProvider_Update]
+(
+@Name varchar(50), 
+@Value varchar(50), 
+@Id int
+  )
+
+  AS
+   SET NOCOUNT ON;
+UPDATE [ConnectionProvider] SET [Name]=@Name
+     , [Value]=@Value
+WHERE [Id]=@Id'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ConnectionProvider_Update]
+(
+@Name varchar(50), 
+@Value varchar(50), 
+@Id int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   UPDATE [ConnectionProvider] SET [Name]=@Name
+     , [Value]=@Value
+WHERE [Id]=@Id'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ConnectionProvider_Delete]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ConnectionProvider_Delete]
+(
+@Id int
+  )
+
+  AS
+   SET NOCOUNT ON;
+DELETE 
+FROM [ConnectionProvider]
+WHERE [Id]=@Id'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ConnectionProvider_Delete]
+(
+@Id int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   DELETE 
+FROM [ConnectionProvider]
+WHERE [Id]=@Id'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ConnectionProvider_Insert]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ConnectionProvider_Insert]
+(
+@Name varchar(50), 
+@Value varchar(50)
+  )
+
+  AS
+   SET NOCOUNT ON;
+INSERT INTO [ConnectionProvider] ([Name], [Value]) VALUES (@Name, @Value);SELECT SCOPE_IDENTITY();'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ConnectionProvider_Insert]
+(
+@Name varchar(50), 
+@Value varchar(50)
+  )
+
+  AS
+   SET NOCOUNT ON;
+   INSERT INTO [ConnectionProvider] ([Name], [Value]) VALUES (@Name, @Value);SELECT SCOPE_IDENTITY();'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ConnectionProvider_GetDataPageable]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ConnectionProvider_GetDataPageable]
+(
+@sortExpression varchar(125), 
+@page Int, 
+@pageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+DECLARE @sql nvarchar(4000),  
+ @startRowIndex int 
+IF @page < 1 SET @page = 1  
+ IF @pageSize < 1 SET @pageSize = 10  
+ 
+ IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+
+SET @sql = ''SELECT [Id], [Name], [Value] FROM (
+    SELECT [Id], [Name], [Value],
+         ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
+      FROM ConnectionProvider) AS PagedResults 
+ WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
+ -- Execute the SQL query 
+  EXEC sp_executesql @sql, N''@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ConnectionProvider_GetDataPageable]
+(
+@sortExpression varchar(125), 
+@page Int, 
+@pageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   DECLARE @sql nvarchar(4000),  
+ @startRowIndex int 
+IF @page < 1 SET @page = 1  
+ IF @pageSize < 1 SET @pageSize = 10  
+ 
+ IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+
+SET @sql = ''SELECT [Id], [Name], [Value] FROM (
+    SELECT [Id], [Name], [Value],
+         ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
+      FROM ConnectionProvider) AS PagedResults 
+ WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
+ -- Execute the SQL query 
+  EXEC sp_executesql @sql, N''@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ConnectionProvider_GetRowCount]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ConnectionProvider_GetRowCount]
+
+  AS
+   SET NOCOUNT ON;
+SELECT COUNT(1) FROM ConnectionProvider'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ConnectionProvider_GetRowCount]
+
+  AS
+   SET NOCOUNT ON;
+   SELECT COUNT(1) FROM ConnectionProvider'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ConnectionProvider_GetDataById]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ConnectionProvider_GetDataById]
+(
+@Id int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT 
+     [Id], [Name], [Value]
+FROM [ConnectionProvider]
+WHERE [Id]=@Id'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ConnectionProvider_GetDataById]
+(
+@Id int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT 
+     [Id], [Name], [Value]
+FROM [ConnectionProvider]
+WHERE [Id]=@Id'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResult_Select]') AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_Select]
@@ -748,7 +1240,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_Sel
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ExpectedValue], [AssertTypeId]
+     [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex]
 FROM [ExpectedResult]'
     END
   ELSE
@@ -758,7 +1250,7 @@ FROM [ExpectedResult]'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ExpectedValue], [AssertTypeId]
+     [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex]
 FROM [ExpectedResult]'
   END
 GO
@@ -771,30 +1263,42 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ex
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_Update]
 (
-@ExpectedValue varchar(50), 
+@TestId int, 
+@ExpectedResultTypeId int, 
 @AssertTypeId int, 
+@ExpectedValue varchar(50), 
+@ResultIndex int, 
 @Id int
   )
 
   AS
    SET NOCOUNT ON;
-UPDATE [ExpectedResult] SET [ExpectedValue]=@ExpectedValue
+UPDATE [ExpectedResult] SET [TestId]=@TestId
+     , [ExpectedResultTypeId]=@ExpectedResultTypeId
      , [AssertTypeId]=@AssertTypeId
+     , [ExpectedValue]=@ExpectedValue
+     , [ResultIndex]=@ResultIndex
 WHERE [Id]=@Id'
     END
   ELSE
   BEGIN
   EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResult_Update]
 (
-@ExpectedValue varchar(50), 
+@TestId int, 
+@ExpectedResultTypeId int, 
 @AssertTypeId int, 
+@ExpectedValue varchar(50), 
+@ResultIndex int, 
 @Id int
   )
 
   AS
    SET NOCOUNT ON;
-   UPDATE [ExpectedResult] SET [ExpectedValue]=@ExpectedValue
+   UPDATE [ExpectedResult] SET [TestId]=@TestId
+     , [ExpectedResultTypeId]=@ExpectedResultTypeId
      , [AssertTypeId]=@AssertTypeId
+     , [ExpectedValue]=@ExpectedValue
+     , [ResultIndex]=@ResultIndex
 WHERE [Id]=@Id'
   END
 GO
@@ -839,25 +1343,31 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ex
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_Insert]
 (
+@TestId int, 
+@ExpectedResultTypeId int, 
+@AssertTypeId int, 
 @ExpectedValue varchar(50), 
-@AssertTypeId int
+@ResultIndex int
   )
 
   AS
    SET NOCOUNT ON;
-INSERT INTO [ExpectedResult] ([ExpectedValue], [AssertTypeId]) VALUES (@ExpectedValue, @AssertTypeId);SELECT SCOPE_IDENTITY();'
+INSERT INTO [ExpectedResult] ([TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex]) VALUES (@TestId, @ExpectedResultTypeId, @AssertTypeId, @ExpectedValue, @ResultIndex);SELECT SCOPE_IDENTITY();'
     END
   ELSE
   BEGIN
   EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResult_Insert]
 (
+@TestId int, 
+@ExpectedResultTypeId int, 
+@AssertTypeId int, 
 @ExpectedValue varchar(50), 
-@AssertTypeId int
+@ResultIndex int
   )
 
   AS
    SET NOCOUNT ON;
-   INSERT INTO [ExpectedResult] ([ExpectedValue], [AssertTypeId]) VALUES (@ExpectedValue, @AssertTypeId);SELECT SCOPE_IDENTITY();'
+   INSERT INTO [ExpectedResult] ([TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex]) VALUES (@TestId, @ExpectedResultTypeId, @AssertTypeId, @ExpectedValue, @ResultIndex);SELECT SCOPE_IDENTITY();'
   END
 GO
 
@@ -884,8 +1394,8 @@ IF @page < 1 SET @page = 1
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [Id], [ExpectedValue], [AssertTypeId] FROM (
-    SELECT [Id], [ExpectedValue], [AssertTypeId],
+SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
+    SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM ExpectedResult) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
@@ -911,8 +1421,8 @@ IF @page < 1 SET @page = 1
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [Id], [ExpectedValue], [AssertTypeId] FROM (
-    SELECT [Id], [ExpectedValue], [AssertTypeId],
+SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
+    SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM ExpectedResult) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
@@ -957,7 +1467,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_Get
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ExpectedValue], [AssertTypeId]
+     [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex]
 FROM [ExpectedResult]
 WHERE [Id]=@Id'
     END
@@ -971,7 +1481,7 @@ WHERE [Id]=@Id'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ExpectedValue], [AssertTypeId]
+     [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex]
 FROM [ExpectedResult]
 WHERE [Id]=@Id'
   END
@@ -991,7 +1501,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_Get
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ExpectedValue], [AssertTypeId]
+     [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex]
 FROM [ExpectedResult]
 WHERE [AssertTypeId]=@AssertTypeId'
     END
@@ -1005,7 +1515,7 @@ WHERE [AssertTypeId]=@AssertTypeId'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ExpectedValue], [AssertTypeId]
+     [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex]
 FROM [ExpectedResult]
 WHERE [AssertTypeId]=@AssertTypeId'
   END
@@ -1034,8 +1544,8 @@ IF @page < 1 SET @page = 1
 IF @pageSize < 1 SET @pageSize = 10 
 IF LEN(@sortExpression) = 0 SET @sortExpression = ''AssertTypeId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ExpectedValue], [AssertTypeId] FROM (
-		   SELECT [Id], [ExpectedValue], [AssertTypeId],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
+		   SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
 		   FROM ExpectedResult WHERE AssertTypeId = @INAssertTypeId) AS PagedResults
 		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
 -- Execute the SQL query
@@ -1060,8 +1570,8 @@ IF @page < 1 SET @page = 1
 IF @pageSize < 1 SET @pageSize = 10 
 IF LEN(@sortExpression) = 0 SET @sortExpression = ''AssertTypeId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ExpectedValue], [AssertTypeId] FROM (
-		   SELECT [Id], [ExpectedValue], [AssertTypeId],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
+		   SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
 		   FROM ExpectedResult WHERE AssertTypeId = @INAssertTypeId) AS PagedResults
 		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
 -- Execute the SQL query
@@ -1096,6 +1606,484 @@ WHERE [AssertTypeId]=@AssertTypeId'
    SET NOCOUNT ON;
    SELECT COUNT(1) FROM ExpectedResult
 WHERE [AssertTypeId]=@AssertTypeId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResult_GetDataByExpectedResultTypeId]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_GetDataByExpectedResultTypeId]
+(
+@ExpectedResultTypeId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT 
+     [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex]
+FROM [ExpectedResult]
+WHERE [ExpectedResultTypeId]=@ExpectedResultTypeId'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResult_GetDataByExpectedResultTypeId]
+(
+@ExpectedResultTypeId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT 
+     [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex]
+FROM [ExpectedResult]
+WHERE [ExpectedResultTypeId]=@ExpectedResultTypeId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResult_GetDataByExpectedResultTypeIdPageable]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_GetDataByExpectedResultTypeIdPageable]
+(
+@ExpectedResultTypeId int, 
+@sortExpression varchar(125), 
+@page Int, 
+@pageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+DECLARE @sql nvarchar(4000), 
+@startRowIndex int 
+
+IF @page < 1 SET @page = 1 
+IF @pageSize < 1 SET @pageSize = 10 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''ExpectedResultTypeId'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
+		   SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+		   FROM ExpectedResult WHERE ExpectedResultTypeId = @INExpectedResultTypeId) AS PagedResults
+		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
+-- Execute the SQL query
+EXEC sp_executesql @sql, N''@INExpectedResultTypeId int,@inStartRowIndex Int,@inPageSize Int'', @INExpectedResultTypeId = @ExpectedResultTypeId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResult_GetDataByExpectedResultTypeIdPageable]
+(
+@ExpectedResultTypeId int, 
+@sortExpression varchar(125), 
+@page Int, 
+@pageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   DECLARE @sql nvarchar(4000), 
+@startRowIndex int 
+
+IF @page < 1 SET @page = 1 
+IF @pageSize < 1 SET @pageSize = 10 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''ExpectedResultTypeId'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
+		   SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+		   FROM ExpectedResult WHERE ExpectedResultTypeId = @INExpectedResultTypeId) AS PagedResults
+		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
+-- Execute the SQL query
+EXEC sp_executesql @sql, N''@INExpectedResultTypeId int,@inStartRowIndex Int,@inPageSize Int'', @INExpectedResultTypeId = @ExpectedResultTypeId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResult_GetDataByExpectedResultTypeIdRowCount]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_GetDataByExpectedResultTypeIdRowCount]
+(
+@ExpectedResultTypeId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT COUNT(1) FROM ExpectedResult
+WHERE [ExpectedResultTypeId]=@ExpectedResultTypeId'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResult_GetDataByExpectedResultTypeIdRowCount]
+(
+@ExpectedResultTypeId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT COUNT(1) FROM ExpectedResult
+WHERE [ExpectedResultTypeId]=@ExpectedResultTypeId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResult_GetDataByTestId]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_GetDataByTestId]
+(
+@TestId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT 
+     [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex]
+FROM [ExpectedResult]
+WHERE [TestId]=@TestId'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResult_GetDataByTestId]
+(
+@TestId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT 
+     [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex]
+FROM [ExpectedResult]
+WHERE [TestId]=@TestId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResult_GetDataByTestIdPageable]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_GetDataByTestIdPageable]
+(
+@TestId int, 
+@sortExpression varchar(125), 
+@page Int, 
+@pageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+DECLARE @sql nvarchar(4000), 
+@startRowIndex int 
+
+IF @page < 1 SET @page = 1 
+IF @pageSize < 1 SET @pageSize = 10 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestId'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
+		   SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+		   FROM ExpectedResult WHERE TestId = @INTestId) AS PagedResults
+		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
+-- Execute the SQL query
+EXEC sp_executesql @sql, N''@INTestId int,@inStartRowIndex Int,@inPageSize Int'', @INTestId = @TestId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResult_GetDataByTestIdPageable]
+(
+@TestId int, 
+@sortExpression varchar(125), 
+@page Int, 
+@pageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   DECLARE @sql nvarchar(4000), 
+@startRowIndex int 
+
+IF @page < 1 SET @page = 1 
+IF @pageSize < 1 SET @pageSize = 10 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestId'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
+		   SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+		   FROM ExpectedResult WHERE TestId = @INTestId) AS PagedResults
+		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
+-- Execute the SQL query
+EXEC sp_executesql @sql, N''@INTestId int,@inStartRowIndex Int,@inPageSize Int'', @INTestId = @TestId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResult_GetDataByTestIdRowCount]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResult_GetDataByTestIdRowCount]
+(
+@TestId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT COUNT(1) FROM ExpectedResult
+WHERE [TestId]=@TestId'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResult_GetDataByTestIdRowCount]
+(
+@TestId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT COUNT(1) FROM ExpectedResult
+WHERE [TestId]=@TestId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResultType_Select]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResultType_Select]
+
+  AS
+   SET NOCOUNT ON;
+SELECT 
+     [Id], [Name]
+FROM [ExpectedResultType]'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResultType_Select]
+
+  AS
+   SET NOCOUNT ON;
+   SELECT 
+     [Id], [Name]
+FROM [ExpectedResultType]'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResultType_Update]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResultType_Update]
+(
+@Name varchar(50), 
+@Id int
+  )
+
+  AS
+   SET NOCOUNT ON;
+UPDATE [ExpectedResultType] SET [Name]=@Name
+WHERE [Id]=@Id'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResultType_Update]
+(
+@Name varchar(50), 
+@Id int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   UPDATE [ExpectedResultType] SET [Name]=@Name
+WHERE [Id]=@Id'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResultType_Delete]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResultType_Delete]
+(
+@Id int
+  )
+
+  AS
+   SET NOCOUNT ON;
+DELETE 
+FROM [ExpectedResultType]
+WHERE [Id]=@Id'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResultType_Delete]
+(
+@Id int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   DELETE 
+FROM [ExpectedResultType]
+WHERE [Id]=@Id'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResultType_Insert]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResultType_Insert]
+(
+@Name varchar(50)
+  )
+
+  AS
+   SET NOCOUNT ON;
+INSERT INTO [ExpectedResultType] ([Name]) VALUES (@Name);SELECT SCOPE_IDENTITY();'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResultType_Insert]
+(
+@Name varchar(50)
+  )
+
+  AS
+   SET NOCOUNT ON;
+   INSERT INTO [ExpectedResultType] ([Name]) VALUES (@Name);SELECT SCOPE_IDENTITY();'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResultType_GetDataPageable]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResultType_GetDataPageable]
+(
+@sortExpression varchar(125), 
+@page Int, 
+@pageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+DECLARE @sql nvarchar(4000),  
+ @startRowIndex int 
+IF @page < 1 SET @page = 1  
+ IF @pageSize < 1 SET @pageSize = 10  
+ 
+ IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+
+SET @sql = ''SELECT [Id], [Name] FROM (
+    SELECT [Id], [Name],
+         ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
+      FROM ExpectedResultType) AS PagedResults 
+ WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
+ -- Execute the SQL query 
+  EXEC sp_executesql @sql, N''@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResultType_GetDataPageable]
+(
+@sortExpression varchar(125), 
+@page Int, 
+@pageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   DECLARE @sql nvarchar(4000),  
+ @startRowIndex int 
+IF @page < 1 SET @page = 1  
+ IF @pageSize < 1 SET @pageSize = 10  
+ 
+ IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+
+SET @sql = ''SELECT [Id], [Name] FROM (
+    SELECT [Id], [Name],
+         ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
+      FROM ExpectedResultType) AS PagedResults 
+ WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
+ -- Execute the SQL query 
+  EXEC sp_executesql @sql, N''@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResultType_GetRowCount]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResultType_GetRowCount]
+
+  AS
+   SET NOCOUNT ON;
+SELECT COUNT(1) FROM ExpectedResultType'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResultType_GetRowCount]
+
+  AS
+   SET NOCOUNT ON;
+   SELECT COUNT(1) FROM ExpectedResultType'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpectedResultType_GetDataById]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ExpectedResultType_GetDataById]
+(
+@Id int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT 
+     [Id], [Name]
+FROM [ExpectedResultType]
+WHERE [Id]=@Id'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ExpectedResultType_GetDataById]
+(
+@Id int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT 
+     [Id], [Name]
+FROM [ExpectedResultType]
+WHERE [Id]=@Id'
   END
 GO
 
@@ -2106,7 +3094,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_Select]
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString]
+     [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]
 FROM [RunHistory]'
     END
   ELSE
@@ -2116,7 +3104,7 @@ FROM [RunHistory]'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString]
+     [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]
 FROM [RunHistory]'
   END
 GO
@@ -2129,18 +3117,20 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ru
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_Update]
 (
-@ScriptId int, 
+@TestId int, 
 @RunDateTime datetime, 
 @IsPass bit, 
+@RunLog text, 
 @ResultString varchar(1000), 
 @Id bigint
   )
 
   AS
    SET NOCOUNT ON;
-UPDATE [RunHistory] SET [ScriptId]=@ScriptId
+UPDATE [RunHistory] SET [TestId]=@TestId
      , [RunDateTime]=@RunDateTime
      , [IsPass]=@IsPass
+     , [RunLog]=@RunLog
      , [ResultString]=@ResultString
 WHERE [Id]=@Id'
     END
@@ -2148,18 +3138,20 @@ WHERE [Id]=@Id'
   BEGIN
   EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[RunHistory_Update]
 (
-@ScriptId int, 
+@TestId int, 
 @RunDateTime datetime, 
 @IsPass bit, 
+@RunLog text, 
 @ResultString varchar(1000), 
 @Id bigint
   )
 
   AS
    SET NOCOUNT ON;
-   UPDATE [RunHistory] SET [ScriptId]=@ScriptId
+   UPDATE [RunHistory] SET [TestId]=@TestId
      , [RunDateTime]=@RunDateTime
      , [IsPass]=@IsPass
+     , [RunLog]=@RunLog
      , [ResultString]=@ResultString
 WHERE [Id]=@Id'
   END
@@ -2205,29 +3197,31 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ru
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_Insert]
 (
-@ScriptId int, 
+@TestId int, 
 @RunDateTime datetime, 
 @IsPass bit, 
+@RunLog text, 
 @ResultString varchar(1000)
   )
 
   AS
    SET NOCOUNT ON;
-INSERT INTO [RunHistory] ([ScriptId], [RunDateTime], [IsPass], [ResultString]) VALUES (@ScriptId, @RunDateTime, @IsPass, @ResultString);SELECT SCOPE_IDENTITY();'
+INSERT INTO [RunHistory] ([TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]) VALUES (@TestId, @RunDateTime, @IsPass, @RunLog, @ResultString);SELECT SCOPE_IDENTITY();'
     END
   ELSE
   BEGIN
   EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[RunHistory_Insert]
 (
-@ScriptId int, 
+@TestId int, 
 @RunDateTime datetime, 
 @IsPass bit, 
+@RunLog text, 
 @ResultString varchar(1000)
   )
 
   AS
    SET NOCOUNT ON;
-   INSERT INTO [RunHistory] ([ScriptId], [RunDateTime], [IsPass], [ResultString]) VALUES (@ScriptId, @RunDateTime, @IsPass, @ResultString);SELECT SCOPE_IDENTITY();'
+   INSERT INTO [RunHistory] ([TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]) VALUES (@TestId, @RunDateTime, @IsPass, @RunLog, @ResultString);SELECT SCOPE_IDENTITY();'
   END
 GO
 
@@ -2254,8 +3248,8 @@ IF @page < 1 SET @page = 1
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString] FROM (
-    SELECT [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString],
+SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString] FROM (
+    SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM RunHistory) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
@@ -2281,8 +3275,8 @@ IF @page < 1 SET @page = 1
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString] FROM (
-    SELECT [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString],
+SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString] FROM (
+    SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM RunHistory) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
@@ -2327,7 +3321,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_GetData
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString]
+     [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]
 FROM [RunHistory]
 WHERE [Id]=@Id'
     END
@@ -2341,7 +3335,7 @@ WHERE [Id]=@Id'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString]
+     [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]
 FROM [RunHistory]
 WHERE [Id]=@Id'
   END
@@ -2351,33 +3345,33 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[RunHistory_GetDataByScriptId]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[RunHistory_GetDataByTestId]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_GetDataByScriptId]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_GetDataByTestId]
 (
-@ScriptId int
+@TestId int
   )
 
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString]
+     [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]
 FROM [RunHistory]
-WHERE [ScriptId]=@ScriptId'
+WHERE [TestId]=@TestId'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[RunHistory_GetDataByScriptId]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[RunHistory_GetDataByTestId]
 (
-@ScriptId int
+@TestId int
   )
 
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString]
+     [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]
 FROM [RunHistory]
-WHERE [ScriptId]=@ScriptId'
+WHERE [TestId]=@TestId'
   END
 GO
 
@@ -2385,11 +3379,11 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[RunHistory_GetDataByScriptIdPageable]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[RunHistory_GetDataByTestIdPageable]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_GetDataByScriptIdPageable]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_GetDataByTestIdPageable]
 (
-@ScriptId int, 
+@TestId int, 
 @sortExpression varchar(125), 
 @page Int, 
 @pageSize Int
@@ -2402,20 +3396,20 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ScriptId'' 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString] FROM (
-		   SELECT [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
-		   FROM RunHistory WHERE ScriptId = @INScriptId) AS PagedResults
+SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString] FROM (
+		   SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+		   FROM RunHistory WHERE TestId = @INTestId) AS PagedResults
 		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
 -- Execute the SQL query
-EXEC sp_executesql @sql, N''@INScriptId int,@inStartRowIndex Int,@inPageSize Int'', @INScriptId = @ScriptId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+EXEC sp_executesql @sql, N''@INTestId int,@inStartRowIndex Int,@inPageSize Int'', @INTestId = @TestId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[RunHistory_GetDataByScriptIdPageable]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[RunHistory_GetDataByTestIdPageable]
 (
-@ScriptId int, 
+@TestId int, 
 @sortExpression varchar(125), 
 @page Int, 
 @pageSize Int
@@ -2428,14 +3422,14 @@ EXEC sp_executesql @sql, N''@INScriptId int,@inStartRowIndex Int,@inPageSize Int
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ScriptId'' 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString] FROM (
-		   SELECT [Id], [ScriptId], [RunDateTime], [IsPass], [ResultString],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
-		   FROM RunHistory WHERE ScriptId = @INScriptId) AS PagedResults
+SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString] FROM (
+		   SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+		   FROM RunHistory WHERE TestId = @INTestId) AS PagedResults
 		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
 -- Execute the SQL query
-EXEC sp_executesql @sql, N''@INScriptId int,@inStartRowIndex Int,@inPageSize Int'', @INScriptId = @ScriptId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+EXEC sp_executesql @sql, N''@INTestId int,@inStartRowIndex Int,@inPageSize Int'', @INTestId = @TestId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
   END
 GO
 
@@ -2443,1525 +3437,29 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[RunHistory_GetDataByScriptIdRowCount]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[RunHistory_GetDataByTestIdRowCount]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_GetDataByScriptIdRowCount]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_GetDataByTestIdRowCount]
 (
-@ScriptId int
+@TestId int
   )
 
   AS
    SET NOCOUNT ON;
 SELECT COUNT(1) FROM RunHistory
-WHERE [ScriptId]=@ScriptId'
+WHERE [TestId]=@TestId'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[RunHistory_GetDataByScriptIdRowCount]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[RunHistory_GetDataByTestIdRowCount]
 (
-@ScriptId int
+@TestId int
   )
 
   AS
    SET NOCOUNT ON;
    SELECT COUNT(1) FROM RunHistory
-WHERE [ScriptId]=@ScriptId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_Select]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_Select]
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-     [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive]
-FROM [Script]'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_Select]
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-     [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive]
-FROM [Script]'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_Update]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_Update]
-(
-@ScriptTypeId int, 
-@Name varchar(50), 
-@ScriptValue text, 
-@IsActive bit, 
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-UPDATE [Script] SET [ScriptTypeId]=@ScriptTypeId
-     , [Name]=@Name
-     , [ScriptValue]=@ScriptValue
-     , [IsActive]=@IsActive
-WHERE [Id]=@Id'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_Update]
-(
-@ScriptTypeId int, 
-@Name varchar(50), 
-@ScriptValue text, 
-@IsActive bit, 
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   UPDATE [Script] SET [ScriptTypeId]=@ScriptTypeId
-     , [Name]=@Name
-     , [ScriptValue]=@ScriptValue
-     , [IsActive]=@IsActive
-WHERE [Id]=@Id'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_Delete]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_Delete]
-(
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-DELETE 
-FROM [Script]
-WHERE [Id]=@Id'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_Delete]
-(
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   DELETE 
-FROM [Script]
-WHERE [Id]=@Id'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_Insert]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_Insert]
-(
-@ScriptTypeId int, 
-@Name varchar(50), 
-@ScriptValue text, 
-@IsActive bit
-  )
-
-  AS
-   SET NOCOUNT ON;
-INSERT INTO [Script] ([ScriptTypeId], [Name], [ScriptValue], [IsActive]) VALUES (@ScriptTypeId, @Name, @ScriptValue, @IsActive);SELECT SCOPE_IDENTITY();'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_Insert]
-(
-@ScriptTypeId int, 
-@Name varchar(50), 
-@ScriptValue text, 
-@IsActive bit
-  )
-
-  AS
-   SET NOCOUNT ON;
-   INSERT INTO [Script] ([ScriptTypeId], [Name], [ScriptValue], [IsActive]) VALUES (@ScriptTypeId, @Name, @ScriptValue, @IsActive);SELECT SCOPE_IDENTITY();'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetDataPageable]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetDataPageable]
-(
-@sortExpression varchar(125), 
-@page Int, 
-@pageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-DECLARE @sql nvarchar(4000),  
- @startRowIndex int 
-IF @page < 1 SET @page = 1  
- IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-
-SET @sql = ''SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive] FROM (
-    SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive],
-         ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
-      FROM Script) AS PagedResults 
- WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
- -- Execute the SQL query 
-  EXEC sp_executesql @sql, N''@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetDataPageable]
-(
-@sortExpression varchar(125), 
-@page Int, 
-@pageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   DECLARE @sql nvarchar(4000),  
- @startRowIndex int 
-IF @page < 1 SET @page = 1  
- IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-
-SET @sql = ''SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive] FROM (
-    SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive],
-         ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
-      FROM Script) AS PagedResults 
- WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
- -- Execute the SQL query 
-  EXEC sp_executesql @sql, N''@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetRowCount]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetRowCount]
-
-  AS
-   SET NOCOUNT ON;
-SELECT COUNT(1) FROM Script'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetRowCount]
-
-  AS
-   SET NOCOUNT ON;
-   SELECT COUNT(1) FROM Script'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetDataById]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetDataById]
-(
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-     [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive]
-FROM [Script]
-WHERE [Id]=@Id'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetDataById]
-(
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-     [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive]
-FROM [Script]
-WHERE [Id]=@Id'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetActiveData]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetActiveData]
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-     [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive]
-FROM [Script] WHERE (IsActive = 1)'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetActiveData]
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-     [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive]
-FROM [Script] WHERE (IsActive = 1)'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetActiveDataPageable]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetActiveDataPageable]
-(
-@sortExpression varchar(125), 
-@page Int, 
-@PageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-DECLARE @sql nvarchar(4000),  
- @startRowIndex int 
-
-IF @page < 1 SET @page = 1  
- IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
- SET @sql = ''SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive] FROM ( 
-       SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive],
-        ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
-       FROM Script WHERE (IsActive = 1)) AS PagedResults 
-     WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
- -- Execute the SQL query 
-EXEC sp_executesql @sql, N'',@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex = @startRowIndex, @inPageSize = @PageSize;'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetActiveDataPageable]
-(
-@sortExpression varchar(125), 
-@page Int, 
-@PageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   DECLARE @sql nvarchar(4000),  
- @startRowIndex int 
-
-IF @page < 1 SET @page = 1  
- IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
- SET @sql = ''SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive] FROM ( 
-       SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive],
-        ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
-       FROM Script WHERE (IsActive = 1)) AS PagedResults 
-     WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
- -- Execute the SQL query 
-EXEC sp_executesql @sql, N'',@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex = @startRowIndex, @inPageSize = @PageSize;'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetActiveDataRowCount]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetActiveDataRowCount]
-
-  AS
-   SET NOCOUNT ON;
-SELECT COUNT(1) FROM Script WHERE (IsActive = 1)'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetActiveDataRowCount]
-
-  AS
-   SET NOCOUNT ON;
-   SELECT COUNT(1) FROM Script WHERE (IsActive = 1)'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetScriptsForTestByTestId]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetScriptsForTestByTestId]
-(
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-Script.[Id], 
-Script.[ScriptTypeId], 
-Script.[Name], 
-Script.[ScriptValue], 
-Script.[IsActive]
-FROM [Script] INNER JOIN Test_Script ON Script.[Id] = Test_Script.[ScriptId]
-WHERE Test_Script.[TestId] = @Id'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetScriptsForTestByTestId]
-(
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-Script.[Id], 
-Script.[ScriptTypeId], 
-Script.[Name], 
-Script.[ScriptValue], 
-Script.[IsActive]
-FROM [Script] INNER JOIN Test_Script ON Script.[Id] = Test_Script.[ScriptId]
-WHERE Test_Script.[TestId] = @Id'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetDataByScriptTypeId]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetDataByScriptTypeId]
-(
-@ScriptTypeId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-     [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive]
-FROM [Script]
-WHERE [ScriptTypeId]=@ScriptTypeId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetDataByScriptTypeId]
-(
-@ScriptTypeId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-     [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive]
-FROM [Script]
-WHERE [ScriptTypeId]=@ScriptTypeId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetDataByScriptTypeIdPageable]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetDataByScriptTypeIdPageable]
-(
-@ScriptTypeId int, 
-@sortExpression varchar(125), 
-@page Int, 
-@pageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-DECLARE @sql nvarchar(4000), 
-@startRowIndex int 
-
-IF @page < 1 SET @page = 1 
-IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ScriptTypeId'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive] FROM (
-		   SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
-		   FROM Script WHERE ScriptTypeId = @INScriptTypeId) AS PagedResults
-		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
--- Execute the SQL query
-EXEC sp_executesql @sql, N''@INScriptTypeId int,@inStartRowIndex Int,@inPageSize Int'', @INScriptTypeId = @ScriptTypeId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetDataByScriptTypeIdPageable]
-(
-@ScriptTypeId int, 
-@sortExpression varchar(125), 
-@page Int, 
-@pageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   DECLARE @sql nvarchar(4000), 
-@startRowIndex int 
-
-IF @page < 1 SET @page = 1 
-IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ScriptTypeId'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive] FROM (
-		   SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
-		   FROM Script WHERE ScriptTypeId = @INScriptTypeId) AS PagedResults
-		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
--- Execute the SQL query
-EXEC sp_executesql @sql, N''@INScriptTypeId int,@inStartRowIndex Int,@inPageSize Int'', @INScriptTypeId = @ScriptTypeId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetDataByScriptTypeIdRowCount]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetDataByScriptTypeIdRowCount]
-(
-@ScriptTypeId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT COUNT(1) FROM Script
-WHERE [ScriptTypeId]=@ScriptTypeId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetDataByScriptTypeIdRowCount]
-(
-@ScriptTypeId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT COUNT(1) FROM Script
-WHERE [ScriptTypeId]=@ScriptTypeId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetActiveDataByScriptTypeId]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetActiveDataByScriptTypeId]
-(
-@ScriptTypeId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-     [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive]
-FROM [Script] WHERE [IsActive] = 1 and [ScriptTypeId] = @ScriptTypeId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetActiveDataByScriptTypeId]
-(
-@ScriptTypeId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-     [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive]
-FROM [Script] WHERE [IsActive] = 1 and [ScriptTypeId] = @ScriptTypeId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetActiveDataByScriptTypeIdPageable]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetActiveDataByScriptTypeIdPageable]
-(
-@ScriptTypeId int, 
-@sortExpression varchar(125), 
-@page Int, 
-@PageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-DECLARE @sql nvarchar(4000), 
-@startRowIndex int 
-
-IF @page < 1 SET @page = 1 
-IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ScriptTypeId'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive] FROM (
-     SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive], 
-      ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '' ) AS ResultSetRowNumber 
-      FROM Script WHERE (IsActive = 1) and ScriptTypeId = @INScriptTypeId ) AS PagedResults  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
- -- Execute the SQL query 
-EXEC sp_executesql @sql, N''@INScriptTypeId int,@inStartRowIndex Int,@inPageSize Int'', @ScriptTypeId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetActiveDataByScriptTypeIdPageable]
-(
-@ScriptTypeId int, 
-@sortExpression varchar(125), 
-@page Int, 
-@PageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   DECLARE @sql nvarchar(4000), 
-@startRowIndex int 
-
-IF @page < 1 SET @page = 1 
-IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ScriptTypeId'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive] FROM (
-     SELECT [Id], [ScriptTypeId], [Name], [ScriptValue], [IsActive], 
-      ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '' ) AS ResultSetRowNumber 
-      FROM Script WHERE (IsActive = 1) and ScriptTypeId = @INScriptTypeId ) AS PagedResults  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
- -- Execute the SQL query 
-EXEC sp_executesql @sql, N''@INScriptTypeId int,@inStartRowIndex Int,@inPageSize Int'', @ScriptTypeId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_GetActiveDataByScriptTypeIdRowCount]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_GetActiveDataByScriptTypeIdRowCount]
-(
-@ScriptTypeId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT COUNT(1) FROM Script WHERE (IsActive = 1) and ScriptTypeId = @ScriptTypeId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_GetActiveDataByScriptTypeIdRowCount]
-(
-@ScriptTypeId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT COUNT(1) FROM Script WHERE (IsActive = 1) and ScriptTypeId = @ScriptTypeId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_Select]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_Select]
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-     [ScriptId], [ExpectedResultId], [ResultIndex]
-FROM [Script_ExpectedResult]'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_Select]
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-     [ScriptId], [ExpectedResultId], [ResultIndex]
-FROM [Script_ExpectedResult]'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_Update]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_Update]
-(
-@ScriptId int, 
-@ExpectedResultId int, 
-@ResultIndex int, 
-@Original_ScriptId int, 
-@Original_ExpectedResultId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-UPDATE [Script_ExpectedResult] SET [ScriptId]=@ScriptId
-     , [ExpectedResultId]=@ExpectedResultId
-     , [ResultIndex]=@ResultIndex
-WHERE [ScriptId]=@Original_ScriptId
-  AND [ExpectedResultId]=@Original_ExpectedResultId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_Update]
-(
-@ScriptId int, 
-@ExpectedResultId int, 
-@ResultIndex int, 
-@Original_ScriptId int, 
-@Original_ExpectedResultId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   UPDATE [Script_ExpectedResult] SET [ScriptId]=@ScriptId
-     , [ExpectedResultId]=@ExpectedResultId
-     , [ResultIndex]=@ResultIndex
-WHERE [ScriptId]=@Original_ScriptId
-  AND [ExpectedResultId]=@Original_ExpectedResultId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_Delete]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_Delete]
-(
-@ScriptId int, 
-@ExpectedResultId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-DELETE 
-FROM [Script_ExpectedResult]
-WHERE [ScriptId]=@ScriptId
-  AND [ExpectedResultId]=@ExpectedResultId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_Delete]
-(
-@ScriptId int, 
-@ExpectedResultId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   DELETE 
-FROM [Script_ExpectedResult]
-WHERE [ScriptId]=@ScriptId
-  AND [ExpectedResultId]=@ExpectedResultId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_Insert]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_Insert]
-(
-@ScriptId int, 
-@ExpectedResultId int, 
-@ResultIndex int
-  )
-
-  AS
-   SET NOCOUNT ON;
-INSERT INTO [Script_ExpectedResult] ([ScriptId], [ExpectedResultId], [ResultIndex]) VALUES (@ScriptId, @ExpectedResultId, @ResultIndex);SELECT 
-     [ScriptId], [ExpectedResultId], [ResultIndex]
-FROM [Script_ExpectedResult]
-WHERE [ScriptId]=@ScriptId
-  AND [ExpectedResultId]=@ExpectedResultId;'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_Insert]
-(
-@ScriptId int, 
-@ExpectedResultId int, 
-@ResultIndex int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   INSERT INTO [Script_ExpectedResult] ([ScriptId], [ExpectedResultId], [ResultIndex]) VALUES (@ScriptId, @ExpectedResultId, @ResultIndex);SELECT 
-     [ScriptId], [ExpectedResultId], [ResultIndex]
-FROM [Script_ExpectedResult]
-WHERE [ScriptId]=@ScriptId
-  AND [ExpectedResultId]=@ExpectedResultId;'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_GetDataPageable]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_GetDataPageable]
-(
-@sortExpression varchar(125), 
-@page Int, 
-@pageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-DECLARE @sql nvarchar(4000),  
- @startRowIndex int 
-IF @page < 1 SET @page = 1  
- IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''ScriptId'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-
-SET @sql = ''SELECT [ScriptId], [ExpectedResultId], [ResultIndex] FROM (
-    SELECT [ScriptId], [ExpectedResultId], [ResultIndex],
-         ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
-      FROM Script_ExpectedResult) AS PagedResults 
- WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
- -- Execute the SQL query 
-  EXEC sp_executesql @sql, N''@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_GetDataPageable]
-(
-@sortExpression varchar(125), 
-@page Int, 
-@pageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   DECLARE @sql nvarchar(4000),  
- @startRowIndex int 
-IF @page < 1 SET @page = 1  
- IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''ScriptId'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-
-SET @sql = ''SELECT [ScriptId], [ExpectedResultId], [ResultIndex] FROM (
-    SELECT [ScriptId], [ExpectedResultId], [ResultIndex],
-         ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
-      FROM Script_ExpectedResult) AS PagedResults 
- WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
- -- Execute the SQL query 
-  EXEC sp_executesql @sql, N''@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_GetRowCount]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_GetRowCount]
-
-  AS
-   SET NOCOUNT ON;
-SELECT COUNT(1) FROM Script_ExpectedResult'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_GetRowCount]
-
-  AS
-   SET NOCOUNT ON;
-   SELECT COUNT(1) FROM Script_ExpectedResult'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_GetDataByScriptIdExpectedResultId]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_GetDataByScriptIdExpectedResultId]
-(
-@ScriptId int, 
-@ExpectedResultId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-     [ScriptId], [ExpectedResultId], [ResultIndex]
-FROM [Script_ExpectedResult]
-WHERE [ScriptId]=@ScriptId
-  AND [ExpectedResultId]=@ExpectedResultId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_GetDataByScriptIdExpectedResultId]
-(
-@ScriptId int, 
-@ExpectedResultId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-     [ScriptId], [ExpectedResultId], [ResultIndex]
-FROM [Script_ExpectedResult]
-WHERE [ScriptId]=@ScriptId
-  AND [ExpectedResultId]=@ExpectedResultId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_GetDataByExpectedResultId]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_GetDataByExpectedResultId]
-(
-@ExpectedResultId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-     [ScriptId], [ExpectedResultId], [ResultIndex]
-FROM [Script_ExpectedResult]
-WHERE [ExpectedResultId]=@ExpectedResultId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_GetDataByExpectedResultId]
-(
-@ExpectedResultId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-     [ScriptId], [ExpectedResultId], [ResultIndex]
-FROM [Script_ExpectedResult]
-WHERE [ExpectedResultId]=@ExpectedResultId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_GetDataByExpectedResultIdPageable]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_GetDataByExpectedResultIdPageable]
-(
-@ExpectedResultId int, 
-@sortExpression varchar(125), 
-@page Int, 
-@pageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-DECLARE @sql nvarchar(4000), 
-@startRowIndex int 
-
-IF @page < 1 SET @page = 1 
-IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ExpectedResultId'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [ScriptId], [ExpectedResultId], [ResultIndex] FROM (
-		   SELECT [ScriptId], [ExpectedResultId], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
-		   FROM Script_ExpectedResult WHERE ExpectedResultId = @INExpectedResultId) AS PagedResults
-		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
--- Execute the SQL query
-EXEC sp_executesql @sql, N''@INExpectedResultId int,@inStartRowIndex Int,@inPageSize Int'', @INExpectedResultId = @ExpectedResultId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_GetDataByExpectedResultIdPageable]
-(
-@ExpectedResultId int, 
-@sortExpression varchar(125), 
-@page Int, 
-@pageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   DECLARE @sql nvarchar(4000), 
-@startRowIndex int 
-
-IF @page < 1 SET @page = 1 
-IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ExpectedResultId'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [ScriptId], [ExpectedResultId], [ResultIndex] FROM (
-		   SELECT [ScriptId], [ExpectedResultId], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
-		   FROM Script_ExpectedResult WHERE ExpectedResultId = @INExpectedResultId) AS PagedResults
-		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
--- Execute the SQL query
-EXEC sp_executesql @sql, N''@INExpectedResultId int,@inStartRowIndex Int,@inPageSize Int'', @INExpectedResultId = @ExpectedResultId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_GetDataByExpectedResultIdRowCount]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_GetDataByExpectedResultIdRowCount]
-(
-@ExpectedResultId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT COUNT(1) FROM Script_ExpectedResult
-WHERE [ExpectedResultId]=@ExpectedResultId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_GetDataByExpectedResultIdRowCount]
-(
-@ExpectedResultId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT COUNT(1) FROM Script_ExpectedResult
-WHERE [ExpectedResultId]=@ExpectedResultId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_GetDataByScriptId]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_GetDataByScriptId]
-(
-@ScriptId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-     [ScriptId], [ExpectedResultId], [ResultIndex]
-FROM [Script_ExpectedResult]
-WHERE [ScriptId]=@ScriptId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_GetDataByScriptId]
-(
-@ScriptId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-     [ScriptId], [ExpectedResultId], [ResultIndex]
-FROM [Script_ExpectedResult]
-WHERE [ScriptId]=@ScriptId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_GetDataByScriptIdPageable]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_GetDataByScriptIdPageable]
-(
-@ScriptId int, 
-@sortExpression varchar(125), 
-@page Int, 
-@pageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-DECLARE @sql nvarchar(4000), 
-@startRowIndex int 
-
-IF @page < 1 SET @page = 1 
-IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ScriptId'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [ScriptId], [ExpectedResultId], [ResultIndex] FROM (
-		   SELECT [ScriptId], [ExpectedResultId], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
-		   FROM Script_ExpectedResult WHERE ScriptId = @INScriptId) AS PagedResults
-		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
--- Execute the SQL query
-EXEC sp_executesql @sql, N''@INScriptId int,@inStartRowIndex Int,@inPageSize Int'', @INScriptId = @ScriptId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_GetDataByScriptIdPageable]
-(
-@ScriptId int, 
-@sortExpression varchar(125), 
-@page Int, 
-@pageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   DECLARE @sql nvarchar(4000), 
-@startRowIndex int 
-
-IF @page < 1 SET @page = 1 
-IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ScriptId'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [ScriptId], [ExpectedResultId], [ResultIndex] FROM (
-		   SELECT [ScriptId], [ExpectedResultId], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
-		   FROM Script_ExpectedResult WHERE ScriptId = @INScriptId) AS PagedResults
-		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
--- Execute the SQL query
-EXEC sp_executesql @sql, N''@INScriptId int,@inStartRowIndex Int,@inPageSize Int'', @INScriptId = @ScriptId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Script_ExpectedResult_GetDataByScriptIdRowCount]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Script_ExpectedResult_GetDataByScriptIdRowCount]
-(
-@ScriptId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT COUNT(1) FROM Script_ExpectedResult
-WHERE [ScriptId]=@ScriptId'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Script_ExpectedResult_GetDataByScriptIdRowCount]
-(
-@ScriptId int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT COUNT(1) FROM Script_ExpectedResult
-WHERE [ScriptId]=@ScriptId'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ScriptType_Select]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ScriptType_Select]
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-     [Id], [Name], [IsActive]
-FROM [ScriptType]'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ScriptType_Select]
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-     [Id], [Name], [IsActive]
-FROM [ScriptType]'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ScriptType_Update]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ScriptType_Update]
-(
-@Name varchar(50), 
-@IsActive bit, 
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-UPDATE [ScriptType] SET [Name]=@Name
-     , [IsActive]=@IsActive
-WHERE [Id]=@Id'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ScriptType_Update]
-(
-@Name varchar(50), 
-@IsActive bit, 
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   UPDATE [ScriptType] SET [Name]=@Name
-     , [IsActive]=@IsActive
-WHERE [Id]=@Id'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ScriptType_Delete]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ScriptType_Delete]
-(
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-DELETE 
-FROM [ScriptType]
-WHERE [Id]=@Id'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ScriptType_Delete]
-(
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   DELETE 
-FROM [ScriptType]
-WHERE [Id]=@Id'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ScriptType_Insert]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ScriptType_Insert]
-(
-@Name varchar(50), 
-@IsActive bit
-  )
-
-  AS
-   SET NOCOUNT ON;
-INSERT INTO [ScriptType] ([Name], [IsActive]) VALUES (@Name, @IsActive);SELECT SCOPE_IDENTITY();'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ScriptType_Insert]
-(
-@Name varchar(50), 
-@IsActive bit
-  )
-
-  AS
-   SET NOCOUNT ON;
-   INSERT INTO [ScriptType] ([Name], [IsActive]) VALUES (@Name, @IsActive);SELECT SCOPE_IDENTITY();'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ScriptType_GetDataPageable]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ScriptType_GetDataPageable]
-(
-@sortExpression varchar(125), 
-@page Int, 
-@pageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-DECLARE @sql nvarchar(4000),  
- @startRowIndex int 
-IF @page < 1 SET @page = 1  
- IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-
-SET @sql = ''SELECT [Id], [Name], [IsActive] FROM (
-    SELECT [Id], [Name], [IsActive],
-         ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
-      FROM ScriptType) AS PagedResults 
- WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
- -- Execute the SQL query 
-  EXEC sp_executesql @sql, N''@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ScriptType_GetDataPageable]
-(
-@sortExpression varchar(125), 
-@page Int, 
-@pageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   DECLARE @sql nvarchar(4000),  
- @startRowIndex int 
-IF @page < 1 SET @page = 1  
- IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
-SET @startRowIndex = (@page -1) * @pageSize + 1 
-
-SET @sql = ''SELECT [Id], [Name], [IsActive] FROM (
-    SELECT [Id], [Name], [IsActive],
-         ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
-      FROM ScriptType) AS PagedResults 
- WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
- -- Execute the SQL query 
-  EXEC sp_executesql @sql, N''@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ScriptType_GetRowCount]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ScriptType_GetRowCount]
-
-  AS
-   SET NOCOUNT ON;
-SELECT COUNT(1) FROM ScriptType'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ScriptType_GetRowCount]
-
-  AS
-   SET NOCOUNT ON;
-   SELECT COUNT(1) FROM ScriptType'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ScriptType_GetDataById]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ScriptType_GetDataById]
-(
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-     [Id], [Name], [IsActive]
-FROM [ScriptType]
-WHERE [Id]=@Id'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ScriptType_GetDataById]
-(
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-     [Id], [Name], [IsActive]
-FROM [ScriptType]
-WHERE [Id]=@Id'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ScriptType_GetActiveData]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ScriptType_GetActiveData]
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-     [Id], [Name], [IsActive]
-FROM [ScriptType] WHERE (IsActive = 1)'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ScriptType_GetActiveData]
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-     [Id], [Name], [IsActive]
-FROM [ScriptType] WHERE (IsActive = 1)'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ScriptType_GetActiveDataPageable]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ScriptType_GetActiveDataPageable]
-(
-@sortExpression varchar(125), 
-@page Int, 
-@PageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-DECLARE @sql nvarchar(4000),  
- @startRowIndex int 
-
-IF @page < 1 SET @page = 1  
- IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
- SET @sql = ''SELECT [Id], [Name], [IsActive] FROM ( 
-       SELECT [Id], [Name], [IsActive],
-        ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
-       FROM ScriptType WHERE (IsActive = 1)) AS PagedResults 
-     WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
- -- Execute the SQL query 
-EXEC sp_executesql @sql, N'',@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex = @startRowIndex, @inPageSize = @PageSize;'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ScriptType_GetActiveDataPageable]
-(
-@sortExpression varchar(125), 
-@page Int, 
-@PageSize Int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   DECLARE @sql nvarchar(4000),  
- @startRowIndex int 
-
-IF @page < 1 SET @page = 1  
- IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
- SET @sql = ''SELECT [Id], [Name], [IsActive] FROM ( 
-       SELECT [Id], [Name], [IsActive],
-        ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
-       FROM ScriptType WHERE (IsActive = 1)) AS PagedResults 
-     WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
- -- Execute the SQL query 
-EXEC sp_executesql @sql, N'',@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex = @startRowIndex, @inPageSize = @PageSize;'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ScriptType_GetActiveDataRowCount]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[ScriptType_GetActiveDataRowCount]
-
-  AS
-   SET NOCOUNT ON;
-SELECT COUNT(1) FROM ScriptType WHERE (IsActive = 1)'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[ScriptType_GetActiveDataRowCount]
-
-  AS
-   SET NOCOUNT ON;
-   SELECT COUNT(1) FROM ScriptType WHERE (IsActive = 1)'
+WHERE [TestId]=@TestId'
   END
 GO
 
@@ -3976,7 +3474,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Select]
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test]'
     END
   ELSE
@@ -3986,7 +3484,7 @@ FROM [Test]'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test]'
   END
 GO
@@ -3999,18 +3497,22 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Te
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Update]
 (
-@ProjectId int, 
 @TestTypeId int, 
+@ProjectId int, 
+@GroupId int, 
 @Name varchar(50), 
+@TestValue text, 
 @IsActive bit, 
 @Id int
   )
 
   AS
    SET NOCOUNT ON;
-UPDATE [Test] SET [ProjectId]=@ProjectId
-     , [TestTypeId]=@TestTypeId
+UPDATE [Test] SET [TestTypeId]=@TestTypeId
+     , [ProjectId]=@ProjectId
+     , [GroupId]=@GroupId
      , [Name]=@Name
+     , [TestValue]=@TestValue
      , [IsActive]=@IsActive
 WHERE [Id]=@Id'
     END
@@ -4018,18 +3520,22 @@ WHERE [Id]=@Id'
   BEGIN
   EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Update]
 (
-@ProjectId int, 
 @TestTypeId int, 
+@ProjectId int, 
+@GroupId int, 
 @Name varchar(50), 
+@TestValue text, 
 @IsActive bit, 
 @Id int
   )
 
   AS
    SET NOCOUNT ON;
-   UPDATE [Test] SET [ProjectId]=@ProjectId
-     , [TestTypeId]=@TestTypeId
+   UPDATE [Test] SET [TestTypeId]=@TestTypeId
+     , [ProjectId]=@ProjectId
+     , [GroupId]=@GroupId
      , [Name]=@Name
+     , [TestValue]=@TestValue
      , [IsActive]=@IsActive
 WHERE [Id]=@Id'
   END
@@ -4075,29 +3581,33 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Te
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Insert]
 (
-@ProjectId int, 
 @TestTypeId int, 
+@ProjectId int, 
+@GroupId int, 
 @Name varchar(50), 
+@TestValue text, 
 @IsActive bit
   )
 
   AS
    SET NOCOUNT ON;
-INSERT INTO [Test] ([ProjectId], [TestTypeId], [Name], [IsActive]) VALUES (@ProjectId, @TestTypeId, @Name, @IsActive);SELECT SCOPE_IDENTITY();'
+INSERT INTO [Test] ([TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]) VALUES (@TestTypeId, @ProjectId, @GroupId, @Name, @TestValue, @IsActive);SELECT SCOPE_IDENTITY();'
     END
   ELSE
   BEGIN
   EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Insert]
 (
-@ProjectId int, 
 @TestTypeId int, 
+@ProjectId int, 
+@GroupId int, 
 @Name varchar(50), 
+@TestValue text, 
 @IsActive bit
   )
 
   AS
    SET NOCOUNT ON;
-   INSERT INTO [Test] ([ProjectId], [TestTypeId], [Name], [IsActive]) VALUES (@ProjectId, @TestTypeId, @Name, @IsActive);SELECT SCOPE_IDENTITY();'
+   INSERT INTO [Test] ([TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]) VALUES (@TestTypeId, @ProjectId, @GroupId, @Name, @TestValue, @IsActive);SELECT SCOPE_IDENTITY();'
   END
 GO
 
@@ -4124,8 +3634,8 @@ IF @page < 1 SET @page = 1
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive] FROM (
-    SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive],
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+    SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM Test) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
@@ -4151,8 +3661,8 @@ IF @page < 1 SET @page = 1
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive] FROM (
-    SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive],
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+    SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM Test) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
@@ -4197,7 +3707,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetDataById]
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test]
 WHERE [Id]=@Id'
     END
@@ -4211,7 +3721,7 @@ WHERE [Id]=@Id'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test]
 WHERE [Id]=@Id'
   END
@@ -4228,7 +3738,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetActiveData
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test] WHERE (IsActive = 1)'
     END
   ELSE
@@ -4238,7 +3748,7 @@ FROM [Test] WHERE (IsActive = 1)'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test] WHERE (IsActive = 1)'
   END
 GO
@@ -4265,8 +3775,8 @@ IF @page < 1 SET @page = 1
  IF @pageSize < 1 SET @pageSize = 10  
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
  SET @startRowIndex = (@page -1) * @pageSize + 1  
- SET @sql = ''SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive] FROM ( 
-       SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive],
+ SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM ( 
+       SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
        FROM Test WHERE (IsActive = 1)) AS PagedResults 
      WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
@@ -4291,8 +3801,8 @@ IF @page < 1 SET @page = 1
  IF @pageSize < 1 SET @pageSize = 10  
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
  SET @startRowIndex = (@page -1) * @pageSize + 1  
- SET @sql = ''SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive] FROM ( 
-       SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive],
+ SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM ( 
+       SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
        FROM Test WHERE (IsActive = 1)) AS PagedResults 
      WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
@@ -4327,48 +3837,6 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_GetTestsForScriptByScriptId]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetTestsForScriptByScriptId]
-(
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-SELECT 
-Test.[Id], 
-Test.[ProjectId], 
-Test.[TestTypeId], 
-Test.[Name], 
-Test.[IsActive]
-FROM [Test] INNER JOIN Test_Script ON Test.[Id] = Test_Script.[TestId]
-WHERE Test_Script.[ScriptId] = @Id'
-    END
-  ELSE
-  BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_GetTestsForScriptByScriptId]
-(
-@Id int
-  )
-
-  AS
-   SET NOCOUNT ON;
-   SELECT 
-Test.[Id], 
-Test.[ProjectId], 
-Test.[TestTypeId], 
-Test.[Name], 
-Test.[IsActive]
-FROM [Test] INNER JOIN Test_Script ON Test.[Id] = Test_Script.[TestId]
-WHERE Test_Script.[ScriptId] = @Id'
-  END
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_GetDataByProjectId]') AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetDataByProjectId]
@@ -4379,7 +3847,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetDataByProj
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test]
 WHERE [ProjectId]=@ProjectId'
     END
@@ -4393,7 +3861,7 @@ WHERE [ProjectId]=@ProjectId'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test]
 WHERE [ProjectId]=@ProjectId'
   END
@@ -4422,8 +3890,8 @@ IF @page < 1 SET @page = 1
 IF @pageSize < 1 SET @pageSize = 10 
 IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive] FROM (
-		   SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+		   SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
 		   FROM Test WHERE ProjectId = @INProjectId) AS PagedResults
 		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
 -- Execute the SQL query
@@ -4448,8 +3916,8 @@ IF @page < 1 SET @page = 1
 IF @pageSize < 1 SET @pageSize = 10 
 IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive] FROM (
-		   SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+		   SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
 		   FROM Test WHERE ProjectId = @INProjectId) AS PagedResults
 		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
 -- Execute the SQL query
@@ -4501,7 +3969,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetActiveData
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test] WHERE [IsActive] = 1 and [ProjectId] = @ProjectId'
     END
   ELSE
@@ -4514,7 +3982,7 @@ FROM [Test] WHERE [IsActive] = 1 and [ProjectId] = @ProjectId'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test] WHERE [IsActive] = 1 and [ProjectId] = @ProjectId'
   END
 GO
@@ -4542,8 +4010,8 @@ IF @page < 1 SET @page = 1
 IF @pageSize < 1 SET @pageSize = 10 
 IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive] FROM (
-     SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive], 
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+     SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive], 
       ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM Test WHERE (IsActive = 1) and ProjectId = @INProjectId ) AS PagedResults  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
  -- Execute the SQL query 
@@ -4568,8 +4036,8 @@ IF @page < 1 SET @page = 1
 IF @pageSize < 1 SET @pageSize = 10 
 IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive] FROM (
-     SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive], 
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+     SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive], 
       ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM Test WHERE (IsActive = 1) and ProjectId = @INProjectId ) AS PagedResults  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
  -- Execute the SQL query 
@@ -4609,6 +4077,246 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_GetDataByGroupId]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetDataByGroupId]
+(
+@GroupId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT 
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
+FROM [Test]
+WHERE [GroupId]=@GroupId'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_GetDataByGroupId]
+(
+@GroupId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT 
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
+FROM [Test]
+WHERE [GroupId]=@GroupId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_GetDataByGroupIdPageable]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetDataByGroupIdPageable]
+(
+@GroupId int, 
+@sortExpression varchar(125), 
+@page Int, 
+@pageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+DECLARE @sql nvarchar(4000), 
+@startRowIndex int 
+
+IF @page < 1 SET @page = 1 
+IF @pageSize < 1 SET @pageSize = 10 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''GroupId'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+		   SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+		   FROM Test WHERE GroupId = @INGroupId) AS PagedResults
+		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
+-- Execute the SQL query
+EXEC sp_executesql @sql, N''@INGroupId int,@inStartRowIndex Int,@inPageSize Int'', @INGroupId = @GroupId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_GetDataByGroupIdPageable]
+(
+@GroupId int, 
+@sortExpression varchar(125), 
+@page Int, 
+@pageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   DECLARE @sql nvarchar(4000), 
+@startRowIndex int 
+
+IF @page < 1 SET @page = 1 
+IF @pageSize < 1 SET @pageSize = 10 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''GroupId'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+		   SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+		   FROM Test WHERE GroupId = @INGroupId) AS PagedResults
+		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
+-- Execute the SQL query
+EXEC sp_executesql @sql, N''@INGroupId int,@inStartRowIndex Int,@inPageSize Int'', @INGroupId = @GroupId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_GetDataByGroupIdRowCount]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetDataByGroupIdRowCount]
+(
+@GroupId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT COUNT(1) FROM Test
+WHERE [GroupId]=@GroupId'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_GetDataByGroupIdRowCount]
+(
+@GroupId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT COUNT(1) FROM Test
+WHERE [GroupId]=@GroupId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_GetActiveDataByGroupId]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetActiveDataByGroupId]
+(
+@GroupId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT 
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
+FROM [Test] WHERE [IsActive] = 1 and [GroupId] = @GroupId'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_GetActiveDataByGroupId]
+(
+@GroupId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT 
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
+FROM [Test] WHERE [IsActive] = 1 and [GroupId] = @GroupId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_GetActiveDataByGroupIdPageable]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetActiveDataByGroupIdPageable]
+(
+@GroupId int, 
+@sortExpression varchar(125), 
+@page Int, 
+@PageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+DECLARE @sql nvarchar(4000), 
+@startRowIndex int 
+
+IF @page < 1 SET @page = 1 
+IF @pageSize < 1 SET @pageSize = 10 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''GroupId'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+     SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive], 
+      ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '' ) AS ResultSetRowNumber 
+      FROM Test WHERE (IsActive = 1) and GroupId = @INGroupId ) AS PagedResults  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
+ -- Execute the SQL query 
+EXEC sp_executesql @sql, N''@INGroupId int,@inStartRowIndex Int,@inPageSize Int'', @GroupId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_GetActiveDataByGroupIdPageable]
+(
+@GroupId int, 
+@sortExpression varchar(125), 
+@page Int, 
+@PageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   DECLARE @sql nvarchar(4000), 
+@startRowIndex int 
+
+IF @page < 1 SET @page = 1 
+IF @pageSize < 1 SET @pageSize = 10 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''GroupId'' 
+SET @startRowIndex = (@page -1) * @pageSize + 1 
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+     SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive], 
+      ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '' ) AS ResultSetRowNumber 
+      FROM Test WHERE (IsActive = 1) and GroupId = @INGroupId ) AS PagedResults  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
+ -- Execute the SQL query 
+EXEC sp_executesql @sql, N''@INGroupId int,@inStartRowIndex Int,@inPageSize Int'', @GroupId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_GetActiveDataByGroupIdRowCount]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetActiveDataByGroupIdRowCount]
+(
+@GroupId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+SELECT COUNT(1) FROM Test WHERE (IsActive = 1) and GroupId = @GroupId'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_GetActiveDataByGroupIdRowCount]
+(
+@GroupId int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   SELECT COUNT(1) FROM Test WHERE (IsActive = 1) and GroupId = @GroupId'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_GetDataByTestTypeId]') AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetDataByTestTypeId]
@@ -4619,7 +4327,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetDataByTest
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test]
 WHERE [TestTypeId]=@TestTypeId'
     END
@@ -4633,7 +4341,7 @@ WHERE [TestTypeId]=@TestTypeId'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test]
 WHERE [TestTypeId]=@TestTypeId'
   END
@@ -4662,8 +4370,8 @@ IF @page < 1 SET @page = 1
 IF @pageSize < 1 SET @pageSize = 10 
 IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestTypeId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive] FROM (
-		   SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+		   SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
 		   FROM Test WHERE TestTypeId = @INTestTypeId) AS PagedResults
 		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
 -- Execute the SQL query
@@ -4688,8 +4396,8 @@ IF @page < 1 SET @page = 1
 IF @pageSize < 1 SET @pageSize = 10 
 IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestTypeId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive] FROM (
-		   SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+		   SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
 		   FROM Test WHERE TestTypeId = @INTestTypeId) AS PagedResults
 		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
 -- Execute the SQL query
@@ -4741,7 +4449,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_GetActiveData
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test] WHERE [IsActive] = 1 and [TestTypeId] = @TestTypeId'
     END
   ELSE
@@ -4754,7 +4462,7 @@ FROM [Test] WHERE [IsActive] = 1 and [TestTypeId] = @TestTypeId'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [ProjectId], [TestTypeId], [Name], [IsActive]
+     [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive]
 FROM [Test] WHERE [IsActive] = 1 and [TestTypeId] = @TestTypeId'
   END
 GO
@@ -4782,8 +4490,8 @@ IF @page < 1 SET @page = 1
 IF @pageSize < 1 SET @pageSize = 10 
 IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestTypeId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive] FROM (
-     SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive], 
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+     SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive], 
       ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM Test WHERE (IsActive = 1) and TestTypeId = @INTestTypeId ) AS PagedResults  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
  -- Execute the SQL query 
@@ -4808,8 +4516,8 @@ IF @page < 1 SET @page = 1
 IF @pageSize < 1 SET @pageSize = 10 
 IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestTypeId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive] FROM (
-     SELECT [Id], [ProjectId], [TestTypeId], [Name], [IsActive], 
+SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
+     SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive], 
       ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM Test WHERE (IsActive = 1) and TestTypeId = @INTestTypeId ) AS PagedResults  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
  -- Execute the SQL query 
@@ -4849,25 +4557,25 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_Select]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_Select]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_Select]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_Select]
 
   AS
    SET NOCOUNT ON;
 SELECT 
-     [TestId], [ScriptId]
-FROM [Test_Script]'
+     [Id], [ProjectId], [Name], [IsActive]
+FROM [TestGroup]'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_Select]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_Select]
 
   AS
    SET NOCOUNT ON;
    SELECT 
-     [TestId], [ScriptId]
-FROM [Test_Script]'
+     [Id], [ProjectId], [Name], [IsActive]
+FROM [TestGroup]'
   END
 GO
 
@@ -4875,39 +4583,39 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_Update]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_Update]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_Update]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_Update]
 (
-@TestId int, 
-@ScriptId int, 
-@Original_TestId int, 
-@Original_ScriptId int
+@ProjectId int, 
+@Name varchar(50), 
+@IsActive bit, 
+@Id int
   )
 
   AS
    SET NOCOUNT ON;
-UPDATE [Test_Script] SET [TestId]=@TestId
-     , [ScriptId]=@ScriptId
-WHERE [TestId]=@Original_TestId
-  AND [ScriptId]=@Original_ScriptId'
+UPDATE [TestGroup] SET [ProjectId]=@ProjectId
+     , [Name]=@Name
+     , [IsActive]=@IsActive
+WHERE [Id]=@Id'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_Update]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_Update]
 (
-@TestId int, 
-@ScriptId int, 
-@Original_TestId int, 
-@Original_ScriptId int
+@ProjectId int, 
+@Name varchar(50), 
+@IsActive bit, 
+@Id int
   )
 
   AS
    SET NOCOUNT ON;
-   UPDATE [Test_Script] SET [TestId]=@TestId
-     , [ScriptId]=@ScriptId
-WHERE [TestId]=@Original_TestId
-  AND [ScriptId]=@Original_ScriptId'
+   UPDATE [TestGroup] SET [ProjectId]=@ProjectId
+     , [Name]=@Name
+     , [IsActive]=@IsActive
+WHERE [Id]=@Id'
   END
 GO
 
@@ -4915,35 +4623,31 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_Delete]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_Delete]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_Delete]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_Delete]
 (
-@TestId int, 
-@ScriptId int
+@Id int
   )
 
   AS
    SET NOCOUNT ON;
 DELETE 
-FROM [Test_Script]
-WHERE [TestId]=@TestId
-  AND [ScriptId]=@ScriptId'
+FROM [TestGroup]
+WHERE [Id]=@Id'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_Delete]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_Delete]
 (
-@TestId int, 
-@ScriptId int
+@Id int
   )
 
   AS
    SET NOCOUNT ON;
    DELETE 
-FROM [Test_Script]
-WHERE [TestId]=@TestId
-  AND [ScriptId]=@ScriptId'
+FROM [TestGroup]
+WHERE [Id]=@Id'
   END
 GO
 
@@ -4951,37 +4655,31 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_Insert]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_Insert]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_Insert]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_Insert]
 (
-@TestId int, 
-@ScriptId int
+@ProjectId int, 
+@Name varchar(50), 
+@IsActive bit
   )
 
   AS
    SET NOCOUNT ON;
-INSERT INTO [Test_Script] ([TestId], [ScriptId]) VALUES (@TestId, @ScriptId);SELECT 
-     [TestId], [ScriptId]
-FROM [Test_Script]
-WHERE [TestId]=@TestId
-  AND [ScriptId]=@ScriptId;'
+INSERT INTO [TestGroup] ([ProjectId], [Name], [IsActive]) VALUES (@ProjectId, @Name, @IsActive);SELECT SCOPE_IDENTITY();'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_Insert]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_Insert]
 (
-@TestId int, 
-@ScriptId int
+@ProjectId int, 
+@Name varchar(50), 
+@IsActive bit
   )
 
   AS
    SET NOCOUNT ON;
-   INSERT INTO [Test_Script] ([TestId], [ScriptId]) VALUES (@TestId, @ScriptId);SELECT 
-     [TestId], [ScriptId]
-FROM [Test_Script]
-WHERE [TestId]=@TestId
-  AND [ScriptId]=@ScriptId;'
+   INSERT INTO [TestGroup] ([ProjectId], [Name], [IsActive]) VALUES (@ProjectId, @Name, @IsActive);SELECT SCOPE_IDENTITY();'
   END
 GO
 
@@ -4989,9 +4687,9 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_GetDataPageable]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_GetDataPageable]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_GetDataPageable]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_GetDataPageable]
 (
 @sortExpression varchar(125), 
 @page Int, 
@@ -5005,20 +4703,20 @@ DECLARE @sql nvarchar(4000),
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestId'' 
+ IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [TestId], [ScriptId] FROM (
-    SELECT [TestId], [ScriptId],
+SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
+    SELECT [Id], [ProjectId], [Name], [IsActive],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
-      FROM Test_Script) AS PagedResults 
+      FROM TestGroup) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
  -- Execute the SQL query 
   EXEC sp_executesql @sql, N''@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_GetDataPageable]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_GetDataPageable]
 (
 @sortExpression varchar(125), 
 @page Int, 
@@ -5032,13 +4730,13 @@ SET @sql = ''SELECT [TestId], [ScriptId] FROM (
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestId'' 
+ IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [TestId], [ScriptId] FROM (
-    SELECT [TestId], [ScriptId],
+SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
+    SELECT [Id], [ProjectId], [Name], [IsActive],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
-      FROM Test_Script) AS PagedResults 
+      FROM TestGroup) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
  -- Execute the SQL query 
   EXEC sp_executesql @sql, N''@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
@@ -5049,21 +4747,21 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_GetRowCount]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_GetRowCount]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_GetRowCount]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_GetRowCount]
 
   AS
    SET NOCOUNT ON;
-SELECT COUNT(1) FROM Test_Script'
+SELECT COUNT(1) FROM TestGroup'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_GetRowCount]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_GetRowCount]
 
   AS
    SET NOCOUNT ON;
-   SELECT COUNT(1) FROM Test_Script'
+   SELECT COUNT(1) FROM TestGroup'
   END
 GO
 
@@ -5071,37 +4769,33 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_GetDataByTestIdScriptId]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_GetDataById]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_GetDataByTestIdScriptId]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_GetDataById]
 (
-@TestId int, 
-@ScriptId int
+@Id int
   )
 
   AS
    SET NOCOUNT ON;
 SELECT 
-     [TestId], [ScriptId]
-FROM [Test_Script]
-WHERE [TestId]=@TestId
-  AND [ScriptId]=@ScriptId'
+     [Id], [ProjectId], [Name], [IsActive]
+FROM [TestGroup]
+WHERE [Id]=@Id'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_GetDataByTestIdScriptId]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_GetDataById]
 (
-@TestId int, 
-@ScriptId int
+@Id int
   )
 
   AS
    SET NOCOUNT ON;
    SELECT 
-     [TestId], [ScriptId]
-FROM [Test_Script]
-WHERE [TestId]=@TestId
-  AND [ScriptId]=@ScriptId'
+     [Id], [ProjectId], [Name], [IsActive]
+FROM [TestGroup]
+WHERE [Id]=@Id'
   END
 GO
 
@@ -5109,33 +4803,139 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_GetDataByScriptId]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_GetActiveData]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_GetDataByScriptId]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_GetActiveData]
+
+  AS
+   SET NOCOUNT ON;
+SELECT 
+     [Id], [ProjectId], [Name], [IsActive]
+FROM [TestGroup] WHERE (IsActive = 1)'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_GetActiveData]
+
+  AS
+   SET NOCOUNT ON;
+   SELECT 
+     [Id], [ProjectId], [Name], [IsActive]
+FROM [TestGroup] WHERE (IsActive = 1)'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_GetActiveDataPageable]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_GetActiveDataPageable]
 (
-@ScriptId int
+@sortExpression varchar(125), 
+@page Int, 
+@PageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+DECLARE @sql nvarchar(4000),  
+ @startRowIndex int 
+
+IF @page < 1 SET @page = 1  
+ IF @pageSize < 1 SET @pageSize = 10  
+ IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
+ SET @startRowIndex = (@page -1) * @pageSize + 1  
+ SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM ( 
+       SELECT [Id], [ProjectId], [Name], [IsActive],
+        ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
+       FROM TestGroup WHERE (IsActive = 1)) AS PagedResults 
+     WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
+ -- Execute the SQL query 
+EXEC sp_executesql @sql, N'',@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex = @startRowIndex, @inPageSize = @PageSize;'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_GetActiveDataPageable]
+(
+@sortExpression varchar(125), 
+@page Int, 
+@PageSize Int
+  )
+
+  AS
+   SET NOCOUNT ON;
+   DECLARE @sql nvarchar(4000),  
+ @startRowIndex int 
+
+IF @page < 1 SET @page = 1  
+ IF @pageSize < 1 SET @pageSize = 10  
+ IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
+ SET @startRowIndex = (@page -1) * @pageSize + 1  
+ SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM ( 
+       SELECT [Id], [ProjectId], [Name], [IsActive],
+        ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
+       FROM TestGroup WHERE (IsActive = 1)) AS PagedResults 
+     WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
+ -- Execute the SQL query 
+EXEC sp_executesql @sql, N'',@inStartRowIndex Int,@inPageSize Int'', @inStartRowIndex = @startRowIndex, @inPageSize = @PageSize;'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_GetActiveDataRowCount]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_GetActiveDataRowCount]
+
+  AS
+   SET NOCOUNT ON;
+SELECT COUNT(1) FROM TestGroup WHERE (IsActive = 1)'
+    END
+  ELSE
+  BEGIN
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_GetActiveDataRowCount]
+
+  AS
+   SET NOCOUNT ON;
+   SELECT COUNT(1) FROM TestGroup WHERE (IsActive = 1)'
+  END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_GetDataByProjectId]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_GetDataByProjectId]
+(
+@ProjectId int
   )
 
   AS
    SET NOCOUNT ON;
 SELECT 
-     [TestId], [ScriptId]
-FROM [Test_Script]
-WHERE [ScriptId]=@ScriptId'
+     [Id], [ProjectId], [Name], [IsActive]
+FROM [TestGroup]
+WHERE [ProjectId]=@ProjectId'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_GetDataByScriptId]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_GetDataByProjectId]
 (
-@ScriptId int
+@ProjectId int
   )
 
   AS
    SET NOCOUNT ON;
    SELECT 
-     [TestId], [ScriptId]
-FROM [Test_Script]
-WHERE [ScriptId]=@ScriptId'
+     [Id], [ProjectId], [Name], [IsActive]
+FROM [TestGroup]
+WHERE [ProjectId]=@ProjectId'
   END
 GO
 
@@ -5143,11 +4943,11 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_GetDataByScriptIdPageable]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_GetDataByProjectIdPageable]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_GetDataByScriptIdPageable]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_GetDataByProjectIdPageable]
 (
-@ScriptId int, 
+@ProjectId int, 
 @sortExpression varchar(125), 
 @page Int, 
 @pageSize Int
@@ -5160,20 +4960,20 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ScriptId'' 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [TestId], [ScriptId] FROM (
-		   SELECT [TestId], [ScriptId],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
-		   FROM Test_Script WHERE ScriptId = @INScriptId) AS PagedResults
+SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
+		   SELECT [Id], [ProjectId], [Name], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+		   FROM TestGroup WHERE ProjectId = @INProjectId) AS PagedResults
 		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
 -- Execute the SQL query
-EXEC sp_executesql @sql, N''@INScriptId int,@inStartRowIndex Int,@inPageSize Int'', @INScriptId = @ScriptId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+EXEC sp_executesql @sql, N''@INProjectId int,@inStartRowIndex Int,@inPageSize Int'', @INProjectId = @ProjectId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_GetDataByScriptIdPageable]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_GetDataByProjectIdPageable]
 (
-@ScriptId int, 
+@ProjectId int, 
 @sortExpression varchar(125), 
 @page Int, 
 @pageSize Int
@@ -5186,14 +4986,14 @@ EXEC sp_executesql @sql, N''@INScriptId int,@inStartRowIndex Int,@inPageSize Int
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ScriptId'' 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [TestId], [ScriptId] FROM (
-		   SELECT [TestId], [ScriptId],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
-		   FROM Test_Script WHERE ScriptId = @INScriptId) AS PagedResults
+SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
+		   SELECT [Id], [ProjectId], [Name], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+		   FROM TestGroup WHERE ProjectId = @INProjectId) AS PagedResults
 		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
 -- Execute the SQL query
-EXEC sp_executesql @sql, N''@INScriptId int,@inStartRowIndex Int,@inPageSize Int'', @INScriptId = @ScriptId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+EXEC sp_executesql @sql, N''@INProjectId int,@inStartRowIndex Int,@inPageSize Int'', @INProjectId = @ProjectId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
   END
 GO
 
@@ -5201,29 +5001,29 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_GetDataByScriptIdRowCount]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_GetDataByProjectIdRowCount]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_GetDataByScriptIdRowCount]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_GetDataByProjectIdRowCount]
 (
-@ScriptId int
+@ProjectId int
   )
 
   AS
    SET NOCOUNT ON;
-SELECT COUNT(1) FROM Test_Script
-WHERE [ScriptId]=@ScriptId'
+SELECT COUNT(1) FROM TestGroup
+WHERE [ProjectId]=@ProjectId'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_GetDataByScriptIdRowCount]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_GetDataByProjectIdRowCount]
 (
-@ScriptId int
+@ProjectId int
   )
 
   AS
    SET NOCOUNT ON;
-   SELECT COUNT(1) FROM Test_Script
-WHERE [ScriptId]=@ScriptId'
+   SELECT COUNT(1) FROM TestGroup
+WHERE [ProjectId]=@ProjectId'
   END
 GO
 
@@ -5231,33 +5031,31 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_GetDataByTestId]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_GetActiveDataByProjectId]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_GetDataByTestId]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_GetActiveDataByProjectId]
 (
-@TestId int
+@ProjectId int
   )
 
   AS
    SET NOCOUNT ON;
 SELECT 
-     [TestId], [ScriptId]
-FROM [Test_Script]
-WHERE [TestId]=@TestId'
+     [Id], [ProjectId], [Name], [IsActive]
+FROM [TestGroup] WHERE [IsActive] = 1 and [ProjectId] = @ProjectId'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_GetDataByTestId]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_GetActiveDataByProjectId]
 (
-@TestId int
+@ProjectId int
   )
 
   AS
    SET NOCOUNT ON;
    SELECT 
-     [TestId], [ScriptId]
-FROM [Test_Script]
-WHERE [TestId]=@TestId'
+     [Id], [ProjectId], [Name], [IsActive]
+FROM [TestGroup] WHERE [IsActive] = 1 and [ProjectId] = @ProjectId'
   END
 GO
 
@@ -5265,14 +5063,14 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_GetDataByTestIdPageable]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_GetActiveDataByProjectIdPageable]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_GetDataByTestIdPageable]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_GetActiveDataByProjectIdPageable]
 (
-@TestId int, 
+@ProjectId int, 
 @sortExpression varchar(125), 
 @page Int, 
-@pageSize Int
+@PageSize Int
   )
 
   AS
@@ -5282,23 +5080,23 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestId'' 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [TestId], [ScriptId] FROM (
-		   SELECT [TestId], [ScriptId],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
-		   FROM Test_Script WHERE TestId = @INTestId) AS PagedResults
-		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
--- Execute the SQL query
-EXEC sp_executesql @sql, N''@INTestId int,@inStartRowIndex Int,@inPageSize Int'', @INTestId = @TestId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
+     SELECT [Id], [ProjectId], [Name], [IsActive], 
+      ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '' ) AS ResultSetRowNumber 
+      FROM TestGroup WHERE (IsActive = 1) and ProjectId = @INProjectId ) AS PagedResults  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
+ -- Execute the SQL query 
+EXEC sp_executesql @sql, N''@INProjectId int,@inStartRowIndex Int,@inPageSize Int'', @ProjectId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_GetDataByTestIdPageable]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_GetActiveDataByProjectIdPageable]
 (
-@TestId int, 
+@ProjectId int, 
 @sortExpression varchar(125), 
 @page Int, 
-@pageSize Int
+@PageSize Int
   )
 
   AS
@@ -5308,14 +5106,14 @@ EXEC sp_executesql @sql, N''@INTestId int,@inStartRowIndex Int,@inPageSize Int''
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestId'' 
+IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [TestId], [ScriptId] FROM (
-		   SELECT [TestId], [ScriptId],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
-		   FROM Test_Script WHERE TestId = @INTestId) AS PagedResults
-		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
--- Execute the SQL query
-EXEC sp_executesql @sql, N''@INTestId int,@inStartRowIndex Int,@inPageSize Int'', @INTestId = @TestId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
+SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
+     SELECT [Id], [ProjectId], [Name], [IsActive], 
+      ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '' ) AS ResultSetRowNumber 
+      FROM TestGroup WHERE (IsActive = 1) and ProjectId = @INProjectId ) AS PagedResults  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
+ -- Execute the SQL query 
+EXEC sp_executesql @sql, N''@INProjectId int,@inStartRowIndex Int,@inPageSize Int'', @ProjectId,@inStartRowIndex =@startRowIndex, @inPageSize = @PageSize;'
   END
 GO
 
@@ -5323,29 +5121,27 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Test_Script_GetDataByTestIdRowCount]') AND type in (N'P', N'PC'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TestGroup_GetActiveDataByProjectIdRowCount]') AND type in (N'P', N'PC'))
 BEGIN
-EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[Test_Script_GetDataByTestIdRowCount]
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestGroup_GetActiveDataByProjectIdRowCount]
 (
-@TestId int
+@ProjectId int
   )
 
   AS
    SET NOCOUNT ON;
-SELECT COUNT(1) FROM Test_Script
-WHERE [TestId]=@TestId'
+SELECT COUNT(1) FROM TestGroup WHERE (IsActive = 1) and ProjectId = @ProjectId'
     END
   ELSE
   BEGIN
-  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[Test_Script_GetDataByTestIdRowCount]
+  EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestGroup_GetActiveDataByProjectIdRowCount]
 (
-@TestId int
+@ProjectId int
   )
 
   AS
    SET NOCOUNT ON;
-   SELECT COUNT(1) FROM Test_Script
-WHERE [TestId]=@TestId'
+   SELECT COUNT(1) FROM TestGroup WHERE (IsActive = 1) and ProjectId = @ProjectId'
   END
 GO
 
@@ -5360,7 +5156,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestType_Select]
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [Name], [IsActive]
+     [Id], [Name], [TestValidatorType], [IsActive]
 FROM [TestType]'
     END
   ELSE
@@ -5370,7 +5166,7 @@ FROM [TestType]'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [Name], [IsActive]
+     [Id], [Name], [TestValidatorType], [IsActive]
 FROM [TestType]'
   END
 GO
@@ -5384,6 +5180,7 @@ BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestType_Update]
 (
 @Name varchar(50), 
+@TestValidatorType varchar(150), 
 @IsActive bit, 
 @Id int
   )
@@ -5391,6 +5188,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestType_Update]
   AS
    SET NOCOUNT ON;
 UPDATE [TestType] SET [Name]=@Name
+     , [TestValidatorType]=@TestValidatorType
      , [IsActive]=@IsActive
 WHERE [Id]=@Id'
     END
@@ -5399,6 +5197,7 @@ WHERE [Id]=@Id'
   EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestType_Update]
 (
 @Name varchar(50), 
+@TestValidatorType varchar(150), 
 @IsActive bit, 
 @Id int
   )
@@ -5406,6 +5205,7 @@ WHERE [Id]=@Id'
   AS
    SET NOCOUNT ON;
    UPDATE [TestType] SET [Name]=@Name
+     , [TestValidatorType]=@TestValidatorType
      , [IsActive]=@IsActive
 WHERE [Id]=@Id'
   END
@@ -5452,24 +5252,26 @@ BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestType_Insert]
 (
 @Name varchar(50), 
+@TestValidatorType varchar(150), 
 @IsActive bit
   )
 
   AS
    SET NOCOUNT ON;
-INSERT INTO [TestType] ([Name], [IsActive]) VALUES (@Name, @IsActive);SELECT SCOPE_IDENTITY();'
+INSERT INTO [TestType] ([Name], [TestValidatorType], [IsActive]) VALUES (@Name, @TestValidatorType, @IsActive);SELECT SCOPE_IDENTITY();'
     END
   ELSE
   BEGIN
   EXEC dbo.sp_executesql @statement = N'ALTER PROCEDURE [dbo].[TestType_Insert]
 (
 @Name varchar(50), 
+@TestValidatorType varchar(150), 
 @IsActive bit
   )
 
   AS
    SET NOCOUNT ON;
-   INSERT INTO [TestType] ([Name], [IsActive]) VALUES (@Name, @IsActive);SELECT SCOPE_IDENTITY();'
+   INSERT INTO [TestType] ([Name], [TestValidatorType], [IsActive]) VALUES (@Name, @TestValidatorType, @IsActive);SELECT SCOPE_IDENTITY();'
   END
 GO
 
@@ -5496,8 +5298,8 @@ IF @page < 1 SET @page = 1
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [Id], [Name], [IsActive] FROM (
-    SELECT [Id], [Name], [IsActive],
+SET @sql = ''SELECT [Id], [Name], [TestValidatorType], [IsActive] FROM (
+    SELECT [Id], [Name], [TestValidatorType], [IsActive],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM TestType) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
@@ -5523,8 +5325,8 @@ IF @page < 1 SET @page = 1
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [Id], [Name], [IsActive] FROM (
-    SELECT [Id], [Name], [IsActive],
+SET @sql = ''SELECT [Id], [Name], [TestValidatorType], [IsActive] FROM (
+    SELECT [Id], [Name], [TestValidatorType], [IsActive],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM TestType) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
@@ -5569,7 +5371,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestType_GetDataBy
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [Name], [IsActive]
+     [Id], [Name], [TestValidatorType], [IsActive]
 FROM [TestType]
 WHERE [Id]=@Id'
     END
@@ -5583,7 +5385,7 @@ WHERE [Id]=@Id'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [Name], [IsActive]
+     [Id], [Name], [TestValidatorType], [IsActive]
 FROM [TestType]
 WHERE [Id]=@Id'
   END
@@ -5600,7 +5402,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[TestType_GetActive
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [Name], [IsActive]
+     [Id], [Name], [TestValidatorType], [IsActive]
 FROM [TestType] WHERE (IsActive = 1)'
     END
   ELSE
@@ -5610,7 +5412,7 @@ FROM [TestType] WHERE (IsActive = 1)'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [Name], [IsActive]
+     [Id], [Name], [TestValidatorType], [IsActive]
 FROM [TestType] WHERE (IsActive = 1)'
   END
 GO
@@ -5637,8 +5439,8 @@ IF @page < 1 SET @page = 1
  IF @pageSize < 1 SET @pageSize = 10  
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
  SET @startRowIndex = (@page -1) * @pageSize + 1  
- SET @sql = ''SELECT [Id], [Name], [IsActive] FROM ( 
-       SELECT [Id], [Name], [IsActive],
+ SET @sql = ''SELECT [Id], [Name], [TestValidatorType], [IsActive] FROM ( 
+       SELECT [Id], [Name], [TestValidatorType], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
        FROM TestType WHERE (IsActive = 1)) AS PagedResults 
      WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 
@@ -5663,8 +5465,8 @@ IF @page < 1 SET @page = 1
  IF @pageSize < 1 SET @pageSize = 10  
  IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
  SET @startRowIndex = (@page -1) * @pageSize + 1  
- SET @sql = ''SELECT [Id], [Name], [IsActive] FROM ( 
-       SELECT [Id], [Name], [IsActive],
+ SET @sql = ''SELECT [Id], [Name], [TestValidatorType], [IsActive] FROM ( 
+       SELECT [Id], [Name], [TestValidatorType], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
        FROM TestType WHERE (IsActive = 1)) AS PagedResults 
      WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex + @inPageSize) - 1'' 

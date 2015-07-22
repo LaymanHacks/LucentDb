@@ -28,6 +28,10 @@ Imports LucentDb.Domain.Entities
         Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
         Function GetConnectionsForProjectByProjectId( ByVal projectId As Int32)  as ICollection(Of Connection)
         Function GetConnectionsForProjectByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
+        Function GetDataByConnectionProviderId( ByVal connectionProviderId As Int32)  as ICollection(Of Connection)
+        Function GetDataByConnectionProviderIdPageable( ByVal connectionProviderId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
+        Function GetActiveDataByConnectionProviderId( ByVal connectionProviderId As Int32)  as ICollection(Of Connection)
+        Function GetActiveDataByConnectionProviderIdPageable( ByVal connectionProviderId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
     End Interface 
 End NameSpace
   

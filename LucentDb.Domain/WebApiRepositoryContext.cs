@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using LucentDb.Data.Repository;
+﻿using LucentDb.Data.Repository;
 using LucentDb.Data.WebApiRepository;
-
 
 namespace LucentDb.Domain
 {

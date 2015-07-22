@@ -86,8 +86,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PagedResult.cs" />
-    <Compile Include="PagedResultHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UrlParameterEncodedContent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

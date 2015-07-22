@@ -27,6 +27,12 @@ Namespace LucentDb.Data.DbCommandProvider
         Function GetGetConnectionsForProjectByProjectIdDbCommand( ByVal projectId As Int32) As IDbCommand
         Function GetGetConnectionsForProjectByProjectIdPageableDbCommand( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
         Function GetGetConnectionsForProjectByProjectIdRowCountDbCommand( ByVal projectId As Int32) As IDbCommand
+        Function GetGetDataByConnectionProviderIdDbCommand( ByVal connectionProviderId As Int32) As IDbCommand
+        Function GetGetDataByConnectionProviderIdPageableDbCommand( ByVal connectionProviderId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
+        Function GetGetDataByConnectionProviderIdRowCountDbCommand( ByVal connectionProviderId As Int32) As IDbCommand
+        Function GetGetActiveDataByConnectionProviderIdDbCommand( ByVal connectionProviderId As Int32) As IDbCommand
+        Function GetGetActiveDataByConnectionProviderIdPageableDbCommand( ByVal connectionProviderId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
+        Function GetGetActiveDataByConnectionProviderIdRowCountDbCommand( ByVal connectionProviderId As Int32) As IDbCommand
 
     End Interface
 End Namespace

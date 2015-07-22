@@ -59,6 +59,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.ValidatorTests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Data.WebApiRepositoryTests", "LucentDb.Data.WebApiRepositoryTests\LucentDb.Data.WebApiRepositoryTests.csproj", "{D4943647-247B-4DC4-A9F8-AC48798E4FC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Web", "LucentDb.Web\LucentDb.Web.csproj", "{ECF69A55-449E-47D1-B28C-FC9B2694FEBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.WebTests", "LucentDb.WebTests\LucentDb.WebTests.csproj", "{82BB1DF3-66A7-41B2-8197-1FDD4349F439}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +121,14 @@ Global
 		{D4943647-247B-4DC4-A9F8-AC48798E4FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4943647-247B-4DC4-A9F8-AC48798E4FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4943647-247B-4DC4-A9F8-AC48798E4FC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECF69A55-449E-47D1-B28C-FC9B2694FEBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECF69A55-449E-47D1-B28C-FC9B2694FEBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECF69A55-449E-47D1-B28C-FC9B2694FEBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECF69A55-449E-47D1-B28C-FC9B2694FEBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82BB1DF3-66A7-41B2-8197-1FDD4349F439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82BB1DF3-66A7-41B2-8197-1FDD4349F439}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82BB1DF3-66A7-41B2-8197-1FDD4349F439}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82BB1DF3-66A7-41B2-8197-1FDD4349F439}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,5 +152,6 @@ Global
 		{1D525ABE-3DDA-4A89-8BDF-2724F3B29ECE} = {2FBCD085-5BD3-402F-B07B-D96D7F04072D}
 		{76AC4E04-776B-4DCF-AC8E-F8FAF96B2F26} = {BD10736B-F479-4DBE-9BEB-F60ADF83EE65}
 		{D4943647-247B-4DC4-A9F8-AC48798E4FC5} = {BD10736B-F479-4DBE-9BEB-F60ADF83EE65}
+		{ECF69A55-449E-47D1-B28C-FC9B2694FEBC} = {2FBCD085-5BD3-402F-B07B-D96D7F04072D}
 	EndGlobalSection
 EndGlobal
