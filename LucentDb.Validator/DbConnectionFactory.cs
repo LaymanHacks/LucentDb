@@ -7,20 +7,7 @@ namespace LucentDb.Validator
     {
         public DbConnection GetConnection(Connection testConnection)
         {
-            var providerName = "";
-            var csb = new DbConnectionStringBuilder {ConnectionString = testConnection.ConnectionString};
-
-            //if (!csb.ContainsKey("provider")) throw new Exception("ConnectionString does not contain a provider");
-
-            //providerName = csb["provider"].ToString();
-
-            //var providerExists = DbProviderFactories
-            //    .GetFactoryClasses()
-            //    .Rows.Cast<DataRow>()
-            //    .Any(r => r[2].Equals(providerName));
-            //if (!providerExists) return null;
-           // testConnection
-            var factory = DbProviderFactories.GetFactory("System.Data.SqlClient");
+            var factory = DbProviderFactories.GetFactory(testConnection.ConnectionProvider.Value);
             var dbConnection = factory.CreateConnection();
 
             if (dbConnection == null) return null;
