@@ -27,16 +27,18 @@ namespace LucentDb.Validator
             if (_scriptResolver == null) return null;
             var sqlScriptTest = new SqlScriptTest
             {
-                DbConnectionHolder = new DbConnectionHolder(DbConnectionFactory.GetConnection(testConnection)),
+                TestDbConnection = DbConnectionFactory.GetConnection(testConnection),
                 ScriptValue = _scriptResolver.GetSqlScript(),
                 ExpectedResults = test.ExpectedResults.Clone()
             };
 
             RunTimer.Start();
-            var response = _sqlScriptRunner.ValidateSqlScript(ValResponse, sqlScriptTest);
+            var response = _sqlScriptRunner.ValidateSqlScript(DbConnectionFactory.GetConnection(testConnection), _scriptResolver.GetSqlScript(), test.ExpectedResults.Clone());
             RunTimer.Stop();
-            ValResponse.Duration = RunTimer.Elapsed.TotalMilliseconds;
-
+            if (response != null)
+            {
+                response.Duration = RunTimer.Elapsed.TotalMilliseconds;
+            }
             return response;
         }
     }
