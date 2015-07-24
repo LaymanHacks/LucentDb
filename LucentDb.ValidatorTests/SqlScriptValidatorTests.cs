@@ -7,6 +7,12 @@ namespace LucentDb.Validator.Tests
     [TestFixture]
     public class SqlScriptValidatorTests
     {
+
+        private readonly Connection _connection = new Connection(1, 1, "Chinook",
+                @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true)
+        {
+            ConnectionProvider = new ConnectionProvider(1, "System.Data.SqlClient", "System.Data.SqlClient")
+        };
         [Test]
         public void Given_Invalid_TestValue_With_Result_0_Should_Not_Be_Valid()
         {
@@ -20,8 +26,7 @@ namespace LucentDb.Validator.Tests
             var sqlVal = new SqlScriptValidator();
             var valResult =
                 sqlVal.Validate(
-                    new Connection(1, 1, "Chinook",
-                        @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), test);
+                    _connection, test);
             Assert.IsFalse(valResult.IsValid);
             Console.WriteLine(valResult.ResultMessage);
         }
@@ -41,8 +46,7 @@ namespace LucentDb.Validator.Tests
             var sqlVal = new SqlScriptValidator();
             var valResult =
                 sqlVal.Validate(
-                    new Connection(1, 1, "Chinook",
-                        @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), test);
+                    _connection, test);
             Assert.IsFalse(valResult.IsValid);
             Console.WriteLine(valResult.ResultMessage);
         }
@@ -58,10 +62,10 @@ namespace LucentDb.Validator.Tests
                 TestType = new TestType(1, "sqlsnippet", "", true)
             };
             var sqlVal = new SqlScriptValidator();
+            
             var valResult =
                 sqlVal.Validate(
-                    new Connection(1, 1, "Chinook",
-                        @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), test);
+                    _connection, test);
             Assert.IsTrue(valResult.IsValid);
             Console.WriteLine(valResult.ResultMessage);
         }
@@ -80,8 +84,7 @@ namespace LucentDb.Validator.Tests
             var sqlVal = new SqlScriptValidator();
             var valResult =
                 sqlVal.Validate(
-                    new Connection(1, 1, "Chinook",
-                        @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), test);
+                    _connection, test);
             Assert.IsFalse(valResult.IsValid);
             Console.WriteLine(valResult.ResultMessage);
         }
@@ -99,8 +102,7 @@ namespace LucentDb.Validator.Tests
             var sqlVal = new SqlScriptValidator();
             var valResult =
                 sqlVal.Validate(
-                    new Connection(1, 1, "Chinook",
-                        @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), test);
+                    _connection, test);
             Assert.IsTrue(valResult.IsValid);
             Console.WriteLine(valResult.ResultMessage);
         }
@@ -118,8 +120,7 @@ namespace LucentDb.Validator.Tests
             var sqlVal = new SqlScriptValidator();
             var valResult =
                 sqlVal.Validate(
-                    new Connection(1, 1, "Chinook",
-                        @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), test);
+                    _connection, test);
             Assert.IsTrue(valResult.IsValid);
             Console.WriteLine(valResult.ResultMessage);
         }

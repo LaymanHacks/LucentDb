@@ -7,6 +7,7 @@ namespace LucentDb.Validator
     {
         public DbConnection GetConnection(Connection testConnection)
         {
+            if (testConnection.ConnectionProvider == null) return null;
             var factory = DbProviderFactories.GetFactory(testConnection.ConnectionProvider.Value);
             var dbConnection = factory.CreateConnection();
 

@@ -1,7 +1,9 @@
-﻿using LucentDb.Common;
-using LucentDb.Data;
+﻿using System;
+using System.Text;
+using LucentDb.Common;
 using LucentDb.Domain.Entities;
 using LucentDb.Domain.Model;
+using LucentDb.Validator.Comparer;
 
 namespace LucentDb.Validator
 {
@@ -15,9 +17,8 @@ namespace LucentDb.Validator
             _sqlScriptRunner = sqlScriptRunner;
         }
 
-        public SqlScriptValidator(): this(new SqlScriptRunner())
+        public SqlScriptValidator() : this(new SqlScriptRunner())
         {
-           
         }
 
         public ValidationResponse Validate(Connection testConnection, Test test)
@@ -25,21 +26,56 @@ namespace LucentDb.Validator
             if (test == null) return null;
             _scriptResolver = new ScriptResolverFactory(test).GetScriptResolver();
             if (_scriptResolver == null) return null;
-            var sqlScriptTest = new SqlScriptTest
-            {
-                TestDbConnection = DbConnectionFactory.GetConnection(testConnection),
-                ScriptValue = _scriptResolver.GetSqlScript(),
-                ExpectedResults = test.ExpectedResults.Clone()
-            };
+            var scriptValue = _scriptResolver.GetSqlScript();
+            var runLog = new StringBuilder();
+            var resultMessage = new StringBuilder();
+            var valResponse = new ValidationResponse {RunDateTime = DateTime.Now};
 
             RunTimer.Start();
-            var response = _sqlScriptRunner.ValidateSqlScript(DbConnectionFactory.GetConnection(testConnection), _scriptResolver.GetSqlScript(), test.ExpectedResults.Clone());
-            RunTimer.Stop();
-            if (response != null)
+            try
             {
-                response.Duration = RunTimer.Elapsed.TotalMilliseconds;
+                using (
+                    var reader = _sqlScriptRunner.RunScript(DbConnectionFactory.GetConnection(testConnection),
+                        scriptValue))
+                {
+                    while (reader.Read())
+                    {
+                        foreach (var expResult in test.ExpectedResults.Clone())
+                        {
+                            if (reader[expResult.ResultIndex].IsNullOrDbNull()) continue;
+                            var actual = reader[expResult.ResultIndex].ToString();
+                            runLog.AppendFormat("Comparing results: Expected = {0} \n Response = {1} \n",
+                                expResult.ExpectedValue, actual);
+
+                            var comparerFactory = new ComparerFactory();
+                            var comparer = comparerFactory.GetComparer(expResult.AssertType.Name);
+                            valResponse.IsValid = comparer.Compare(expResult.ExpectedValue, actual);
+
+                            if (valResponse.IsValid) continue;
+                            resultMessage.AppendFormat("expected: {0} \n but was: {1}",
+                                expResult.ExpectedValue, actual);
+                            break;
+                        }
+                    }
+                }
             }
-            return response;
+            catch (Exception e)
+            {
+                runLog.AppendFormat("Exception caught: {0}", e.InnerException);
+                valResponse.IsValid = false;
+                resultMessage.AppendFormat("Error occurred while trying to run validation {0}. \n \n {1} : {2}",
+                    scriptValue,
+                    e.Message,
+                    e.StackTrace);
+            }
+            finally
+            {
+                RunTimer.Stop();
+                valResponse.Duration = RunTimer.Elapsed.TotalMilliseconds;
+                valResponse.RunLog = runLog.ToString();
+                valResponse.ResultMessage = resultMessage.ToString();
+            }
+            return valResponse;
         }
     }
 }
