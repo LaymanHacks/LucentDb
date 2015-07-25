@@ -1,11 +1,12 @@
+using System.Data;
 using System.Data.Common;
 using LucentDb.Domain.Entities;
 
 namespace LucentDb.Validator
 {
-    public class DbConnectionFactory
+    public class DbConnectionFactory : IDbConnectionFactory
     {
-        public DbConnection GetConnection(Connection testConnection)
+        public IDbConnection GetConnection(Connection testConnection)
         {
             if (testConnection.ConnectionProvider == null) return null;
             var factory = DbProviderFactories.GetFactory(testConnection.ConnectionProvider.Value);

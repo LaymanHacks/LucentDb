@@ -50,6 +50,7 @@
     <Compile Include="Comparer\AreNotEqualComparer.cs" />
     <Compile Include="DbConnectionFactory.cs" />
     <Compile Include="Comparer\ITestValueComparer.cs" />
+    <Compile Include="IDbConnectionFactory.cs" />
     <Compile Include="ScriptResolver\FileSystemScriptResolver.cs" />
     <Compile Include="ScriptResolver\HttpScriptResolver.cs" />
     <Compile Include="ScriptResolver\IScriptResolver.cs" />

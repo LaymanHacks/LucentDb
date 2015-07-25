@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Common;
 using System.Text;
 using LucentDb.Common;
 using LucentDb.Domain.Entities;
@@ -34,8 +35,9 @@ namespace LucentDb.Validator
             RunTimer.Start();
             try
             {
+                var dbConnection = (DbConnection)DbConnectionFactory.GetConnection(testConnection);
                 using (
-                    var reader = _sqlScriptRunner.RunScript(DbConnectionFactory.GetConnection(testConnection),
+                    var reader = _sqlScriptRunner.RunScript(dbConnection,
                         scriptValue))
                 {
                     while (reader.Read())
