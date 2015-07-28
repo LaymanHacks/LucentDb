@@ -52,7 +52,9 @@
   <ItemGroup>
     <Compile Include="SqlDbAssertTypeCommandProvider.vb" />
     <Compile Include="SqlDbConnectionCommandProvider.vb" />
+    <Compile Include="SqlDbConnectionProviderCommandProvider.vb" />
     <Compile Include="SqlDbExpectedResultCommandProvider.vb" />
+    <Compile Include="SqlDbExpectedResultTypeCommandProvider.vb" />
     <Compile Include="SqlDbProjectCommandProvider.vb" />
     <Compile Include="SqlDbProject_ConnectionCommandProvider.vb" />
     <Compile Include="SqlDbRunHistoryCommandProvider.vb" />

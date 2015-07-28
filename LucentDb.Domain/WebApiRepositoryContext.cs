@@ -7,7 +7,7 @@ namespace LucentDb.Domain
     {
         public WebApiRepositoryContext(string baseWebApiAddress)
         {
-            
+            ConnectionProviderRepository = new WebApiConnectionProviderRepository(baseWebApiAddress);
             ConnectionRepository = new WebApiConnectionRepository(baseWebApiAddress);
             ExpectedResultRepository = new WebApiExpectedResultRepository(baseWebApiAddress);
             ProjectRepository = new WebApiProjectRepository(baseWebApiAddress);
@@ -18,6 +18,8 @@ namespace LucentDb.Domain
             TestTypeRepository = new WebApiTestTypeRepository(baseWebApiAddress);
             AssertTypeRepository = new WebApiAssertTypeRepository(baseWebApiAddress);
         }
+
+        public IConnectionProviderRepository ConnectionProviderRepository { get; set; }
 
         public IAssertTypeRepository AssertTypeRepository { get; set; }
         public ITestTypeRepository TestTypeRepository { get; set; }

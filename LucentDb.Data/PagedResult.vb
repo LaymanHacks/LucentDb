@@ -1,10 +1,11 @@
 ﻿Imports System
 Imports System.Collections.Generic
+Imports System.Collections.ObjectModel
 
 Public Class PagedResult (Of T)
 
     Public Sub New(requestedPage As Integer, requestedPageSize As Integer, recordCount As Int64,
-                   data As ICollection(Of T))
+                   data As Collection(Of T))
         Dim totalPages As Int32
         If recordCount > 0 Then
             totalPages = CInt(Math.Ceiling(CDbl(recordCount) / requestedPageSize))
@@ -17,7 +18,7 @@ Public Class PagedResult (Of T)
         Results = data
     End Sub
 
-    Public Property Results As ICollection(Of T)
+    Public Property Results As Collection(Of T)
     Public Property CurrentPage As Integer
     Public Property PageCount As Integer
     Public Property PageSize As Integer

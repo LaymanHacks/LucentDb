@@ -34,7 +34,7 @@ namespace LucentDb.Win.UI
             //cboTests.DataSource = _selectedProject.Tests;
             //cboTests.DisplayMember = "Name";
             //cboTests.ValueMember = "Id";
-
+           
 
             _selectedProject.Tests = (Collection<Test>) _dataRepository.TestRepository.GetActiveDataByProjectId(_selectedProject.ProjectId);
 
@@ -42,7 +42,8 @@ namespace LucentDb.Win.UI
             {
                 test.TestType =
                     _dataRepository.TestTypeRepository.GetDataById(test.TestTypeId).FirstOrDefault();
-                test.RunHistories =(Collection<RunHistory>)_dataRepository.RunHistoryRepository.GetDataByTestIdPageable(test.Id, "Id Desc", 1, 5).Results;
+                var temp = _dataRepository.RunHistoryRepository.GetDataByTestIdPageable(test.Id, "Id Desc", 1, 5).Results;
+                test.RunHistories = _dataRepository.RunHistoryRepository.GetDataByTestIdPageable(test.Id, "Id Desc", 1, 5).Results;
                 test.ExpectedResults =
                     (Collection<ExpectedResult>) _dataRepository.ExpectedResultRepository.GetDataByTestId(test.Id);
 

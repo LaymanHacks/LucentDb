@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor.Document;
 using LucentDb.Domain;
@@ -36,12 +37,17 @@ namespace LucentDb.Win.UI.Controls
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            var scriptVal = new SqlScriptValidator();
-            var valResult =
-                scriptVal.Validate(
-                    new Connection(1, 1, "Chinook",
-                        @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true), _test);
             var repo = new WebApiRepositoryContext("http://localhost:60205/");
+            var scriptVal = new SqlScriptValidator();
+            var connection = new Connection(1, 1, "Chinook",
+                @"Data Source=(localdb)\V11.0;Initial Catalog=Chinook;Integrated Security=True;", true);
+            if (connection.ConnectionProviderId != null)
+                connection.ConnectionProvider =
+                    repo.ConnectionProviderRepository.GetDataById((int) connection.ConnectionProviderId).FirstOrDefault();
+            var valResult =
+                scriptVal.Validate(connection
+                    , _test);
+           
             
             repo.RunHistoryRepository.Insert(_test.Id, valResult.RunDateTime, valResult.IsValid, valResult.RunLog, valResult.ResultMessage);
             MessageBox.Show(valResult.IsValid.ToString());
