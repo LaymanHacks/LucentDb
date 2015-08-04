@@ -1,45 +1,45 @@
 @*
-@model LucentDb.Domain.Entities.Script_ExpectedResult
+    @model LucentDb.Domain.Entities.Script_ExpectedResult
 
-@{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    @{
+        ViewBag.Title = "Details";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 
-<h2>Details</h2>
+    <h2>Details</h2>
 
-<div>
-    <h4></h4>
-    <hr/>
-    <dl class="dl-horizontal">
+    <div>
+        <h4></h4>
+        <hr/>
+        <dl class="dl-horizontal">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ScriptId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ScriptId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ScriptId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ScriptId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ExpectedResultId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ExpectedResultId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ExpectedResultId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ExpectedResultId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ResultIndex)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ResultIndex)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ResultIndex)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ResultIndex)
+            </dd>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new {id = Model.ScriptId, id = Model.ExpectedResultId}) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new {id = Model.ScriptId, id = Model.ExpectedResultId}) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
