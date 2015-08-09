@@ -16,6 +16,7 @@ namespace LucentDb.Domain
             TestRepository = new DbTestRepository(new SqlDbTestCommandProvider());
             TestTypeRepository = new DbTestTypeRepository(new SqlDbTestTypeCommandProvider());
             AssertTypeRepository = new DbAssertTypeRepository(new SqlDbAssertTypeCommandProvider());
+            ConnectionProviderRepository = new DbConnectionProviderRepository(new SqlDbConnectionProviderCommandProvider());
         }
 
         public IAssertTypeRepository AssertTypeRepository { get; set; }
@@ -26,5 +27,6 @@ namespace LucentDb.Domain
         public IProjectRepository ProjectRepository { get; set; }
         public IExpectedResultRepository ExpectedResultRepository { get; set; }
         public IConnectionRepository ConnectionRepository { get; set; }
+        public IConnectionProviderRepository ConnectionProviderRepository { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Domain.Entities", "LucentDb.Domain.Entities\LucentDb.Domain.Entities.csproj", "{4ADCF3CB-049F-4BE2-B421-7875DC51301B}"
 EndProject
@@ -61,7 +61,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Data.WebApiReposit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Web", "LucentDb.Web\LucentDb.Web.csproj", "{ECF69A55-449E-47D1-B28C-FC9B2694FEBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.WebTests", "LucentDb.WebTests\LucentDb.WebTests.csproj", "{82BB1DF3-66A7-41B2-8197-1FDD4349F439}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucentDb.Web.UI.Tests", "LucentDb.WebTests\LucentDb.Web.UI.Tests.csproj", "{82BB1DF3-66A7-41B2-8197-1FDD4349F439}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

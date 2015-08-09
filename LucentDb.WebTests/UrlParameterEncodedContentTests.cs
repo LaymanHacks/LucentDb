@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LucentDb.Web;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
-namespace LucentDb.Web.Tests
+
+namespace LucentDb.Web.UI.Tests
 {
     [TestFixture()]
     public class UrlParameterEncodedContentTests

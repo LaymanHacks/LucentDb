@@ -19,7 +19,7 @@ namespace LucentDb.Domain.Entities
     public partial class Connection{
       
         private Int32 _connectionId;
-        private Nullable<Int32> _connectionProviderId;
+        private int _connectionProviderId;
         private String _name;
         private String _connectionString;
         private Boolean _isActive;
@@ -30,7 +30,7 @@ namespace LucentDb.Domain.Entities
       {
       }
 
-      public Connection(Int32 connectionId, Nullable<Int32> connectionProviderId, String name, String connectionString, Boolean isActive) : base()
+      public Connection(Int32 connectionId, int connectionProviderId, String name, String connectionString, Boolean isActive) : base()
       {
           
            _connectionId = connectionId;
@@ -59,7 +59,7 @@ namespace LucentDb.Domain.Entities
         /// <returns>ConnectionProviderId as Nullable<Int32></returns>
         /// <remarks></remarks>
         [DataMember()]
-        public virtual Nullable<Int32> ConnectionProviderId
+        public virtual int ConnectionProviderId
         {
             get{return this._connectionProviderId;}
             set{this._connectionProviderId = value;}

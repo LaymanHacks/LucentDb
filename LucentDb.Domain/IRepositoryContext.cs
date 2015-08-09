@@ -12,5 +12,6 @@ namespace LucentDb.Domain
         IProjectRepository ProjectRepository { get; set; }
         IExpectedResultRepository ExpectedResultRepository { get; set; }
         IConnectionRepository ConnectionRepository { get; set; }
+        IConnectionProviderRepository ConnectionProviderRepository { get; set; }
     }
 }

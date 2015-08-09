@@ -43,7 +43,7 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public void Update(Int32?  connectionProviderId, string name, string connectionString, Boolean isActive, Int32 connectionId)
+        public void Update(Int32  connectionProviderId, string name, string connectionString, Boolean isActive, Int32 connectionId)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -87,7 +87,7 @@ namespace LucentDb.Data.WebApiRepository
         }
 
 
-        public Int32 Insert(Int32?  connectionProviderId, string name, string connectionString, Boolean isActive)
+        public Int32 Insert(Int32  connectionProviderId, string name, string connectionString, Boolean isActive)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {

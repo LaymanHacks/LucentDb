@@ -16,11 +16,11 @@ Imports LucentDb.Domain.Entities
  Namespace LucentDb.Data.Repository     
     Public Interface IConnectionRepository
         Function GetData()  as ICollection(Of Connection)
-        Sub Update( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean,  ByVal connectionId As Int32) 
+        Sub Update(ByVal connectionProviderId As Int32, ByVal name As String, ByVal connectionString As String, ByVal isActive As Boolean, ByVal connectionId As Int32)
         Sub Update(ByVal connection as Connection) 
         Sub Delete( ByVal connectionId As Int32) 
         Sub Delete(ByVal connection as Connection) 
-        Function Insert( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean)  as Int32
+        Function Insert(ByVal connectionProviderId As Int32, ByVal name As String, ByVal connectionString As String, ByVal isActive As Boolean) As Int32
         Function Insert(ByVal connection as Connection)  as Int32
         Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
         Function GetDataByConnectionId( ByVal connectionId As Int32)  as ICollection(Of Connection)

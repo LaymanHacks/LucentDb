@@ -63,7 +63,7 @@ namespace LucentDb.Validator
             }
             catch (Exception e)
             {
-                runLog.AppendFormat("Exception caught: {0}", e.InnerException);
+                runLog.AppendFormat("Exception caught: {0}", e.Message);
                 valResponse.IsValid = false;
                 resultMessage.AppendFormat("Error occurred while trying to run validation {0}. \n \n {1} : {2}",
                     scriptValue,

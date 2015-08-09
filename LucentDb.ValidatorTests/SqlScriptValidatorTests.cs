@@ -9,7 +9,7 @@ namespace LucentDb.Validator.Tests
     {
 
         private readonly Connection _connection = new Connection(1, 1, "Chinook",
-                @"Data Source=.\sqlexpress;Initial Catalog=Chinook;Integrated Security=True;", true)
+                @"Data Source=(LocalDB)\v11.0;Initial Catalog=Chinook;Integrated Security=True", true)
         {
             ConnectionProvider = new ConnectionProvider(1, "System.Data.SqlClient", "System.Data.SqlClient")
         };

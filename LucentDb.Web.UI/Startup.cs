@@ -10,7 +10,6 @@ namespace LucentDb.Web.UI
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
         }
     }
 }

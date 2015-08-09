@@ -38,57 +38,57 @@ Namespace LucentDb.Data.Repository
               Dim entList as new Collection(Of Connection)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New Connection( reader.GetInt32("ConnectionId"),  reader.GetNullableInt32("ConnectionProviderId"),  reader.GetString("Name") ,  reader.GetString("ConnectionString") ,  reader.GetBoolean("IsActive"))
+                Dim tempEntity As New Connection(reader.GetInt32("ConnectionId"), reader.GetInt32("ConnectionProviderId"), reader.GetString("Name"), reader.GetString("ConnectionString"), reader.GetBoolean("IsActive"))
                  entList.Add(tempEntity)
             Loop
             reader.Close 
             Return entList 
 
     End Function
-          Public Sub Update( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean,  ByVal connectionId As Int32)  Implements IConnectionRepository.Update
-            Dim command As IDbCommand = _dbConnectionCommandProvider.GetUpdateDbCommand(ConnectionProviderId, Name, ConnectionString, IsActive, ConnectionId)
+        Public Sub Update(ByVal connectionProviderId As Int32, ByVal name As String, ByVal connectionString As String, ByVal isActive As Boolean, ByVal connectionId As Int32) Implements IConnectionRepository.Update
+            Dim command As IDbCommand = _dbConnectionCommandProvider.GetUpdateDbCommand(connectionProviderId, name, connectionString, isActive, connectionId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-          Command.ExecuteNonQuery
+            command.ExecuteNonQuery()
             _dbConnHolder.Close()
-    End Sub
+        End Sub
   
     Public Sub Update(ByVal connection as Connection)  Implements IConnectionRepository.Update
              With Connection
-Update(.ConnectionProviderId, .Name, .ConnectionString,  CBool(.IsActive),  CInt(.ConnectionId))
-       End With
+                Update(.ConnectionProviderId(), .Name, .ConnectionString, CBool(.IsActive), CInt(.ConnectionId))
+            End With
 
-    End Sub
-          Public Sub Delete( ByVal connectionId As Int32)  Implements IConnectionRepository.Delete
-            Dim command As IDbCommand = _dbConnectionCommandProvider.GetDeleteDbCommand(ConnectionId)
+        End Sub
+        Public Sub Delete(ByVal connectionId As Int32) Implements IConnectionRepository.Delete
+            Dim command As IDbCommand = _dbConnectionCommandProvider.GetDeleteDbCommand(connectionId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-          Command.ExecuteNonQuery
+            command.ExecuteNonQuery()
             _dbConnHolder.Close()
-    End Sub
-  
-    Public Sub Delete(ByVal connection as Connection)  Implements IConnectionRepository.Delete
-             With Connection
-Delete( CInt(.ConnectionId))
-       End With
+        End Sub
 
-    End Sub
-          Public Function Insert( ByVal connectionProviderId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal connectionString As String,  ByVal isActive As Boolean)  as Int32 Implements IConnectionRepository.Insert
-            Dim command As IDbCommand = _dbConnectionCommandProvider.GetInsertDbCommand(ConnectionProviderId, Name, ConnectionString, IsActive)
+        Public Sub Delete(ByVal connection As Connection) Implements IConnectionRepository.Delete
+            With connection
+                Delete(CInt(.ConnectionId))
+            End With
+
+        End Sub
+        Public Function Insert(ByVal connectionProviderId As Int32, ByVal name As String, ByVal connectionString As String, ByVal isActive As Boolean) As Int32 Implements IConnectionRepository.Insert
+            Dim command As IDbCommand = _dbConnectionCommandProvider.GetInsertDbCommand(connectionProviderId, name, connectionString, isActive)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
+            Dim returnValue As Int32 = Convert.ToInt32(command.ExecuteScalar())
             _dbConnHolder.Close()
-            Return returnValue 
+            Return returnValue
 
-    End Function
-  
-    Public Function Insert(ByVal connection as Connection)  as Int32 Implements IConnectionRepository.Insert
-             With Connection
- Return Insert(.ConnectionProviderId, .Name, .ConnectionString,  CBool(.IsActive))
-       End With
+        End Function
 
-    End Function
+        Public Function Insert(ByVal connection As Connection) As Int32 Implements IConnectionRepository.Insert
+            With connection
+                Return Insert(.ConnectionProviderId(), .Name, .ConnectionString, CBool(.IsActive))
+            End With
+
+        End Function
           Public Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection) Implements IConnectionRepository.GetDataPageable
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetDataPageableDbCommand(sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
@@ -96,185 +96,185 @@ Delete( CInt(.ConnectionId))
               Dim entList as new Collection(Of Connection)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New Connection( reader.GetInt32("ConnectionId"),  reader.GetNullableInt32("ConnectionProviderId"),  reader.GetString("Name") ,  reader.GetString("ConnectionString") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
+                Dim tempEntity As New Connection(reader.GetInt32("ConnectionId"), reader.GetInt32("ConnectionProviderId"), reader.GetString("Name"), reader.GetString("ConnectionString"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close 
-            Dim totalCount as Int64 = GetRowCount()
-            Dim pagedResults as PagedResult(Of Connection) = New PagedResult(Of Connection)(page, pageSize, totalCount, entList)
+            reader.Close()
+            Dim totalCount As Int64 = GetRowCount()
+            Dim pagedResults As PagedResult(Of Connection) = New PagedResult(Of Connection)(page, pageSize, totalCount, entList)
             Return pagedResults
 
-    End Function
-          Public Function GetRowCount()  as Int32
+        End Function
+        Public Function GetRowCount() As Int32
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetRowCountDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
+            Dim returnValue As Int32 = Convert.ToInt32(Command.ExecuteScalar())
             _dbConnHolder.Close()
-            Return returnValue 
+            Return returnValue
 
-    End Function
-          Public Function GetDataByConnectionId( ByVal connectionId As Int32)  as ICollection(Of Connection) Implements IConnectionRepository.GetDataByConnectionId
+        End Function
+        Public Function GetDataByConnectionId(ByVal connectionId As Int32) As ICollection(Of Connection) Implements IConnectionRepository.GetDataByConnectionId
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetDataByConnectionIdDbCommand(ConnectionId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of Connection)
+            Dim entList As New Collection(Of Connection)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New Connection( reader.GetInt32("ConnectionId"),  reader.GetNullableInt32("ConnectionProviderId"),  reader.GetString("Name") ,  reader.GetString("ConnectionString") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
+                Dim tempEntity As New Connection(reader.GetInt32("ConnectionId"), reader.GetInt32("ConnectionProviderId"), reader.GetString("Name"), reader.GetString("ConnectionString"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close 
-            Return entList 
+            reader.Close()
+            Return entList
 
-    End Function
-          Public Function GetActiveData()  as ICollection(Of Connection) Implements IConnectionRepository.GetActiveData
+        End Function
+        Public Function GetActiveData() As ICollection(Of Connection) Implements IConnectionRepository.GetActiveData
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetActiveDataDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of Connection)
+            Dim entList As New Collection(Of Connection)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New Connection( reader.GetInt32("ConnectionId"),  reader.GetNullableInt32("ConnectionProviderId"),  reader.GetString("Name") ,  reader.GetString("ConnectionString") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
+                Dim tempEntity As New Connection(reader.GetInt32("ConnectionId"), reader.GetInt32("ConnectionProviderId"), reader.GetString("Name"), reader.GetString("ConnectionString"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close 
-            Return entList 
+            reader.Close()
+            Return entList
 
-    End Function
-          Public Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection) Implements IConnectionRepository.GetActiveDataPageable
+        End Function
+        Public Function GetActiveDataPageable(ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of Connection) Implements IConnectionRepository.GetActiveDataPageable
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetActiveDataPageableDbCommand(sortExpression, page, PageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of Connection)
+            Dim entList As New Collection(Of Connection)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New Connection( reader.GetInt32("ConnectionId"),  reader.GetNullableInt32("ConnectionProviderId"),  reader.GetString("Name") ,  reader.GetString("ConnectionString") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
+                Dim tempEntity As New Connection(reader.GetInt32("ConnectionId"), reader.GetInt32("ConnectionProviderId"), reader.GetString("Name"), reader.GetString("ConnectionString"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close 
-            Dim totalCount as Int64 = GetActiveDataRowCount()
-            Dim pagedResults as PagedResult(Of Connection) = New PagedResult(Of Connection)(page, pageSize, totalCount, entList)
+            reader.Close()
+            Dim totalCount As Int64 = GetActiveDataRowCount()
+            Dim pagedResults As PagedResult(Of Connection) = New PagedResult(Of Connection)(page, pageSize, totalCount, entList)
             Return pagedResults
 
-    End Function
-          Public Function GetActiveDataRowCount()  as Int32
+        End Function
+        Public Function GetActiveDataRowCount() As Int32
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetActiveDataRowCountDbCommand()
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
+            Dim returnValue As Int32 = Convert.ToInt32(Command.ExecuteScalar())
             _dbConnHolder.Close()
-            Return returnValue 
+            Return returnValue
 
-    End Function
-          Public Function GetConnectionsForProjectByProjectId( ByVal projectId As Int32)  as ICollection(Of Connection) Implements IConnectionRepository.GetConnectionsForProjectByProjectId
+        End Function
+        Public Function GetConnectionsForProjectByProjectId(ByVal projectId As Int32) As ICollection(Of Connection) Implements IConnectionRepository.GetConnectionsForProjectByProjectId
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetConnectionsForProjectByProjectIdDbCommand(ProjectId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of Connection)
+            Dim entList As New Collection(Of Connection)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New Connection( reader.GetInt32("ConnectionId"),  reader.GetNullableInt32("ConnectionProviderId"),  reader.GetString("Name") ,  reader.GetString("ConnectionString") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
+                Dim tempEntity As New Connection(reader.GetInt32("ConnectionId"), reader.GetInt32("ConnectionProviderId"), reader.GetString("Name"), reader.GetString("ConnectionString"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close 
-            Return entList 
+            reader.Close()
+            Return entList
 
-    End Function
-          Public Function GetConnectionsForProjectByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection) Implements IConnectionRepository.GetConnectionsForProjectByProjectIdPageable
+        End Function
+        Public Function GetConnectionsForProjectByProjectIdPageable(ByVal projectId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of Connection) Implements IConnectionRepository.GetConnectionsForProjectByProjectIdPageable
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetConnectionsForProjectByProjectIdPageableDbCommand(ProjectId, sortExpression, page, PageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of Connection)
+            Dim entList As New Collection(Of Connection)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New Connection( reader.GetInt32("ConnectionId"),  reader.GetNullableInt32("ConnectionProviderId"),  reader.GetString("Name") ,  reader.GetString("ConnectionString") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
+                Dim tempEntity As New Connection(reader.GetInt32("ConnectionId"), reader.GetInt32("ConnectionProviderId"), reader.GetString("Name"), reader.GetString("ConnectionString"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close 
-            Dim totalCount as Int64 = GetConnectionsForProjectByProjectIdRowCount(projectId)
-            Dim pagedResults as PagedResult(Of Connection) = New PagedResult(Of Connection)(page, pageSize, totalCount, entList)
+            reader.Close()
+            Dim totalCount As Int64 = GetConnectionsForProjectByProjectIdRowCount(projectId)
+            Dim pagedResults As PagedResult(Of Connection) = New PagedResult(Of Connection)(page, pageSize, totalCount, entList)
             Return pagedResults
 
-    End Function
-          Public Function GetConnectionsForProjectByProjectIdRowCount( ByVal projectId As Int32)  as Int32
+        End Function
+        Public Function GetConnectionsForProjectByProjectIdRowCount(ByVal projectId As Int32) As Int32
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetConnectionsForProjectByProjectIdRowCountDbCommand(ProjectId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
+            Dim returnValue As Int32 = Convert.ToInt32(Command.ExecuteScalar())
             _dbConnHolder.Close()
-            Return returnValue 
+            Return returnValue
 
-    End Function
-          Public Function GetDataByConnectionProviderId( ByVal connectionProviderId As Int32)  as ICollection(Of Connection) Implements IConnectionRepository.GetDataByConnectionProviderId
+        End Function
+        Public Function GetDataByConnectionProviderId(ByVal connectionProviderId As Int32) As ICollection(Of Connection) Implements IConnectionRepository.GetDataByConnectionProviderId
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetDataByConnectionProviderIdDbCommand(ConnectionProviderId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of Connection)
+            Dim entList As New Collection(Of Connection)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New Connection( reader.GetInt32("ConnectionId"),  reader.GetNullableInt32("ConnectionProviderId"),  reader.GetString("Name") ,  reader.GetString("ConnectionString") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
+                Dim tempEntity As New Connection(reader.GetInt32("ConnectionId"), reader.GetInt32("ConnectionProviderId"), reader.GetString("Name"), reader.GetString("ConnectionString"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close 
-            Return entList 
+            reader.Close()
+            Return entList
 
-    End Function
-          Public Function GetDataByConnectionProviderIdPageable( ByVal connectionProviderId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection) Implements IConnectionRepository.GetDataByConnectionProviderIdPageable
+        End Function
+        Public Function GetDataByConnectionProviderIdPageable(ByVal connectionProviderId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of Connection) Implements IConnectionRepository.GetDataByConnectionProviderIdPageable
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetDataByConnectionProviderIdPageableDbCommand(ConnectionProviderId, sortExpression, page, pageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of Connection)
+            Dim entList As New Collection(Of Connection)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New Connection( reader.GetInt32("ConnectionId"),  reader.GetNullableInt32("ConnectionProviderId"),  reader.GetString("Name") ,  reader.GetString("ConnectionString") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
+                Dim tempEntity As New Connection(reader.GetInt32("ConnectionId"), reader.GetInt32("ConnectionProviderId"), reader.GetString("Name"), reader.GetString("ConnectionString"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close 
-            Dim totalCount as Int64 = GetDataByConnectionProviderIdRowCount(connectionProviderId)
-            Dim pagedResults as PagedResult(Of Connection) = New PagedResult(Of Connection)(page, pageSize, totalCount, entList)
+            reader.Close()
+            Dim totalCount As Int64 = GetDataByConnectionProviderIdRowCount(connectionProviderId)
+            Dim pagedResults As PagedResult(Of Connection) = New PagedResult(Of Connection)(page, pageSize, totalCount, entList)
             Return pagedResults
 
-    End Function
-          Public Function GetDataByConnectionProviderIdRowCount( ByVal connectionProviderId As Int32)  as Int32
+        End Function
+        Public Function GetDataByConnectionProviderIdRowCount(ByVal connectionProviderId As Int32) As Int32
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetDataByConnectionProviderIdRowCountDbCommand(ConnectionProviderId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim returnValue As Int32  = Convert.ToInt32(Command.ExecuteScalar())
+            Dim returnValue As Int32 = Convert.ToInt32(Command.ExecuteScalar())
             _dbConnHolder.Close()
-            Return returnValue 
+            Return returnValue
 
-    End Function
-          Public Function GetActiveDataByConnectionProviderId( ByVal connectionProviderId As Int32)  as ICollection(Of Connection) Implements IConnectionRepository.GetActiveDataByConnectionProviderId
+        End Function
+        Public Function GetActiveDataByConnectionProviderId(ByVal connectionProviderId As Int32) As ICollection(Of Connection) Implements IConnectionRepository.GetActiveDataByConnectionProviderId
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetActiveDataByConnectionProviderIdDbCommand(ConnectionProviderId)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of Connection)
+            Dim entList As New Collection(Of Connection)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New Connection( reader.GetInt32("ConnectionId"),  reader.GetNullableInt32("ConnectionProviderId"),  reader.GetString("Name") ,  reader.GetString("ConnectionString") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
+                Dim tempEntity As New Connection(reader.GetInt32("ConnectionId"), reader.GetInt32("ConnectionProviderId"), reader.GetString("Name"), reader.GetString("ConnectionString"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close 
-            Return entList 
+            reader.Close()
+            Return entList
 
-    End Function
-          Public Function GetActiveDataByConnectionProviderIdPageable( ByVal connectionProviderId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection) Implements IConnectionRepository.GetActiveDataByConnectionProviderIdPageable
+        End Function
+        Public Function GetActiveDataByConnectionProviderIdPageable(ByVal connectionProviderId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of Connection) Implements IConnectionRepository.GetActiveDataByConnectionProviderIdPageable
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetActiveDataByConnectionProviderIdPageableDbCommand(ConnectionProviderId, sortExpression, page, PageSize)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
-              Dim entList as new Collection(Of Connection)
+            Dim entList As New Collection(Of Connection)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New Connection( reader.GetInt32("ConnectionId"),  reader.GetNullableInt32("ConnectionProviderId"),  reader.GetString("Name") ,  reader.GetString("ConnectionString") ,  reader.GetBoolean("IsActive"))
-                 entList.Add(tempEntity)
+                Dim tempEntity As New Connection(reader.GetInt32("ConnectionId"), reader.GetInt32("ConnectionProviderId"), reader.GetString("Name"), reader.GetString("ConnectionString"), reader.GetBoolean("IsActive"))
+                entList.Add(tempEntity)
             Loop
-            reader.Close 
-            Dim totalCount as Int64 = GetActiveDataByConnectionProviderIdRowCount(connectionProviderId)
-            Dim pagedResults as PagedResult(Of Connection) = New PagedResult(Of Connection)(page, pageSize, totalCount, entList)
+            reader.Close()
+            Dim totalCount As Int64 = GetActiveDataByConnectionProviderIdRowCount(connectionProviderId)
+            Dim pagedResults As PagedResult(Of Connection) = New PagedResult(Of Connection)(page, pageSize, totalCount, entList)
             Return pagedResults
 
-    End Function
+        End Function
           Public Function GetActiveDataByConnectionProviderIdRowCount( ByVal connectionProviderId As Int32)  as Int32
             Dim command As IDbCommand = _dbConnectionCommandProvider.GetGetActiveDataByConnectionProviderIdRowCountDbCommand(ConnectionProviderId)
             command.Connection = _dbConnHolder.Connection
