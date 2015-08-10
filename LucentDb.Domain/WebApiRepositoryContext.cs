@@ -17,9 +17,11 @@ namespace LucentDb.Domain
             TestRepository = new WebApiTestRepository(baseWebApiAddress);
             TestTypeRepository = new WebApiTestTypeRepository(baseWebApiAddress);
             AssertTypeRepository = new WebApiAssertTypeRepository(baseWebApiAddress);
+            TestGroupRepository = new WebApiTestGroupRepository(baseWebApiAddress);
         }
 
         public IConnectionProviderRepository ConnectionProviderRepository { get; set; }
+        public ITestGroupRepository TestGroupRepository { get; set; }
 
         public IAssertTypeRepository AssertTypeRepository { get; set; }
         public ITestTypeRepository TestTypeRepository { get; set; }
