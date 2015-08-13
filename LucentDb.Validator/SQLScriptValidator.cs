@@ -31,8 +31,9 @@ namespace LucentDb.Validator
             var runLog = new StringBuilder();
             var resultMessage = new StringBuilder();
             var valResponse = new ValidationResponse {RunDateTime = DateTime.Now};
-
+            RunTimer.Reset();
             RunTimer.Start();
+        
             try
             {
                 var dbConnection = (DbConnection)DbConnectionFactory.GetConnection(testConnection);
