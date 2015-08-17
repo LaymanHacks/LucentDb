@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using LucentDb.Web.Formatter;
 using Microsoft.Owin.Security.OAuth;
 
 namespace LucentDb.Web.UI
@@ -10,7 +11,7 @@ namespace LucentDb.Web.UI
            
             // Web API routes
             config.MapHttpAttributeRoutes();
-
+            config.Formatters.Add(new BrowserJsonFormatter());
             config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new {id = RouteParameter.Optional}
                 );
         }
