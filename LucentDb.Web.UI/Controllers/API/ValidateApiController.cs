@@ -21,8 +21,69 @@ namespace LucentDb.Web.UI.Controllers.API
             _dataRepository = new DbRepositoryContext();
         }
 
+        //api/TestGroup/Validate/1/1 or api/connections/1/testgroups/1/validate
+        [Route("api/ValidateTestGroup/{groupId}/{connectionId}", Name = "ValidateTestGroupRoute")]
+        [HttpGet]
+        public HttpResponseMessage ValidateGroup(int groupId, int connectionId)
+        {
+            var connection = BuildConnection(connectionId);
+            var testGroup = BuildTestGroup(groupId, connectionId);
+            if (!ValidateConnectionForProject(connectionId, testGroup.ProjectId))
+                throw new Exception("Not a valid Connection for this test group.");
+
+            var scriptVal = new SqlScriptValidator();
+            var valCollection = new Collection<ValidationResponse>();
+
+            foreach (
+                var valResult in
+                    testGroup.Tests.Select(test => scriptVal.Validate(connection, test))
+                        .Where(valResult => valResult != null))
+            {
+                valCollection.Add(valResult);
+                _dataRepository.RunHistoryRepository.Insert(testGroup.ProjectId, valResult.RunDateTime,
+                    valResult.IsValid,
+                    valResult.RunLog, valResult.ResultMessage);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, valCollection);
+        }
+
+        //api/Project/Validate/1/1 or api/connections/1/projects/1/validate
+        [Route("api/ValidateProject/{projectId}/{connectionId}", Name = "ValidateProjectRoute")]
+        [HttpGet]
+        public HttpResponseMessage ValidateProject(int projectId, int connectionId)
+        {
+            var valCollection = new Collection<ValidationResponse>();
+            try
+            {
+                if (!ValidateConnectionForProject(connectionId, projectId))
+                    throw new Exception("Not a valid Connection for this project.");
+
+
+                var connection = BuildConnection(connectionId);
+                var project = BuildProject(projectId);
+
+                var scriptVal = new SqlScriptValidator();
+
+                foreach (
+                    var valResult in
+                        project.Tests.Select(test => scriptVal.Validate(connection, test))
+                            .Where(valResult => valResult != null))
+                {
+                    valCollection.Add(valResult);
+                    _dataRepository.RunHistoryRepository.Insert(project.ProjectId, valResult.RunDateTime,
+                        valResult.IsValid,
+                        valResult.RunLog, valResult.ResultMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(ex.Message == "Not a valid Connection for this project." ? HttpStatusCode.BadRequest : HttpStatusCode.InternalServerError, ex.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, valCollection);
+        }
+
         //TODO think about moving this under the Test path so 
-        //api/Test/Validate/1/1
+        //api/Test/Validate/1/1 or api/connections/1/tests/1/validate
         [Route("api/ValidateTest/{testId}/{connectionId}", Name = "ValidateTestRoute")]
         [HttpGet]
         public HttpResponseMessage ValidateTest(int testId, int connectionId)
@@ -42,29 +103,18 @@ namespace LucentDb.Web.UI.Controllers.API
             return Request.CreateResponse(HttpStatusCode.OK, valResult);
         }
 
-        [Route("api/ValidateProject/{projectId}/{connectionId}", Name = "ValidateProjectRoute")]
-        [HttpGet]
-        public HttpResponseMessage ValidateProject(int projectId, int connectionId)
+        private Connection BuildConnection(int connectionId)
         {
-            var valCollection = new Collection<ValidationResponse>();
-            var connection = BuildConnection(connectionId);
-            var project = BuildProject(projectId, connectionId);
-
-            var scriptVal = new SqlScriptValidator();
-
-            foreach (
-                var valResult in
-                    project.Tests.Select(test => scriptVal.Validate(connection, test))
-                        .Where(valResult => valResult != null))
-            {
-                valCollection.Add(valResult);
-                _dataRepository.RunHistoryRepository.Insert(project.ProjectId, valResult.RunDateTime, valResult.IsValid,
-                    valResult.RunLog, valResult.ResultMessage);
-            }
-            return Request.CreateResponse(HttpStatusCode.OK, valCollection);
+            var connectionList = _dataRepository.ConnectionRepository.GetDataByConnectionId(connectionId);
+            if (connectionList.Count == 0) throw new Exception("Not a valid connection");
+            var connection = connectionList.First();
+            connection.ConnectionProvider =
+                _dataRepository.ConnectionProviderRepository.GetDataById(connection.ConnectionProviderId)
+                    .First();
+            return connection;
         }
 
-        private Project BuildProject(int projectId, int connectionId)
+        private Project BuildProject(int projectId)
         {
             var project = _dataRepository.ProjectRepository.GetDataByProjectId(projectId).First();
             project.Tests = new Collection<Test>();
@@ -72,17 +122,11 @@ namespace LucentDb.Web.UI.Controllers.API
             {
                 project.Tests.Add(BuildTest(test.Id));
             }
-            
-            project.Connections = new Collection<Connection> {BuildConnection(connectionId)};
-            project.TestGroups = (Collection<TestGroup>) _dataRepository.TestGroupRepository.GetActiveDataByProjectId(projectId);
-            foreach (var testGroup in project.TestGroups)
-            {
-                testGroup.Tests = (Collection<Test>) _dataRepository.TestRepository.GetActiveDataByGroupId(testGroup.Id);
-            }
+
+         
             return project;
         }
 
-        //TODO refactor
         private Test BuildTest(int testId)
         {
             var test = _dataRepository.TestRepository.GetDataById(testId).First();
@@ -105,22 +149,22 @@ namespace LucentDb.Web.UI.Controllers.API
             return test;
         }
 
+        private TestGroup BuildTestGroup(int groupId, int connectionId)
+        {
+            var testGroup = _dataRepository.TestGroupRepository.GetDataById(groupId).First();
+            testGroup.Tests = new Collection<Test>();
+            foreach (var test in _dataRepository.TestRepository.GetActiveDataByGroupId(groupId))
+            {
+                testGroup.Tests.Add(BuildTest(test.Id));
+            }
+
+            return testGroup;
+        }
+
         private bool ValidateConnectionForProject(int connectionId, int projectId)
         {
             return _dataRepository.ProjectConnectionRepository
                 .GetDataByProjectId(projectId).Any(x => x.ConnectionId == connectionId);
-        }
-
-        //TODO refactor
-        private Connection BuildConnection(int connectionId)
-        {
-            var connectionList = _dataRepository.ConnectionRepository.GetDataByConnectionId(connectionId);
-            if (connectionList.Count == 0) throw new Exception("Not a valid connection");
-            var connection = connectionList.First();
-            connection.ConnectionProvider =
-                _dataRepository.ConnectionProviderRepository.GetDataById(connection.ConnectionProviderId)
-                    .First();
-            return connection;
         }
     }
 }
