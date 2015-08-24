@@ -30,8 +30,7 @@ namespace LucentDb.Web.UI.Controllers.API
             _testGroupFactory = new TestGroupFactory(_dataRepository.TestRepository, _dataRepository.TestGroupRepository, _testFactory);
         }
 
-        //api/TestGroup/Validate/1/1 or api/connections/1/testgroups/1/validate
-        [Route("api/ValidateTestGroup/{groupId}/{connectionId}", Name = "ValidateTestGroupRoute")]
+       [Route("api/connections/{connectionId}/testgroups/{groupId}/validate")]
         [HttpGet]
         public HttpResponseMessage ValidateGroup(int groupId, int connectionId)
         {
@@ -41,21 +40,27 @@ namespace LucentDb.Web.UI.Controllers.API
                 var testGroup = _testGroupFactory.CreateTestGroup(groupId);
                 if (!ValidateConnectionForProject(connectionId, testGroup.ProjectId))
                     throw new Exception("Not a valid Connection for this test group.");
-
+                
                 var scriptVal = new SqlScriptValidator();
-                var valCollection = new Collection<ValidationResponse>();
-
-                foreach (
-                    var valResult in
-                        testGroup.Tests.Select(test => scriptVal.Validate(connection, test))
-                            .Where(valResult => valResult != null))
+                //var valCollection = new Collection<ValidationResponse>();
+                foreach (var test in  testGroup.Tests)
                 {
-                    valCollection.Add(valResult);
-                    _dataRepository.RunHistoryRepository.Insert(testGroup.ProjectId, valResult.RunDateTime,
-                        valResult.IsValid,
-                        valResult.RunLog, valResult.ResultMessage);
+                    test.RunHistories = new Collection<RunHistory>();
+                    var valResult = scriptVal.Validate(connection, test);
+                    if (valResult == null) continue;
+                    var rHistory = new RunHistory
+                    {
+                        TestId = test.Id,
+                        RunDateTime = valResult.RunDateTime,
+                        IsPass = valResult.IsValid,
+                        RunLog = valResult.RunLog,
+                        ResultString = valResult.ResultMessage
+                    };
+                    test.RunHistories.Add(rHistory);
+                    //valCollection.Add(valResult);
+                    _dataRepository.RunHistoryRepository.Insert(rHistory);
                 }
-                return Request.CreateResponse(HttpStatusCode.OK, valCollection);
+                return Request.CreateResponse(HttpStatusCode.OK, testGroup);
             }
             catch (Exception ex)
             {
@@ -63,8 +68,7 @@ namespace LucentDb.Web.UI.Controllers.API
             }
         }
 
-        //api/Project/Validate/1/1 or api/connections/1/projects/1/validate
-        [Route("api/ValidateProject/{projectId}/{connectionId}", Name = "ValidateProjectRoute")]
+        [Route("api/connections/{connectionId}/projects/{projectId}/validate")]
         [HttpGet]
         public HttpResponseMessage ValidateProject(int projectId, int connectionId)
         {
