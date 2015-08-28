@@ -21,7 +21,7 @@ namespace LucentDb.Domain.Entities
         private Int64 _id;
         private Int32 _testId;
         private DateTime _runDateTime;
-        private Boolean _isPass;
+        private Boolean _isValid;
         private String _runLog;
         private String _resultString; 
         private Test _test;  
@@ -30,13 +30,13 @@ namespace LucentDb.Domain.Entities
       {
       }
 
-      public RunHistory(Int64 id, Int32 testId, DateTime runDateTime, Boolean isPass, String runLog, String resultString) : base()
+      public RunHistory(Int64 id, Int32 testId, DateTime runDateTime, Boolean isValid, String runLog, String resultString) : base()
       {
           
            _id = id;
            _testId = testId;
            _runDateTime = runDateTime;
-           _isPass = isPass;
+           _isValid = isValid;
            _runLog = runLog;
            _resultString = resultString;
       }
@@ -79,15 +79,15 @@ namespace LucentDb.Domain.Entities
         }
 
         /// <summary>
-        /// Public Property IsPass
+        /// Public Property IsValid
         /// </summary>
-        /// <returns>IsPass as Boolean</returns>
+        /// <returns>IsValid as Boolean</returns>
         /// <remarks></remarks>
         [DataMember()]
-        public virtual Boolean IsPass
+        public virtual Boolean IsValid
         {
-            get{return this._isPass;}
-            set{this._isPass = value;}
+            get{return this._isValid;}
+            set{this._isValid = value;}
         }
 
         /// <summary>

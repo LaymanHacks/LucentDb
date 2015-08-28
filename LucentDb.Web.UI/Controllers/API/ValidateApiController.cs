@@ -52,7 +52,7 @@ namespace LucentDb.Web.UI.Controllers.API
                     {
                         TestId = test.Id,
                         RunDateTime = valResult.RunDateTime,
-                        IsPass = valResult.IsValid,
+                        IsValid = valResult.IsValid,
                         RunLog = valResult.RunLog,
                         ResultString = valResult.ResultMessage
                     };

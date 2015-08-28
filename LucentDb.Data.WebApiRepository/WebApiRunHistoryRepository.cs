@@ -43,7 +43,7 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public void Update(Int32 testId, DateTime runDateTime, Boolean isPass, string runLog, string resultString, Int64 id)
+        public void Update(Int32 testId, DateTime runDateTime, Boolean isValid, string runLog, string resultString, Int64 id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -54,7 +54,7 @@ namespace LucentDb.Data.WebApiRepository
                     {
                     TestId = testId, 
                     RunDateTime = runDateTime, 
-                    IsPass = isPass, 
+                    IsValid = isValid, 
                     RunLog = runLog, 
                     ResultString = resultString, 
                     Id = id
@@ -66,7 +66,7 @@ namespace LucentDb.Data.WebApiRepository
 
         public void Update(RunHistory runHistory)
         {
-            Update(runHistory.TestId, runHistory.RunDateTime, runHistory.IsPass, runHistory.RunLog, runHistory.ResultString, runHistory.Id);
+            Update(runHistory.TestId, runHistory.RunDateTime, runHistory.IsValid, runHistory.RunLog, runHistory.ResultString, runHistory.Id);
         }
 
 
@@ -88,7 +88,7 @@ namespace LucentDb.Data.WebApiRepository
         }
 
 
-        public Int64 Insert(Int32 testId, DateTime runDateTime, Boolean isPass, string runLog, string resultString)
+        public Int64 Insert(Int32 testId, DateTime runDateTime, Boolean isValid, string runLog, string resultString)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -99,7 +99,7 @@ namespace LucentDb.Data.WebApiRepository
                     {
                     TestId = testId, 
                     RunDateTime = runDateTime, 
-                    IsPass = isPass, 
+                    IsValid = isValid, 
                     RunLog = runLog, 
                     ResultString = resultString
                     };
@@ -113,7 +113,7 @@ namespace LucentDb.Data.WebApiRepository
 
         public Int64 Insert(RunHistory runHistory)
         {
-            return Insert(runHistory.TestId, runHistory.RunDateTime, runHistory.IsPass, runHistory.RunLog, runHistory.ResultString);
+            return Insert(runHistory.TestId, runHistory.RunDateTime, runHistory.IsValid, runHistory.RunLog, runHistory.ResultString);
         }
 
 

@@ -15,9 +15,9 @@ Namespace LucentDb.Data.DbCommandProvider
         ReadOnly Property RunHistoryDbConnectionHolder() As DbConnectionHolder
         ReadOnly Property DbConnectionName As String
         Function GetGetDataDbCommand() As IDbCommand
-        Function GetUpdateDbCommand( ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isPass As Boolean,  ByVal runLog As String,  ByVal resultString As String,  ByVal id As Int64) As IDbCommand
+        Function GetUpdateDbCommand( ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isValid As Boolean,  ByVal runLog As String,  ByVal resultString As String,  ByVal id As Int64) As IDbCommand
         Function GetDeleteDbCommand( ByVal id As Int64) As IDbCommand
-        Function GetInsertDbCommand( ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isPass As Boolean,  ByVal runLog As String,  ByVal resultString As String) As IDbCommand
+        Function GetInsertDbCommand( ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isValid As Boolean,  ByVal runLog As String,  ByVal resultString As String) As IDbCommand
         Function GetGetDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
         Function GetGetRowCountDbCommand() As IDbCommand
         Function GetGetDataByIdDbCommand( ByVal id As Int64) As IDbCommand

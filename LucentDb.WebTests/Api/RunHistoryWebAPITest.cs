@@ -68,12 +68,12 @@
 //        {
 //            _repository
 //                 .Setup(it => it.Update(It.IsAny<Int32>(), It.IsAny<DateTime>(), It.IsAny<Boolean>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<Int64>()))
-//                 .Callback<Int32, DateTime, Boolean, String, String, Int64>((testId, runDateTime, isPass, runLog, resultString, id) => 
+//                 .Callback<Int32, DateTime, Boolean, String, String, Int64>((testId, runDateTime, isValid, runLog, resultString, id) => 
 //            { 
 //                 var tRunHistory = _repositoryList.Find(x => x.Id==id);
 //                 tRunHistory.TestId = testId; 
 //                 tRunHistory.RunDateTime = runDateTime; 
-//                 tRunHistory.IsPass = isPass; 
+//                 tRunHistory.IsValid = isValid; 
 //                 tRunHistory.RunLog = runLog; 
 //                 tRunHistory.ResultString = resultString; 
 //            });
@@ -82,7 +82,7 @@
 //                 Id = tempRunHistory.Id, 
 //                 TestId = tempRunHistory.TestId, 
 //                 RunDateTime = tempRunHistory.RunDateTime, 
-//                 IsPass = tempRunHistory.IsPass, 
+//                 IsValid = tempRunHistory.IsValid, 
 //                 RunLog = tempRunHistory.RunLog, 
 //                 ResultString = tempRunHistory.ResultString};
             
@@ -115,13 +115,13 @@
 //        {
 //            _repository
 //                 .Setup(it => it.Insert(It.IsAny<Int32>(), It.IsAny<DateTime>(), It.IsAny<Boolean>(), It.IsAny<String>(), It.IsAny<String>()))
-//                 .Returns<Int32, DateTime, Boolean, String, String>((testId, runDateTime, isPass, runLog, resultString) => 
+//                 .Returns<Int32, DateTime, Boolean, String, String>((testId, runDateTime, isValid, runLog, resultString) => 
 //            { 
-//                 _repositoryList.Add(new  RunHistory (testId, runDateTime, isPass, runLog, resultString));
+//                 _repositoryList.Add(new  RunHistory (testId, runDateTime, isValid, runLog, resultString));
 //            });
             
 //            //TODO insert values 
-//            _target.Insert(new RunHistory (testId, runDateTime, isPass, runLog, resultString));
+//            _target.Insert(new RunHistory (testId, runDateTime, isValid, runLog, resultString));
 //            //Assert.AreEqual(11, _repositoryList.Count());
 //            //TODO fail until we update the test above
 //            Assert.Fail();
@@ -148,8 +148,8 @@
 //                          case  "RunDateTime":
 //                              query = new List<RunHistory>(query.OrderBy(q => q.RunDateTime));
 //                              break;
-//                          case  "IsPass":
-//                              query = new List<RunHistory>(query.OrderBy(q => q.IsPass));
+//                          case  "IsValid":
+//                              query = new List<RunHistory>(query.OrderBy(q => q.IsValid));
 //                              break;
 //                          case  "RunLog":
 //                              query = new List<RunHistory>(query.OrderBy(q => q.RunLog));
@@ -219,8 +219,8 @@
 //                          case  "RunDateTime":
 //                              query = new List<RunHistory>(query.OrderBy(q => q.RunDateTime));
 //                              break;
-//                          case  "IsPass":
-//                              query = new List<RunHistory>(query.OrderBy(q => q.IsPass));
+//                          case  "IsValid":
+//                              query = new List<RunHistory>(query.OrderBy(q => q.IsValid));
 //                              break;
 //                          case  "RunLog":
 //                              query = new List<RunHistory>(query.OrderBy(q => q.RunLog));

@@ -3080,7 +3080,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_Select]
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]
+     [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString]
 FROM [RunHistory]'
     END
   ELSE
@@ -3090,7 +3090,7 @@ FROM [RunHistory]'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]
+     [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString]
 FROM [RunHistory]'
   END
 GO
@@ -3105,7 +3105,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_Update]
 (
 @TestId int, 
 @RunDateTime datetime, 
-@IsPass bit, 
+@IsValid bit, 
 @RunLog text, 
 @ResultString varchar(1000), 
 @Id bigint
@@ -3115,7 +3115,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_Update]
    SET NOCOUNT ON;
 UPDATE [RunHistory] SET [TestId]=@TestId
      , [RunDateTime]=@RunDateTime
-     , [IsPass]=@IsPass
+     , [IsValid]=@IsValid
      , [RunLog]=@RunLog
      , [ResultString]=@ResultString
 WHERE [Id]=@Id'
@@ -3126,7 +3126,7 @@ WHERE [Id]=@Id'
 (
 @TestId int, 
 @RunDateTime datetime, 
-@IsPass bit, 
+@IsValid bit, 
 @RunLog text, 
 @ResultString varchar(1000), 
 @Id bigint
@@ -3136,7 +3136,7 @@ WHERE [Id]=@Id'
    SET NOCOUNT ON;
    UPDATE [RunHistory] SET [TestId]=@TestId
      , [RunDateTime]=@RunDateTime
-     , [IsPass]=@IsPass
+     , [IsValid]=@IsValid
      , [RunLog]=@RunLog
      , [ResultString]=@ResultString
 WHERE [Id]=@Id'
@@ -3185,14 +3185,14 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_Insert]
 (
 @TestId int, 
 @RunDateTime datetime, 
-@IsPass bit, 
+@IsValid bit, 
 @RunLog text, 
 @ResultString varchar(1000)
   )
 
   AS
    SET NOCOUNT ON;
-INSERT INTO [RunHistory] ([TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]) VALUES (@TestId, @RunDateTime, @IsPass, @RunLog, @ResultString);SELECT SCOPE_IDENTITY();'
+INSERT INTO [RunHistory] ([TestId], [RunDateTime], [IsValid], [RunLog], [ResultString]) VALUES (@TestId, @RunDateTime, @IsValid, @RunLog, @ResultString);SELECT SCOPE_IDENTITY();'
     END
   ELSE
   BEGIN
@@ -3200,14 +3200,14 @@ INSERT INTO [RunHistory] ([TestId], [RunDateTime], [IsPass], [RunLog], [ResultSt
 (
 @TestId int, 
 @RunDateTime datetime, 
-@IsPass bit, 
+@IsValid bit, 
 @RunLog text, 
 @ResultString varchar(1000)
   )
 
   AS
    SET NOCOUNT ON;
-   INSERT INTO [RunHistory] ([TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]) VALUES (@TestId, @RunDateTime, @IsPass, @RunLog, @ResultString);SELECT SCOPE_IDENTITY();'
+   INSERT INTO [RunHistory] ([TestId], [RunDateTime], [IsValid], [RunLog], [ResultString]) VALUES (@TestId, @RunDateTime, @IsValid, @RunLog, @ResultString);SELECT SCOPE_IDENTITY();'
   END
 GO
 
@@ -3233,8 +3233,8 @@ IF @page < 1 SET @page = 1
  SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString] FROM (
-    SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString],
+SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString] FROM (
+    SELECT [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM RunHistory) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
@@ -3259,8 +3259,8 @@ IF @page < 1 SET @page = 1
  SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
-SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString] FROM (
-    SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString],
+SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString] FROM (
+    SELECT [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString],
          ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber 
       FROM RunHistory) AS PagedResults 
  WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND (@inStartRowIndex  +  @inPageSize) - 1'' 
@@ -3305,7 +3305,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_GetData
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]
+     [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString]
 FROM [RunHistory]
 WHERE [Id]=@Id'
     END
@@ -3319,7 +3319,7 @@ WHERE [Id]=@Id'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]
+     [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString]
 FROM [RunHistory]
 WHERE [Id]=@Id'
   END
@@ -3339,7 +3339,7 @@ EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[RunHistory_GetData
   AS
    SET NOCOUNT ON;
 SELECT 
-     [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]
+     [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString]
 FROM [RunHistory]
 WHERE [TestId]=@TestId'
     END
@@ -3353,7 +3353,7 @@ WHERE [TestId]=@TestId'
   AS
    SET NOCOUNT ON;
    SELECT 
-     [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString]
+     [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString]
 FROM [RunHistory]
 WHERE [TestId]=@TestId'
   END
@@ -3382,8 +3382,8 @@ IF @page < 1 SET @page = 1
 IF @pageSize < 1 SET @pageSize = 10 
 SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''TestId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString] FROM (
-		   SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString] FROM (
+		   SELECT [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
 		   FROM RunHistory WHERE TestId = @INTestId) AS PagedResults
 		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
 -- Execute the SQL query
@@ -3408,8 +3408,8 @@ IF @page < 1 SET @page = 1
 IF @pageSize < 1 SET @pageSize = 10 
 SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''TestId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
-SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString] FROM (
-		   SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
+SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString] FROM (
+		   SELECT [Id], [TestId], [RunDateTime], [IsValid], [RunLog], [ResultString],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
 		   FROM RunHistory WHERE TestId = @INTestId) AS PagedResults
 		WHERE ResultSetRowNumber BETWEEN @inStartRowIndex AND ( @inStartRowIndex + @inPageSize) - 1''
 -- Execute the SQL query
