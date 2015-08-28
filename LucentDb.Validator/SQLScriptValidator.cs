@@ -35,7 +35,8 @@ namespace LucentDb.Validator
                 RunDateTime = DateTime.Now,
                 TestId = test.Id,
                 TestName = test.Name,
-                TestValue = test.TestValue};
+                TestValue = test.TestValue
+            };
             RunTimer.Reset();
             RunTimer.Start();
 
