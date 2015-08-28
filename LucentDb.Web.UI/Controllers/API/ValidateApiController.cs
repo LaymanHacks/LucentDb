@@ -42,7 +42,7 @@ namespace LucentDb.Web.UI.Controllers.API
                     throw new Exception("Not a valid Connection for this test group.");
                 
                 var scriptVal = new SqlScriptValidator();
-                //var valCollection = new Collection<ValidationResponse>();
+                var valCollection = new Collection<ValidationResponse>();
                 foreach (var test in  testGroup.Tests)
                 {
                     test.RunHistories = new Collection<RunHistory>();
@@ -57,10 +57,10 @@ namespace LucentDb.Web.UI.Controllers.API
                         ResultString = valResult.ResultMessage
                     };
                     test.RunHistories.Add(rHistory);
-                    //valCollection.Add(valResult);
+                    valCollection.Add(valResult);
                     _dataRepository.RunHistoryRepository.Insert(rHistory);
                 }
-                return Request.CreateResponse(HttpStatusCode.OK, testGroup);
+                return Request.CreateResponse(HttpStatusCode.OK, valCollection);
             }
             catch (Exception ex)
             {
@@ -103,6 +103,7 @@ namespace LucentDb.Web.UI.Controllers.API
                             ? HttpStatusCode.BadRequest
                             : HttpStatusCode.InternalServerError, new HttpError(ex.Message));
             }
+            
             return Request.CreateResponse(HttpStatusCode.OK, valCollection);
         }
 

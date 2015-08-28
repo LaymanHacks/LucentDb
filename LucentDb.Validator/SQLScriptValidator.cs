@@ -30,13 +30,19 @@ namespace LucentDb.Validator
             var scriptValue = _scriptResolver.GetSqlScript();
             var runLog = new StringBuilder();
             var resultMessage = new StringBuilder();
-            var valResponse = new ValidationResponse {RunDateTime = DateTime.Now};
+            var valResponse = new ValidationResponse
+            {
+                RunDateTime = DateTime.Now,
+                TestId = test.Id,
+                TestName = test.Name,
+                TestValue = test.TestValue
+            };
             RunTimer.Reset();
             RunTimer.Start();
-        
+
             try
             {
-                var dbConnection = (DbConnection)DbConnectionFactory.GetConnection(testConnection);
+                var dbConnection = (DbConnection) DbConnectionFactory.GetConnection(testConnection);
                 using (
                     var reader = _sqlScriptRunner.RunScript(dbConnection,
                         scriptValue))
@@ -54,7 +60,11 @@ namespace LucentDb.Validator
                             var comparer = comparerFactory.GetComparer(expResult.AssertType.Name);
                             valResponse.IsValid = comparer.Compare(expResult.ExpectedValue, actual);
 
-                            if (valResponse.IsValid) continue;
+                            if (valResponse.IsValid)
+                            {
+                                resultMessage.Append("Is Valid!");
+                                continue;
+                            }
                             resultMessage.AppendFormat("expected: {0} \n but was: {1}",
                                 expResult.ExpectedValue, actual);
                             break;
@@ -62,14 +72,14 @@ namespace LucentDb.Validator
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                runLog.AppendFormat("Exception caught: {0}", e.Message);
+                runLog.AppendFormat("Exception caught: {0}", exception.Message);
                 valResponse.IsValid = false;
                 resultMessage.AppendFormat("Error occurred while trying to run validation {0}. \n \n {1} : {2}",
                     scriptValue,
-                    e.Message,
-                    e.StackTrace);
+                    exception.Message,
+                    exception.StackTrace);
             }
             finally
             {
