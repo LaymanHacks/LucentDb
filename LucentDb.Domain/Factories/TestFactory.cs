@@ -8,13 +8,13 @@ namespace LucentDb.Domain
 {
     public class TestFactory
     {
+        private readonly IAssertTypeRepository _assertTypeRepository;
+        private readonly IExpectedResultRepository _expectedResultRepository;
         private readonly ITestRepository _testRepository;
         private readonly ITestTypeRepository _testTypeRepository;
-        private readonly IExpectedResultRepository _expectedResultRepository;
-        private readonly IAssertTypeRepository _assertTypeRepository;
 
-
-        public TestFactory(ITestRepository testRepository, ITestTypeRepository testTypeRepository, IExpectedResultRepository expectedResultRepository, IAssertTypeRepository assertTypeRepository)
+        public TestFactory(ITestRepository testRepository, ITestTypeRepository testTypeRepository,
+            IExpectedResultRepository expectedResultRepository, IAssertTypeRepository assertTypeRepository)
         {
             _testRepository = testRepository;
             _testTypeRepository = testTypeRepository;

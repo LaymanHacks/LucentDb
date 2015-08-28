@@ -10,7 +10,6 @@ namespace LucentDb.Validator.Comparer
                     return new AreNotEqualComparer();
                 default:
                     return new AreEqualComparer();
-                
             }
         }
     }

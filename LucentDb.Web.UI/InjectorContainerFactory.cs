@@ -1,5 +1,3 @@
-
-
 using LucentDb.Data.DbCommandProvider;
 using LucentDb.Data.Repository;
 using LucentDb.Data.SqlDbCommandProvider;
@@ -20,7 +18,7 @@ namespace LucentDb.Web.UI
             container.Register<IDbConnectionCommandProvider, SqlDbConnectionCommandProvider>();
             container.Register<IConnectionRepository, DbConnectionRepository>();
 
-            container.Register<IDbConnectionProviderCommandProvider,  SqlDbConnectionProviderCommandProvider>();
+            container.Register<IDbConnectionProviderCommandProvider, SqlDbConnectionProviderCommandProvider>();
             container.Register<IConnectionProviderRepository, DbConnectionProviderRepository>();
 
             container.Register<IDbExpectedResultCommandProvider, SqlDbExpectedResultCommandProvider>();

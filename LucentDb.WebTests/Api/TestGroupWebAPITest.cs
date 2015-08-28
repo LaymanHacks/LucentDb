@@ -24,7 +24,7 @@
 //    [TestFixture()]
 //    public class TestGroupApiControllerTests
 //    {
-        
+
 //        private Mock<ITestGroupRepository> _repository;
 
 //        private List<TestGroup> _repositoryList = new List<TestGroup>
@@ -34,7 +34,7 @@
 //        };
 
 //        private TestGroupApiController _target;
-        
+
 //        [TestInitialize]
 //        public void Init()
 //        {
@@ -51,14 +51,14 @@
 
 //            _target.Request.SetConfiguration(config);
 //        }
-   
+
 //                [Test()]
 //        public void GetDataTest() 
 //        {
 //            _repository
 //                 .Setup(it => it.GetData())
 //                     .Returns(_repositoryList);
-                
+
 //            var result = _target.GetData().ToList();
 //             Assert.AreEqual(_repositoryList.ToList().Count, result.Count);
 //        }
@@ -81,7 +81,7 @@
 //                 ProjectId = tempTestGroup.ProjectId, 
 //                 Name = tempTestGroup.Name, 
 //                 IsActive = tempTestGroup.IsActive};
-            
+
 //            //TODO change something on testTestGroup
 //            //testTestGroup.oldValue = newValue; 
 //            _target.Update(testTestGroup);
@@ -115,7 +115,7 @@
 //            { 
 //                 _repositoryList.Add(new  TestGroup (projectId, name, isActive));
 //            });
-            
+
 //            //TODO insert values 
 //            _target.Insert(new TestGroup (projectId, name, isActive));
 //            //Assert.AreEqual(11, _repositoryList.Count());
@@ -169,7 +169,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.Id==id).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataById(idValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.Id==idValue).ToList().Count, result.Count);
 //        }
@@ -180,7 +180,7 @@
 //            _repository
 //                 .Setup(it => it.GetActiveData())
 //                     .Returns(_repositoryList);
-                
+
 //            var result = _target.GetActiveData().ToList();
 //             Assert.AreEqual(_repositoryList.ToList().Count, result.Count);
 //        }
@@ -231,7 +231,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.ProjectId==projectId).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataByProjectId(projectIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.ProjectId==projectIdValue).ToList().Count, result.Count);
 //        }
@@ -282,7 +282,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.ProjectId==projectId).ToList();
 //                 });
-                
+
 //            var result = _target.GetActiveDataByProjectId(projectIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.ProjectId==projectIdValue).ToList().Count, result.Count);
 //        }
@@ -327,3 +327,4 @@
 
 //    }
 //}
+

@@ -1,10 +1,8 @@
-
 using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using LucentDb.Data.DbCommandProvider;
 using LucentDb.Data.Repository;
 using LucentDb.Domain.Entities;
 
@@ -18,10 +16,10 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             _dbRepository = dbRepository;
         }
-   
+
         [Route("api/expectedResultTypes/all", Name = "ExpectedResultTypesGetDataRoute")]
         [HttpGet]
-        public IQueryable<ExpectedResultType> GetData() 
+        public IQueryable<ExpectedResultType> GetData()
         {
             return _dbRepository.GetData().AsQueryable();
         }
@@ -30,47 +28,45 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPut]
         public void Update(ExpectedResultType expectedResultType)
         {
-            _dbRepository.Update( (string)expectedResultType.Name,  (Int32)expectedResultType.Id);
-          }
+            _dbRepository.Update(expectedResultType.Name, expectedResultType.Id);
+        }
 
         [Route("api/expectedResultTypes", Name = "ExpectedResultTypesDeleteRoute")]
         [HttpDelete]
-        public HttpResponseMessage Delete(Int32 id)
+        public HttpResponseMessage Delete(int id)
         {
             try
             {
-                 _dbRepository.Delete(id);
-                 return Request.CreateResponse(HttpStatusCode.OK);
+                _dbRepository.Delete(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception)
             {
-                 return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
 
         [Route("api/expectedResultTypes", Name = "ExpectedResultTypesInsertRoute")]
         [HttpPost]
-        public Int32 Insert(ExpectedResultType expectedResultType)
+        public int Insert(ExpectedResultType expectedResultType)
         {
-             return _dbRepository.Insert( (string)expectedResultType.Name);
-          }
+            return _dbRepository.Insert(expectedResultType.Name);
+        }
 
         [Route("api/expectedResultTypes", Name = "ExpectedResultTypesGetDataPageableRoute")]
         [HttpGet]
-        public  HttpResponseMessage  GetDataPageable(String sortExpression, Int32 page, Int32 pageSize) 
+        public HttpResponseMessage GetDataPageable(string sortExpression, int page, int pageSize)
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
-            var results =_dbRepository.GetDataPageable(sortExpression, page, pageSize);
+            var results = _dbRepository.GetDataPageable(sortExpression, page, pageSize);
             return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/expectedResultTypes/{id}", Name = "ExpectedResultTypesGetDataByIdRoute")]
         [HttpGet]
-        public IQueryable<ExpectedResultType> GetDataById(Int32 id) 
+        public IQueryable<ExpectedResultType> GetDataById(int id)
         {
             return _dbRepository.GetDataById(id).AsQueryable();
         }
-
-
     }
 }

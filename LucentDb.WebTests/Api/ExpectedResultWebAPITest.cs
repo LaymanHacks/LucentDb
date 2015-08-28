@@ -24,7 +24,7 @@
 //    [TestFixture()]
 //    public class ExpectedResultApiControllerTests
 //    {
-        
+
 //        private Mock<IExpectedResultRepository> _repository;
 
 //        private List<ExpectedResult> _repositoryList = new List<ExpectedResult>
@@ -34,7 +34,7 @@
 //        };
 
 //        private ExpectedResultApiController _target;
-        
+
 //        [TestInitialize]
 //        public void Init()
 //        {
@@ -51,14 +51,14 @@
 
 //            _target.Request.SetConfiguration(config);
 //        }
-   
+
 //                [Test()]
 //        public void GetDataTest() 
 //        {
 //            _repository
 //                 .Setup(it => it.GetData())
 //                     .Returns(_repositoryList);
-                
+
 //            var result = _target.GetData().ToList();
 //             Assert.AreEqual(_repositoryList.ToList().Count, result.Count);
 //        }
@@ -85,7 +85,7 @@
 //                 AssertTypeId = tempExpectedResult.AssertTypeId, 
 //                 ExpectedValue = tempExpectedResult.ExpectedValue, 
 //                 ResultIndex = tempExpectedResult.ResultIndex};
-            
+
 //            //TODO change something on testExpectedResult
 //            //testExpectedResult.oldValue = newValue; 
 //            _target.Update(testExpectedResult);
@@ -119,7 +119,7 @@
 //            { 
 //                 _repositoryList.Add(new  ExpectedResult (testId, expectedResultTypeId, assertTypeId, expectedValue, resultIndex));
 //            });
-            
+
 //            //TODO insert values 
 //            _target.Insert(new ExpectedResult (testId, expectedResultTypeId, assertTypeId, expectedValue, resultIndex));
 //            //Assert.AreEqual(11, _repositoryList.Count());
@@ -179,7 +179,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.Id==id).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataById(idValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.Id==idValue).ToList().Count, result.Count);
 //        }
@@ -193,7 +193,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.AssertTypeId==assertTypeId).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataByAssertTypeId(assertTypeIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.AssertTypeId==assertTypeIdValue).ToList().Count, result.Count);
 //        }
@@ -250,7 +250,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.ExpectedResultTypeId==expectedResultTypeId).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataByExpectedResultTypeId(expectedResultTypeIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.ExpectedResultTypeId==expectedResultTypeIdValue).ToList().Count, result.Count);
 //        }
@@ -307,7 +307,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.TestId==testId).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataByTestId(testIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.TestId==testIdValue).ToList().Count, result.Count);
 //        }
@@ -358,3 +358,4 @@
 
 //    }
 //}
+

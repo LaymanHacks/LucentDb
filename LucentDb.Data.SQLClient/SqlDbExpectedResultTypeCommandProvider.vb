@@ -9,156 +9,160 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Data
-Imports System.Data.Common
 Imports System.Data.SqlClient
 Imports LucentDb.Data.DbCommandProvider
 
-Namespace LucentDb.Data.SqlDbCommandProvider 
+Namespace LucentDb.Data.SqlDbCommandProvider
+    Public Class SqlDbExpectedResultTypeCommandProvider
+        Implements IDbExpectedResultTypeCommandProvider
 
-  
-Public Class SqlDbExpectedResultTypeCommandProvider
-      Implements IDbExpectedResultTypeCommandProvider
-    
-      ReadOnly _dbConnHolder As DbConnectionHolder
+        ReadOnly _dbConnHolder As DbConnectionHolder
 
-      Public Sub New()
-          _dbConnHolder = New DbConnectionHolder(DbConnectionName)
-      End Sub
+        Public Sub New()
+            _dbConnHolder = New DbConnectionHolder(DbConnectionName)
+        End Sub
 
-      Public ReadOnly Property DbConnectionName() As String Implements IDbExpectedResultTypeCommandProvider.DbConnectionName
-          Get
-              Return "LucentDbConnection"
-          End Get
-      End Property
+        Public ReadOnly Property DbConnectionName As String _
+            Implements IDbExpectedResultTypeCommandProvider.DbConnectionName
+            Get
+                Return "LucentDbConnection"
+            End Get
+        End Property
 
-      Public ReadOnly Property ExpectedResultTypeDbConnectionHolder() As DbConnectionHolder Implements IDbExpectedResultTypeCommandProvider.ExpectedResultTypeDbConnectionHolder
-          Get
-              Return _dbConnHolder
-          End Get
-      End Property
-      
-    
+        Public ReadOnly Property ExpectedResultTypeDbConnectionHolder As DbConnectionHolder _
+            Implements IDbExpectedResultTypeCommandProvider.ExpectedResultTypeDbConnectionHolder
+            Get
+                Return _dbConnHolder
+            End Get
+        End Property
+
+
         ''' <summary>
-        ''' Selects one or more records from the ExpectedResultType table 
+        '''     Selects one or more records from the ExpectedResultType table
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataDbCommand() As IDbCommand Implements IDbExpectedResultTypeCommandProvider.GetGetDataDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataDbCommand() As IDbCommand _
+            Implements IDbExpectedResultTypeCommandProvider.GetGetDataDbCommand
+
             Dim command As New SqlCommand("ExpectedResultType_Select")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Updates one or more records from the ExpectedResultType table 
+        '''     Updates one or more records from the ExpectedResultType table
         ''' </summary>
-      ''' <param name="name" />
-      ''' <param name="id" />
+        ''' <param name="name" />
+        ''' <param name="id" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetUpdateDbCommand( ByVal name As String,  ByVal id As Int32) As IDbCommand Implements IDbExpectedResultTypeCommandProvider.GetUpdateDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetUpdateDbCommand(name As String, id As Int32) As IDbCommand _
+            Implements IDbExpectedResultTypeCommandProvider.GetUpdateDbCommand
+
             Dim command As New SqlCommand("ExpectedResultType_Update")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Deletes one or more records from the ExpectedResultType table 
+        '''     Deletes one or more records from the ExpectedResultType table
         ''' </summary>
-      ''' <param name="id" />
+        ''' <param name="id" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetDeleteDbCommand( ByVal id As Int32) As IDbCommand Implements IDbExpectedResultTypeCommandProvider.GetDeleteDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetDeleteDbCommand(id As Int32) As IDbCommand _
+            Implements IDbExpectedResultTypeCommandProvider.GetDeleteDbCommand
+
             Dim command As New SqlCommand("ExpectedResultType_Delete")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Inserts a record into the ExpectedResultType table on the database.
+        '''     Inserts a record into the ExpectedResultType table on the database.
         ''' </summary>
-      ''' <param name="name" />
+        ''' <param name="name" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetInsertDbCommand( ByVal name As String) As IDbCommand Implements IDbExpectedResultTypeCommandProvider.GetInsertDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetInsertDbCommand(name As String) As IDbCommand _
+            Implements IDbExpectedResultTypeCommandProvider.GetInsertDbCommand
+
             Dim command As New SqlCommand("ExpectedResultType_Insert")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetDataPageable returns a IDataReader populated with a subset of data from ExpectedResultType
+        '''     Function GetDataPageable returns a IDataReader populated with a subset of data from ExpectedResultType
         ''' </summary>
-      ''' <param name="sortExpression" />
-      ''' <param name="page" />
-      ''' <param name="pageSize" />
+        ''' <param name="sortExpression" />
+        ''' <param name="page" />
+        ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand Implements IDbExpectedResultTypeCommandProvider.GetGetDataPageableDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) _
+            As IDbCommand Implements IDbExpectedResultTypeCommandProvider.GetGetDataPageableDbCommand
+
             Dim command As New SqlCommand("ExpectedResultType_GetDataPageable")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetRowCount returns the row count for ExpectedResultType
+        '''     Function GetRowCount returns the row count for ExpectedResultType
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetRowCountDbCommand() As IDbCommand Implements IDbExpectedResultTypeCommandProvider.GetGetRowCountDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetRowCountDbCommand() As IDbCommand _
+            Implements IDbExpectedResultTypeCommandProvider.GetGetRowCountDbCommand
+
             Dim command As New SqlCommand("ExpectedResultType_GetRowCount")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function  GetDataById returns a IDataReader for ExpectedResultType
+        '''     Function  GetDataById returns a IDataReader for ExpectedResultType
         ''' </summary>
-      ''' <param name="id" />
+        ''' <param name="id" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByIdDbCommand( ByVal id As Int32) As IDbCommand Implements IDbExpectedResultTypeCommandProvider.GetGetDataByIdDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataByIdDbCommand(id As Int32) As IDbCommand _
+            Implements IDbExpectedResultTypeCommandProvider.GetGetDataByIdDbCommand
+
             Dim command As New SqlCommand("ExpectedResultType_GetDataById")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
-  End Class
- End Namespace
-  
+        End Function
+    End Class
+End Namespace

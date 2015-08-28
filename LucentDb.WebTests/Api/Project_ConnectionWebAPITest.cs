@@ -24,7 +24,7 @@
 //    [TestFixture()]
 //    public class Project_ConnectionApiControllerTests
 //    {
-        
+
 //        private Mock<IProject_ConnectionRepository> _repository;
 
 //        private List<Project_Connection> _repositoryList = new List<Project_Connection>
@@ -34,7 +34,7 @@
 //        };
 
 //        private Project_ConnectionApiController _target;
-        
+
 //        [TestInitialize]
 //        public void Init()
 //        {
@@ -51,14 +51,14 @@
 
 //            _target.Request.SetConfiguration(config);
 //        }
-   
+
 //                [Test()]
 //        public void GetDataTest() 
 //        {
 //            _repository
 //                 .Setup(it => it.GetData())
 //                     .Returns(_repositoryList);
-                
+
 //            var result = _target.GetData().ToList();
 //             Assert.AreEqual(_repositoryList.ToList().Count, result.Count);
 //        }
@@ -76,7 +76,7 @@
 //            var testProject_Connection = new Project_Connection {
 //                 ProjectId = tempProject_Connection.ProjectId, 
 //                 ConnectionId = tempProject_Connection.ConnectionId};
-            
+
 //            //TODO change something on testProject_Connection
 //            //testProject_Connection.oldValue = newValue; 
 //            _target.Update(testProject_Connection);
@@ -110,7 +110,7 @@
 //            { 
 //                 _repositoryList.Add(new  Project_Connection (projectId, connectionId));
 //            });
-            
+
 //            //TODO insert values 
 //            _target.Insert(new Project_Connection (projectId, connectionId));
 //            //Assert.AreEqual(11, _repositoryList.Count());
@@ -158,7 +158,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.ProjectId==projectId & x.ConnectionId==connectionId).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataByProjectIdConnectionId(projectIdValue, connectionIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.ProjectId==projectIdValue & x.ConnectionId==connectionIdValue).ToList().Count, result.Count);
 //        }
@@ -172,7 +172,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.ConnectionId==connectionId).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataByConnectionId(connectionIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.ConnectionId==connectionIdValue).ToList().Count, result.Count);
 //        }
@@ -217,7 +217,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.ProjectId==projectId).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataByProjectId(projectIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.ProjectId==projectIdValue).ToList().Count, result.Count);
 //        }
@@ -256,3 +256,4 @@
 
 //    }
 //}
+

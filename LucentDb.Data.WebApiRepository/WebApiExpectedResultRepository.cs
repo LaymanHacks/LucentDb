@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,19 +11,24 @@ using Newtonsoft.Json;
 
 namespace LucentDb.Data.WebApiRepository
 {
-
     [DataObject(true)]
     public class WebApiExpectedResultRepository : IExpectedResultRepository, IDisposable
     {
-
         private const string UrlBase = "/api/expectedResults";
         private readonly string _baseAddress;
+        private bool _disposedValue;
         private HttpMessageHandler _messageHandler;
 
         public WebApiExpectedResultRepository(string baseAddress, HttpMessageHandler messageHandler = null)
         {
             _baseAddress = !baseAddress.EndsWith("/") ? baseAddress + "/" : baseAddress;
             _messageHandler = messageHandler ?? new HttpClientHandler();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public ICollection<ExpectedResult> GetData()
@@ -43,22 +46,23 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public void Update(Int32 testId, Int32?  expectedResultTypeId, Int32?  assertTypeId, string expectedValue, Int32 resultIndex, Int32 id)
+        public void Update(int testId, int? expectedResultTypeId, int? assertTypeId, string expectedValue,
+            int resultIndex, int id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var expectedResult = new ExpectedResult()
-                    {
-                    TestId = testId, 
-                    ExpectedResultTypeId = expectedResultTypeId, 
-                    AssertTypeId = assertTypeId, 
-                    ExpectedValue = expectedValue, 
-                    ResultIndex = resultIndex, 
+                var expectedResult = new ExpectedResult
+                {
+                    TestId = testId,
+                    ExpectedResultTypeId = expectedResultTypeId,
+                    AssertTypeId = assertTypeId,
+                    ExpectedValue = expectedValue,
+                    ResultIndex = resultIndex,
                     Id = id
-                    };
+                };
                 var response = client.PutAsync(UrlBase, expectedResult, new JsonMediaTypeFormatter()).Result;
                 response.EnsureSuccessStatusCode();
             }
@@ -66,11 +70,11 @@ namespace LucentDb.Data.WebApiRepository
 
         public void Update(ExpectedResult expectedResult)
         {
-            Update(expectedResult.TestId, expectedResult.ExpectedResultTypeId, expectedResult.AssertTypeId, expectedResult.ExpectedValue, expectedResult.ResultIndex, expectedResult.Id);
+            Update(expectedResult.TestId, expectedResult.ExpectedResultTypeId, expectedResult.AssertTypeId,
+                expectedResult.ExpectedValue, expectedResult.ResultIndex, expectedResult.Id);
         }
 
-
-        public void Delete(Int32 id)
+        public void Delete(int id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -87,44 +91,46 @@ namespace LucentDb.Data.WebApiRepository
             Delete(expectedResult.Id);
         }
 
-
-        public Int32 Insert(Int32 testId, Int32?  expectedResultTypeId, Int32?  assertTypeId, string expectedValue, Int32 resultIndex)
+        public int Insert(int testId, int? expectedResultTypeId, int? assertTypeId, string expectedValue,
+            int resultIndex)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var expectedResult = new ExpectedResult()
-                    {
-                    TestId = testId, 
-                    ExpectedResultTypeId = expectedResultTypeId, 
-                    AssertTypeId = assertTypeId, 
-                    ExpectedValue = expectedValue, 
+                var expectedResult = new ExpectedResult
+                {
+                    TestId = testId,
+                    ExpectedResultTypeId = expectedResultTypeId,
+                    AssertTypeId = assertTypeId,
+                    ExpectedValue = expectedValue,
                     ResultIndex = resultIndex
-                    };
+                };
                 var response = client.PostAsync(UrlBase, expectedResult, new JsonMediaTypeFormatter()).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
-                var returnValue  = Convert.ToInt32(responseString);
+                var returnValue = Convert.ToInt32(responseString);
                 return returnValue;
             }
         }
 
-        public Int32 Insert(ExpectedResult expectedResult)
+        public int Insert(ExpectedResult expectedResult)
         {
-            return Insert(expectedResult.TestId, expectedResult.ExpectedResultTypeId, expectedResult.AssertTypeId, expectedResult.ExpectedValue, expectedResult.ResultIndex);
+            return Insert(expectedResult.TestId, expectedResult.ExpectedResultTypeId, expectedResult.AssertTypeId,
+                expectedResult.ExpectedValue, expectedResult.ResultIndex);
         }
 
-
-        public PagedResult<ExpectedResult> GetDataPageable(string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<ExpectedResult> GetDataPageable(string sortExpression, int page, int pageSize)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
+                var response =
+                    client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" +
+                                    pageSize).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<ExpectedResult>>(responseString);
@@ -132,8 +138,7 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-
-        public ICollection<ExpectedResult> GetDataById(Int32 id)
+        public ICollection<ExpectedResult> GetDataById(int id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -148,14 +153,14 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public ICollection<ExpectedResult> GetDataByAssertTypeId(Int32 assertTypeId)
+        public ICollection<ExpectedResult> GetDataByAssertTypeId(int assertTypeId)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync("/api/assertTypes/" + assertTypeId  + "/expectedResults/all").Result;
+                var response = client.GetAsync("/api/assertTypes/" + assertTypeId + "/expectedResults/all").Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<Collection<ExpectedResult>>(responseString);
@@ -163,14 +168,18 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public PagedResult<ExpectedResult> GetDataByAssertTypeIdPageable(Int32 assertTypeId, string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<ExpectedResult> GetDataByAssertTypeIdPageable(int assertTypeId, string sortExpression,
+            int page, int pageSize)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync("/api/assertTypes/" + assertTypeId  + "/expectedResults" + "?assertTypeId=" + assertTypeId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
+                var response =
+                    client.GetAsync("/api/assertTypes/" + assertTypeId + "/expectedResults" + "?assertTypeId=" +
+                                    assertTypeId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" +
+                                    pageSize).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<ExpectedResult>>(responseString);
@@ -178,15 +187,15 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-
-        public ICollection<ExpectedResult> GetDataByExpectedResultTypeId(Int32 expectedResultTypeId)
+        public ICollection<ExpectedResult> GetDataByExpectedResultTypeId(int expectedResultTypeId)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync("/api/expectedResultTypes/" + expectedResultTypeId  + "/expectedResults/all").Result;
+                var response =
+                    client.GetAsync("/api/expectedResultTypes/" + expectedResultTypeId + "/expectedResults/all").Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<Collection<ExpectedResult>>(responseString);
@@ -194,14 +203,18 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public PagedResult<ExpectedResult> GetDataByExpectedResultTypeIdPageable(Int32 expectedResultTypeId, string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<ExpectedResult> GetDataByExpectedResultTypeIdPageable(int expectedResultTypeId,
+            string sortExpression, int page, int pageSize)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync("/api/expectedResultTypes/" + expectedResultTypeId  + "/expectedResults" + "?expectedResultTypeId=" + expectedResultTypeId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
+                var response =
+                    client.GetAsync("/api/expectedResultTypes/" + expectedResultTypeId + "/expectedResults" +
+                                    "?expectedResultTypeId=" + expectedResultTypeId + "&sortExpression=" +
+                                    sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<ExpectedResult>>(responseString);
@@ -209,15 +222,14 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-
-        public ICollection<ExpectedResult> GetDataByTestId(Int32 testId)
+        public ICollection<ExpectedResult> GetDataByTestId(int testId)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync("/api/tests/" + testId  + "/expectedResults/all").Result;
+                var response = client.GetAsync("/api/tests/" + testId + "/expectedResults/all").Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<Collection<ExpectedResult>>(responseString);
@@ -225,14 +237,18 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public PagedResult<ExpectedResult> GetDataByTestIdPageable(Int32 testId, string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<ExpectedResult> GetDataByTestIdPageable(int testId, string sortExpression, int page,
+            int pageSize)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync("/api/tests/" + testId  + "/expectedResults" + "?testId=" + testId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
+                var response =
+                    client.GetAsync("/api/tests/" + testId + "/expectedResults" + "?testId=" + testId +
+                                    "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize)
+                        .Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<ExpectedResult>>(responseString);
@@ -240,8 +256,6 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-
-        private bool _disposedValue;
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
@@ -253,12 +267,5 @@ namespace LucentDb.Data.WebApiRepository
             }
             _disposedValue = true;
         }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
     }
 }

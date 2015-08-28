@@ -9,329 +9,345 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Data
-Imports System.Data.Common
 Imports System.Data.SqlClient
 Imports LucentDb.Data.DbCommandProvider
 
-Namespace LucentDb.Data.SqlDbCommandProvider 
+Namespace LucentDb.Data.SqlDbCommandProvider
+    Public Class SqlDbTestGroupCommandProvider
+        Implements IDbTestGroupCommandProvider
 
-  
-Public Class SqlDbTestGroupCommandProvider
-      Implements IDbTestGroupCommandProvider
-    
-      ReadOnly _dbConnHolder As DbConnectionHolder
+        ReadOnly _dbConnHolder As DbConnectionHolder
 
-      Public Sub New()
-          _dbConnHolder = New DbConnectionHolder(DbConnectionName)
-      End Sub
+        Public Sub New()
+            _dbConnHolder = New DbConnectionHolder(DbConnectionName)
+        End Sub
 
-      Public ReadOnly Property DbConnectionName() As String Implements IDbTestGroupCommandProvider.DbConnectionName
-          Get
-              Return "LucentDbConnection"
-          End Get
-      End Property
+        Public ReadOnly Property DbConnectionName As String Implements IDbTestGroupCommandProvider.DbConnectionName
+            Get
+                Return "LucentDbConnection"
+            End Get
+        End Property
 
-      Public ReadOnly Property TestGroupDbConnectionHolder() As DbConnectionHolder Implements IDbTestGroupCommandProvider.TestGroupDbConnectionHolder
-          Get
-              Return _dbConnHolder
-          End Get
-      End Property
-      
-    
+        Public ReadOnly Property TestGroupDbConnectionHolder As DbConnectionHolder _
+            Implements IDbTestGroupCommandProvider.TestGroupDbConnectionHolder
+            Get
+                Return _dbConnHolder
+            End Get
+        End Property
+
+
         ''' <summary>
-        ''' Selects one or more records from the TestGroup table 
+        '''     Selects one or more records from the TestGroup table
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
+        ''' <remarks></remarks>
         Public Function GetGetDataDbCommand() As IDbCommand Implements IDbTestGroupCommandProvider.GetGetDataDbCommand
-            
+
             Dim command As New SqlCommand("TestGroup_Select")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Updates one or more records from the TestGroup table 
+        '''     Updates one or more records from the TestGroup table
         ''' </summary>
-      ''' <param name="projectId" />
-      ''' <param name="name" />
-      ''' <param name="isActive" />
-      ''' <param name="id" />
+        ''' <param name="projectId" />
+        ''' <param name="name" />
+        ''' <param name="isActive" />
+        ''' <param name="id" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetUpdateDbCommand( ByVal projectId As Int32,  ByVal name As String,  ByVal isActive As Boolean,  ByVal id As Int32) As IDbCommand Implements IDbTestGroupCommandProvider.GetUpdateDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetUpdateDbCommand(projectId As Int32, name As String, isActive As Boolean, id As Int32) _
+            As IDbCommand Implements IDbTestGroupCommandProvider.GetUpdateDbCommand
+
             Dim command As New SqlCommand("TestGroup_Update")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsActive", SqlDbType.bit, isActive))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsActive", SqlDbType.bit, isActive))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Deletes one or more records from the TestGroup table 
+        '''     Deletes one or more records from the TestGroup table
         ''' </summary>
-      ''' <param name="id" />
+        ''' <param name="id" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetDeleteDbCommand( ByVal id As Int32) As IDbCommand Implements IDbTestGroupCommandProvider.GetDeleteDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetDeleteDbCommand(id As Int32) As IDbCommand _
+            Implements IDbTestGroupCommandProvider.GetDeleteDbCommand
+
             Dim command As New SqlCommand("TestGroup_Delete")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Inserts a record into the TestGroup table on the database.
+        '''     Inserts a record into the TestGroup table on the database.
         ''' </summary>
-      ''' <param name="projectId" />
-      ''' <param name="name" />
-      ''' <param name="isActive" />
+        ''' <param name="projectId" />
+        ''' <param name="name" />
+        ''' <param name="isActive" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetInsertDbCommand( ByVal projectId As Int32,  ByVal name As String,  ByVal isActive As Boolean) As IDbCommand Implements IDbTestGroupCommandProvider.GetInsertDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetInsertDbCommand(projectId As Int32, name As String, isActive As Boolean) As IDbCommand _
+            Implements IDbTestGroupCommandProvider.GetInsertDbCommand
+
             Dim command As New SqlCommand("TestGroup_Insert")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsActive", SqlDbType.bit, isActive))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Name", SqlDbType.varchar, name))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsActive", SqlDbType.bit, isActive))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetDataPageable returns a IDataReader populated with a subset of data from TestGroup
+        '''     Function GetDataPageable returns a IDataReader populated with a subset of data from TestGroup
         ''' </summary>
-      ''' <param name="sortExpression" />
-      ''' <param name="page" />
-      ''' <param name="pageSize" />
+        ''' <param name="sortExpression" />
+        ''' <param name="page" />
+        ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand Implements IDbTestGroupCommandProvider.GetGetDataPageableDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) _
+            As IDbCommand Implements IDbTestGroupCommandProvider.GetGetDataPageableDbCommand
+
             Dim command As New SqlCommand("TestGroup_GetDataPageable")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetRowCount returns the row count for TestGroup
+        '''     Function GetRowCount returns the row count for TestGroup
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetRowCountDbCommand() As IDbCommand Implements IDbTestGroupCommandProvider.GetGetRowCountDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetRowCountDbCommand() As IDbCommand _
+            Implements IDbTestGroupCommandProvider.GetGetRowCountDbCommand
+
             Dim command As New SqlCommand("TestGroup_GetRowCount")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function  GetDataById returns a IDataReader for TestGroup
+        '''     Function  GetDataById returns a IDataReader for TestGroup
         ''' </summary>
-      ''' <param name="id" />
+        ''' <param name="id" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByIdDbCommand( ByVal id As Int32) As IDbCommand Implements IDbTestGroupCommandProvider.GetGetDataByIdDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataByIdDbCommand(id As Int32) As IDbCommand _
+            Implements IDbTestGroupCommandProvider.GetGetDataByIdDbCommand
+
             Dim command As New SqlCommand("TestGroup_GetDataById")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.int, id))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveData returns a IDataReader for TestGroup with records that are marked as active
+        '''     Function GetActiveData returns a IDataReader for TestGroup with records that are marked as active
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataDbCommand() As IDbCommand Implements IDbTestGroupCommandProvider.GetGetActiveDataDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataDbCommand() As IDbCommand _
+            Implements IDbTestGroupCommandProvider.GetGetActiveDataDbCommand
+
             Dim command As New SqlCommand("TestGroup_GetActiveData")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveDataPageable returns a IDataReader populated with paged active records from TestGroup
+        '''     Function GetActiveDataPageable returns a IDataReader populated with paged active records from TestGroup
         ''' </summary>
-      ''' <param name="sortExpression" />
-      ''' <param name="page" />
-      ''' <param name="pageSize" />
+        ''' <param name="sortExpression" />
+        ''' <param name="page" />
+        ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand Implements IDbTestGroupCommandProvider.GetGetActiveDataPageableDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) _
+            As IDbCommand Implements IDbTestGroupCommandProvider.GetGetActiveDataPageableDbCommand
+
             Dim command As New SqlCommand("TestGroup_GetActiveDataPageable")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@PageSize", SqlDbType.Int, pageSize))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@PageSize", SqlDbType.Int, pageSize))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveDataRowCount returns the row count for TestGroup
+        '''     Function GetActiveDataRowCount returns the row count for TestGroup
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataRowCountDbCommand() As IDbCommand Implements IDbTestGroupCommandProvider.GetGetActiveDataRowCountDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataRowCountDbCommand() As IDbCommand _
+            Implements IDbTestGroupCommandProvider.GetGetActiveDataRowCountDbCommand
+
             Dim command As New SqlCommand("TestGroup_GetActiveDataRowCount")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetDataByProjectId returns a IDataReader for TestGroup
+        '''     Function GetDataByProjectId returns a IDataReader for TestGroup
         ''' </summary>
-      ''' <param name="projectId" />
+        ''' <param name="projectId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByProjectIdDbCommand( ByVal projectId As Int32) As IDbCommand Implements IDbTestGroupCommandProvider.GetGetDataByProjectIdDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataByProjectIdDbCommand(projectId As Int32) As IDbCommand _
+            Implements IDbTestGroupCommandProvider.GetGetDataByProjectIdDbCommand
+
             Dim command As New SqlCommand("TestGroup_GetDataByProjectId")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetDataByProjectIdPageable returns a IDataReader populated with a subset of data from TestGroup
+        '''     Function GetDataByProjectIdPageable returns a IDataReader populated with a subset of data from TestGroup
         ''' </summary>
-      ''' <param name="projectId" />
-      ''' <param name="sortExpression" />
-      ''' <param name="page" />
-      ''' <param name="pageSize" />
+        ''' <param name="projectId" />
+        ''' <param name="sortExpression" />
+        ''' <param name="page" />
+        ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByProjectIdPageableDbCommand( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand Implements IDbTestGroupCommandProvider.GetGetDataByProjectIdPageableDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataByProjectIdPageableDbCommand(projectId As Int32, sortExpression As String,
+                                                               page As Int32, pageSize As Int32) As IDbCommand _
+            Implements IDbTestGroupCommandProvider.GetGetDataByProjectIdPageableDbCommand
+
             Dim command As New SqlCommand("TestGroup_GetDataByProjectIdPageable")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetRowCount returns the row count for TestGroup
+        '''     Function GetRowCount returns the row count for TestGroup
         ''' </summary>
-      ''' <param name="projectId" />
+        ''' <param name="projectId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByProjectIdRowCountDbCommand( ByVal projectId As Int32) As IDbCommand Implements IDbTestGroupCommandProvider.GetGetDataByProjectIdRowCountDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataByProjectIdRowCountDbCommand(projectId As Int32) As IDbCommand _
+            Implements IDbTestGroupCommandProvider.GetGetDataByProjectIdRowCountDbCommand
+
             Dim command As New SqlCommand("TestGroup_GetDataByProjectIdRowCount")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveDataByProjectId returns a IDataReader for TestGroup
+        '''     Function GetActiveDataByProjectId returns a IDataReader for TestGroup
         ''' </summary>
-      ''' <param name="projectId" />
+        ''' <param name="projectId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataByProjectIdDbCommand( ByVal projectId As Int32) As IDbCommand Implements IDbTestGroupCommandProvider.GetGetActiveDataByProjectIdDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataByProjectIdDbCommand(projectId As Int32) As IDbCommand _
+            Implements IDbTestGroupCommandProvider.GetGetActiveDataByProjectIdDbCommand
+
             Dim command As New SqlCommand("TestGroup_GetActiveDataByProjectId")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveDataByProjectIdPageable returns a IDataReader populated with a subset of data from TestGroup
+        '''     Function GetActiveDataByProjectIdPageable returns a IDataReader populated with a subset of data from TestGroup
         ''' </summary>
-      ''' <param name="projectId" />
-      ''' <param name="sortExpression" />
-      ''' <param name="page" />
-      ''' <param name="pageSize" />
+        ''' <param name="projectId" />
+        ''' <param name="sortExpression" />
+        ''' <param name="page" />
+        ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataByProjectIdPageableDbCommand( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand Implements IDbTestGroupCommandProvider.GetGetActiveDataByProjectIdPageableDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataByProjectIdPageableDbCommand(projectId As Int32, sortExpression As String,
+                                                                     page As Int32, pageSize As Int32) As IDbCommand _
+            Implements IDbTestGroupCommandProvider.GetGetActiveDataByProjectIdPageableDbCommand
+
             Dim command As New SqlCommand("TestGroup_GetActiveDataByProjectIdPageable")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@PageSize", SqlDbType.Int, pageSize))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@PageSize", SqlDbType.Int, pageSize))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetRowCount returns the row count for TestGroup
+        '''     Function GetRowCount returns the row count for TestGroup
         ''' </summary>
-      ''' <param name="projectId" />
+        ''' <param name="projectId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataByProjectIdRowCountDbCommand( ByVal projectId As Int32) As IDbCommand Implements IDbTestGroupCommandProvider.GetGetActiveDataByProjectIdRowCountDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataByProjectIdRowCountDbCommand(projectId As Int32) As IDbCommand _
+            Implements IDbTestGroupCommandProvider.GetGetActiveDataByProjectIdRowCountDbCommand
+
             Dim command As New SqlCommand("TestGroup_GetActiveDataByProjectIdRowCount")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
-  End Class
- End Namespace
-  
+        End Function
+    End Class
+End Namespace

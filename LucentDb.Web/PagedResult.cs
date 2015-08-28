@@ -7,7 +7,7 @@ namespace LucentDb.Web
     {
         public PagedResult(int requestedPage, int pageSize, int totalCount, ICollection<T> data)
         {
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var totalPages = (int) Math.Ceiling((double) totalCount/pageSize);
             TotalCount = totalCount;
             PageCount = totalPages;
             PageSize = pageSize;
@@ -20,6 +20,5 @@ namespace LucentDb.Web
         public int PageCount { get; set; }
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
-        
     }
 }

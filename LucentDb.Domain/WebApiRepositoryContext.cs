@@ -3,7 +3,7 @@ using LucentDb.Data.WebApiRepository;
 
 namespace LucentDb.Domain
 {
-    public class WebApiRepositoryContext: IRepositoryContext
+    public class WebApiRepositoryContext : IRepositoryContext
     {
         public WebApiRepositoryContext(string baseWebApiAddress)
         {
@@ -22,7 +22,6 @@ namespace LucentDb.Domain
 
         public IConnectionProviderRepository ConnectionProviderRepository { get; set; }
         public ITestGroupRepository TestGroupRepository { get; set; }
-
         public IAssertTypeRepository AssertTypeRepository { get; set; }
         public ITestTypeRepository TestTypeRepository { get; set; }
         public ITestRepository TestRepository { get; set; }

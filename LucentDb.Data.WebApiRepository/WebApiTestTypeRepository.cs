@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,22 +9,26 @@ using LucentDb.Data.Repository;
 using LucentDb.Domain.Entities;
 using Newtonsoft.Json;
 
-
 namespace LucentDb.Data.WebApiRepository
 {
-
     [DataObject(true)]
     public class WebApiTestTypeRepository : ITestTypeRepository, IDisposable
     {
-
         private const string UrlBase = "/api/testTypes";
         private readonly string _baseAddress;
+        private bool _disposedValue;
         private HttpMessageHandler _messageHandler;
 
         public WebApiTestTypeRepository(string baseAddress, HttpMessageHandler messageHandler = null)
         {
             _baseAddress = !baseAddress.EndsWith("/") ? baseAddress + "/" : baseAddress;
             _messageHandler = messageHandler ?? new HttpClientHandler();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public ICollection<TestType> GetData()
@@ -43,20 +46,20 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public void Update(string name, string testValidatorType, Boolean isActive, Int32 id)
+        public void Update(string name, string testValidatorType, bool isActive, int id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var testType = new TestType()
-                    {
-                    Name = name, 
-                    TestValidatorType = testValidatorType, 
-                    IsActive = isActive, 
+                var testType = new TestType
+                {
+                    Name = name,
+                    TestValidatorType = testValidatorType,
+                    IsActive = isActive,
                     Id = id
-                    };
+                };
                 var response = client.PutAsync(UrlBase, testType, new JsonMediaTypeFormatter()).Result;
                 response.EnsureSuccessStatusCode();
             }
@@ -67,8 +70,7 @@ namespace LucentDb.Data.WebApiRepository
             Update(testType.Name, testType.TestValidatorType, testType.IsActive, testType.Id);
         }
 
-
-        public void Delete(Int32 id)
+        public void Delete(int id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -85,42 +87,42 @@ namespace LucentDb.Data.WebApiRepository
             Delete(testType.Id);
         }
 
-
-        public Int32 Insert(string name, string testValidatorType, Boolean isActive)
+        public int Insert(string name, string testValidatorType, bool isActive)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var testType = new TestType()
-                    {
-                    Name = name, 
-                    TestValidatorType = testValidatorType, 
+                var testType = new TestType
+                {
+                    Name = name,
+                    TestValidatorType = testValidatorType,
                     IsActive = isActive
-                    };
+                };
                 var response = client.PostAsync(UrlBase, testType, new JsonMediaTypeFormatter()).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
-                var returnValue  = Convert.ToInt32(responseString);
+                var returnValue = Convert.ToInt32(responseString);
                 return returnValue;
             }
         }
 
-        public Int32 Insert(TestType testType)
+        public int Insert(TestType testType)
         {
             return Insert(testType.Name, testType.TestValidatorType, testType.IsActive);
         }
 
-
-        public PagedResult<TestType> GetDataPageable(string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<TestType> GetDataPageable(string sortExpression, int page, int pageSize)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
+                var response =
+                    client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" +
+                                    pageSize).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<TestType>>(responseString);
@@ -128,8 +130,7 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-
-        public ICollection<TestType> GetDataById(Int32 id)
+        public ICollection<TestType> GetDataById(int id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -159,14 +160,16 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public PagedResult<TestType> GetActiveDataPageable(string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<TestType> GetActiveDataPageable(string sortExpression, int page, int pageSize)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync(UrlBase + "/active" + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
+                var response =
+                    client.GetAsync(UrlBase + "/active" + "?sortExpression=" + sortExpression + "&page=" + page +
+                                    "&pageSize=" + pageSize).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<TestType>>(responseString);
@@ -174,8 +177,6 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-
-        private bool _disposedValue;
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
@@ -187,12 +188,5 @@ namespace LucentDb.Data.WebApiRepository
             }
             _disposedValue = true;
         }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
     }
 }

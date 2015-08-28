@@ -1,5 +1,4 @@
 using System;
-using LucentDb.Domain.Entities;
 
 namespace LucentDb.Domain.Model
 {
@@ -13,6 +12,5 @@ namespace LucentDb.Domain.Model
         public string RunLog { get; set; }
         public double Duration { get; set; }
         public DateTime RunDateTime { get; set; }
-     
     }
 }

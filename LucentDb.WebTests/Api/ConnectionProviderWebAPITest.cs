@@ -24,7 +24,7 @@
 //    [TestFixture()]
 //    public class ConnectionProviderApiControllerTests
 //    {
-        
+
 //        private Mock<IConnectionProviderRepository> _repository;
 
 //        private List<ConnectionProvider> _repositoryList = new List<ConnectionProvider>
@@ -34,7 +34,7 @@
 //        };
 
 //        private ConnectionProviderApiController _target;
-        
+
 //        [TestInitialize]
 //        public void Init()
 //        {
@@ -51,14 +51,14 @@
 
 //            _target.Request.SetConfiguration(config);
 //        }
-   
+
 //                [Test()]
 //        public void GetDataTest() 
 //        {
 //            _repository
 //                 .Setup(it => it.GetData())
 //                     .Returns(_repositoryList);
-                
+
 //            var result = _target.GetData().ToList();
 //             Assert.AreEqual(_repositoryList.ToList().Count, result.Count);
 //        }
@@ -79,7 +79,7 @@
 //                 Id = tempConnectionProvider.Id, 
 //                 Name = tempConnectionProvider.Name, 
 //                 Value = tempConnectionProvider.Value};
-            
+
 //            //TODO change something on testConnectionProvider
 //            //testConnectionProvider.oldValue = newValue; 
 //            _target.Update(testConnectionProvider);
@@ -113,7 +113,7 @@
 //            { 
 //                 _repositoryList.Add(new  ConnectionProvider (name, value));
 //            });
-            
+
 //            //TODO insert values 
 //            _target.Insert(new ConnectionProvider (name, value));
 //            //Assert.AreEqual(11, _repositoryList.Count());
@@ -164,7 +164,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.Id==id).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataById(idValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.Id==idValue).ToList().Count, result.Count);
 //        }
@@ -172,3 +172,4 @@
 
 //    }
 //}
+

@@ -1,6 +1,5 @@
 ﻿using System.Web.Http;
 using LucentDb.Web.Formatter;
-using Microsoft.Owin.Security.OAuth;
 
 namespace LucentDb.Web.UI
 {
@@ -8,7 +7,6 @@ namespace LucentDb.Web.UI
     {
         public static void Register(HttpConfiguration config)
         {
-           
             // Web API routes
             config.MapHttpAttributeRoutes();
             config.Formatters.Add(new BrowserJsonFormatter());

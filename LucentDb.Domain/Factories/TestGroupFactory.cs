@@ -9,11 +9,11 @@ namespace LucentDb.Domain
     public class TestGroupFactory
     {
         private readonly TestFactory _testFactory;
-        private readonly ITestRepository _testRepository;
         private readonly ITestGroupRepository _testGroupRepository;
+        private readonly ITestRepository _testRepository;
 
-
-        public TestGroupFactory(ITestRepository testRepository, ITestGroupRepository testGroupRepository, TestFactory testFactory)
+        public TestGroupFactory(ITestRepository testRepository, ITestGroupRepository testGroupRepository,
+            TestFactory testFactory)
         {
             _testRepository = testRepository;
             _testGroupRepository = testGroupRepository;
@@ -24,7 +24,7 @@ namespace LucentDb.Domain
         {
             var testGroup = _testGroupRepository.GetDataById(groupId).FirstOrDefault();
             if (testGroup == null) throw new Exception("Test Group not found.");
-            
+
             testGroup.Tests = new Collection<Test>();
             foreach (var test in _testRepository.GetActiveDataByGroupId(groupId))
             {
@@ -32,7 +32,6 @@ namespace LucentDb.Domain
             }
 
             return testGroup;
-            
         }
     }
 }

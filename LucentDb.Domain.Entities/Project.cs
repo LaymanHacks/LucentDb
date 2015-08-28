@@ -1,102 +1,79 @@
-
 using System;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
-
 namespace LucentDb.Domain.Entities
 {
     [Serializable]
-    public partial class ProjectList :  Collection<Project>
+    public class ProjectList : Collection<Project>
     {
         public Project First()
         {
-          return base.Count > 0 ? base[0] : null;
+            return Count > 0 ? base[0] : null;
         }
     }
-    
+
     [DataContract]
-    public partial class Project{
-      
-        private Int32 _projectId;
-        private String _name;
-        private Boolean _isActive;
-        private Collection<Connection> _connections;
-        private Collection<Test> _tests;
-        private Collection<TestGroup> _testGroups;  
+    public class Project
+    {
+        private bool _isActive;
+        private string _name;
+        private int _projectId;
 
-      public Project() : base()
-      {
-      }
+        public Project()
+        {
+        }
 
-      public Project(Int32 projectId, String name, Boolean isActive) : base()
-      {
-          
-           _projectId = projectId;
-           _name = name;
-           _isActive = isActive;
-      }
-  
-    
+        public Project(int projectId, string name, bool isActive)
+        {
+            _projectId = projectId;
+            _name = name;
+            _isActive = isActive;
+        }
+
         /// <summary>
-        /// Public Property ProjectId
+        ///     Public Property ProjectId
         /// </summary>
         /// <returns>ProjectId as Int32</returns>
         /// <remarks></remarks>
-        [DataMember()]
-        public virtual Int32 ProjectId
+        [DataMember]
+        public virtual int ProjectId
         {
-            get{return this._projectId;}
-            set{this._projectId = value;}
+            get { return _projectId; }
+            set { _projectId = value; }
         }
 
         /// <summary>
-        /// Public Property Name
+        ///     Public Property Name
         /// </summary>
         /// <returns>Name as String</returns>
         /// <remarks></remarks>
-        [DataMember()]
-        public virtual String Name
+        [DataMember]
+        public virtual string Name
         {
-            get{return this._name;}
-            set{this._name = value;}
+            get { return _name; }
+            set { _name = value; }
         }
 
         /// <summary>
-        /// Public Property IsActive
+        ///     Public Property IsActive
         /// </summary>
         /// <returns>IsActive as Boolean</returns>
         /// <remarks></remarks>
-        [DataMember()]
-        public virtual Boolean IsActive
+        [DataMember]
+        public virtual bool IsActive
         {
-            get{return this._isActive;}
-            set{this._isActive = value;}
+            get { return _isActive; }
+            set { _isActive = value; }
         }
 
         [DataMember]
-        public virtual Collection<Connection> Connections 
-        {
-          get { return  _connections;}
-          set { _connections = value;}
-        }
-  
-      
+        public virtual Collection<Connection> Connections { get; set; }
+
         [DataMember]
-        public virtual Collection<Test> Tests 
-        {
-          get { return  _tests;}
-          set { _tests = value;}
-        }
-  
-      
+        public virtual Collection<Test> Tests { get; set; }
+
         [DataMember]
-        public virtual Collection<TestGroup> TestGroups 
-        {
-          get { return  _testGroups;}
-          set { _testGroups = value;}
-        }
-  
-      
+        public virtual Collection<TestGroup> TestGroups { get; set; }
     }
- }     
+}

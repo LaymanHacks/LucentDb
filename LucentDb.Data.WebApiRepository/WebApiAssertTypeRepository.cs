@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,13 +11,12 @@ using Newtonsoft.Json;
 
 namespace LucentDb.Data.WebApiRepository
 {
-
     [DataObject(true)]
     public class WebApiAssertTypeRepository : IAssertTypeRepository, IDisposable
     {
-
         private const string UrlBase = "/api/assertTypes";
         private readonly string _baseAddress;
+        private bool _disposedValue;
         private HttpMessageHandler _messageHandler;
 
         public WebApiAssertTypeRepository(string baseAddress, HttpMessageHandler messageHandler = null)
@@ -43,18 +40,18 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public void Update(string name, Int32 id)
+        public void Update(string name, int id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var assertType = new AssertType()
-                    {
-                    Name = name, 
+                var assertType = new AssertType
+                {
+                    Name = name,
                     Id = id
-                    };
+                };
                 var response = client.PutAsync(UrlBase, assertType, new JsonMediaTypeFormatter()).Result;
                 response.EnsureSuccessStatusCode();
             }
@@ -65,8 +62,7 @@ namespace LucentDb.Data.WebApiRepository
             Update(assertType.Name, assertType.Id);
         }
 
-
-        public void Delete(Int32 id)
+        public void Delete(int id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -83,40 +79,40 @@ namespace LucentDb.Data.WebApiRepository
             Delete(assertType.Id);
         }
 
-
-        public Int32 Insert(string name)
+        public int Insert(string name)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var assertType = new AssertType()
-                    {
+                var assertType = new AssertType
+                {
                     Name = name
-                    };
+                };
                 var response = client.PostAsync(UrlBase, assertType, new JsonMediaTypeFormatter()).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
-                var returnValue  = Convert.ToInt32(responseString);
+                var returnValue = Convert.ToInt32(responseString);
                 return returnValue;
             }
         }
 
-        public Int32 Insert(AssertType assertType)
+        public int Insert(AssertType assertType)
         {
             return Insert(assertType.Name);
         }
 
-
-        public PagedResult<AssertType> GetDataPageable(string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<AssertType> GetDataPageable(string sortExpression, int page, int pageSize)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
+                var response =
+                    client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" +
+                                    pageSize).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<AssertType>>(responseString);
@@ -124,8 +120,7 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-
-        public ICollection<AssertType> GetDataById(Int32 id)
+        public ICollection<AssertType> GetDataById(int id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -140,7 +135,12 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        private bool _disposedValue;
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
@@ -152,12 +152,5 @@ namespace LucentDb.Data.WebApiRepository
             }
             _disposedValue = true;
         }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
     }
 }

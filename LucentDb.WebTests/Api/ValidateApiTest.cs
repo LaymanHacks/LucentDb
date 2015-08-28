@@ -34,7 +34,8 @@ namespace LucentDb.Web.UI.Tests.Api
         public void ValidateTest_Should_Return_True_When_Provided_A_Valid_Test_And_Connection()
         {
             var result = _target.ValidateTest(1, 1);
-            var validationResponse = JsonConvert.DeserializeObject<ValidationResponse>(result.Content.ReadAsStringAsync().Result);
+            var validationResponse =
+                JsonConvert.DeserializeObject<ValidationResponse>(result.Content.ReadAsStringAsync().Result);
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
             Assert.AreEqual(true, validationResponse.IsValid);
         }

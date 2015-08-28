@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,22 +9,26 @@ using LucentDb.Data.Repository;
 using LucentDb.Domain.Entities;
 using Newtonsoft.Json;
 
-
 namespace LucentDb.Data.WebApiRepository
 {
-
     [DataObject(true)]
     public class WebApiRunHistoryRepository : IRunHistoryRepository, IDisposable
     {
-
         private const string UrlBase = "/api/runHistories";
         private readonly string _baseAddress;
+        private bool _disposedValue;
         private HttpMessageHandler _messageHandler;
 
         public WebApiRunHistoryRepository(string baseAddress, HttpMessageHandler messageHandler = null)
         {
             _baseAddress = !baseAddress.EndsWith("/") ? baseAddress + "/" : baseAddress;
             _messageHandler = messageHandler ?? new HttpClientHandler();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public ICollection<RunHistory> GetData()
@@ -43,22 +46,22 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public void Update(Int32 testId, DateTime runDateTime, Boolean isValid, string runLog, string resultString, Int64 id)
+        public void Update(int testId, DateTime runDateTime, bool isValid, string runLog, string resultString, long id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var runHistory = new RunHistory()
-                    {
-                    TestId = testId, 
-                    RunDateTime = runDateTime, 
-                    IsValid = isValid, 
-                    RunLog = runLog, 
-                    ResultString = resultString, 
+                var runHistory = new RunHistory
+                {
+                    TestId = testId,
+                    RunDateTime = runDateTime,
+                    IsValid = isValid,
+                    RunLog = runLog,
+                    ResultString = resultString,
                     Id = id
-                    };
+                };
                 var response = client.PutAsync(UrlBase, runHistory, new JsonMediaTypeFormatter()).Result;
                 response.EnsureSuccessStatusCode();
             }
@@ -66,11 +69,11 @@ namespace LucentDb.Data.WebApiRepository
 
         public void Update(RunHistory runHistory)
         {
-            Update(runHistory.TestId, runHistory.RunDateTime, runHistory.IsValid, runHistory.RunLog, runHistory.ResultString, runHistory.Id);
+            Update(runHistory.TestId, runHistory.RunDateTime, runHistory.IsValid, runHistory.RunLog,
+                runHistory.ResultString, runHistory.Id);
         }
 
-
-        public void Delete(Int64 id)
+        public void Delete(long id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -87,44 +90,45 @@ namespace LucentDb.Data.WebApiRepository
             Delete(runHistory.Id);
         }
 
-
-        public Int64 Insert(Int32 testId, DateTime runDateTime, Boolean isValid, string runLog, string resultString)
+        public long Insert(int testId, DateTime runDateTime, bool isValid, string runLog, string resultString)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var runHistory = new RunHistory()
-                    {
-                    TestId = testId, 
-                    RunDateTime = runDateTime, 
-                    IsValid = isValid, 
-                    RunLog = runLog, 
+                var runHistory = new RunHistory
+                {
+                    TestId = testId,
+                    RunDateTime = runDateTime,
+                    IsValid = isValid,
+                    RunLog = runLog,
                     ResultString = resultString
-                    };
+                };
                 var response = client.PostAsync(UrlBase, runHistory, new JsonMediaTypeFormatter()).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
-                var returnValue  = Convert.ToInt64(responseString);
+                var returnValue = Convert.ToInt64(responseString);
                 return returnValue;
             }
         }
 
-        public Int64 Insert(RunHistory runHistory)
+        public long Insert(RunHistory runHistory)
         {
-            return Insert(runHistory.TestId, runHistory.RunDateTime, runHistory.IsValid, runHistory.RunLog, runHistory.ResultString);
+            return Insert(runHistory.TestId, runHistory.RunDateTime, runHistory.IsValid, runHistory.RunLog,
+                runHistory.ResultString);
         }
 
-
-        public PagedResult<RunHistory> GetDataPageable(string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<RunHistory> GetDataPageable(string sortExpression, int page, int pageSize)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
+                var response =
+                    client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" +
+                                    pageSize).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<RunHistory>>(responseString);
@@ -132,8 +136,7 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-
-        public ICollection<RunHistory> GetDataById(Int64 id)
+        public ICollection<RunHistory> GetDataById(long id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -148,14 +151,14 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public ICollection<RunHistory> GetDataByTestId(Int32 testId)
+        public ICollection<RunHistory> GetDataByTestId(int testId)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync("/api/tests/" + testId  + "/runHistories/all").Result;
+                var response = client.GetAsync("/api/tests/" + testId + "/runHistories/all").Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<Collection<RunHistory>>(responseString);
@@ -163,14 +166,16 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public PagedResult<RunHistory> GetDataByTestIdPageable(Int32 testId, string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<RunHistory> GetDataByTestIdPageable(int testId, string sortExpression, int page, int pageSize)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync("/api/tests/" + testId  + "/runHistories" + "?testId=" + testId + "&sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
+                var response =
+                    client.GetAsync("/api/tests/" + testId + "/runHistories" + "?testId=" + testId + "&sortExpression=" +
+                                    sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<RunHistory>>(responseString);
@@ -178,8 +183,6 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-
-        private bool _disposedValue;
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
@@ -191,12 +194,5 @@ namespace LucentDb.Data.WebApiRepository
             }
             _disposedValue = true;
         }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
     }
 }

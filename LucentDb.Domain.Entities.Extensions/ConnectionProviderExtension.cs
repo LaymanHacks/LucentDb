@@ -1,11 +1,6 @@
-
-using LucentDb.Data.Repository;
-using System.Linq;
-  
-namespace LucentDb.Domain.Entities.Extensions 
+namespace LucentDb.Domain.Entities.Extensions
 {
-  public static class ConnectionProviderExtensions
-  {
-      
-  }    
-}    
+    public static class ConnectionProviderExtensions
+    {
+    }
+}

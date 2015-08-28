@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using LucentDb.Data.Repository;
 using LucentDb.Domain;
 using LucentDb.Domain.Entities;
 using LucentDb.Domain.Model;
@@ -14,8 +13,8 @@ namespace LucentDb.Web.UI.Controllers.API
 {
     public class ValidateApiController : ApiController
     {
-        private readonly IRepositoryContext _dataRepository;
         private readonly ConnectionFactory _connectionFactory;
+        private readonly IRepositoryContext _dataRepository;
         private readonly ProjectFactory _projectFactory;
         private readonly TestFactory _testFactory;
         private readonly TestGroupFactory _testGroupFactory;
@@ -24,13 +23,17 @@ namespace LucentDb.Web.UI.Controllers.API
         {
             //TODO Initalize from constructor
             _dataRepository = new DbRepositoryContext();
-            _connectionFactory = new ConnectionFactory(_dataRepository.ConnectionRepository,_dataRepository.ConnectionProviderRepository);
-            _testFactory = new TestFactory(_dataRepository.TestRepository, _dataRepository.TestTypeRepository, _dataRepository.ExpectedResultRepository, _dataRepository.AssertTypeRepository);
-           _projectFactory = new ProjectFactory(_dataRepository.ProjectRepository, _dataRepository.TestRepository, _testFactory);
-            _testGroupFactory = new TestGroupFactory(_dataRepository.TestRepository, _dataRepository.TestGroupRepository, _testFactory);
+            _connectionFactory = new ConnectionFactory(_dataRepository.ConnectionRepository,
+                _dataRepository.ConnectionProviderRepository);
+            _testFactory = new TestFactory(_dataRepository.TestRepository, _dataRepository.TestTypeRepository,
+                _dataRepository.ExpectedResultRepository, _dataRepository.AssertTypeRepository);
+            _projectFactory = new ProjectFactory(_dataRepository.ProjectRepository, _dataRepository.TestRepository,
+                _testFactory);
+            _testGroupFactory = new TestGroupFactory(_dataRepository.TestRepository, _dataRepository.TestGroupRepository,
+                _testFactory);
         }
 
-       [Route("api/connections/{connectionId}/testgroups/{groupId}/validate")]
+        [Route("api/connections/{connectionId}/testgroups/{groupId}/validate")]
         [HttpGet]
         public HttpResponseMessage ValidateGroup(int groupId, int connectionId)
         {
@@ -40,7 +43,7 @@ namespace LucentDb.Web.UI.Controllers.API
                 var testGroup = _testGroupFactory.CreateTestGroup(groupId);
                 if (!ValidateConnectionForProject(connectionId, testGroup.ProjectId))
                     throw new Exception("Not a valid Connection for this test group.");
-                
+
                 var scriptVal = new SqlScriptValidator();
                 var valCollection = new Collection<ValidationResponse>();
                 foreach (var test in  testGroup.Tests)
@@ -103,10 +106,9 @@ namespace LucentDb.Web.UI.Controllers.API
                             ? HttpStatusCode.BadRequest
                             : HttpStatusCode.InternalServerError, new HttpError(ex.Message));
             }
-            
+
             return Request.CreateResponse(HttpStatusCode.OK, valCollection);
         }
-
 
         //[Route("api/ValidateTest/{testId}/{connectionId}", Name = "ValidateTestRoute")]
         [Route("api/connections/{connectionId}/tests/{testId}/validate")]

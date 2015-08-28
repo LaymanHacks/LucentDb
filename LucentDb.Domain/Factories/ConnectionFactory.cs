@@ -7,10 +7,11 @@ namespace LucentDb.Domain
 {
     public class ConnectionFactory
     {
-        private readonly IConnectionRepository _connectionRepository;
         private readonly IConnectionProviderRepository _connectionProviderRepository;
+        private readonly IConnectionRepository _connectionRepository;
 
-        public ConnectionFactory(IConnectionRepository connectionRepository, IConnectionProviderRepository connectionProviderRepository)
+        public ConnectionFactory(IConnectionRepository connectionRepository,
+            IConnectionProviderRepository connectionProviderRepository)
         {
             _connectionRepository = connectionRepository;
             _connectionProviderRepository = connectionProviderRepository;
@@ -21,7 +22,8 @@ namespace LucentDb.Domain
             var connection = _connectionRepository.GetDataByConnectionId(connectionId).FirstOrDefault();
             if (connection == null) throw new Exception("Connection not found.");
 
-            connection.ConnectionProvider = _connectionProviderRepository.GetDataById(connection.ConnectionProviderId).FirstOrDefault();
+            connection.ConnectionProvider =
+                _connectionProviderRepository.GetDataById(connection.ConnectionProviderId).FirstOrDefault();
             if (connection == null) throw new Exception("Connection Provider not found.");
             return connection;
         }

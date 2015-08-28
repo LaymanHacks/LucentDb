@@ -1,4 +1,3 @@
-
 //using System;
 //using System.Collections.Generic;
 //using System.Linq;
@@ -16,7 +15,7 @@
 //    [TestFixture()]
 //    public class AssertTypeApiControllerTests
 //    {
-        
+
 //        private Mock<IAssertTypeRepository> _repository;
 
 //        private List<AssertType> _repositoryList = new List<AssertType>
@@ -26,7 +25,7 @@
 //        };
 
 //        private AssertTypeApiController _target;
-        
+
 //        [TestFixtureSetUp]
 //        public void Init()
 //        {
@@ -43,14 +42,14 @@
 
 //            _target.Request.SetConfiguration(config);
 //        }
-   
+
 //                [Test()]
 //        public void GetDataTest() 
 //        {
 //            _repository
 //                 .Setup(it => it.GetData())
 //                     .Returns(_repositoryList);
-                
+
 //            var result = _target.GetData().ToList();
 //             Assert.AreEqual(_repositoryList.ToList().Count, result.Count);
 //        }
@@ -69,7 +68,7 @@
 //            var testAssertType = new AssertType {
 //                 Id = tempAssertType.Id, 
 //                 Name = tempAssertType.Name};
-            
+
 //            TODO change something on testAssertType
 //            testAssertType.oldValue = newValue; 
 //            _target.Update(testAssertType);
@@ -97,7 +96,7 @@
 //        [Test()]
 //        public void Insert_Should_Insert_A_AssertType() 
 //        {
-           
+
 //            _repository
 //                 .Setup(it => it.Insert(It.IsAny<String>()))
 //                 .Returns<int>((name) =>
@@ -105,7 +104,7 @@
 //                     _repositoryList.Add(new  AssertType (name));
 //                     return -1;
 //                 });
-            
+
 //            TODO insert values 
 //            _target.Insert(new AssertType (name));
 //            Assert.AreEqual(11, _repositoryList.Count());
@@ -162,3 +161,4 @@
 
 //    }
 //}
+

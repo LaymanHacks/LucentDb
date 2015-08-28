@@ -24,7 +24,7 @@
 //    [TestFixture()]
 //    public class ExpectedResultTypeApiControllerTests
 //    {
-        
+
 //        private Mock<IExpectedResultTypeRepository> _repository;
 
 //        private List<ExpectedResultType> _repositoryList = new List<ExpectedResultType>
@@ -34,7 +34,7 @@
 //        };
 
 //        private ExpectedResultTypeApiController _target;
-        
+
 //        [TestInitialize]
 //        public void Init()
 //        {
@@ -51,14 +51,14 @@
 
 //            _target.Request.SetConfiguration(config);
 //        }
-   
+
 //                [Test()]
 //        public void GetDataTest() 
 //        {
 //            _repository
 //                 .Setup(it => it.GetData())
 //                     .Returns(_repositoryList);
-                
+
 //            var result = _target.GetData().ToList();
 //             Assert.AreEqual(_repositoryList.ToList().Count, result.Count);
 //        }
@@ -77,7 +77,7 @@
 //            var testExpectedResultType = new ExpectedResultType {
 //                 Id = tempExpectedResultType.Id, 
 //                 Name = tempExpectedResultType.Name};
-            
+
 //            //TODO change something on testExpectedResultType
 //            //testExpectedResultType.oldValue = newValue; 
 //            _target.Update(testExpectedResultType);
@@ -111,7 +111,7 @@
 //            { 
 //                 _repositoryList.Add(new  ExpectedResultType (name));
 //            });
-            
+
 //            //TODO insert values 
 //            _target.Insert(new ExpectedResultType (name));
 //            //Assert.AreEqual(11, _repositoryList.Count());
@@ -159,7 +159,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.Id==id).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataById(idValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.Id==idValue).ToList().Count, result.Count);
 //        }
@@ -167,3 +167,4 @@
 
 //    }
 //}
+

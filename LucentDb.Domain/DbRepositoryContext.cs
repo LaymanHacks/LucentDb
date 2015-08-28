@@ -16,7 +16,8 @@ namespace LucentDb.Domain
             TestRepository = new DbTestRepository(new SqlDbTestCommandProvider());
             TestTypeRepository = new DbTestTypeRepository(new SqlDbTestTypeCommandProvider());
             AssertTypeRepository = new DbAssertTypeRepository(new SqlDbAssertTypeCommandProvider());
-            ConnectionProviderRepository = new DbConnectionProviderRepository(new SqlDbConnectionProviderCommandProvider());
+            ConnectionProviderRepository =
+                new DbConnectionProviderRepository(new SqlDbConnectionProviderCommandProvider());
             TestGroupRepository = new DbTestGroupRepository(new SqlDbTestGroupCommandProvider());
         }
 

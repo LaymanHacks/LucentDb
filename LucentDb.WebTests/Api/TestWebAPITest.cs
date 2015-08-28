@@ -24,7 +24,7 @@
 //    [TestFixture()]
 //    public class TestApiControllerTests
 //    {
-        
+
 //        private Mock<ITestRepository> _repository;
 
 //        private List<Test> _repositoryList = new List<Test>
@@ -34,7 +34,7 @@
 //        };
 
 //        private TestApiController _target;
-        
+
 //        [TestInitialize]
 //        public void Init()
 //        {
@@ -51,14 +51,14 @@
 
 //            _target.Request.SetConfiguration(config);
 //        }
-   
+
 //                [Test()]
 //        public void GetDataTest() 
 //        {
 //            _repository
 //                 .Setup(it => it.GetData())
 //                     .Returns(_repositoryList);
-                
+
 //            var result = _target.GetData().ToList();
 //             Assert.AreEqual(_repositoryList.ToList().Count, result.Count);
 //        }
@@ -87,7 +87,7 @@
 //                 Name = tempTest.Name, 
 //                 TestValue = tempTest.TestValue, 
 //                 IsActive = tempTest.IsActive};
-            
+
 //            //TODO change something on testTest
 //            //testTest.oldValue = newValue; 
 //            _target.Update(testTest);
@@ -121,7 +121,7 @@
 //            { 
 //                 _repositoryList.Add(new  Test (testTypeId, projectId, groupId, name, testValue, isActive));
 //            });
-            
+
 //            //TODO insert values 
 //            _target.Insert(new Test (testTypeId, projectId, groupId, name, testValue, isActive));
 //            //Assert.AreEqual(11, _repositoryList.Count());
@@ -184,7 +184,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.Id==id).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataById(idValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.Id==idValue).ToList().Count, result.Count);
 //        }
@@ -195,7 +195,7 @@
 //            _repository
 //                 .Setup(it => it.GetActiveData())
 //                     .Returns(_repositoryList);
-                
+
 //            var result = _target.GetActiveData().ToList();
 //             Assert.AreEqual(_repositoryList.ToList().Count, result.Count);
 //        }
@@ -255,7 +255,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.ProjectId==projectId).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataByProjectId(projectIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.ProjectId==projectIdValue).ToList().Count, result.Count);
 //        }
@@ -315,7 +315,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.ProjectId==projectId).ToList();
 //                 });
-                
+
 //            var result = _target.GetActiveDataByProjectId(projectIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.ProjectId==projectIdValue).ToList().Count, result.Count);
 //        }
@@ -375,7 +375,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.GroupId==groupId).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataByGroupId(groupIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.GroupId==groupIdValue).ToList().Count, result.Count);
 //        }
@@ -435,7 +435,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.GroupId==groupId).ToList();
 //                 });
-                
+
 //            var result = _target.GetActiveDataByGroupId(groupIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.GroupId==groupIdValue).ToList().Count, result.Count);
 //        }
@@ -495,7 +495,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.TestTypeId==testTypeId).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataByTestTypeId(testTypeIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.TestTypeId==testTypeIdValue).ToList().Count, result.Count);
 //        }
@@ -555,7 +555,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.TestTypeId==testTypeId).ToList();
 //                 });
-                
+
 //            var result = _target.GetActiveDataByTestTypeId(testTypeIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.TestTypeId==testTypeIdValue).ToList().Count, result.Count);
 //        }
@@ -609,3 +609,4 @@
 
 //    }
 //}
+

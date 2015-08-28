@@ -1,103 +1,95 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LucentDb.Data.Web;
-using LucentDb.Data.WebApiRepository;
+﻿using LucentDb.Data.WebApiRepository;
 using LucentDb.Domain.Entities;
 using NUnit.Framework;
+
 namespace LucentDb.Data.Web.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class WebApiProject_ConnectionRepositoryTests
     {
-        [Test()]
-        public void WebApiProject_ConnectionRepositoryTest()
-        {
-            Assert.Fail();
-        }
-
-        [Test()]
-        public void GetDataTest()
-        {
-            var temp = new WebApiProject_ConnectionRepository("http://localhost:60205/");
-          var result =   temp.GetData();
-            Assert.IsNotEmpty(result);
-        }
-
-        [Test()]
-        public void UpdateTest()
-        {
-            var temp = new WebApiProject_ConnectionRepository("http://localhost:60205/");
-            temp.Update(new Project_Connection(){ConnectionId = 1,ProjectId = 2},1,1 );
-            
-        }
-
-        
-
-        [Test()]
+        [Test]
         public void DeleteTest()
         {
             Assert.Fail();
         }
 
-        [Test()]
+        [Test]
         public void DeleteTest1()
         {
             Assert.Fail();
         }
 
-        [Test()]
-        public void InsertTest()
+        [Test]
+        public void DisposeTest()
         {
             Assert.Fail();
         }
 
-        [Test()]
-        public void InsertTest1()
-        {
-            Assert.Fail();
-        }
-
-        [Test()]
-        public void GetDataPageableTest()
-        {
-            Assert.Fail();
-        }
-
-        [Test()]
-        public void GetDataByProjectIdConnectionIdTest()
-        {
-            Assert.Fail();
-        }
-
-        [Test()]
-        public void GetDataByConnectionIdTest()
-        {
-            Assert.Fail();
-        }
-
-        [Test()]
+        [Test]
         public void GetDataByConnectionIdPageableTest()
         {
             Assert.Fail();
         }
 
-        [Test()]
-        public void GetDataByProjectIdTest()
+        [Test]
+        public void GetDataByConnectionIdTest()
         {
             Assert.Fail();
         }
 
-        [Test()]
+        [Test]
+        public void GetDataByProjectIdConnectionIdTest()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
         public void GetDataByProjectIdPageableTest()
         {
             Assert.Fail();
         }
 
-        [Test()]
-        public void DisposeTest()
+        [Test]
+        public void GetDataByProjectIdTest()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void GetDataPageableTest()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void GetDataTest()
+        {
+            var temp = new WebApiProject_ConnectionRepository("http://localhost:60205/");
+            var result = temp.GetData();
+            Assert.IsNotEmpty(result);
+        }
+
+        [Test]
+        public void InsertTest()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void InsertTest1()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void UpdateTest()
+        {
+            var temp = new WebApiProject_ConnectionRepository("http://localhost:60205/");
+            temp.Update(new Project_Connection {ConnectionId = 1, ProjectId = 2}, 1, 1);
+        }
+
+        [Test]
+        public void WebApiProject_ConnectionRepositoryTest()
         {
             Assert.Fail();
         }

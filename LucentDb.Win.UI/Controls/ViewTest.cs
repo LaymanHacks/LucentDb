@@ -43,13 +43,14 @@ namespace LucentDb.Win.UI.Controls
                 @"Data Source=(localdb)\V11.0;Initial Catalog=Chinook;Integrated Security=True;", true);
             if (connection.ConnectionProviderId != null)
                 connection.ConnectionProvider =
-                    repo.ConnectionProviderRepository.GetDataById((int) connection.ConnectionProviderId).FirstOrDefault();
+                    repo.ConnectionProviderRepository.GetDataById(connection.ConnectionProviderId).FirstOrDefault();
             var valResult =
                 scriptVal.Validate(connection
                     , _test);
-           
-            
-            repo.RunHistoryRepository.Insert(_test.Id, valResult.RunDateTime, valResult.IsValid, valResult.RunLog, valResult.ResultMessage);
+
+
+            repo.RunHistoryRepository.Insert(_test.Id, valResult.RunDateTime, valResult.IsValid, valResult.RunLog,
+                valResult.ResultMessage);
             MessageBox.Show(valResult.IsValid.ToString());
         }
     }

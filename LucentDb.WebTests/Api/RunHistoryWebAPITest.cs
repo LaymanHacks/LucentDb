@@ -24,7 +24,7 @@
 //    [TestFixture()]
 //    public class RunHistoryApiControllerTests
 //    {
-        
+
 //        private Mock<IRunHistoryRepository> _repository;
 
 //        private List<RunHistory> _repositoryList = new List<RunHistory>
@@ -34,7 +34,7 @@
 //        };
 
 //        private RunHistoryApiController _target;
-        
+
 //        [TestInitialize]
 //        public void Init()
 //        {
@@ -51,14 +51,14 @@
 
 //            _target.Request.SetConfiguration(config);
 //        }
-   
+
 //                [Test()]
 //        public void GetDataTest() 
 //        {
 //            _repository
 //                 .Setup(it => it.GetData())
 //                     .Returns(_repositoryList);
-                
+
 //            var result = _target.GetData().ToList();
 //             Assert.AreEqual(_repositoryList.ToList().Count, result.Count);
 //        }
@@ -85,7 +85,7 @@
 //                 IsValid = tempRunHistory.IsValid, 
 //                 RunLog = tempRunHistory.RunLog, 
 //                 ResultString = tempRunHistory.ResultString};
-            
+
 //            //TODO change something on testRunHistory
 //            //testRunHistory.oldValue = newValue; 
 //            _target.Update(testRunHistory);
@@ -119,7 +119,7 @@
 //            { 
 //                 _repositoryList.Add(new  RunHistory (testId, runDateTime, isValid, runLog, resultString));
 //            });
-            
+
 //            //TODO insert values 
 //            _target.Insert(new RunHistory (testId, runDateTime, isValid, runLog, resultString));
 //            //Assert.AreEqual(11, _repositoryList.Count());
@@ -179,7 +179,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.Id==id).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataById(idValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.Id==idValue).ToList().Count, result.Count);
 //        }
@@ -193,7 +193,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.TestId==testId).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataByTestId(testIdValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.TestId==testIdValue).ToList().Count, result.Count);
 //        }
@@ -244,3 +244,4 @@
 
 //    }
 //}
+

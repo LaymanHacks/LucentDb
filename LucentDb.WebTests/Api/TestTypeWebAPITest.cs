@@ -24,7 +24,7 @@
 //    [TestFixture()]
 //    public class TestTypeApiControllerTests
 //    {
-        
+
 //        private Mock<ITestTypeRepository> _repository;
 
 //        private List<TestType> _repositoryList = new List<TestType>
@@ -34,7 +34,7 @@
 //        };
 
 //        private TestTypeApiController _target;
-        
+
 //        [TestInitialize]
 //        public void Init()
 //        {
@@ -51,14 +51,14 @@
 
 //            _target.Request.SetConfiguration(config);
 //        }
-   
+
 //                [Test()]
 //        public void GetDataTest() 
 //        {
 //            _repository
 //                 .Setup(it => it.GetData())
 //                     .Returns(_repositoryList);
-                
+
 //            var result = _target.GetData().ToList();
 //             Assert.AreEqual(_repositoryList.ToList().Count, result.Count);
 //        }
@@ -81,7 +81,7 @@
 //                 Name = tempTestType.Name, 
 //                 TestValidatorType = tempTestType.TestValidatorType, 
 //                 IsActive = tempTestType.IsActive};
-            
+
 //            //TODO change something on testTestType
 //            //testTestType.oldValue = newValue; 
 //            _target.Update(testTestType);
@@ -115,7 +115,7 @@
 //            { 
 //                 _repositoryList.Add(new  TestType (name, testValidatorType, isActive));
 //            });
-            
+
 //            //TODO insert values 
 //            _target.Insert(new TestType (name, testValidatorType, isActive));
 //            //Assert.AreEqual(11, _repositoryList.Count());
@@ -169,7 +169,7 @@
 //                 { 
 //                      return _repositoryList.Where(x => x.Id==id).ToList();
 //                 });
-                
+
 //            var result = _target.GetDataById(idValue).ToList();
 //             Assert.AreEqual(_repositoryList.Where(x => x.Id==idValue).ToList().Count, result.Count);
 //        }
@@ -180,7 +180,7 @@
 //            _repository
 //                 .Setup(it => it.GetActiveData())
 //                     .Returns(_repositoryList);
-                
+
 //            var result = _target.GetActiveData().ToList();
 //             Assert.AreEqual(_repositoryList.ToList().Count, result.Count);
 //        }
@@ -225,3 +225,4 @@
 
 //    }
 //}
+

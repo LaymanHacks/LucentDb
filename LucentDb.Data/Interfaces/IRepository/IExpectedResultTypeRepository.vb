@@ -9,21 +9,22 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
-Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-  
- Namespace LucentDb.Data.Repository     
+
+Namespace LucentDb.Data.Repository
     Public Interface IExpectedResultTypeRepository
-        Function GetData()  as ICollection(Of ExpectedResultType)
-        Sub Update( ByVal name As String,  ByVal id As Int32) 
-        Sub Update(ByVal expectedResultType as ExpectedResultType) 
-        Sub Delete( ByVal id As Int32) 
-        Sub Delete(ByVal expectedResultType as ExpectedResultType) 
-        Function Insert( ByVal name As String)  as Int32
-        Function Insert(ByVal expectedResultType as ExpectedResultType)  as Int32
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ExpectedResultType)
-        Function GetDataById( ByVal id As Int32)  as ICollection(Of ExpectedResultType)
-    End Interface 
+        Function GetData() as ICollection(Of ExpectedResultType)
+        Sub Update(name As String, id As Int32)
+        Sub Update(expectedResultType as ExpectedResultType)
+        Sub Delete(id As Int32)
+        Sub Delete(expectedResultType as ExpectedResultType)
+        Function Insert(name As String) as Int32
+        Function Insert(expectedResultType as ExpectedResultType) as Int32
+
+        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
+            as PagedResult(Of ExpectedResultType)
+
+        Function GetDataById(id As Int32) as ICollection(Of ExpectedResultType)
+    End Interface
 End NameSpace
-  

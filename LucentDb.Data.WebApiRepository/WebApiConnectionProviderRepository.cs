@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,13 +11,12 @@ using Newtonsoft.Json;
 
 namespace LucentDb.Data.WebApiRepository
 {
-
     [DataObject(true)]
     public class WebApiConnectionProviderRepository : IConnectionProviderRepository, IDisposable
     {
-
         private const string UrlBase = "/api/connectionProviders";
         private readonly string _baseAddress;
+        private bool _disposedValue;
         private HttpMessageHandler _messageHandler;
 
         public WebApiConnectionProviderRepository(string baseAddress, HttpMessageHandler messageHandler = null)
@@ -43,19 +40,19 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        public void Update(string name, string value, Int32 id)
+        public void Update(string name, string value, int id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var connectionProvider = new ConnectionProvider()
-                    {
-                    Name = name, 
-                    Value = value, 
+                var connectionProvider = new ConnectionProvider
+                {
+                    Name = name,
+                    Value = value,
                     Id = id
-                    };
+                };
                 var response = client.PutAsync(UrlBase, connectionProvider, new JsonMediaTypeFormatter()).Result;
                 response.EnsureSuccessStatusCode();
             }
@@ -66,8 +63,7 @@ namespace LucentDb.Data.WebApiRepository
             Update(connectionProvider.Name, connectionProvider.Value, connectionProvider.Id);
         }
 
-
-        public void Delete(Int32 id)
+        public void Delete(int id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -84,41 +80,41 @@ namespace LucentDb.Data.WebApiRepository
             Delete(connectionProvider.Id);
         }
 
-
-        public Int32 Insert(string name, string value)
+        public int Insert(string name, string value)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var connectionProvider = new ConnectionProvider()
-                    {
-                    Name = name, 
+                var connectionProvider = new ConnectionProvider
+                {
+                    Name = name,
                     Value = value
-                    };
+                };
                 var response = client.PostAsync(UrlBase, connectionProvider, new JsonMediaTypeFormatter()).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
-                var returnValue  = Convert.ToInt32(responseString);
+                var returnValue = Convert.ToInt32(responseString);
                 return returnValue;
             }
         }
 
-        public Int32 Insert(ConnectionProvider connectionProvider)
+        public int Insert(ConnectionProvider connectionProvider)
         {
             return Insert(connectionProvider.Name, connectionProvider.Value);
         }
 
-
-        public PagedResult<ConnectionProvider> GetDataPageable(string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<ConnectionProvider> GetDataPageable(string sortExpression, int page, int pageSize)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
                 client.BaseAddress = new Uri(_baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" + pageSize).Result;
+                var response =
+                    client.GetAsync(UrlBase + "?sortExpression=" + sortExpression + "&page=" + page + "&pageSize=" +
+                                    pageSize).Result;
                 response.EnsureSuccessStatusCode();
                 var responseString = response.Content.ReadAsStringAsync().Result;
                 var returnValue = JsonConvert.DeserializeObject<PagedResult<ConnectionProvider>>(responseString);
@@ -126,8 +122,7 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-
-        public ICollection<ConnectionProvider> GetDataById(Int32 id)
+        public ICollection<ConnectionProvider> GetDataById(int id)
         {
             using (var client = new HttpClient(_messageHandler, false))
             {
@@ -142,7 +137,12 @@ namespace LucentDb.Data.WebApiRepository
             }
         }
 
-        private bool _disposedValue;
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
@@ -154,12 +154,5 @@ namespace LucentDb.Data.WebApiRepository
             }
             _disposedValue = true;
         }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
     }
 }

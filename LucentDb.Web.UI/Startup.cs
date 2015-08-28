@@ -6,7 +6,7 @@ using Owin;
 
 namespace LucentDb.Web.UI
 {
-    public partial class Startup
+    public class Startup
     {
         public void Configuration(IAppBuilder app)
         {

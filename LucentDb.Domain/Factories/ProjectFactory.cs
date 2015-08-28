@@ -9,10 +9,11 @@ namespace LucentDb.Domain
     public class ProjectFactory
     {
         private readonly IProjectRepository _projectRepository;
-        private readonly ITestRepository _testRepository;
         private readonly TestFactory _testFactory;
+        private readonly ITestRepository _testRepository;
 
-        public ProjectFactory(IProjectRepository projectRepository, ITestRepository testRepository, TestFactory testFactory)
+        public ProjectFactory(IProjectRepository projectRepository, ITestRepository testRepository,
+            TestFactory testFactory)
         {
             _projectRepository = projectRepository;
             _testRepository = testRepository;
