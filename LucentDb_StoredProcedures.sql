@@ -136,8 +136,7 @@ DECLARE @sql nvarchar(4000),
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [Name] FROM (
@@ -163,8 +162,7 @@ SET @sql = ''SELECT [Id], [Name] FROM (
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [Name] FROM (
@@ -388,8 +386,7 @@ DECLARE @sql nvarchar(4000),
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ConnectionId'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM (
@@ -415,8 +412,7 @@ SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionS
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ConnectionId'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM (
@@ -531,8 +527,8 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ConnectionId'')  
+  SET @startRowIndex = (@page -1) * @pageSize + 1  
  SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM ( 
        SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
@@ -557,8 +553,8 @@ EXEC sp_executesql @sql, N'',@inStartRowIndex Int,@inPageSize Int'', @inStartRow
 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ConnectionId'')  
+  SET @startRowIndex = (@page -1) * @pageSize + 1  
  SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM ( 
        SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
@@ -654,7 +650,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ConnectionId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT 
 [ConnectionId], 
@@ -691,7 +687,7 @@ EXEC sp_executesql @sql, N''@INProjectId int,@inStartRowIndex Int,@inPageSize In
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ConnectionId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT 
 [ConnectionId], 
@@ -804,7 +800,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionProviderId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ConnectionProviderId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM (
 		   SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -830,7 +826,7 @@ EXEC sp_executesql @sql, N''@INConnectionProviderId int,@inStartRowIndex Int,@in
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionProviderId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ConnectionProviderId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM (
 		   SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -924,7 +920,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionProviderId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ConnectionProviderId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM (
      SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive], 
@@ -950,7 +946,7 @@ EXEC sp_executesql @sql, N''@INConnectionProviderId int,@inStartRowIndex Int,@in
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionProviderId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ConnectionProviderId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive] FROM (
      SELECT [ConnectionId], [ConnectionProviderId], [Name], [ConnectionString], [IsActive], 
@@ -1132,8 +1128,7 @@ DECLARE @sql nvarchar(4000),
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [Name], [Value] FROM (
@@ -1159,8 +1154,7 @@ SET @sql = ''SELECT [Id], [Name], [Value] FROM (
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [Name], [Value] FROM (
@@ -1390,8 +1384,7 @@ DECLARE @sql nvarchar(4000),
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
@@ -1417,8 +1410,7 @@ SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [Exp
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
@@ -1542,7 +1534,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''AssertTypeId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''AssertTypeId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
 		   SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -1568,7 +1560,7 @@ EXEC sp_executesql @sql, N''@INAssertTypeId int,@inStartRowIndex Int,@inPageSize
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''AssertTypeId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''AssertTypeId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
 		   SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -1664,7 +1656,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ExpectedResultTypeId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ExpectedResultTypeId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
 		   SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -1690,7 +1682,7 @@ EXEC sp_executesql @sql, N''@INExpectedResultTypeId int,@inStartRowIndex Int,@in
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ExpectedResultTypeId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ExpectedResultTypeId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
 		   SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -1786,7 +1778,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''TestId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
 		   SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -1812,7 +1804,7 @@ EXEC sp_executesql @sql, N''@INTestId int,@inStartRowIndex Int,@inPageSize Int''
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''TestId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex] FROM (
 		   SELECT [Id], [TestId], [ExpectedResultTypeId], [AssertTypeId], [ExpectedValue], [ResultIndex],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -1990,8 +1982,7 @@ DECLARE @sql nvarchar(4000),
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [Name] FROM (
@@ -2017,8 +2008,7 @@ SET @sql = ''SELECT [Id], [Name] FROM (
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [Name] FROM (
@@ -2230,8 +2220,7 @@ DECLARE @sql nvarchar(4000),
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [ProjectId], [Name], [IsActive] FROM (
@@ -2257,8 +2246,7 @@ SET @sql = ''SELECT [ProjectId], [Name], [IsActive] FROM (
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [ProjectId], [Name], [IsActive] FROM (
@@ -2373,8 +2361,8 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'')  
+  SET @startRowIndex = (@page -1) * @pageSize + 1  
  SET @sql = ''SELECT [ProjectId], [Name], [IsActive] FROM ( 
        SELECT [ProjectId], [Name], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
@@ -2399,8 +2387,8 @@ EXEC sp_executesql @sql, N'',@inStartRowIndex Int,@inPageSize Int'', @inStartRow
 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'')  
+  SET @startRowIndex = (@page -1) * @pageSize + 1  
  SET @sql = ''SELECT [ProjectId], [Name], [IsActive] FROM ( 
        SELECT [ProjectId], [Name], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
@@ -2492,7 +2480,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT 
 [ProjectId], 
@@ -2525,7 +2513,7 @@ EXEC sp_executesql @sql, N''@INConnectionId int,@inStartRowIndex Int,@inPageSize
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT 
 [ProjectId], 
@@ -2738,8 +2726,7 @@ DECLARE @sql nvarchar(4000),
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [ProjectId], [ConnectionId] FROM (
@@ -2765,8 +2752,7 @@ SET @sql = ''SELECT [ProjectId], [ConnectionId] FROM (
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [ProjectId], [ConnectionId] FROM (
@@ -2894,7 +2880,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ConnectionId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [ProjectId], [ConnectionId] FROM (
 		   SELECT [ProjectId], [ConnectionId],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -2920,7 +2906,7 @@ EXEC sp_executesql @sql, N''@INConnectionId int,@inStartRowIndex Int,@inPageSize
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ConnectionId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ConnectionId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [ProjectId], [ConnectionId] FROM (
 		   SELECT [ProjectId], [ConnectionId],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -3016,7 +3002,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [ProjectId], [ConnectionId] FROM (
 		   SELECT [ProjectId], [ConnectionId],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -3042,7 +3028,7 @@ EXEC sp_executesql @sql, N''@INProjectId int,@inStartRowIndex Int,@inPageSize In
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [ProjectId], [ConnectionId] FROM (
 		   SELECT [ProjectId], [ConnectionId],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -3244,8 +3230,7 @@ DECLARE @sql nvarchar(4000),
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString] FROM (
@@ -3271,8 +3256,7 @@ SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultSt
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString] FROM (
@@ -3396,7 +3380,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''TestId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString] FROM (
 		   SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -3422,7 +3406,7 @@ EXEC sp_executesql @sql, N''@INTestId int,@inStartRowIndex Int,@inPageSize Int''
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''TestId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString] FROM (
 		   SELECT [Id], [TestId], [RunDateTime], [IsPass], [RunLog], [ResultString],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -3630,8 +3614,7 @@ DECLARE @sql nvarchar(4000),
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
@@ -3657,8 +3640,7 @@ SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestVal
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
@@ -3773,8 +3755,8 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')  
+  SET @startRowIndex = (@page -1) * @pageSize + 1  
  SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM ( 
        SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
@@ -3799,8 +3781,8 @@ EXEC sp_executesql @sql, N'',@inStartRowIndex Int,@inPageSize Int'', @inStartRow
 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')  
+  SET @startRowIndex = (@page -1) * @pageSize + 1  
  SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM ( 
        SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
@@ -3888,7 +3870,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
 		   SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -3914,7 +3896,7 @@ EXEC sp_executesql @sql, N''@INProjectId int,@inStartRowIndex Int,@inPageSize In
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
 		   SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -4008,7 +3990,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
      SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive], 
@@ -4034,7 +4016,7 @@ EXEC sp_executesql @sql, N''@INProjectId int,@inStartRowIndex Int,@inPageSize In
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
      SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive], 
@@ -4128,7 +4110,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''GroupId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''GroupId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
 		   SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -4154,7 +4136,7 @@ EXEC sp_executesql @sql, N''@INGroupId int,@inStartRowIndex Int,@inPageSize Int'
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''GroupId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''GroupId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
 		   SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -4248,7 +4230,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''GroupId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''GroupId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
      SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive], 
@@ -4274,7 +4256,7 @@ EXEC sp_executesql @sql, N''@INGroupId int,@inStartRowIndex Int,@inPageSize Int'
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''GroupId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''GroupId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
      SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive], 
@@ -4368,7 +4350,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestTypeId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''TestTypeId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
 		   SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -4394,7 +4376,7 @@ EXEC sp_executesql @sql, N''@INTestTypeId int,@inStartRowIndex Int,@inPageSize I
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestTypeId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''TestTypeId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
 		   SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -4488,7 +4470,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestTypeId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''TestTypeId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
      SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive], 
@@ -4514,7 +4496,7 @@ EXEC sp_executesql @sql, N''@INTestTypeId int,@inStartRowIndex Int,@inPageSize I
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''TestTypeId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''TestTypeId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive] FROM (
      SELECT [Id], [TestTypeId], [ProjectId], [GroupId], [Name], [TestValue], [IsActive], 
@@ -4702,8 +4684,7 @@ DECLARE @sql nvarchar(4000),
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
@@ -4729,8 +4710,7 @@ SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
@@ -4845,8 +4825,8 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')  
+  SET @startRowIndex = (@page -1) * @pageSize + 1  
  SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM ( 
        SELECT [Id], [ProjectId], [Name], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
@@ -4871,8 +4851,8 @@ EXEC sp_executesql @sql, N'',@inStartRowIndex Int,@inPageSize Int'', @inStartRow
 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')  
+  SET @startRowIndex = (@page -1) * @pageSize + 1  
  SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM ( 
        SELECT [Id], [ProjectId], [Name], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
@@ -4960,7 +4940,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
 		   SELECT [Id], [ProjectId], [Name], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -4986,7 +4966,7 @@ EXEC sp_executesql @sql, N''@INProjectId int,@inStartRowIndex Int,@inPageSize In
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
 		   SELECT [Id], [ProjectId], [Name], [IsActive],  ROW_NUMBER() OVER (ORDER BY '' + @SortExpression + '' ) AS ResultSetRowNumber
@@ -5080,7 +5060,7 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
      SELECT [Id], [ProjectId], [Name], [IsActive], 
@@ -5106,7 +5086,7 @@ EXEC sp_executesql @sql, N''@INProjectId int,@inStartRowIndex Int,@inPageSize In
 
 IF @page < 1 SET @page = 1 
 IF @pageSize < 1 SET @pageSize = 10 
-IF LEN(@sortExpression) = 0 SET @sortExpression = ''ProjectId'' 
+SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''ProjectId'') 
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 SET @sql = ''SELECT [Id], [ProjectId], [Name], [IsActive] FROM (
      SELECT [Id], [ProjectId], [Name], [IsActive], 
@@ -5294,8 +5274,7 @@ DECLARE @sql nvarchar(4000),
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [Name], [TestValidatorType], [IsActive] FROM (
@@ -5321,8 +5300,7 @@ SET @sql = ''SELECT [Id], [Name], [TestValidatorType], [IsActive] FROM (
  @startRowIndex int 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- 
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id'' 
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')     
 SET @startRowIndex = (@page -1) * @pageSize + 1 
 
 SET @sql = ''SELECT [Id], [Name], [TestValidatorType], [IsActive] FROM (
@@ -5437,8 +5415,8 @@ DECLARE @sql nvarchar(4000),
 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')  
+  SET @startRowIndex = (@page -1) * @pageSize + 1  
  SET @sql = ''SELECT [Id], [Name], [TestValidatorType], [IsActive] FROM ( 
        SELECT [Id], [Name], [TestValidatorType], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
@@ -5463,8 +5441,8 @@ EXEC sp_executesql @sql, N'',@inStartRowIndex Int,@inPageSize Int'', @inStartRow
 
 IF @page < 1 SET @page = 1  
  IF @pageSize < 1 SET @pageSize = 10  
- IF LEN(@sortExpression) = 0 SET @sortExpression = ''Id''  
- SET @startRowIndex = (@page -1) * @pageSize + 1  
+ SET  @sortExpression = coalesce(nullif(@sortExpression,''''), ''Id'')  
+  SET @startRowIndex = (@page -1) * @pageSize + 1  
  SET @sql = ''SELECT [Id], [Name], [TestValidatorType], [IsActive] FROM ( 
        SELECT [Id], [Name], [TestValidatorType], [IsActive],
         ROW_NUMBER() OVER (ORDER BY  '' + @SortExpression + '') AS ResultSetRowNumber 
