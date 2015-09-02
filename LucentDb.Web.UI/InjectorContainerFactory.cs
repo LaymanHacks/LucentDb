@@ -27,9 +27,6 @@ namespace LucentDb.Web.UI
             container.Register<IDbProjectCommandProvider, SqlDbProjectCommandProvider>();
             container.Register<IProjectRepository, DbProjectRepository>();
 
-            container.Register<IDbProject_ConnectionCommandProvider, SqlDbProject_ConnectionCommandProvider>();
-            container.Register<IProject_ConnectionRepository, DbProject_ConnectionRepository>();
-
             container.Register<IDbRunHistoryCommandProvider, SqlDbRunHistoryCommandProvider>();
             container.Register<IRunHistoryRepository, DbRunHistoryRepository>();
 

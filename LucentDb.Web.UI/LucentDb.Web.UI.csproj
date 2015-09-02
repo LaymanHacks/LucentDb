@@ -147,7 +147,6 @@
     <Compile Include="Controllers\API\ExpectedResultAPIController.cs" />
     <Compile Include="Controllers\API\ExpectedResultTypeAPIController.cs" />
     <Compile Include="Controllers\API\ProjectAPIController.cs" />
-    <Compile Include="Controllers\API\Project_ConnectionAPIController.cs" />
     <Compile Include="Controllers\API\RunHistoryAPIController.cs" />
     <Compile Include="Controllers\API\TestAPIController.cs" />
     <Compile Include="Controllers\API\TestGroupAPIController.cs" />
@@ -158,7 +157,6 @@
     <Compile Include="Controllers\ExpectedResultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
-    <Compile Include="Controllers\Project_ConnectionController.cs" />
     <Compile Include="Controllers\RunHistoryController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TestGroupController.cs" />

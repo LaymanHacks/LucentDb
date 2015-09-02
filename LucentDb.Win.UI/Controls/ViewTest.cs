@@ -39,8 +39,8 @@ namespace LucentDb.Win.UI.Controls
         {
             var repo = new WebApiRepositoryContext("http://localhost:60205/");
             var scriptVal = new SqlScriptValidator();
-            var connection = new Connection(1, 1, "Chinook",
-                @"Data Source=(localdb)\V11.0;Initial Catalog=Chinook;Integrated Security=True;", true);
+            var connection = new Connection(1, 1,1, "Chinook",
+                @"Data Source=(localdb)\V11.0;Initial Catalog=Chinook;Integrated Security=True;",true, true);
             if (connection.ConnectionProviderId != null)
                 connection.ConnectionProvider =
                     repo.ConnectionProviderRepository.GetDataById(connection.ConnectionProviderId).FirstOrDefault();

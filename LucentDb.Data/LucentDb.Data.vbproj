@@ -58,7 +58,6 @@
     <Compile Include="Interfaces\IDbCommandProvider\IDbExpectedResultCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbExpectedResultTypeCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbProjectCommandProvider.vb" />
-    <Compile Include="Interfaces\IDbCommandProvider\IDbProject_ConnectionCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbRunHistoryCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbTestCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbTestGroupCommandProvider.vb" />
@@ -69,7 +68,6 @@
     <Compile Include="Interfaces\IRepository\IExpectedResultRepository.vb" />
     <Compile Include="Interfaces\IRepository\IExpectedResultTypeRepository.vb" />
     <Compile Include="Interfaces\IRepository\IProjectRepository.vb" />
-    <Compile Include="Interfaces\IRepository\IProject_ConnectionRepository.vb" />
     <Compile Include="Interfaces\IRepository\IRunHistoryRepository.vb" />
     <Compile Include="Interfaces\IRepository\ITestGroupRepository.vb" />
     <Compile Include="Interfaces\IRepository\ITestRepository.vb" />

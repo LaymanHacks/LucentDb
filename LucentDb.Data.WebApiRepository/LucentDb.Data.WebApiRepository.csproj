@@ -56,7 +56,6 @@
     <Compile Include="WebApiExpectedResultRepository.cs" />
     <Compile Include="WebApiExpectedResultTypeRepository.cs" />
     <Compile Include="WebApiProjectRepository.cs" />
-    <Compile Include="WebApiProject_ConnectionRepository.cs" />
     <Compile Include="WebApiRunHistoryRepository.cs" />
     <Compile Include="WebApiTestGroupRepository.cs" />
     <Compile Include="WebApiTestRepository.cs" />

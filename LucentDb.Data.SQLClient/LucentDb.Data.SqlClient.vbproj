@@ -56,7 +56,6 @@
     <Compile Include="SqlDbExpectedResultCommandProvider.vb" />
     <Compile Include="SqlDbExpectedResultTypeCommandProvider.vb" />
     <Compile Include="SqlDbProjectCommandProvider.vb" />
-    <Compile Include="SqlDbProject_ConnectionCommandProvider.vb" />
     <Compile Include="SqlDbRunHistoryCommandProvider.vb" />
     <Compile Include="SqlDbTestCommandProvider.vb" />
     <Compile Include="SqlDbTestGroupCommandProvider.vb" />

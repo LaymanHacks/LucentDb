@@ -9,48 +9,31 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface IConnectionRepository
-        Function GetData() as ICollection(Of Connection)
-
-        Sub Update(connectionProviderId As Int32, name As String, connectionString As String, isActive As Boolean,
-                   connectionId As Int32)
-
-        Sub Update(connection as Connection)
-        Sub Delete(connectionId As Int32)
-        Sub Delete(connection as Connection)
-
-        Function Insert(connectionProviderId As Int32, name As String, connectionString As String, isActive As Boolean) _
-            As Int32
-
-        Function Insert(connection as Connection) as Int32
-
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of Connection)
-
-        Function GetDataByConnectionId(connectionId As Int32) as ICollection(Of Connection)
-        Function GetActiveData() as ICollection(Of Connection)
-
-        Function GetActiveDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of Connection)
-
-        Function GetConnectionsForProjectByProjectId(projectId As Int32) as ICollection(Of Connection)
-
-        Function GetConnectionsForProjectByProjectIdPageable(projectId As Int32, sortExpression As String, page As Int32,
-                                                             pageSize As Int32) as PagedResult(Of Connection)
-
-        Function GetDataByConnectionProviderId(connectionProviderId As Int32) as ICollection(Of Connection)
-
-        Function GetDataByConnectionProviderIdPageable(connectionProviderId As Int32, sortExpression As String,
-                                                       page As Int32, pageSize As Int32) as PagedResult(Of Connection)
-
-        Function GetActiveDataByConnectionProviderId(connectionProviderId As Int32) as ICollection(Of Connection)
-
-        Function GetActiveDataByConnectionProviderIdPageable(connectionProviderId As Int32, sortExpression As String,
-                                                             page As Int32, pageSize As Int32) _
-            as PagedResult(Of Connection)
-    End Interface
+        Function GetData()  as ICollection(Of Connection)
+        Sub Update(ByVal projectId As Int32, ByVal connectionProviderId As Int32, ByVal name As String, ByVal connectionString As String, ByVal isDefault As Boolean, ByVal isActive As Boolean, ByVal connectionId As Int32)
+        Sub Update(ByVal connection as Connection) 
+        Sub Delete( ByVal connectionId As Int32) 
+        Sub Delete(ByVal connection as Connection) 
+        Function Insert( ByVal projectId As  Nullable(Of Int32) ,  ByVal connectionProviderId As Int32,  ByVal name As String,  ByVal connectionString As String,  ByVal isDefault As Boolean,  ByVal isActive As Boolean)  as Int32
+        Function Insert(ByVal connection as Connection)  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
+        Function GetDataByConnectionId( ByVal connectionId As Int32)  as ICollection(Of Connection)
+        Function GetActiveData()  as ICollection(Of Connection)
+        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
+        Function GetDataByConnectionProviderId( ByVal connectionProviderId As Int32)  as ICollection(Of Connection)
+        Function GetDataByConnectionProviderIdPageable( ByVal connectionProviderId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
+        Function GetActiveDataByConnectionProviderId( ByVal connectionProviderId As Int32)  as ICollection(Of Connection)
+        Function GetActiveDataByConnectionProviderIdPageable( ByVal connectionProviderId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
+        Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Connection)
+        Function GetDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
+        Function GetActiveDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Connection)
+        Function GetActiveDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Connection)
+    End Interface 
 End NameSpace
+  

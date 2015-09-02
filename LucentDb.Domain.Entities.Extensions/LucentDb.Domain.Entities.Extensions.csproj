@@ -59,7 +59,6 @@
     <Compile Include="ExpectedResultExtension.cs" />
     <Compile Include="ExpectedResultTypeExtension.cs" />
     <Compile Include="ProjectExtension.cs" />
-    <Compile Include="Project_ConnectionExtension.cs" />
     <Compile Include="RunHistoryExtension.cs" />
     <Compile Include="TestExtension.cs" />
     <Compile Include="TestGroupExtension.cs" />

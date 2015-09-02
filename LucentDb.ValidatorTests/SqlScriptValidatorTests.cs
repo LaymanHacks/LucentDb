@@ -7,8 +7,8 @@ namespace LucentDb.Validator.Tests
     [TestFixture]
     public class SqlScriptValidatorTests
     {
-        private readonly Connection _connection = new Connection(1, 1, "Chinook",
-            @"Data Source=(LocalDB)\v11.0;Initial Catalog=Chinook;Integrated Security=True", true)
+        private readonly Connection _connection = new Connection(1, 1, 1, "Chinook",
+            @"Data Source=(LocalDB)\v11.0;Initial Catalog=Chinook;Integrated Security=True",true, true)
         {
             ConnectionProvider = new ConnectionProvider(1, "System.Data.SqlClient", "System.Data.SqlClient")
         };
