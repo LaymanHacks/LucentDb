@@ -26,7 +26,6 @@ namespace LucentDb.Domain
         public ITestTypeRepository TestTypeRepository { get; set; }
         public ITestRepository TestRepository { get; set; }
         public IRunHistoryRepository RunHistoryRepository { get; set; }
-        
         public IProjectRepository ProjectRepository { get; set; }
         public IExpectedResultRepository ExpectedResultRepository { get; set; }
         public IConnectionRepository ConnectionRepository { get; set; }

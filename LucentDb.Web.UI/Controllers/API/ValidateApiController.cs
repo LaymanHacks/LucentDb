@@ -132,7 +132,9 @@ namespace LucentDb.Web.UI.Controllers.API
 
         private bool ValidateConnectionForProject(int connectionId, int projectId)
         {
-            return _dataRepository.ConnectionRepository.GetDataByProjectId(projectId).Any(x => x.ConnectionId == connectionId);
+            return
+                _dataRepository.ConnectionRepository.GetDataByProjectId(projectId)
+                    .Any(x => x.ConnectionId == connectionId);
         }
     }
 }

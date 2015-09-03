@@ -10,7 +10,7 @@ namespace LucentDb.Domain
             ConnectionRepository = new DbConnectionRepository(new SqlDbConnectionCommandProvider());
             ExpectedResultRepository = new DbExpectedResultRepository(new SqlDbExpectedResultCommandProvider());
             ProjectRepository = new DbProjectRepository(new SqlDbProjectCommandProvider());
-      
+
             RunHistoryRepository = new DbRunHistoryRepository(new SqlDbRunHistoryCommandProvider());
             TestRepository = new DbTestRepository(new SqlDbTestCommandProvider());
             TestTypeRepository = new DbTestTypeRepository(new SqlDbTestTypeCommandProvider());
@@ -24,7 +24,6 @@ namespace LucentDb.Domain
         public ITestTypeRepository TestTypeRepository { get; set; }
         public ITestRepository TestRepository { get; set; }
         public IRunHistoryRepository RunHistoryRepository { get; set; }
-      
         public IProjectRepository ProjectRepository { get; set; }
         public IExpectedResultRepository ExpectedResultRepository { get; set; }
         public IConnectionRepository ConnectionRepository { get; set; }
