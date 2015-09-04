@@ -230,6 +230,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.yeti.css" />
+    <Content Include="Content\bootstrap.yeti.min.css" />
     <Content Include="Content\codemirror-3.01\codemirror.css" />
     <Content Include="Content\codemirror-3.01\dialog.css" />
     <Content Include="Content\codemirror-3.01\simple-hint.css" />
@@ -258,7 +260,6 @@
     <Content Include="Content\images\AngularJS-small.png" />
     <Content Include="Content\images\breezelogo.png" />
     <Content Include="Content\images\icon.png" />
-    <Content Include="Content\sb-admin.css" />
     <Content Include="Content\styles.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
