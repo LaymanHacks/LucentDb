@@ -1,0 +1,286 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LucentDb.Domain.Entities</name>
+    </assembly>
+    <members>
+        <member name="P:LucentDb.Domain.Entities.AssertType.Id">
+            <summary>
+                Public Property Id
+            </summary>
+            <returns>Id as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.AssertType.Name">
+            <summary>
+                Public Property Name
+            </summary>
+            <returns>Name as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.Connection.ConnectionId">
+            <summary>
+            Public Property ConnectionId
+            </summary>
+            <returns>ConnectionId as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:LucentDb.Domain.Entities.Connection.ProjectId" -->
+        <member name="P:LucentDb.Domain.Entities.Connection.ConnectionProviderId">
+            <summary>
+            Public Property ConnectionProviderId
+            </summary>
+            <returns>ConnectionProviderId as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.Connection.Name">
+            <summary>
+            Public Property Name
+            </summary>
+            <returns>Name as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.Connection.ConnectionString">
+            <summary>
+            Public Property ConnectionString
+            </summary>
+            <returns>ConnectionString as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.Connection.IsDefault">
+            <summary>
+            Public Property IsDefault
+            </summary>
+            <returns>IsDefault as Boolean</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.Connection.IsActive">
+            <summary>
+            Public Property IsActive
+            </summary>
+            <returns>IsActive as Boolean</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.ConnectionProvider.Id">
+            <summary>
+            Public Property Id
+            </summary>
+            <returns>Id as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.ConnectionProvider.Name">
+            <summary>
+            Public Property Name
+            </summary>
+            <returns>Name as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.ConnectionProvider.Value">
+            <summary>
+            Public Property Value
+            </summary>
+            <returns>Value as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.ExpectedResult.Id">
+            <summary>
+                Public Property Id
+            </summary>
+            <returns>Id as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.ExpectedResult.TestId">
+            <summary>
+                Public Property TestId
+            </summary>
+            <returns>TestId as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:LucentDb.Domain.Entities.ExpectedResult.ExpectedResultTypeId" -->
+        <!-- Badly formed XML comment ignored for member "P:LucentDb.Domain.Entities.ExpectedResult.AssertTypeId" -->
+        <member name="P:LucentDb.Domain.Entities.ExpectedResult.ExpectedValue">
+            <summary>
+                Public Property ExpectedValue
+            </summary>
+            <returns>ExpectedValue as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.ExpectedResult.ResultIndex">
+            <summary>
+                Public Property ResultIndex
+            </summary>
+            <returns>ResultIndex as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.ExpectedResultType.Id">
+            <summary>
+                Public Property Id
+            </summary>
+            <returns>Id as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.ExpectedResultType.Name">
+            <summary>
+                Public Property Name
+            </summary>
+            <returns>Name as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.Project.ProjectId">
+            <summary>
+            Public Property ProjectId
+            </summary>
+            <returns>ProjectId as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.Project.Name">
+            <summary>
+            Public Property Name
+            </summary>
+            <returns>Name as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.Project.IsActive">
+            <summary>
+            Public Property IsActive
+            </summary>
+            <returns>IsActive as Boolean</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.RunHistory.Id">
+            <summary>
+                Public Property Id
+            </summary>
+            <returns>Id as Int64</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.RunHistory.TestId">
+            <summary>
+                Public Property TestId
+            </summary>
+            <returns>TestId as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.RunHistory.RunDateTime">
+            <summary>
+                Public Property RunDateTime
+            </summary>
+            <returns>RunDateTime as DateTime</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.RunHistory.IsValid">
+            <summary>
+                Public Property IsValid
+            </summary>
+            <returns>IsValid as Boolean</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.RunHistory.RunLog">
+            <summary>
+                Public Property RunLog
+            </summary>
+            <returns>RunLog as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.RunHistory.ResultString">
+            <summary>
+                Public Property ResultString
+            </summary>
+            <returns>ResultString as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.Test.Id">
+            <summary>
+                Public Property Id
+            </summary>
+            <returns>Id as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.Test.TestTypeId">
+            <summary>
+                Public Property TestTypeId
+            </summary>
+            <returns>TestTypeId as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:LucentDb.Domain.Entities.Test.ProjectId" -->
+        <!-- Badly formed XML comment ignored for member "P:LucentDb.Domain.Entities.Test.GroupId" -->
+        <member name="P:LucentDb.Domain.Entities.Test.Name">
+            <summary>
+                Public Property Name
+            </summary>
+            <returns>Name as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.Test.TestValue">
+            <summary>
+                Public Property TestValue
+            </summary>
+            <returns>TestValue as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.Test.IsActive">
+            <summary>
+                Public Property IsActive
+            </summary>
+            <returns>IsActive as Boolean</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.TestGroup.Id">
+            <summary>
+                Public Property Id
+            </summary>
+            <returns>Id as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.TestGroup.ProjectId">
+            <summary>
+                Public Property ProjectId
+            </summary>
+            <returns>ProjectId as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.TestGroup.Name">
+            <summary>
+                Public Property Name
+            </summary>
+            <returns>Name as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.TestGroup.IsActive">
+            <summary>
+                Public Property IsActive
+            </summary>
+            <returns>IsActive as Boolean</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.TestType.Id">
+            <summary>
+                Public Property Id
+            </summary>
+            <returns>Id as Int32</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.TestType.Name">
+            <summary>
+                Public Property Name
+            </summary>
+            <returns>Name as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.TestType.TestValidatorType">
+            <summary>
+                Public Property TestValidatorType
+            </summary>
+            <returns>TestValidatorType as String</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:LucentDb.Domain.Entities.TestType.IsActive">
+            <summary>
+                Public Property IsActive
+            </summary>
+            <returns>IsActive as Boolean</returns>
+            <remarks></remarks>
+        </member>
+    </members>
+</doc>
