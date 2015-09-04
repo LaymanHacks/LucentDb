@@ -15,11 +15,9 @@
     <div class="row" ng-repeat="item in vm.pageableResults.results">
         <div class="col col-lg-12">
             <div class="well">
-                                 
+                <div class="row">
 
-                <div class="row" >
-
-                    <div class="col-md-11">
+                    <div class="col-md-10">
                         <h3>
                             {{item.name}}
                         </h3>
@@ -30,12 +28,18 @@
                         </a>
                         <a href="/Project/Edit/{{item.projectId}}">Edit</a>
                     </div>
-                    <div class="col-md-1">
-                        
+                    <div class="col-md-2">
+                        <div style="float: right">
+                           
+                            <span class="fa-stack fa-lg">
+  <i class="fa fa-square fa-stack-2x"></i>
+  <i class="fa fa-play fa-stack-1x fa-inverse"></i>
+</span>
+                        </div>
                     </div>
                 </div>
-                <i class="fa fa-pencil-square-o fa-2x" style="float: right; padding-bottom: 25px"></i>
-                <i class="fa fa-play fa-2x" style="color: #008000;float: right"></i>
+
+
 
 
             </div>
