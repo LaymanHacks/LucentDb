@@ -93,7 +93,7 @@ namespace LucentDb.Web.UI.Controllers.API
                             .Where(valResult => valResult != null))
                 {
                     valCollection.Add(valResult);
-                    _dataRepository.RunHistoryRepository.Insert(project.ProjectId, valResult.RunDateTime,
+                    _dataRepository.RunHistoryRepository.Insert(valResult.TestId, valResult.RunDateTime,
                         valResult.IsValid,
                         valResult.RunLog, valResult.ResultMessage);
                 }

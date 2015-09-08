@@ -11,16 +11,16 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <div ng-controller="projectIndexCtrl as vm">
-    
+
     <div class="row" ng-repeat="item in vm.pageableResults.results">
         <div class="col col-lg-12">
             <div class="well">
                 <div class="row">
 
                     <div class="col-md-10">
-                        <h3>
+                        <p>
                             {{item.name}}
-                        </h3>
+                        </p>
                         {{item.isActive}}
 
                         <a href="" ng-click="vm.deleteProject(item.projectId)">
@@ -30,11 +30,11 @@
                     </div>
                     <div class="col-md-2">
                         <div style="float: right">
-                           
-                            <span class="fa-stack fa-lg">
-  <i class="fa fa-square fa-stack-2x"></i>
-  <i class="fa fa-play fa-stack-1x fa-inverse"></i>
-</span>
+
+                            <span class="fa-stack fa-lg text-success">
+                                <i class="fa fa-square-o fa-stack-2x"></i>
+                                <i class="fa fa-play fa-stack-1x"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
