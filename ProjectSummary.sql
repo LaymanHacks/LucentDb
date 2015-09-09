@@ -1,11 +1,7 @@
-﻿SELECT          project.NAME, 
-                project.isActive, 
-                
-                CASE 
-                                WHEN test.groupid IS NULL THEN 0 
-                                ELSE 1 
-                END GroupCount, 
-                count(test.id) OVER(partition BY test.projectid) AS testcount, 
+﻿Select q1.Name, q1.IsActive  From (SELECT          project.NAME, 
+                project.isActive,
+				project.ProjectId,  
+               1 AS testcount, 
                 CASE 
                                 WHEN test.isactive = 0 THEN 0 
                                 ELSE 1 
@@ -16,10 +12,11 @@ LEFT OUTER JOIN test
 ON              test.projectid = project.projectid 
 LEFT OUTER JOIN testgroup 
 ON              test.groupid = testgroup.id 
-AND             project.projectid = testgroup.projectid
+AND             project.projectid = testgroup.projectid) as q1
 
 
 
+Select COUNT(*)  From TESTGROUP where TESTGROUP.Id  
 
 Select top 100 * From RunHistory where testid =4 order by runhistory.RunDateTime desc
 
