@@ -36,6 +36,7 @@ namespace LucentDb.Web.UI
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.yeti.min.css",
+                "~/Content/bootstrap.checkbox.css",
                 "~/Content/site.css"));
         }
     }
