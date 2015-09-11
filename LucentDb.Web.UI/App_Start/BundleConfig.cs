@@ -35,7 +35,8 @@ namespace LucentDb.Web.UI
                 "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/bootstrap.css",
+                "~/Content/bootstrap.yeti.min.css",
+                "~/Content/bootstrap.checkbox.css",
                 "~/Content/site.css"));
         }
     }
