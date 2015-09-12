@@ -45,8 +45,8 @@ namespace LucentDb.Web.UI.Controllers
         // GET: Connection/Create
         public ActionResult Create()
         {
-            ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "ProjectId");
-            ViewBag.ConnectionProviders = new SelectList(_dbConnectionProviderRepository.GetData(), "Id", "Id");
+            ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "Name");
+            ViewBag.ConnectionProviders = new SelectList(_dbConnectionProviderRepository.GetData(), "Id", "Name");
 
             return View();
         }
@@ -72,10 +72,10 @@ namespace LucentDb.Web.UI.Controllers
         {
             var connection = _dbConnectionRepository.GetDataByConnectionId(connectionId).FirstOrDefault();
             if (connection != null)
-                ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "ProjectId",
+                ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "Name",
                     connection.ProjectId);
             if (connection != null)
-                ViewBag.ConnectionProviders = new SelectList(_dbConnectionProviderRepository.GetData(), "Id", "Id",
+                ViewBag.ConnectionProviders = new SelectList(_dbConnectionProviderRepository.GetData(), "Id", "Name",
                     connection.ConnectionProviderId);
 
             return View(connection);

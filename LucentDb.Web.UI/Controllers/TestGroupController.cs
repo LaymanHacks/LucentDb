@@ -19,15 +19,15 @@ namespace LucentDb.Web.UI.Controllers
     {
         private readonly ITestGroupRepository _dbTestGroupRepository;
         private readonly IProjectRepository _dbProjectRepository;
-        
+
 
         public TestGroupController(ITestGroupRepository dbTestGroupRepository, IProjectRepository dbProjectRepository)
         {
             _dbTestGroupRepository = dbTestGroupRepository;
-            _dbProjectRepository = dbProjectRepository; 
+            _dbProjectRepository = dbProjectRepository;
             
         }
-        
+
         // GET: TestGroup
         public ActionResult Index()
         {
@@ -44,8 +44,8 @@ namespace LucentDb.Web.UI.Controllers
         // GET: TestGroup/Create
         public ActionResult Create()
         {
-            ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "ProjectId");
-            
+            ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "Name");
+
             return View();
         }
 
@@ -68,9 +68,11 @@ namespace LucentDb.Web.UI.Controllers
         [Route("TestGroup/Edit/{id}", Name = "GetTestGroupEdit")]
         public ActionResult Edit(Int32 id)
         {
-        	var testGroup = _dbTestGroupRepository.GetDataById(id).FirstOrDefault();    
-            if (testGroup != null) ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "ProjectId", testGroup.ProjectId);
-            
+            var testGroup = _dbTestGroupRepository.GetDataById(id).FirstOrDefault();
+            if (testGroup != null)
+                ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "Name",
+                    testGroup.ProjectId);
+
             return View(testGroup);
         }
 
@@ -89,5 +91,5 @@ namespace LucentDb.Web.UI.Controllers
                 return View(testGroup);
             }
         }
-   }
+    }
 }
