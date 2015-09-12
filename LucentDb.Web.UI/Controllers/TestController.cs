@@ -37,9 +37,9 @@ namespace LucentDb.Web.UI.Controllers
         // GET: Test/Create
         public ActionResult Create()
         {
-            ViewBag.TestTypes = new SelectList(_dbTestTypeRepository.GetData(), "Id", "Id");
-            ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "ProjectId");
-            ViewBag.TestGroups = new SelectList(_dbTestGroupRepository.GetData(), "Id", "Id");
+            ViewBag.TestTypes = new SelectList(_dbTestTypeRepository.GetData(), "Id", "Name");
+            ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "Name");
+            ViewBag.TestGroups = new SelectList(_dbTestGroupRepository.GetData(), "Id", "Name");
 
             return View();
         }
@@ -65,12 +65,12 @@ namespace LucentDb.Web.UI.Controllers
         {
             var test = _dbTestRepository.GetDataById(id).FirstOrDefault();
             if (test != null)
-                ViewBag.TestTypes = new SelectList(_dbTestTypeRepository.GetData(), "Id", "Id", test.TestTypeId);
+                ViewBag.TestTypes = new SelectList(_dbTestTypeRepository.GetData(), "Id", "Name", test.TestTypeId);
             if (test != null)
-                ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "ProjectId",
+                ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "Name",
                     test.ProjectId);
             if (test != null)
-                ViewBag.TestGroups = new SelectList(_dbTestGroupRepository.GetData(), "Id", "Id", test.GroupId);
+                ViewBag.TestGroups = new SelectList(_dbTestGroupRepository.GetData(), "Id", "Name", test.GroupId);
 
             return View(test);
         }

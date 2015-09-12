@@ -38,9 +38,9 @@ namespace LucentDb.Web.UI.Controllers
         // GET: ExpectedResult/Create
         public ActionResult Create()
         {
-            ViewBag.Tests = new SelectList(_dbTestRepository.GetData(), "Id", "Id");
-            ViewBag.ExpectedResultTypes = new SelectList(_dbExpectedResultTypeRepository.GetData(), "Id", "Id");
-            ViewBag.AssertTypes = new SelectList(_dbAssertTypeRepository.GetData(), "Id", "Id");
+            ViewBag.Tests = new SelectList(_dbTestRepository.GetData(), "Id", "Name");
+            ViewBag.ExpectedResultTypes = new SelectList(_dbExpectedResultTypeRepository.GetData(), "Id", "Name");
+            ViewBag.AssertTypes = new SelectList(_dbAssertTypeRepository.GetData(), "Id", "Name");
 
             return View();
         }
@@ -66,12 +66,12 @@ namespace LucentDb.Web.UI.Controllers
         {
             var expectedResult = _dbExpectedResultRepository.GetDataById(id).FirstOrDefault();
             if (expectedResult != null)
-                ViewBag.Tests = new SelectList(_dbTestRepository.GetData(), "Id", "Id", expectedResult.TestId);
+                ViewBag.Tests = new SelectList(_dbTestRepository.GetData(), "Id", "Name", expectedResult.TestId);
             if (expectedResult != null)
-                ViewBag.ExpectedResultTypes = new SelectList(_dbExpectedResultTypeRepository.GetData(), "Id", "Id",
+                ViewBag.ExpectedResultTypes = new SelectList(_dbExpectedResultTypeRepository.GetData(), "Id", "Name",
                     expectedResult.ExpectedResultTypeId);
             if (expectedResult != null)
-                ViewBag.AssertTypes = new SelectList(_dbAssertTypeRepository.GetData(), "Id", "Id",
+                ViewBag.AssertTypes = new SelectList(_dbAssertTypeRepository.GetData(), "Id", "Name",
                     expectedResult.AssertTypeId);
 
             return View(expectedResult);

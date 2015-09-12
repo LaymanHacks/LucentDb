@@ -39,6 +39,8 @@ namespace LucentDb.Web.UI
             container.Register<IDbTestTypeCommandProvider, SqlDbTestTypeCommandProvider>();
             container.Register<ITestTypeRepository, DbTestTypeRepository>();
 
+            container.Register<IDbExpectedResultTypeCommandProvider, SqlDbExpectedResultTypeCommandProvider>();
+            container.Register<IExpectedResultTypeRepository, DbExpectedResultTypeRepository>();
 
             return container;
         }
