@@ -60,6 +60,7 @@
     <Compile Include="ExpectedResult.cs" />
     <Compile Include="ExpectedResultType.cs" />
     <Compile Include="Project.cs" />
+    <Compile Include="ProjectDetailsView.cs" />
     <Compile Include="RunHistory.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="TestGroup.cs" />

@@ -40,9 +40,8 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetDataPageable(sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetRowCount();
-            var pagedResults = new PagedResult(page, pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
         [Route("api/projectDetailsViews/all/active", Name = "ProjectDetailsViewsGetActiveDataRoute")]
@@ -58,9 +57,8 @@ namespace LucentDb.Web.UI.Controllers.Api
         {
             if (page < 1) return Request.CreateResponse(HttpStatusCode.BadRequest);
             var results =_dbRepository.GetActiveDataPageable(sortExpression, page, pageSize);
-            var totalCount = _dbRepository.GetActiveDataRowCount();
-            var pagedResults = new PagedResult(page, pageSize, totalCount, results);
-            return Request.CreateResponse(HttpStatusCode.OK, pagedResults);
+            
+            return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
 
