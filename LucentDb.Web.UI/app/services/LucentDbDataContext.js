@@ -2,16 +2,16 @@
     "use strict";
 
     var serviceId = "lucentDbDataContext";
-    angular.module("app").factory(serviceId, ["assertTypeDataService", "connectionDataService", "testDataService", "scriptDataService", lucentDbDataContext]);
+    angular.module("app").factory(serviceId, ["assertTypeDataService", "connectionDataService", "testDataService", "expectedResultDataService", lucentDbDataContext]);
 
-    function lucentDbDataContext(assertTypeDataService, connectionDataService, testDataService, scriptDataService) {
+    function lucentDbDataContext(assertTypeDataService, connectionDataService, testDataService, expectedResultDataService) {
 
 
         var service = {
             assertTypeDS: assertTypeDataService,
             connectionDS: connectionDataService,
             testDS: testDataService,
-            scriptDS: scriptDataService
+            expectedResultDS: expectedResultDataService
         };
 
         return service;

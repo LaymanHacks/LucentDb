@@ -3,9 +3,9 @@
     "use strict";
 
     var controllerId = "expectedResultIndexCtrl";
-    angular.module("app").controller(controllerId, ["common", "expectedResultDataService", expectedResultIndexCtrl]);
+    angular.module("app").controller(controllerId, ["common", "expectedResultDataService", "assertTypeDataService", expectedResultIndexCtrl]);
 
-    function expectedResultIndexCtrl(common, expectedResultDataService) {
+    function expectedResultIndexCtrl(common, expectedResultDataService, assertTypeDataService) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
 
@@ -16,6 +16,7 @@
         };
 
         vm.pageableResults = [];
+        vm.assertTypes = [];
         vm.title = "ExpectedResultList";
         vm.sortExpression = "";
         vm.currentPage = 1;
@@ -29,9 +30,15 @@
         };
 
         function activate() {
-            var promises = [getDataPageable(vm.sortExpression, vm.currentPage, vm.pageSize)];
+            var promises = [getDataPageable(vm.sortExpression, vm.currentPage, vm.pageSize), getAssertTypes()];
             common.activateController(promises, controllerId)
                 .then(function() { log("Activated ExpectedResult List View"); });
+        }
+
+        function getAssertTypes() {
+            return assertTypeDataService.getData().then(function (results) {
+                return vm.assertTypes = results.data;
+            });
         }
 
         function getDataPageable(sortExpression, page, pageSize) {
@@ -41,7 +48,7 @@
         }
 
         function deleteExpectedResult(expectedResultId) {
-            alert("test worked");
+            alert("Simulated Delete");
             //  return expectedResultDataService.deleteExpectedResult(expectedResultId);
         };
     }

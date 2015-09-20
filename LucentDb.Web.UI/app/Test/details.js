@@ -18,7 +18,7 @@
         activate();
 
         function activate() {
-            var promises = [getTestById(1), getValidationScriptsByTestId(1), getAssertTypes()];
+            var promises = [getTestById(1), getExpectedResultByTestId(1), getAssertTypes()];
             common.activateController(promises, controllerId)
                 .then(function() {
                     if (!$scope.$$phase) {
@@ -43,9 +43,9 @@
             });
         };
 
-        function getValidationScriptsByTestId(id) {
+        function getExpectedResultByTestId(id) {
 
-            return lucentDbDataContext.scriptDS.getDataByTestId(id).then(function(results) {
+            return lucentDbDataContext.expectedResultDS.getDataByTestId(id).then(function (results) {
                 return vm.test.validationScripts = results.data;
 
             });
