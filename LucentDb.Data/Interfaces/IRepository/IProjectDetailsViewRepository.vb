@@ -9,16 +9,19 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
-Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-  
- Namespace LucentDb.Data.Repository     
+
+Namespace LucentDb.Data.Repository
     Public Interface IProjectDetailsViewRepository
-        Function GetData()  as ICollection(Of ProjectDetailsView)
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ProjectDetailsView)
-        Function GetActiveData()  as ICollection(Of ProjectDetailsView)
-        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of ProjectDetailsView)
-    End Interface 
+        Function GetData() as ICollection(Of ProjectDetailsView)
+
+        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
+            as PagedResult(Of ProjectDetailsView)
+
+        Function GetActiveData() as ICollection(Of ProjectDetailsView)
+
+        Function GetActiveDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
+            as PagedResult(Of ProjectDetailsView)
+    End Interface
 End NameSpace
-  

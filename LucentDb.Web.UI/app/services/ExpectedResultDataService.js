@@ -1,4 +1,3 @@
-
 (function() {
     "use strict";
 
@@ -37,7 +36,7 @@
         };
 
         this.getDataById = function(id) {
-            return $http.get("/api/expectedResults/" + id);
+            return $http.get(urlBase + "/all");
         };
 
         this.getDataByAssertTypeId = function(assertTypeId) {
@@ -50,6 +49,40 @@
                 method: "GET",
                 params: {
                     assertTypeId: assertTypeId || "",
+                    sortExpression: sortExpression || "",
+                    page: page || "",
+                    pageSize: pageSize || ""
+                }
+            });
+        };
+
+        this.getDataByExpectedResultTypeId = function(expectedResultTypeId) {
+            return $http.get("/api/expectedResultTypes/" + expectedResultTypeId + "/expectedResults/all");
+        };
+
+        this.getDataByExpectedResultTypeIdPageable = function(expectedResultTypeId, sortExpression, page, pageSize) {
+            return $http({
+                url: "/api/expectedResultTypes/" + expectedResultTypeId + "/expectedResults",
+                method: "GET",
+                params: {
+                    expectedResultTypeId: expectedResultTypeId || "",
+                    sortExpression: sortExpression || "",
+                    page: page || "",
+                    pageSize: pageSize || ""
+                }
+            });
+        };
+
+        this.getDataByTestId = function(testId) {
+            return $http.get("/api/tests/" + testId + "/expectedResults/all");
+        };
+
+        this.getDataByTestIdPageable = function(testId, sortExpression, page, pageSize) {
+            return $http({
+                url: "/api/tests/" + testId + "/expectedResults",
+                method: "GET",
+                params: {
+                    testId: testId || "",
                     sortExpression: sortExpression || "",
                     page: page || "",
                     pageSize: pageSize || ""

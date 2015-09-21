@@ -1,5 +1,3 @@
-
-
 using LucentDb.Data.Repository;
 
 namespace LucentDb.Domain.Entities.Extensions

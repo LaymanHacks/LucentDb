@@ -45,7 +45,7 @@
 
         function getExpectedResultByTestId(id) {
 
-            return lucentDbDataContext.expectedResultDS.getDataByTestId(id).then(function (results) {
+            return lucentDbDataContext.expectedResultDS.getDataByTestId(id).then(function(results) {
                 return vm.test.validationScripts = results.data;
 
             });

@@ -12,14 +12,16 @@ Imports System.Data
 
 Namespace LucentDb.Data.DbCommandProvider
     Public Interface IDbProjectDetailsViewCommandProvider
-        ReadOnly Property ProjectDetailsViewDbConnectionHolder() As DbConnectionHolder
+        ReadOnly Property ProjectDetailsViewDbConnectionHolder As DbConnectionHolder
         ReadOnly Property DbConnectionName As String
         Function GetGetDataDbCommand() As IDbCommand
-        Function GetGetDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
+        Function GetGetDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) As IDbCommand
         Function GetGetRowCountDbCommand() As IDbCommand
         Function GetGetActiveDataDbCommand() As IDbCommand
-        Function GetGetActiveDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand
-        Function GetGetActiveDataRowCountDbCommand() As IDbCommand
 
+        Function GetGetActiveDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) _
+            As IDbCommand
+
+        Function GetGetActiveDataRowCountDbCommand() As IDbCommand
     End Interface
 End Namespace

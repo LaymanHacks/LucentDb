@@ -36,7 +36,7 @@
         }
 
         function getAssertTypes() {
-            return assertTypeDataService.getData().then(function (results) {
+            return assertTypeDataService.getData().then(function(results) {
                 return vm.assertTypes = results.data;
             });
         }

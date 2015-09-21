@@ -1,4 +1,3 @@
-
 using System.Linq;
 using LucentDb.Data.Repository;
 

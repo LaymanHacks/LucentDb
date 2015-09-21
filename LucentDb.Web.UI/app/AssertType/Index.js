@@ -3,12 +3,12 @@
     "use strict";
 
     var controllerId = "assertTypeIndexCtrl";
-    angular.module("app").controller(controllerId, ["common", "assertTypeDataService","$filter", assertTypeIndexCtrl]);
+    angular.module("app").controller(controllerId, ["common", "assertTypeDataService", "$filter", assertTypeIndexCtrl]);
 
     function assertTypeIndexCtrl(common, assertTypeDataService, $filter) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
-       
+
 
         var vm = this;
         vm.news = {
