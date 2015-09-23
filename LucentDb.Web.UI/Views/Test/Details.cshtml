@@ -4,6 +4,11 @@
 @{
     ViewBag.Title = "Test - " + @Model.Id;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    var selectListTestTypes = new SelectList(ViewBag.TestTypes, "Id", "Name", @Model.TestTypeId);
+    var selectListProjects = new SelectList(ViewBag.Projects, "ProjectId", "Name",@Model.ProjectId);
+    var selectListTestGroups = new SelectList(ViewBag.TestGroups, "Id", "Name", @Model.GroupId);
+           
 }
 <link href="~/Content/codemirror-3.01/codemirror.css" rel="stylesheet"/>
 <link href="~/Content/codemirror-3.0/theme/ambiance.css" rel="stylesheet"/>
@@ -46,7 +51,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.TestTypeId, new { @class = "control-label" })
                     <div>
-                        @Html.DropDownListFor(model => model.TestTypeId, (SelectList)ViewBag.TestTypes, new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.TestTypeId,  @selectListTestTypes,"--Select Test Type--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.TestTypeId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -54,7 +59,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProjectId, new { @class = "control-label" })
                     <div>
-                        @Html.DropDownListFor(model => model.ProjectId, (SelectList)ViewBag.Projects, new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.ProjectId, @selectListProjects, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -62,7 +67,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.GroupId, new { @class = "control-label" })
                     <div>
-                        @Html.DropDownListFor(model => model.GroupId, (SelectList)ViewBag.TestGroups, new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.GroupId, @selectListTestGroups, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
                     </div>
                 </div>

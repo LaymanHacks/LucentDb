@@ -14,14 +14,14 @@ Imports LucentDb.Domain.Entities
 
 Namespace LucentDb.Data.Repository
     Public Interface IProjectDetailsViewRepository
-        Function GetData() as ICollection(Of ProjectDetailsView)
+        Function GetData() As ICollection(Of ProjectDetailsView)
 
         Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of ProjectDetailsView)
+            As PagedResult(Of ProjectDetailsView)
 
-        Function GetActiveData() as ICollection(Of ProjectDetailsView)
+        Function GetActiveData() As ICollection(Of ProjectDetailsView)
 
         Function GetActiveDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of ProjectDetailsView)
+            As PagedResult(Of ProjectDetailsView)
     End Interface
-End NameSpace
+End Namespace

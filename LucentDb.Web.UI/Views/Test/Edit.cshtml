@@ -3,7 +3,13 @@
 @model LucentDb.Domain.Entities.Test
 @{
     var projectList = (IEnumerable<Project>) ViewBag.Projects;
-    var projectName = projectList.First(p => p.ProjectId == Model.ProjectId);
+    var testGroupList = (IEnumerable<TestGroup>)ViewBag.TestGroups;
+    var testTypeList = (IEnumerable<TestType>)ViewBag.TestTypes;
+    
+
+    var selectListTestTypes = new SelectList(ViewBag.TestTypes, "Id", "Name", @Model.TestTypeId);
+    var selectListProjects = new SelectList(ViewBag.Projects, "ProjectId", "Name", @Model.ProjectId);
+    var selectListTestGroups = new SelectList(ViewBag.TestGroups, "Id", "Name", @Model.GroupId);
 }
 
 @using (Html.BeginForm())
@@ -11,12 +17,15 @@
     @Html.AntiForgeryToken()
     <ul class="breadcrumb">
         <li>
-            <a href="#">@projectName</a>
+            <a href="../../project/details/1">@projectList.First(p => p.ProjectId == Model.ProjectId).Name</a>
         </li>
-        <li>
-            <a href="#">Products</a>
-        </li>
-        <li class="active">Accessories</li>
+      @if (@Model.GroupId == null )
+      {
+          <li>
+              <a href="#">@testGroupList.First(p => p.Id == Model.GroupId).Name</a>
+          </li>
+      }
+        <li class="active">@Model.Name</li>
     </ul>
 
     <div class="form-vertical">
@@ -42,7 +51,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TestTypeId, new { @class = "control-label" })
             <div>
-                @Html.DropDownListFor(model => model.TestTypeId, (SelectList)ViewBag.TestTypes, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.TestTypeId, @selectListTestTypes, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TestTypeId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,7 +59,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ProjectId, new { @class = "control-label" })
             <div>
-                @Html.DropDownListFor(model => model.ProjectId, (SelectList)ViewBag.Projects, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.ProjectId, @selectListProjects, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -58,7 +67,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.GroupId, new { @class = "control-label" })
             <div>
-                @Html.DropDownListFor(model => model.GroupId, (SelectList)ViewBag.TestGroups, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.GroupId, @selectListTestGroups, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
             </div>
         </div>

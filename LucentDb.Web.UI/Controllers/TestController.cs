@@ -39,17 +39,12 @@ namespace LucentDb.Web.UI.Controllers
 
         // GET: Test/Details/5
         [Route("Test/Details/{id}")]
-        [Route("Test/{id}")]
         public ActionResult Details(int id)
         {
             var test = _dbTestRepository.GetDataById(id).FirstOrDefault();
-            if (test != null)
-                ViewBag.TestTypes = new SelectList(_dbTestTypeRepository.GetData(), "Id", "Name", test.TestTypeId);
-            if (test != null)
-                ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "Name",
-                    test.ProjectId);
-            if (test != null)
-                ViewBag.TestGroups = new SelectList(_dbTestGroupRepository.GetData(), "Id", "Name", test.GroupId);
+            ViewBag.TestTypes = _dbTestTypeRepository.GetData();
+            ViewBag.Projects = _dbProjectRepository.GetData();
+            ViewBag.TestGroups = _dbTestGroupRepository.GetData();
 
             return View(test);
         }
@@ -57,10 +52,10 @@ namespace LucentDb.Web.UI.Controllers
         // GET: Test/Create
         public ActionResult Create()
         {
-            ViewBag.TestTypes = new SelectList(_dbTestTypeRepository.GetData(), "Id", "Name");
-            ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "Name");
-            ViewBag.TestGroups = new SelectList(_dbTestGroupRepository.GetData(), "Id", "Name");
-
+            ViewBag.TestTypes = _dbTestTypeRepository.GetData();
+            ViewBag.Projects = _dbProjectRepository.GetData();
+            ViewBag.TestGroups = _dbTestGroupRepository.GetData();
+       
             return View();
         }
 
@@ -81,16 +76,13 @@ namespace LucentDb.Web.UI.Controllers
 
         // GET: Test/Edit/5
         [Route("Test/Edit/{id}", Name = "GetTestEdit")]
+        [Route("Test/{id}")]
         public ActionResult Edit(int id)
         {
             var test = _dbTestRepository.GetDataById(id).FirstOrDefault();
-            if (test != null)
-                ViewBag.TestTypes = new SelectList(_dbTestTypeRepository.GetData(), "Id", "Name", test.TestTypeId);
-            if (test != null)
-                ViewBag.Projects = new SelectList(_dbProjectRepository.GetData(), "ProjectId", "Name",
-                    test.ProjectId);
-            if (test != null)
-                ViewBag.TestGroups = new SelectList(_dbTestGroupRepository.GetData(), "Id", "Name", test.GroupId);
+            ViewBag.TestTypes = _dbTestTypeRepository.GetData();
+            ViewBag.Projects = _dbProjectRepository.GetData();
+            ViewBag.TestGroups = _dbTestGroupRepository.GetData();
 
             return View(test);
         }
