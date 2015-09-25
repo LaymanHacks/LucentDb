@@ -11,88 +11,92 @@
     var selectListProjects = new SelectList(ViewBag.Projects, "ProjectId", "Name", @Model.ProjectId);
     var selectListTestGroups = new SelectList(ViewBag.TestGroups, "Id", "Name", @Model.GroupId);
 }
+<div ng-controller="testEditCtrl as vm">
+    <script>window.testId = @Model.Id;</script>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <ul class="breadcrumb">
-        <li>
-            <a href="../../project/details/1">@projectList.First(p => p.ProjectId == Model.ProjectId).Name</a>
-        </li>
-      @if (@Model.GroupId == null )
-      {
-          <li>
-              <a href="#">@testGroupList.First(p => p.Id == Model.GroupId).Name</a>
-          </li>
-      }
-        <li class="active">@Model.Name</li>
-    </ul>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <ul class="breadcrumb">
+            <li>
+                <a href="../../project/details/1">@projectList.First(p => p.ProjectId == Model.ProjectId).Name</a>
+            </li>
+            @if ((@Model.GroupId ?? 0) != 0)
+            {
+                <li>
+                    <a href="#">@testGroupList.First(p => p.Id == Model.GroupId).Name</a>
+                </li>
+            }
+            <li class="active">@Model.Name</li>
+        </ul>
 
-    <div class="form-vertical">
-        <h4 style="font-size: 40px">Test - @Model.Id</h4>
-        <hr />
+        <div class="form-vertical">
+            <h4 style="font-size: 40px">Test - @Model.Id</h4>
+            <hr/>
 
 
-        <div class="form-group">
-            <label for="txtName" class="control-label">Name</label>
-            <div>
-                <input type="text" class="form-control" id="txtName" placeholder="Name" value="@Model.Name">
+            <div class="form-group">
+                <label for="txtName" class="control-label">Name</label>
+                <div>
+                    <input type="text" class="form-control" id="Name" name="Name" placeholder="Name" value="@Model.Name">
+                </div>
+
             </div>
 
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.TestValue, new {@class = "control-label"})
+                <div>
+                    <textarea id="testvalue" name="testvalue" class="form-control" rows="3">@Model.TestValue</textarea>
+                </div>
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TestValue, new { @class = "control-label" })
-            <div>
-                <textarea class="form-control" rows="3">@Model.TestValue</textarea>
+            <div class="form-group">
+                @Html.LabelFor(model => model.TestTypeId, new {@class = "control-label"})
+                <div>
+                    @Html.DropDownListFor(model => model.TestTypeId, @selectListTestTypes, "--Select--", new {@class = "form-control"})
+                    @Html.ValidationMessageFor(model => model.TestTypeId, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProjectId, new {@class = "control-label"})
+                <div>
+                    @Html.DropDownListFor(model => model.ProjectId, @selectListProjects, "--Select--", new {@class = "form-control"})
+                    @Html.ValidationMessageFor(model => model.ProjectId, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GroupId, new {@class = "control-label"})
+                <div>
+                    @Html.DropDownListFor(model => model.GroupId, @selectListTestGroups, "--Select--", new {@class = "form-control"})
+                    @Html.ValidationMessageFor(model => model.ProjectId, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsActive, new {@class = "control-label"})
+                <div>
+                    @Html.EditorFor(model => model.IsActive)
+
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" class="btn btn-default" value="Cancel" onclick="location.href = '@Url.Action("Index")'"/>
+                    <input type="submit" value="Save" class="btn btn-primary"/>
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TestTypeId, new { @class = "control-label" })
-            <div>
-                @Html.DropDownListFor(model => model.TestTypeId, @selectListTestTypes, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TestTypeId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProjectId, new { @class = "control-label" })
-            <div>
-                @Html.DropDownListFor(model => model.ProjectId, @selectListProjects, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GroupId, new { @class = "control-label" })
-            <div>
-                @Html.DropDownListFor(model => model.GroupId, @selectListTestGroups, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
-            <div>
-                @Html.EditorFor(model => model.IsActive)
-
-                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" class="btn btn-default" value="Cancel" onclick="location.href = '@Url.Action("Index")'"/>
-                <input type="submit" value="Save" class="btn btn-primary"/>
-            </div>
-        </div>
-    </div>
-}
-
-
+    }
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/LucentDbServices")
+<script src="~/app/services/ExpectedResultDataService.js"></script>
+<script src="~/app/Test/edit.js"></script>
 }

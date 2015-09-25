@@ -77,8 +77,9 @@ namespace LucentDb.Web.UI.Controllers
         // GET: Test/Edit/5
         [Route("Test/Edit/{id}", Name = "GetTestEdit")]
         [Route("Test/{id}")]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id = 0)
         {
+            if (id == 0) return View("Index");
             var test = _dbTestRepository.GetDataById(id).FirstOrDefault();
             ViewBag.TestTypes = _dbTestTypeRepository.GetData();
             ViewBag.Projects = _dbProjectRepository.GetData();
