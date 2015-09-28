@@ -42,9 +42,9 @@ namespace LucentDb.Web.UI.Controllers
         public ActionResult Details(int id)
         {
             var test = _dbTestRepository.GetDataById(id).FirstOrDefault();
-            ViewBag.TestTypes = _dbTestTypeRepository.GetData();
-            ViewBag.Projects = _dbProjectRepository.GetData();
-            ViewBag.TestGroups = _dbTestGroupRepository.GetData();
+            ViewBag.TestTypes = _dbTestTypeRepository.GetData().ToList();
+            ViewBag.Projects = _dbProjectRepository.GetData().ToList();
+            ViewBag.TestGroups = _dbTestGroupRepository.GetData().ToList();
 
             return View(test);
         }
@@ -81,9 +81,9 @@ namespace LucentDb.Web.UI.Controllers
         {
             if (id == 0) return View("Index");
             var test = _dbTestRepository.GetDataById(id).FirstOrDefault();
-            ViewBag.TestTypes = _dbTestTypeRepository.GetData();
-            ViewBag.Projects = _dbProjectRepository.GetData();
-            ViewBag.TestGroups = _dbTestGroupRepository.GetData();
+            ViewBag.TestTypes = _dbTestTypeRepository.GetData().ToList();
+            ViewBag.Projects = _dbProjectRepository.GetData().ToList();
+            ViewBag.TestGroups = _dbTestGroupRepository.GetData().ToList();
 
             return View(test);
         }
