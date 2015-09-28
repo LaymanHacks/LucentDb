@@ -1,102 +1,105 @@
 @using System.Collections
+@using System.Diagnostics
 @using LucentDb.Domain.Entities
 @model LucentDb.Domain.Entities.Test
 @{
-    var projectList = (IEnumerable<Project>) ViewBag.Projects;
-    var testGroupList = (IEnumerable<TestGroup>)ViewBag.TestGroups;
-    var testTypeList = (IEnumerable<TestType>)ViewBag.TestTypes;
+    var projectList = (List<Project>) ViewBag.Projects;
+    var testGroupList = (List<TestGroup>)ViewBag.TestGroups;
+    var testTypeList = (List<TestType>)ViewBag.TestTypes;
+    var testProject = projectList.FirstOrDefault(p => p.ProjectId == Model.ProjectId);
+    var testGroup = testGroupList.First(p => p.Id == Model.GroupId);
     
-
-    var selectListTestTypes = new SelectList(ViewBag.TestTypes, "Id", "Name", @Model.TestTypeId);
-    var selectListProjects = new SelectList(ViewBag.Projects, "ProjectId", "Name", @Model.ProjectId);
-    var selectListTestGroups = new SelectList(ViewBag.TestGroups, "Id", "Name", @Model.GroupId);
+    //if (@Model != null)
+    //{
+        var selectListTestTypes = new SelectList(testTypeList, "Id", "Name", @Model.TestTypeId);
+        var selectListProjects = new SelectList(projectList, "ProjectId", "Name", @Model.ProjectId);
+        var selectListTestGroups = new SelectList(testGroupList, "Id", "Name", @Model.GroupId);
+  //  }
 }
-<div ng-controller="testEditCtrl as vm">
-    <script>window.testId = @Model.Id;</script>
+<ul class="breadcrumb">
+    @if (testProject != null)
+    {<li><a href="../../project/details/@testProject.ProjectId">@testProject.Name</a>
+    </li>}
+    @if (@testGroup != null)
+    {<li><a href="../../testGroup/details/@testGroup.Id">@testGroup.Name</a></li>}
+    <li class="active">@Model.Name</li>
+</ul>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        <ul class="breadcrumb">
-            <li>
-                <a href="../../project/details/1">@projectList.First(p => p.ProjectId == Model.ProjectId).Name</a>
-            </li>
-            @if ((@Model.GroupId ?? 0) != 0)
-            {
-                <li>
-                    <a href="#">@testGroupList.First(p => p.Id == Model.GroupId).Name</a>
-                </li>
-            }
-            <li class="active">@Model.Name</li>
-        </ul>
+<div class="lui-page-panel">
+    <div ng-controller="testEditCtrl as vm">
+        <script>window.testId = @Model.Id;</script>
 
-        <div class="form-vertical">
-            <h4 style="font-size: 40px">Test - @Model.Id</h4>
-            <hr/>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+           
 
+            <div class="form-vertical">
+                <h2>Test - @Model.Id</h2>
+                <hr />
 
-            <div class="form-group">
-                <label for="txtName" class="control-label">Name</label>
-                <div>
-                    <input type="text" class="form-control" id="Name" name="Name" placeholder="Name" value="@Model.Name">
+                <div class="form-group">
+                    <label for="txtName" class="control-label">Name</label>
+                    <div>
+                        <input type="text" class="form-control" id="Name" name="Name" placeholder="Name" value="@Model.Name">
+                    </div>
+
                 </div>
 
-            </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TestValue, new { @class = "control-label" })
+                    <div>
+                        <textarea id="testvalue" name="testvalue" class="form-control" rows="3">@Model.TestValue</textarea>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.TestValue, new {@class = "control-label"})
-                <div>
-                    <textarea id="testvalue" name="testvalue" class="form-control" rows="3">@Model.TestValue</textarea>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TestTypeId, new { @class = "control-label" })
+                    <div>
+                        @Html.DropDownListFor(model => model.TestTypeId, @selectListTestTypes, "--Select--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TestTypeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProjectId, new { @class = "control-label" })
+                    <div>
+                        @Html.DropDownListFor(model => model.ProjectId, @selectListProjects, "--Select--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GroupId, new { @class = "control-label" })
+                    <div>
+                        @Html.DropDownListFor(model => model.GroupId, @selectListTestGroups, "--Select--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
+                    <div>
+                        @Html.EditorFor(model => model.IsActive)
+
+                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" class="btn btn-default" value="Cancel" onclick="location.href = '@Url.Action("Index")'" />
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.TestTypeId, new {@class = "control-label"})
-                <div>
-                    @Html.DropDownListFor(model => model.TestTypeId, @selectListTestTypes, "--Select--", new {@class = "form-control"})
-                    @Html.ValidationMessageFor(model => model.TestTypeId, "", new {@class = "text-danger"})
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ProjectId, new {@class = "control-label"})
-                <div>
-                    @Html.DropDownListFor(model => model.ProjectId, @selectListProjects, "--Select--", new {@class = "form-control"})
-                    @Html.ValidationMessageFor(model => model.ProjectId, "", new {@class = "text-danger"})
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.GroupId, new {@class = "control-label"})
-                <div>
-                    @Html.DropDownListFor(model => model.GroupId, @selectListTestGroups, "--Select--", new {@class = "form-control"})
-                    @Html.ValidationMessageFor(model => model.ProjectId, "", new {@class = "text-danger"})
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.IsActive, new {@class = "control-label"})
-                <div>
-                    @Html.EditorFor(model => model.IsActive)
-
-                    @Html.ValidationMessageFor(model => model.IsActive, "", new {@class = "text-danger"})
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="button" class="btn btn-default" value="Cancel" onclick="location.href = '@Url.Action("Index")'"/>
-                    <input type="submit" value="Save" class="btn btn-primary"/>
-                </div>
-            </div>
-        </div>
-    }
+        }
+    </div>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-@Scripts.Render("~/bundles/LucentDbServices")
-<script src="~/app/services/ExpectedResultDataService.js"></script>
-<script src="~/app/Test/edit.js"></script>
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/LucentDbServices")
+        <script src="~/app/services/ExpectedResultDataService.js"></script>
+        <script src="~/app/Test/edit.js"></script>
+    }
