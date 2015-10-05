@@ -62,6 +62,7 @@
     <Compile Include="Project.cs" />
     <Compile Include="ProjectDetailsView.cs" />
     <Compile Include="RunHistory.cs" />
+    <Compile Include="RunHistoryDetail.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="TestGroup.cs" />
     <Compile Include="TestType.cs" />

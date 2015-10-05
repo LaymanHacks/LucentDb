@@ -33,7 +33,7 @@ namespace LucentDb.Web.UI.Controllers
         }
 
         // GET: RunHistory/Details/5
-        [Route("RunHistory/Details/{id}", Name = "GetRunHistoryDetails")]
+        [Route("RunHistory/Details/{id}", Name = "GetRunHistoryDetail")]
         public ActionResult Details(long id)
         {
             return View(_dbRunHistoryRepository.GetDataById(id).FirstOrDefault());

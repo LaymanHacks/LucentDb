@@ -149,6 +149,7 @@
     <Compile Include="Controllers\API\ProjectAPIController.cs" />
     <Compile Include="Controllers\API\ProjectDetailsViewAPIController.cs" />
     <Compile Include="Controllers\API\RunHistoryAPIController.cs" />
+    <Compile Include="Controllers\API\RunHistoryDetailAPIController.cs" />
     <Compile Include="Controllers\API\TestAPIController.cs" />
     <Compile Include="Controllers\API\TestGroupAPIController.cs" />
     <Compile Include="Controllers\API\TestTypeAPIController.cs" />

@@ -13,5 +13,6 @@ namespace LucentDb.Domain
         IConnectionRepository ConnectionRepository { get; set; }
         IConnectionProviderRepository ConnectionProviderRepository { get; set; }
         ITestGroupRepository TestGroupRepository { get; set; }
+        IRunHistoryDetailRepository RunHistoryDetailsRepository { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 using LucentDb.Domain;
 using LucentDb.Domain.Entities;
@@ -39,6 +40,12 @@ namespace LucentDb.Web.UI.Controllers.API
         {
             try
             {
+                var runHistory = new RunHistory
+                {
+                    GroupId = groupId,
+                    RunDateTime = DateTime.Now
+                };
+                var runHistoryLog = new StringBuilder(); 
                 var connection = _connectionFactory.CreateConnection(connectionId);
                 var testGroup = _testGroupFactory.CreateTestGroup(groupId);
                 if (!ValidateConnectionForProject(connectionId, testGroup.ProjectId))
@@ -46,23 +53,26 @@ namespace LucentDb.Web.UI.Controllers.API
 
                 var scriptVal = new SqlScriptValidator();
                 var valCollection = new Collection<ValidationResponse>();
-                foreach (var test in  testGroup.Tests)
+                foreach (var test in testGroup.Tests)
                 {
-                    test.RunHistories = new Collection<RunHistory>();
                     var valResult = scriptVal.Validate(connection, test);
                     if (valResult == null) continue;
-                    var rHistory = new RunHistory
+                    var runHistoryDetail = new RunHistoryDetail
                     {
                         TestId = test.Id,
                         RunDateTime = valResult.RunDateTime,
-                        IsValid = valResult.IsValid,
-                        RunLog = valResult.RunLog,
-                        ResultString = valResult.ResultMessage
+                        IsValid = valResult.IsValid
                     };
-                    test.RunHistories.Add(rHistory);
+                    runHistoryLog.Append(valResult.RunLog);
                     valCollection.Add(valResult);
-                    _dataRepository.RunHistoryRepository.Insert(rHistory);
+                    runHistory.RunHistoryDetail.Add(runHistoryDetail);
                 }
+                runHistory.RunLog = runHistoryLog.ToString();
+                foreach (var rHistoryDetails in runHistory.RunHistoryDetail)
+                {
+                    _dataRepository.RunHistoryDetailsRepository.Insert(rHistoryDetails);
+                }
+                _dataRepository.RunHistoryRepository.Insert(runHistory);
                 return Request.CreateResponse(HttpStatusCode.OK, valCollection);
             }
             catch (Exception ex)
@@ -81,6 +91,12 @@ namespace LucentDb.Web.UI.Controllers.API
                 if (!ValidateConnectionForProject(connectionId, projectId))
                     throw new Exception("Not a valid Connection for this project.");
 
+                var runHistory = new RunHistory
+                {
+                    RunDateTime = DateTime.Now,
+                    ProjectId = projectId,
+                    ConnectionId = connectionId
+                };
 
                 var connection = _connectionFactory.CreateConnection(connectionId);
                 var project = _projectFactory.CreateProject(projectId);
@@ -92,11 +108,25 @@ namespace LucentDb.Web.UI.Controllers.API
                         project.Tests.Select(test => scriptVal.Validate(connection, test))
                             .Where(valResult => valResult != null))
                 {
+
+                    var runHistoryDetails = new RunHistoryDetail
+                    {
+                        TestId = valResult.TestId,
+                        RunDateTime = valResult.RunDateTime,
+                        ResultString = valResult.ResultMessage
+                    };
+                    
                     valCollection.Add(valResult);
-                    _dataRepository.RunHistoryRepository.Insert(valResult.TestId, valResult.RunDateTime,
-                        valResult.IsValid,
-                        valResult.RunLog, valResult.ResultMessage);
+                    runHistory.RunHistoryDetail.Add(runHistoryDetails);
                 }
+
+                foreach (var rHistoryDetails in runHistory.RunHistoryDetail)
+                {
+                    _dataRepository.RunHistoryDetailsRepository.Insert(rHistoryDetails);
+                }
+                _dataRepository.RunHistoryRepository.Insert(runHistory);
+               
+
             }
             catch (Exception ex)
             {
@@ -123,9 +153,10 @@ namespace LucentDb.Web.UI.Controllers.API
             var scriptVal = new SqlScriptValidator();
             var valResult = scriptVal.Validate(connection, test);
 
-
-            _dataRepository.RunHistoryRepository.Insert(test.Id, valResult.RunDateTime, valResult.IsValid,
-                valResult.RunLog, valResult.ResultMessage);
+           
+           //_dataRepository.RunHistoryDetailsRepository.Insert();
+           _dataRepository.RunHistoryRepository.Insert(test.Id,null,null, valResult.RunDateTime, valResult.IsValid,
+                 valResult.RunLog);
 
             return Request.CreateResponse(HttpStatusCode.OK, valResult);
         }

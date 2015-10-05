@@ -9,32 +9,23 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface IRunHistoryRepository
-        Function GetData() as ICollection(Of RunHistory)
-
-        Sub Update(testId As Int32, runDateTime As DateTime, isValid As Boolean, runLog As String,
-                   resultString As String, id As Int64)
-
-        Sub Update(runHistory as RunHistory)
-        Sub Delete(id As Int64)
-        Sub Delete(runHistory as RunHistory)
-
-        Function Insert(testId As Int32, runDateTime As DateTime, isValid As Boolean, runLog As String,
-                        resultString As String) as Int64
-
-        Function Insert(runHistory as RunHistory) as Int64
-
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of RunHistory)
-
-        Function GetDataById(id As Int64) as ICollection(Of RunHistory)
-        Function GetDataByTestId(testId As Int32) as ICollection(Of RunHistory)
-
-        Function GetDataByTestIdPageable(testId As Int32, sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of RunHistory)
-    End Interface
+        Function GetData()  as ICollection(Of RunHistory)
+        Sub Update( ByVal testId As  Nullable(Of Int32) ,  ByVal projectId As  Nullable(Of Int32) ,  ByVal testGroupId As  Nullable(Of Int32) ,  ByVal runDateTime As DateTime,  ByVal isValid As Boolean,  ByVal runLog As String,  ByVal id As Int64) 
+        Sub Update(ByVal runHistory as RunHistory) 
+        Sub Delete( ByVal id As Int64) 
+        Sub Delete(ByVal runHistory as RunHistory) 
+        Function Insert( ByVal testId As  Nullable(Of Int32) ,  ByVal projectId As  Nullable(Of Int32) ,  ByVal testGroupId As  Nullable(Of Int32) ,  ByVal runDateTime As DateTime,  ByVal isValid As Boolean,  ByVal runLog As String)  as Int64
+        Function Insert(ByVal runHistory as RunHistory)  as Int64
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of RunHistory)
+        Function GetDataById( ByVal id As Int64)  as ICollection(Of RunHistory)
+        Function GetDataByTestId( ByVal testId As Int32)  as ICollection(Of RunHistory)
+        Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of RunHistory)
+    End Interface 
 End NameSpace
+  
