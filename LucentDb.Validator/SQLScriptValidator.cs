@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Text;
 using LucentDb.Common;
@@ -84,9 +85,21 @@ namespace LucentDb.Validator
             finally
             {
                 RunTimer.Stop();
-                valResponse.Duration = RunTimer.Elapsed.TotalMilliseconds;
+                valResponse.Duration = (decimal) RunTimer.Elapsed.TotalMilliseconds;
                 valResponse.RunLog = runLog.ToString();
                 valResponse.ResultMessage = resultMessage.ToString();
+            }
+            return valResponse;
+        }
+
+        public Collection<ValidationResponse> ValidateCollection(Collection<ValidationTest> valTestCollection)
+        {
+            var valResponse = new Collection<ValidationResponse>();
+            foreach (var valTest in valTestCollection)
+            {
+                var valResult = Validate(valTest.Connection, valTest.Test);
+                if (valResult == null) continue;
+                valResponse.Add(valResult);
             }
             return valResponse;
         }

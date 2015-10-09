@@ -40,45 +40,64 @@ namespace LucentDb.Web.UI.Controllers.API
         {
             try
             {
-                var runHistory = new RunHistory
-                {
-                    GroupId = groupId,
-                    RunDateTime = DateTime.Now
-                };
-                var runHistoryLog = new StringBuilder(); 
                 var connection = _connectionFactory.CreateConnection(connectionId);
                 var testGroup = _testGroupFactory.CreateTestGroup(groupId);
                 if (!ValidateConnectionForProject(connectionId, testGroup.ProjectId))
                     throw new Exception("Not a valid Connection for this test group.");
 
                 var scriptVal = new SqlScriptValidator();
-                var valCollection = new Collection<ValidationResponse>();
+                var valTestCollection = new Collection<ValidationTest>();
                 foreach (var test in testGroup.Tests)
                 {
-                    var valResult = scriptVal.Validate(connection, test);
-                    if (valResult == null) continue;
-                    var runHistoryDetail = new RunHistoryDetail
-                    {
-                        TestId = test.Id,
-                        RunDateTime = valResult.RunDateTime,
-                        IsValid = valResult.IsValid
-                    };
-                    runHistoryLog.Append(valResult.RunLog);
-                    valCollection.Add(valResult);
-                    runHistory.RunHistoryDetail.Add(runHistoryDetail);
+                    valTestCollection.Add(new ValidationTest(connection, test));    
                 }
-                runHistory.RunLog = runHistoryLog.ToString();
-                foreach (var rHistoryDetails in runHistory.RunHistoryDetail)
-                {
-                    _dataRepository.RunHistoryDetailsRepository.Insert(rHistoryDetails);
-                }
-                _dataRepository.RunHistoryRepository.Insert(runHistory);
+
+                var valCollection = scriptVal.ValidateCollection(valTestCollection);
+
+                var rHistory = ProcessTestResults(valCollection, DateTime.Now, groupId);
+
+                PersistValidationResults(rHistory);
                 return Request.CreateResponse(HttpStatusCode.OK, valCollection);
             }
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message));
             }
+        }
+
+        private void PersistValidationResults(RunHistory rHistory)
+        {
+            //need to make this a transaction
+            var runHistoryId = _dataRepository.RunHistoryRepository.Insert(rHistory);
+            foreach (var rHistoryDetails in rHistory.RunHistoryDetail)
+            {
+                rHistoryDetails.RunHistoryId = runHistoryId;
+                _dataRepository.RunHistoryDetailRepository.Insert(rHistoryDetails);
+            }
+          
+        }
+
+        private RunHistory ProcessTestResults(Collection<ValidationResponse> valCollection, DateTime startDateTime, int? groupId)
+        {
+            var runHistoryLog = new StringBuilder(); 
+            var runHistory = new RunHistory
+            {
+                GroupId = groupId,
+                RunDateTime = startDateTime
+            };
+            foreach (var valResult in valCollection)
+            {
+                var runHistoryDetail = new RunHistoryDetail
+                {
+                    TestId = valResult.TestId,
+                    RunDateTime = valResult.RunDateTime,
+                    IsValid = valResult.IsValid,
+                    Duration = valResult.Duration
+                };
+                runHistoryLog.AppendLine(valResult.RunLog);
+                runHistory.RunHistoryDetail.Add(runHistoryDetail);
+            }
+            return runHistory;
         }
 
         [Route("api/connections/{connectionId}/projects/{projectId}/validate")]
@@ -122,7 +141,7 @@ namespace LucentDb.Web.UI.Controllers.API
 
                 foreach (var rHistoryDetails in runHistory.RunHistoryDetail)
                 {
-                    _dataRepository.RunHistoryDetailsRepository.Insert(rHistoryDetails);
+                    _dataRepository.RunHistoryDetailRepository.Insert(rHistoryDetails);
                 }
                 _dataRepository.RunHistoryRepository.Insert(runHistory);
                
@@ -168,4 +187,6 @@ namespace LucentDb.Web.UI.Controllers.API
                     .Any(x => x.ConnectionId == connectionId);
         }
     }
+
+    
 }

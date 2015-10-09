@@ -18,6 +18,7 @@ namespace LucentDb.Domain
             ConnectionProviderRepository =
                 new DbConnectionProviderRepository(new SqlDbConnectionProviderCommandProvider());
             TestGroupRepository = new DbTestGroupRepository(new SqlDbTestGroupCommandProvider());
+            RunHistoryDetailRepository = new DbRunHistoryDetailRepository(new SqlDbRunHistoryDetailCommandProvider());
         }
 
         public IAssertTypeRepository AssertTypeRepository { get; set; }
@@ -29,5 +30,6 @@ namespace LucentDb.Domain
         public IConnectionRepository ConnectionRepository { get; set; }
         public IConnectionProviderRepository ConnectionProviderRepository { get; set; }
         public ITestGroupRepository TestGroupRepository { get; set; }
+        public IRunHistoryDetailRepository RunHistoryDetailRepository { get; set; }
     }
 }

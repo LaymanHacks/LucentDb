@@ -32,9 +32,10 @@ namespace LucentDb.Domain.Entities
         private DateTime _runDateTime;
         private Boolean _isValid;
         private String _resultString; 
-        private RunHistory _runHistory;  
+        private RunHistory _runHistory;
+        private decimal _duration;
 
-      public RunHistoryDetail() : base()
+        public RunHistoryDetail() : base()
       {
       }
 
@@ -104,10 +105,10 @@ namespace LucentDb.Domain.Entities
         /// <returns>IsValid as Boolean</returns>
         /// <remarks></remarks>
         [DataMember()]
-        public virtual Boolean IsValid
+        public virtual bool IsValid
         {
-            get{return this._isValid;}
-            set{this._isValid = value;}
+            get{return _isValid;}
+            set{_isValid = value;}
         }
 
         /// <summary>
@@ -128,7 +129,11 @@ namespace LucentDb.Domain.Entities
           get { return  _runHistory;}
           set { _runHistory = value;}
         }
-  
-      
+
+        public Decimal Duration
+        {
+            get { return _duration; }
+            set { _duration = value; }
+        }
     }
  }     

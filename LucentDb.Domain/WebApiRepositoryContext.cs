@@ -1,4 +1,5 @@
-﻿using LucentDb.Data.Repository;
+﻿using System.Linq.Expressions;
+using LucentDb.Data.Repository;
 using LucentDb.Data.WebApiRepository;
 
 namespace LucentDb.Domain
@@ -18,6 +19,7 @@ namespace LucentDb.Domain
             TestTypeRepository = new WebApiTestTypeRepository(baseWebApiAddress);
             AssertTypeRepository = new WebApiAssertTypeRepository(baseWebApiAddress);
             TestGroupRepository = new WebApiTestGroupRepository(baseWebApiAddress);
+            RunHistoryDetailRepository = new WebApiRunHistoryDetailRepository(baseWebApiAddress);
         }
 
         public IConnectionProviderRepository ConnectionProviderRepository { get; set; }
@@ -29,5 +31,8 @@ namespace LucentDb.Domain
         public IProjectRepository ProjectRepository { get; set; }
         public IExpectedResultRepository ExpectedResultRepository { get; set; }
         public IConnectionRepository ConnectionRepository { get; set; }
+
+
+        public IRunHistoryDetailRepository RunHistoryDetailRepository { get; set; }
     }
 }

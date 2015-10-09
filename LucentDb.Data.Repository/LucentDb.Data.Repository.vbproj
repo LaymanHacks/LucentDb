@@ -55,7 +55,9 @@
     <Compile Include="DbConnectionRepository.vb" />
     <Compile Include="DbExpectedResultRepository.vb" />
     <Compile Include="DbExpectedResultTypeRepository.vb" />
+    <Compile Include="DbProjectDetailsViewRepository.vb" />
     <Compile Include="DbProjectRepository.vb" />
+    <Compile Include="DbRunHistoryDetailRepository.vb" />
     <Compile Include="DbRunHistoryRepository.vb" />
     <Compile Include="DbTestGroupRepository.vb" />
     <Compile Include="DbTestRepository.vb" />
