@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
@@ -52,7 +53,7 @@ namespace LucentDb.Web.UI.Controllers.API
                     valTestCollection.Add(new ValidationTest(connection, test));    
                 }
 
-                var valCollection = scriptVal.ValidateCollection(valTestCollection);
+                var valCollection = scriptVal.ValidateTestCollection(valTestCollection);
 
                 var rHistory = ProcessTestResults(valCollection, DateTime.Now, groupId);
 
@@ -69,7 +70,7 @@ namespace LucentDb.Web.UI.Controllers.API
         {
             //need to make this a transaction
             var runHistoryId = _dataRepository.RunHistoryRepository.Insert(rHistory);
-            foreach (var rHistoryDetails in rHistory.RunHistoryDetail)
+            foreach (var rHistoryDetails in rHistory.RunHistoryDetails)
             {
                 rHistoryDetails.RunHistoryId = runHistoryId;
                 _dataRepository.RunHistoryDetailRepository.Insert(rHistoryDetails);
@@ -77,13 +78,14 @@ namespace LucentDb.Web.UI.Controllers.API
           
         }
 
-        private RunHistory ProcessTestResults(Collection<ValidationResponse> valCollection, DateTime startDateTime, int? groupId)
+        private static RunHistory ProcessTestResults(IEnumerable<ValidationResponse> valCollection, DateTime startDateTime, int? groupId)
         {
-            var runHistoryLog = new StringBuilder(); 
+            var runHistoryLog = new StringBuilder();
             var runHistory = new RunHistory
             {
                 GroupId = groupId,
-                RunDateTime = startDateTime
+                RunDateTime = startDateTime,
+                RunHistoryDetails = new Collection<RunHistoryDetail>()
             };
             foreach (var valResult in valCollection)
             {
@@ -92,11 +94,15 @@ namespace LucentDb.Web.UI.Controllers.API
                     TestId = valResult.TestId,
                     RunDateTime = valResult.RunDateTime,
                     IsValid = valResult.IsValid,
-                    Duration = valResult.Duration
+                    Duration = valResult.Duration,
+                    ResultString =valResult.ResultMessage
                 };
+                runHistoryLog.AppendLine(valResult.TestName);
+                runHistoryLog.AppendLine(valResult.ResultMessage);
                 runHistoryLog.AppendLine(valResult.RunLog);
-                runHistory.RunHistoryDetail.Add(runHistoryDetail);
+                runHistory.RunHistoryDetails.Add(runHistoryDetail);
             }
+            runHistory.RunLog = runHistoryLog.ToString();
             return runHistory;
         }
 
@@ -136,10 +142,10 @@ namespace LucentDb.Web.UI.Controllers.API
                     };
                     
                     valCollection.Add(valResult);
-                    runHistory.RunHistoryDetail.Add(runHistoryDetails);
+                    runHistory.RunHistoryDetails.Add(runHistoryDetails);
                 }
 
-                foreach (var rHistoryDetails in runHistory.RunHistoryDetail)
+                foreach (var rHistoryDetails in runHistory.RunHistoryDetails)
                 {
                     _dataRepository.RunHistoryDetailRepository.Insert(rHistoryDetails);
                 }
@@ -174,7 +180,7 @@ namespace LucentDb.Web.UI.Controllers.API
 
            
            //_dataRepository.RunHistoryDetailsRepository.Insert();
-           _dataRepository.RunHistoryRepository.Insert(test.Id,null,null, valResult.RunDateTime, valResult.IsValid,
+            _dataRepository.RunHistoryRepository.Insert(test.Id, null, null, connectionId, valResult.RunDateTime, valResult.Duration, valResult.IsValid, 
                  valResult.RunLog);
 
             return Request.CreateResponse(HttpStatusCode.OK, valResult);

@@ -16,11 +16,11 @@ Imports LucentDb.Domain.Entities
  Namespace LucentDb.Data.Repository     
     Public Interface IRunHistoryDetailRepository
         Function GetData()  as ICollection(Of RunHistoryDetail)
-        Sub Update( ByVal runHistoryId As Int64,  ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isValid As Boolean,  ByVal resultString As String,  ByVal id As Int64) 
-        Sub Update(ByVal runHistoryDetail as RunHistoryDetail) 
-        Sub Delete( ByVal id As Int64) 
-        Sub Delete(ByVal runHistoryDetail as RunHistoryDetail) 
-        Function Insert( ByVal runHistoryId As Int64,  ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isValid As Boolean,  ByVal resultString As String)  as Int64
+        Sub Update(ByVal runHistoryId As Int64, ByVal testId As Int32, ByVal runDateTime As DateTime, ByVal duration As Nullable(Of Decimal), ByVal isValid As Boolean, ByVal resultString As String, ByVal id As Int64)
+        Sub Update(ByVal runHistoryDetail As RunHistoryDetail)
+        Sub Delete(ByVal id As Int64)
+        Sub Delete(ByVal runHistoryDetail As RunHistoryDetail)
+        Function Insert(ByVal runHistoryId As Int64, ByVal testId As Int32, ByVal runDateTime As DateTime, ByVal duration As Nullable(Of Decimal), ByVal isValid As Boolean, ByVal resultString As String) As Int64
         Function Insert(ByVal runHistoryDetail as RunHistoryDetail)  as Int64
         Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of RunHistoryDetail)
         Function GetDataById( ByVal id As Int64)  as ICollection(Of RunHistoryDetail)

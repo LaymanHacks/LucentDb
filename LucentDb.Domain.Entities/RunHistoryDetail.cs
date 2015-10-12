@@ -30,22 +30,23 @@ namespace LucentDb.Domain.Entities
         private Int64 _runHistoryId;
         private Int32 _testId;
         private DateTime _runDateTime;
+        private Nullable<Decimal> _duration;
         private Boolean _isValid;
         private String _resultString; 
-        private RunHistory _runHistory;
-        private decimal _duration;
+        private RunHistory _runHistory;  
 
-        public RunHistoryDetail() : base()
+      public RunHistoryDetail() : base()
       {
       }
 
-      public RunHistoryDetail(Int64 id, Int64 runHistoryId, Int32 testId, DateTime runDateTime, Boolean isValid, String resultString) : base()
+      public RunHistoryDetail(Int64 id, Int64 runHistoryId, Int32 testId, DateTime runDateTime, Nullable<Decimal> duration, Boolean isValid, String resultString) : base()
       {
           
            _id = id;
            _runHistoryId = runHistoryId;
            _testId = testId;
            _runDateTime = runDateTime;
+           _duration = duration;
            _isValid = isValid;
            _resultString = resultString;
       }
@@ -100,15 +101,27 @@ namespace LucentDb.Domain.Entities
         }
 
         /// <summary>
+        /// Public Property Duration
+        /// </summary>
+        /// <returns>Duration as Nullable<Decimal></returns>
+        /// <remarks></remarks>
+        [DataMember()]
+        public virtual Nullable<Decimal> Duration
+        {
+            get{return this._duration;}
+            set{this._duration = value;}
+        }
+
+        /// <summary>
         /// Public Property IsValid
         /// </summary>
         /// <returns>IsValid as Boolean</returns>
         /// <remarks></remarks>
         [DataMember()]
-        public virtual bool IsValid
+        public virtual Boolean IsValid
         {
-            get{return _isValid;}
-            set{_isValid = value;}
+            get{return this._isValid;}
+            set{this._isValid = value;}
         }
 
         /// <summary>
@@ -129,11 +142,7 @@ namespace LucentDb.Domain.Entities
           get { return  _runHistory;}
           set { _runHistory = value;}
         }
-
-        public Decimal Duration
-        {
-            get { return _duration; }
-            set { _duration = value; }
-        }
+  
+      
     }
  }     

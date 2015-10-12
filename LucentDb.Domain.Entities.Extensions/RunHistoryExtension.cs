@@ -18,8 +18,8 @@ namespace LucentDb.Domain.Entities.Extensions
      
       public static RunHistory IncludeRunHistoryDetail(this RunHistory runHistory, IRunHistoryDetailRepository RunHistoryDetailRepository) 
       {
-         if (runHistory.RunHistoryDetail != null) return  runHistory;   
-               runHistory.RunHistoryDetail = (RunHistoryDetailList)RunHistoryDetailRepository.GetDataByRunHistoryId(runHistory.Id);
+         if (runHistory.RunHistoryDetails != null) return  runHistory;   
+               runHistory.RunHistoryDetails = (RunHistoryDetailList)RunHistoryDetailRepository.GetDataByRunHistoryId(runHistory.Id);
          return  runHistory;      
       }
   

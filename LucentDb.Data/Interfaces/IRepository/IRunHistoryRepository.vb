@@ -12,20 +12,23 @@ Imports System.Collections.Generic
 Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-  
- Namespace LucentDb.Data.Repository     
+
+Namespace LucentDb.Data.Repository
     Public Interface IRunHistoryRepository
-        Function GetData()  as ICollection(Of RunHistory)
-        Sub Update( ByVal testId As  Nullable(Of Int32) ,  ByVal projectId As  Nullable(Of Int32) ,  ByVal testGroupId As  Nullable(Of Int32) ,  ByVal runDateTime As DateTime,  ByVal isValid As Boolean,  ByVal runLog As String,  ByVal id As Int64) 
-        Sub Update(ByVal runHistory as RunHistory) 
-        Sub Delete( ByVal id As Int64) 
-        Sub Delete(ByVal runHistory as RunHistory) 
-        Function Insert( ByVal testId As  Nullable(Of Int32) ,  ByVal projectId As  Nullable(Of Int32) ,  ByVal testGroupId As  Nullable(Of Int32) ,  ByVal runDateTime As DateTime,  ByVal isValid As Boolean,  ByVal runLog As String)  as Int64
-        Function Insert(ByVal runHistory as RunHistory)  as Int64
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of RunHistory)
-        Function GetDataById( ByVal id As Int64)  as ICollection(Of RunHistory)
-        Function GetDataByTestId( ByVal testId As Int32)  as ICollection(Of RunHistory)
-        Function GetDataByTestIdPageable( ByVal testId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of RunHistory)
-    End Interface 
-End NameSpace
-  
+        Function GetData() As ICollection(Of RunHistory)
+        Sub Update(ByVal testId As Nullable(Of Int32), ByVal projectId As Nullable(Of Int32), ByVal groupId As Nullable(Of Int32), ByVal connectionId As Nullable(Of Int32), ByVal runDateTime As DateTime, ByVal totalDuration As Nullable(Of Decimal), ByVal isValid As Boolean, ByVal runLog As String, ByVal id As Int64)
+        Sub Update(ByVal runHistory As RunHistory)
+        Sub Delete(ByVal id As Int64)
+        Sub Delete(ByVal runHistory As RunHistory)
+        Function Insert(ByVal testId As Nullable(Of Int32), ByVal projectId As Nullable(Of Int32), ByVal groupId As Nullable(Of Int32), ByVal connectionId As Nullable(Of Int32), ByVal runDateTime As DateTime, ByVal totalDuration As Nullable(Of Decimal), ByVal isValid As Boolean, ByVal runLog As String) As Int64
+        Function Insert(ByVal runHistory As RunHistory) As Int64
+        Function GetDataPageable(ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of RunHistory)
+        Function GetDataById(ByVal id As Int64) As ICollection(Of RunHistory)
+        Function GetDataByProjectId(ByVal projectId As Int32) As ICollection(Of RunHistory)
+        Function GetDataByProjectIdPageable(ByVal projectId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of RunHistory)
+        Function GetDataByTestId(ByVal testId As Int32) As ICollection(Of RunHistory)
+        Function GetDataByTestIdPageable(ByVal testId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of RunHistory)
+        Function GetDataByGroupId(ByVal groupId As Int32) As ICollection(Of RunHistory)
+        Function GetDataByGroupIdPageable(ByVal groupId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As PagedResult(Of RunHistory)
+    End Interface
+End Namespace

@@ -59,19 +59,26 @@ Public Class SqlDbRunHistoryDetailCommandProvider
       ''' <param name="runHistoryId" />
       ''' <param name="testId" />
       ''' <param name="runDateTime" />
+      ''' <param name="duration" />
       ''' <param name="isValid" />
       ''' <param name="resultString" />
       ''' <param name="id" />
         ''' <returns></returns>
         ''' <remarks></remarks> 
-        Public Function GetUpdateDbCommand( ByVal runHistoryId As Int64,  ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isValid As Boolean,  ByVal resultString As String,  ByVal id As Int64) As IDbCommand Implements IDbRunHistoryDetailCommandProvider.GetUpdateDbCommand
+        Public Function GetUpdateDbCommand( ByVal runHistoryId As Int64,  ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal duration As  Nullable(Of Decimal) ,  ByVal isValid As Boolean,  ByVal resultString As String,  ByVal id As Int64) As IDbCommand Implements IDbRunHistoryDetailCommandProvider.GetUpdateDbCommand
             
             Dim command As New SqlCommand("RunHistoryDetail_Update")
             command.CommandType = CommandType.StoredProcedure
                 command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunHistoryId", SqlDbType.bigint, runHistoryId))
                   command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TestId", SqlDbType.int, testId))
                   command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunDateTime", SqlDbType.datetime, runDateTime))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsValid", SqlDbType.bit, isValid))
+      
+            If (Duration.HasValue = true ) Then
+                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Duration", SqlDbType.decimal, duration))
+      Else
+                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Duration", SqlDbType.decimal, global.System.DBNull.Value))
+      End If
+                    command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsValid", SqlDbType.bit, isValid))
       
             If (Not resultString  Is Nothing ) Then
                             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ResultString", SqlDbType.varchar, resultString))
@@ -108,18 +115,25 @@ Public Class SqlDbRunHistoryDetailCommandProvider
       ''' <param name="runHistoryId" />
       ''' <param name="testId" />
       ''' <param name="runDateTime" />
+      ''' <param name="duration" />
       ''' <param name="isValid" />
       ''' <param name="resultString" />
         ''' <returns></returns>
         ''' <remarks></remarks> 
-        Public Function GetInsertDbCommand( ByVal runHistoryId As Int64,  ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isValid As Boolean,  ByVal resultString As String) As IDbCommand Implements IDbRunHistoryDetailCommandProvider.GetInsertDbCommand
+        Public Function GetInsertDbCommand( ByVal runHistoryId As Int64,  ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal duration As  Nullable(Of Decimal) ,  ByVal isValid As Boolean,  ByVal resultString As String) As IDbCommand Implements IDbRunHistoryDetailCommandProvider.GetInsertDbCommand
             
             Dim command As New SqlCommand("RunHistoryDetail_Insert")
             command.CommandType = CommandType.StoredProcedure
                 command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunHistoryId", SqlDbType.bigint, runHistoryId))
                   command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TestId", SqlDbType.int, testId))
                   command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunDateTime", SqlDbType.datetime, runDateTime))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsValid", SqlDbType.bit, isValid))
+      
+            If (Duration.HasValue = true ) Then
+                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Duration", SqlDbType.decimal, duration))
+      Else
+                            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Duration", SqlDbType.decimal, global.System.DBNull.Value))
+      End If
+                    command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsValid", SqlDbType.bit, isValid))
       
             If (Not resultString  Is Nothing ) Then
                             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ResultString", SqlDbType.varchar, resultString))

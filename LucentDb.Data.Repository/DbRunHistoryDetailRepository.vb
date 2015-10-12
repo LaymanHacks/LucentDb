@@ -38,15 +38,15 @@ Namespace LucentDb.Data.Repository
               Dim entList as new Collection(Of RunHistoryDetail)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New RunHistoryDetail( reader.GetInt64("Id"),  reader.GetInt64("RunHistoryId"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetBoolean("IsValid"),  reader.GetString("ResultString") )
+                Dim tempEntity As New RunHistoryDetail(reader.GetInt64("Id"), reader.GetInt64("RunHistoryId"), reader.GetInt32("TestId"), reader.GetDateTime("RunDateTime"), reader.GetNullableDecimal("Duration"), reader.GetBoolean("IsValid"), reader.GetString("ResultString"))
                  entList.Add(tempEntity)
             Loop
             reader.Close 
             Return entList 
 
     End Function
-          Public Sub Update( ByVal runHistoryId As Int64,  ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isValid As Boolean,  ByVal resultString As String,  ByVal id As Int64)  Implements IRunHistoryDetailRepository.Update
-            Dim command As IDbCommand = _dbRunHistoryDetailCommandProvider.GetUpdateDbCommand(RunHistoryId, TestId, RunDateTime, IsValid, ResultString, Id)
+          Public Sub Update( ByVal runHistoryId As Int64,  ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal duration As  Nullable(Of Decimal) ,  ByVal isValid As Boolean,  ByVal resultString As String,  ByVal id As Int64)  Implements IRunHistoryDetailRepository.Update
+            Dim command As IDbCommand = _dbRunHistoryDetailCommandProvider.GetUpdateDbCommand(RunHistoryId, TestId, RunDateTime, Duration, IsValid, ResultString, Id)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
           Command.ExecuteNonQuery
@@ -55,7 +55,7 @@ Namespace LucentDb.Data.Repository
   
     Public Sub Update(ByVal runHistoryDetail as RunHistoryDetail)  Implements IRunHistoryDetailRepository.Update
              With RunHistoryDetail
-Update( CLng(.RunHistoryId),  CInt(.TestId),  CDate(.RunDateTime),  CBool(.IsValid), .ResultString,  CLng(.Id))
+Update( CLng(.RunHistoryId),  CInt(.TestId),  CDate(.RunDateTime), .Duration,  CBool(.IsValid), .ResultString,  CLng(.Id))
        End With
 
     End Sub
@@ -73,8 +73,8 @@ Delete( CLng(.Id))
        End With
 
     End Sub
-          Public Function Insert( ByVal runHistoryId As Int64,  ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal isValid As Boolean,  ByVal resultString As String)  as Int64 Implements IRunHistoryDetailRepository.Insert
-            Dim command As IDbCommand = _dbRunHistoryDetailCommandProvider.GetInsertDbCommand(RunHistoryId, TestId, RunDateTime, IsValid, ResultString)
+          Public Function Insert( ByVal runHistoryId As Int64,  ByVal testId As Int32,  ByVal runDateTime As DateTime,  ByVal duration As  Nullable(Of Decimal) ,  ByVal isValid As Boolean,  ByVal resultString As String)  as Int64 Implements IRunHistoryDetailRepository.Insert
+            Dim command As IDbCommand = _dbRunHistoryDetailCommandProvider.GetInsertDbCommand(RunHistoryId, TestId, RunDateTime, Duration, IsValid, ResultString)
             command.Connection = _dbConnHolder.Connection
             _dbConnHolder.Open()
               Dim returnValue As Int64  = Convert.ToInt64(Command.ExecuteScalar())
@@ -85,7 +85,7 @@ Delete( CLng(.Id))
   
     Public Function Insert(ByVal runHistoryDetail as RunHistoryDetail)  as Int64 Implements IRunHistoryDetailRepository.Insert
              With RunHistoryDetail
- Return Insert( CLng(.RunHistoryId),  CInt(.TestId),  CDate(.RunDateTime),  CBool(.IsValid), .ResultString)
+ Return Insert( CLng(.RunHistoryId),  CInt(.TestId),  CDate(.RunDateTime), .Duration,  CBool(.IsValid), .ResultString)
        End With
 
     End Function
@@ -96,7 +96,7 @@ Delete( CLng(.Id))
               Dim entList as new Collection(Of RunHistoryDetail)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New RunHistoryDetail( reader.GetInt64("Id"),  reader.GetInt64("RunHistoryId"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetBoolean("IsValid"),  reader.GetString("ResultString") )
+                 Dim tempEntity As New RunHistoryDetail( reader.GetInt64("Id"),  reader.GetInt64("RunHistoryId"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetNullableDecimal("Duration") ,  reader.GetBoolean("IsValid"),  reader.GetString("ResultString") )
                  entList.Add(tempEntity)
             Loop
             reader.Close 
@@ -121,7 +121,7 @@ Delete( CLng(.Id))
               Dim entList as new Collection(Of RunHistoryDetail)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New RunHistoryDetail( reader.GetInt64("Id"),  reader.GetInt64("RunHistoryId"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetBoolean("IsValid"),  reader.GetString("ResultString") )
+                 Dim tempEntity As New RunHistoryDetail( reader.GetInt64("Id"),  reader.GetInt64("RunHistoryId"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetNullableDecimal("Duration") ,  reader.GetBoolean("IsValid"),  reader.GetString("ResultString") )
                  entList.Add(tempEntity)
             Loop
             reader.Close 
@@ -135,7 +135,7 @@ Delete( CLng(.Id))
               Dim entList as new Collection(Of RunHistoryDetail)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New RunHistoryDetail( reader.GetInt64("Id"),  reader.GetInt64("RunHistoryId"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetBoolean("IsValid"),  reader.GetString("ResultString") )
+                 Dim tempEntity As New RunHistoryDetail( reader.GetInt64("Id"),  reader.GetInt64("RunHistoryId"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetNullableDecimal("Duration") ,  reader.GetBoolean("IsValid"),  reader.GetString("ResultString") )
                  entList.Add(tempEntity)
             Loop
             reader.Close 
@@ -149,7 +149,7 @@ Delete( CLng(.Id))
               Dim entList as new Collection(Of RunHistoryDetail)
             Dim reader As New SafeDataReader(command.ExecuteReader(CommandBehavior.CloseConnection))
             Do While (reader.Read())
-                 Dim tempEntity As New RunHistoryDetail( reader.GetInt64("Id"),  reader.GetInt64("RunHistoryId"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetBoolean("IsValid"),  reader.GetString("ResultString") )
+                 Dim tempEntity As New RunHistoryDetail( reader.GetInt64("Id"),  reader.GetInt64("RunHistoryId"),  reader.GetInt32("TestId"),  reader.GetDateTime("RunDateTime"),  reader.GetNullableDecimal("Duration") ,  reader.GetBoolean("IsValid"),  reader.GetString("ResultString") )
                  entList.Add(tempEntity)
             Loop
             reader.Close 

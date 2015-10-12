@@ -38,7 +38,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPut]
         public void Update(RunHistoryDetail runHistoryDetail)
         {
-            _dbRepository.Update(runHistoryDetail.RunHistoryId,  (Int32)runHistoryDetail.TestId,  (DateTime)runHistoryDetail.RunDateTime,  (bool)runHistoryDetail.IsValid, runHistoryDetail.ResultString, runHistoryDetail.Id);
+            _dbRepository.Update(runHistoryDetail.RunHistoryId,  (Int32)runHistoryDetail.TestId,  (DateTime)runHistoryDetail.RunDateTime, runHistoryDetail.Duration, (bool)runHistoryDetail.IsValid, runHistoryDetail.ResultString, runHistoryDetail.Id);
           }
 
         [Route("api/RunHistoryDetail", Name = "RunHistoryDetailDeleteRoute")]
@@ -60,7 +60,7 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPost]
         public Int64 Insert(RunHistoryDetail runHistoryDetail)
         {
-             return _dbRepository.Insert(runHistoryDetail.RunHistoryId,  (Int32)runHistoryDetail.TestId,  (DateTime)runHistoryDetail.RunDateTime,  (bool)runHistoryDetail.IsValid, runHistoryDetail.ResultString);
+             return _dbRepository.Insert(runHistoryDetail.RunHistoryId,  (Int32)runHistoryDetail.TestId,  (DateTime)runHistoryDetail.RunDateTime,runHistoryDetail.Duration,  (bool)runHistoryDetail.IsValid, runHistoryDetail.ResultString);
           }
 
         [Route("api/RunHistoryDetail", Name = "RunHistoryDetailGetDataPageableRoute")]
