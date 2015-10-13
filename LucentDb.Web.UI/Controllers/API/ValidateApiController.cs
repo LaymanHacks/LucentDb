@@ -54,7 +54,6 @@ namespace LucentDb.Web.UI.Controllers.API
                 }
 
                 var valCollection = scriptVal.ValidateTestCollection(valTestCollection);
-
                 var rHistory = ProcessTestResults(valCollection, DateTime.Now, groupId);
 
                 PersistValidationResults(rHistory);
