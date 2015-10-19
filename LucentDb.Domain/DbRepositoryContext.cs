@@ -3,7 +3,7 @@ using LucentDb.Data.SqlDbCommandProvider;
 
 namespace LucentDb.Domain
 {
-    public class DbRepositoryContext : IRepositoryContext
+    public class DbRepositoryContext : ILucentDbRepositoryContext
     {
         public DbRepositoryContext()
         {

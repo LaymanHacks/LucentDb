@@ -4,7 +4,7 @@ using LucentDb.Data.WebApiRepository;
 
 namespace LucentDb.Domain
 {
-    public class WebApiRepositoryContext : IRepositoryContext
+    public class WebApiRepositoryContext : ILucentDbRepositoryContext
     {
         public WebApiRepositoryContext(string baseWebApiAddress)
         {

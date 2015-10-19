@@ -92,16 +92,5 @@ namespace LucentDb.Validator
             return valResponse;
         }
 
-        public Collection<ValidationResponse> ValidateTestCollection(Collection<ValidationTest> valTestCollection)
-        {
-            var valResponse = new Collection<ValidationResponse>();
-            foreach (var valTest in valTestCollection)
-            {
-                var valResult = Validate(valTest.Connection, valTest.Test);
-                if (valResult == null) continue;
-                valResponse.Add(valResult);
-            }
-            return valResponse;
-        }
     }
 }

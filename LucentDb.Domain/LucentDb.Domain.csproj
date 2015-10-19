@@ -48,6 +48,7 @@
     <Compile Include="DbRepositoryContext.cs" />
     <Compile Include="IRepositoryContext.cs" />
     <Compile Include="Factories\ProjectFactory.cs" />
+    <Compile Include="Model\Project.cs" />
     <Compile Include="Model\ValidationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\TestCondition.cs" />

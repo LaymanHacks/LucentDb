@@ -9,7 +9,7 @@ namespace LucentDb.Win.UI
 {
     public partial class Form1 : Form
     {
-        private readonly IRepositoryContext _dataRepository;
+        private readonly ILucentDbRepositoryContext _dataRepository;
         private Project _selectedProject;
 
         public Form1()

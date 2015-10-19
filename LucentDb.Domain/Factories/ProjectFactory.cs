@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using LucentDb.Data.Repository;
 using LucentDb.Domain.Entities;
+using Project = LucentDb.Domain.Model.Project;
 
 namespace LucentDb.Domain
 {
@@ -29,7 +30,7 @@ namespace LucentDb.Domain
             {
                 project.Tests.Add(_testFactory.CreateTest(test.Id));
             }
-            return project;
+            return (Project) project;
         }
     }
 }

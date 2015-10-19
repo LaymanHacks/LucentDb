@@ -2,7 +2,7 @@ using LucentDb.Data.Repository;
 
 namespace LucentDb.Domain
 {
-    public interface IRepositoryContext
+    public interface ILucentDbRepositoryContext
     {
         IAssertTypeRepository AssertTypeRepository { get; set; }
         ITestTypeRepository TestTypeRepository { get; set; }
