@@ -43,7 +43,8 @@ namespace LucentDb.Web.UI.Controllers.API
             {
                 var connection = _connectionFactory.CreateConnection(connectionId);
                 var testGroup = _testGroupFactory.CreateTestGroup(groupId);
-                if (!ValidateConnectionForProject(connectionId, testGroup.ProjectId))
+                var proj = new Domain.Model.Project(_dataRepository) { ProjectId = testGroup.ProjectId };
+                if (!proj.ValidateConnection(connectionId))
                     throw new Exception("Not a valid Connection for this test group.");
 
                 var valCollection = ExecuteTests(testGroup.Tests, connection);

@@ -64,6 +64,7 @@
     <Compile Include="Interfaces\IDbCommandProvider\IDbTestCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbTestGroupCommandProvider.vb" />
     <Compile Include="Interfaces\IDbCommandProvider\IDbTestTypeCommandProvider.vb" />
+    <Compile Include="Interfaces\IDbCommandProvider\IDbTestValueTypeCommandProvider.vb" />
     <Compile Include="Interfaces\IRepository\IAssertTypeRepository.vb" />
     <Compile Include="Interfaces\IRepository\IConnectionProviderRepository.vb" />
     <Compile Include="Interfaces\IRepository\IConnectionRepository.vb" />
@@ -77,6 +78,7 @@
     <Compile Include="Interfaces\IRepository\ITestRepository.vb" />
     <Compile Include="Interfaces\IRepository\ITestTypeRepository.vb" />
     <Compile Include="ConnectionHelper.vb" />
+    <Compile Include="Interfaces\IRepository\ITestValueTypeRepository.vb" />
     <Compile Include="PagedResult.vb" />
   </ItemGroup>
   <ItemGroup>

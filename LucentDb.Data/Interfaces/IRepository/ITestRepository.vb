@@ -9,59 +9,39 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
+Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-
-Namespace LucentDb.Data.Repository
+  
+ Namespace LucentDb.Data.Repository     
     Public Interface ITestRepository
-        Function GetData() as ICollection(Of Test)
-
-        Sub Update(testTypeId As Int32, projectId As Nullable(Of Int32), groupId As Nullable(Of Int32), name As String,
-                   testValue As String, isActive As Boolean, id As Int32)
-
-        Sub Update(test as Test)
-        Sub Delete(id As Int32)
-        Sub Delete(test as Test)
-
-        Function Insert(testTypeId As Int32, projectId As Nullable(Of Int32), groupId As Nullable(Of Int32),
-                        name As String, testValue As String, isActive As Boolean) as Int32
-
-        Function Insert(test as Test) as Int32
-        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) as PagedResult(Of Test)
-        Function GetDataById(id As Int32) as ICollection(Of Test)
-        Function GetActiveData() as ICollection(Of Test)
-
-        Function GetActiveDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of Test)
-
-        Function GetDataByProjectId(projectId As Int32) as ICollection(Of Test)
-
-        Function GetDataByProjectIdPageable(projectId As Int32, sortExpression As String, page As Int32,
-                                            pageSize As Int32) as PagedResult(Of Test)
-
-        Function GetActiveDataByProjectId(projectId As Int32) as ICollection(Of Test)
-
-        Function GetActiveDataByProjectIdPageable(projectId As Int32, sortExpression As String, page As Int32,
-                                                  pageSize As Int32) as PagedResult(Of Test)
-
-        Function GetDataByGroupId(groupId As Int32) as ICollection(Of Test)
-
-        Function GetDataByGroupIdPageable(groupId As Int32, sortExpression As String, page As Int32, pageSize As Int32) _
-            as PagedResult(Of Test)
-
-        Function GetActiveDataByGroupId(groupId As Int32) as ICollection(Of Test)
-
-        Function GetActiveDataByGroupIdPageable(groupId As Int32, sortExpression As String, page As Int32,
-                                                pageSize As Int32) as PagedResult(Of Test)
-
-        Function GetDataByTestTypeId(testTypeId As Int32) as ICollection(Of Test)
-
-        Function GetDataByTestTypeIdPageable(testTypeId As Int32, sortExpression As String, page As Int32,
-                                             pageSize As Int32) as PagedResult(Of Test)
-
-        Function GetActiveDataByTestTypeId(testTypeId As Int32) as ICollection(Of Test)
-
-        Function GetActiveDataByTestTypeIdPageable(testTypeId As Int32, sortExpression As String, page As Int32,
-                                                   pageSize As Int32) as PagedResult(Of Test)
-    End Interface
+        Function GetData()  as ICollection(Of Test)
+        Sub Update( ByVal testTypeId As Int32,  ByVal testValueTypeId As Int32,  ByVal projectId As Int32,  ByVal groupId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal testValue As String,  ByVal isActive As Boolean,  ByVal id As Int32) 
+        Sub Update(ByVal test as Test) 
+        Sub Delete( ByVal id As Int32) 
+        Sub Delete(ByVal test as Test) 
+        Function Insert( ByVal testTypeId As Int32,  ByVal testValueTypeId As Int32,  ByVal projectId As Int32,  ByVal groupId As  Nullable(Of Int32) ,  ByVal name As String,  ByVal testValue As String,  ByVal isActive As Boolean)  as Int32
+        Function Insert(ByVal test as Test)  as Int32
+        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Test)
+        Function GetDataById( ByVal id As Int32)  as ICollection(Of Test)
+        Function GetActiveData()  as ICollection(Of Test)
+        Function GetActiveDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Test)
+        Function GetDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Test)
+        Function GetDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Test)
+        Function GetActiveDataByProjectId( ByVal projectId As Int32)  as ICollection(Of Test)
+        Function GetActiveDataByProjectIdPageable( ByVal projectId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Test)
+        Function GetDataByGroupId( ByVal groupId As Int32)  as ICollection(Of Test)
+        Function GetDataByGroupIdPageable( ByVal groupId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Test)
+        Function GetActiveDataByGroupId( ByVal groupId As Int32)  as ICollection(Of Test)
+        Function GetActiveDataByGroupIdPageable( ByVal groupId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Test)
+        Function GetDataByTestTypeId( ByVal testTypeId As Int32)  as ICollection(Of Test)
+        Function GetDataByTestTypeIdPageable( ByVal testTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Test)
+        Function GetActiveDataByTestTypeId( ByVal testTypeId As Int32)  as ICollection(Of Test)
+        Function GetActiveDataByTestTypeIdPageable( ByVal testTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Test)
+        Function GetDataByTestValueTypeId( ByVal testValueTypeId As Int32)  as ICollection(Of Test)
+        Function GetDataByTestValueTypeIdPageable( ByVal testValueTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Test)
+        Function GetActiveDataByTestValueTypeId( ByVal testValueTypeId As Int32)  as ICollection(Of Test)
+        Function GetActiveDataByTestValueTypeIdPageable( ByVal testValueTypeId As Int32,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of Test)
+    End Interface 
 End NameSpace
+  

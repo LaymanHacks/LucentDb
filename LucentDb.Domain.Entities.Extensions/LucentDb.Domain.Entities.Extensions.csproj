@@ -60,10 +60,12 @@
     <Compile Include="ExpectedResultTypeExtension.cs" />
     <Compile Include="ProjectDetailsViewExtension.cs" />
     <Compile Include="ProjectExtension.cs" />
+    <Compile Include="RunHistoryDetailExtension.cs" />
     <Compile Include="RunHistoryExtension.cs" />
     <Compile Include="TestExtension.cs" />
     <Compile Include="TestGroupExtension.cs" />
     <Compile Include="TestTypeExtension.cs" />
+    <Compile Include="TestValueTypeExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LucentDb.Data.Repository\LucentDb.Data.Repository.vbproj">
