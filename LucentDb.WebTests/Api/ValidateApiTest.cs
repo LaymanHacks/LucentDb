@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using LucentDb.Domain.Model;
+using LucentDb.Validator.Model;
 using LucentDb.Web.UI.Controllers.API;
 using Newtonsoft.Json;
 using NUnit.Framework;

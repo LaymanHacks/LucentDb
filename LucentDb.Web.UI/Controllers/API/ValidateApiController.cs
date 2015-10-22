@@ -10,6 +10,7 @@ using LucentDb.Domain;
 using LucentDb.Domain.Entities;
 using LucentDb.Domain.Model;
 using LucentDb.Validator;
+using LucentDb.Validator.Model;
 
 namespace LucentDb.Web.UI.Controllers.API
 {
@@ -43,7 +44,7 @@ namespace LucentDb.Web.UI.Controllers.API
             {
                 var connection = _connectionFactory.CreateConnection(connectionId);
                 var testGroup = _testGroupFactory.CreateTestGroup(groupId);
-                var proj = new Domain.Model.Project(_dataRepository) { ProjectId = testGroup.ProjectId };
+                var proj = new ValidationProject(_dataRepository) { ProjectId = testGroup.ProjectId };
                 if (!proj.ValidateConnection(connectionId))
                     throw new Exception("Not a valid Connection for this test group.");
 
@@ -109,11 +110,18 @@ namespace LucentDb.Web.UI.Controllers.API
             { 
                 
                 var project = _projectFactory.CreateProject(projectId);
-                if (!project.ValidateConnection(connectionId))
+                var validationProject = new ValidationProject(_dataRepository){ProjectId = projectId};
+                if (!validationProject.ValidateConnection(connectionId))
                     throw new Exception("Not a valid Connection for this project.");
                 
                 var connection = _connectionFactory.CreateConnection(connectionId);
-               
+
+                foreach (var test in project.Tests)
+                {
+                    validationProject.ValidationTests.Add(new ValidationTest(connection,test));
+                }
+
+                validationProject.Validate();
 
                 var valCollection = ExecuteTests(project.Tests, connection);
                 var rHistory = ProcessTestResults(valCollection, DateTime.Now,null, projectId);
@@ -152,11 +160,10 @@ namespace LucentDb.Web.UI.Controllers.API
         [HttpGet]
         public HttpResponseMessage ValidateTest(int testId, int connectionId)
         {
-           
             var connection = _connectionFactory.CreateConnection(connectionId);
             var test = _testFactory.CreateTest(testId);
-            var project = new Domain.Model.Project(_dataRepository) {ProjectId = (int) test.ProjectId};
-            if (test.ProjectId != null && !project.ValidateConnection(connectionId))
+            var project = new ValidationProject(_dataRepository) {ProjectId = test.ProjectId};
+            if (!project.ValidateConnection(connectionId))
                 throw new Exception("Not a valid Connection for this test.");
 
             var scriptVal = new SqlScriptValidator();

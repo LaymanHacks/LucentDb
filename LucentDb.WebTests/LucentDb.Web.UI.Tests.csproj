@@ -126,6 +126,10 @@
       <Project>{35F11A61-843B-4E97-B992-BF22FB50F1EA}</Project>
       <Name>LucentDb.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LucentDb.Validator\LucentDb.Validator.csproj">
+      <Project>{4a33135e-3a6a-4a9a-9e20-8d8613bf4785}</Project>
+      <Name>LucentDb.Validator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LucentDb.Web.UI\LucentDb.Web.UI.csproj">
       <Project>{bc29d6c8-6e2c-4428-a270-e6874298762a}</Project>
       <Name>LucentDb.Web.UI</Name>
