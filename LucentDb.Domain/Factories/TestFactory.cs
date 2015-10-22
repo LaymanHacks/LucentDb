@@ -4,7 +4,7 @@ using System.Linq;
 using LucentDb.Data.Repository;
 using LucentDb.Domain.Entities;
 
-namespace LucentDb.Domain
+namespace LucentDb.Domain.Factories
 {
     public class TestFactory
     {

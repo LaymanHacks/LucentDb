@@ -8,6 +8,7 @@ using System.Text;
 using System.Web.Http;
 using LucentDb.Domain;
 using LucentDb.Domain.Entities;
+using LucentDb.Domain.Factories;
 using LucentDb.Domain.Model;
 using LucentDb.Validator;
 using LucentDb.Validator.Model;

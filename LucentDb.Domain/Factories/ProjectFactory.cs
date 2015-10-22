@@ -3,9 +3,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using LucentDb.Data.Repository;
 using LucentDb.Domain.Entities;
-using LucentDb.Domain.Model;
 
-namespace LucentDb.Domain
+namespace LucentDb.Domain.Factories
 {
     public class ProjectFactory
     {

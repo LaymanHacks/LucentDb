@@ -4,21 +4,20 @@ namespace LucentDb.Validator.Model
 {
     public class ValidationTest
     {
-        public Connection Connection { get; private set; }
-        public Test Test { get; private set; }
-
         public ValidationTest(Connection connection, Test test)
         {
             Connection = connection;
             Test = test;
-
         }
 
-        public  ValidationResponse Validate()
+        public Connection Connection { get; private set; }
+        public Test Test { get; private set; }
+        public ValidationResponse Response { get; private set; }
+
+        public void Validate()
         {
             var scriptVal = new SqlScriptValidator();
-           return scriptVal.Validate(Connection, Test);
-            
+            Response = scriptVal.Validate(Connection, Test);
         }
     }
 }

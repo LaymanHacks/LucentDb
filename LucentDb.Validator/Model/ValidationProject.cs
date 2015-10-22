@@ -26,7 +26,7 @@ namespace LucentDb.Validator.Model
             if (ValidationTests.Count == 0) return;
             foreach (var vTest in ValidationTests)
             {
-                ValidationResponses.Add(vTest.Validate());
+                vTest.Validate();
             }
         }
 
