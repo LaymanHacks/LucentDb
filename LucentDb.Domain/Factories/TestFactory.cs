@@ -26,7 +26,6 @@ namespace LucentDb.Domain.Factories
         {
             var test = _testRepository.GetDataById(testId).FirstOrDefault();
             if (test == null) throw new Exception("Test not found.");
-            if (test.ProjectId == null) throw new Exception("No valid project for this test.");
 
             test.TestType = _testTypeRepository.GetDataById(test.TestTypeId).FirstOrDefault();
 

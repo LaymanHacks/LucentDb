@@ -61,6 +61,7 @@
     <Compile Include="SqlDbTestCommandProvider.vb" />
     <Compile Include="SqlDbTestGroupCommandProvider.vb" />
     <Compile Include="SqlDbTestTypeCommandProvider.vb" />
+    <Compile Include="SqlDbTestValueTypeCommandProvider.vb" />
     <Compile Include="SqlParameterFactory.vb" />
   </ItemGroup>
   <ItemGroup>

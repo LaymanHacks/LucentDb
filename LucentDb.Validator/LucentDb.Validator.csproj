@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,9 +56,7 @@
     <Compile Include="DbConnectionFactory.cs" />
     <Compile Include="Comparer\ITestValueComparer.cs" />
     <Compile Include="IDbConnectionFactory.cs" />
-    <Compile Include="Model\ValidationProject.cs" />
     <Compile Include="Model\ValidationResponse.cs" />
-    <Compile Include="Model\ValidationTest.cs" />
     <Compile Include="ScriptResolver\FileSystemScriptResolver.cs" />
     <Compile Include="ScriptResolver\HttpScriptResolver.cs" />
     <Compile Include="ScriptResolver\IScriptResolver.cs" />
@@ -84,10 +83,6 @@
     <ProjectReference Include="..\LucentDb.Domain.Entities\LucentDb.Domain.Entities.csproj">
       <Project>{4ADCF3CB-049F-4BE2-B421-7875DC51301B}</Project>
       <Name>LucentDb.Domain.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LucentDb.Domain\LucentDb.Domain.csproj">
-      <Project>{35f11a61-843b-4e97-b992-bf22fb50f1ea}</Project>
-      <Name>LucentDb.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
