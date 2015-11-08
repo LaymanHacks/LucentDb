@@ -43,32 +43,34 @@ namespace LucentDb.Validator
 
             try
             {
-                var dbConnection = (DbConnection) DbConnectionFactory.GetConnection(testConnection);
-                using (
-                    var reader = _sqlScriptRunner.RunScript(dbConnection,
-                        scriptValue))
+                using (var dbConnection = (DbConnection) DbConnectionFactory.GetConnection(testConnection))
                 {
-                    while (reader.Read())
+                    using (
+                        var reader = _sqlScriptRunner.RunScript(dbConnection,
+                            scriptValue))
                     {
-                        foreach (var expResult in test.ExpectedResults.Clone())
+                        while (reader.Read())
                         {
-                            if (reader[expResult.ResultIndex].IsNullOrDbNull()) continue;
-                            var actual = reader[expResult.ResultIndex].ToString();
-                            runLog.AppendFormat("Comparing results: Expected = {0} \n Response = {1} \n",
-                                expResult.ExpectedValue, actual);
-
-                            var comparerFactory = new ComparerFactory();
-                            var comparer = comparerFactory.GetComparer(expResult.AssertType.Name);
-                            valResponse.IsValid = comparer.Compare(expResult.ExpectedValue, actual);
-
-                            if (valResponse.IsValid)
+                            foreach (var expResult in test.ExpectedResults.Clone())
                             {
-                                resultMessage.Append("Is Valid!");
-                                continue;
+                                if (reader[expResult.ResultIndex].IsNullOrDbNull()) continue;
+                                var actual = reader[expResult.ResultIndex].ToString();
+                                runLog.AppendFormat("Comparing results: Expected = {0} \n Response = {1} \n",
+                                    expResult.ExpectedValue, actual);
+
+                                var comparerFactory = new ComparerFactory();
+                                var comparer = comparerFactory.GetComparer(expResult.AssertType.Name);
+                                valResponse.IsValid = comparer.Compare(expResult.ExpectedValue, actual);
+
+                                if (valResponse.IsValid)
+                                {
+                                    resultMessage.Append("Is Valid!");
+                                    continue;
+                                }
+                                resultMessage.AppendFormat("expected: {0} \n but was: {1}",
+                                    expResult.ExpectedValue, actual);
+                                break;
                             }
-                            resultMessage.AppendFormat("expected: {0} \n but was: {1}",
-                                expResult.ExpectedValue, actual);
-                            break;
                         }
                     }
                 }

@@ -42,6 +42,9 @@ namespace LucentDb.Web.UI
             container.Register<IDbExpectedResultTypeCommandProvider, SqlDbExpectedResultTypeCommandProvider>();
             container.Register<IExpectedResultTypeRepository, DbExpectedResultTypeRepository>();
 
+            container.Register<IDbProjectDetailsViewCommandProvider, SqlDbProjectDetailsViewCommandProvider>();
+            container.Register<IProjectDetailsViewRepository, DbProjectDetailsViewRepository>();
+
             return container;
         }
     }
