@@ -165,6 +165,7 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TestGroupController.cs" />
     <Compile Include="Controllers\TestTypeController.cs" />
+    <Compile Include="Controllers\ValidationController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -218,11 +219,15 @@
     <Content Include="app\services\ScriptTypeDataService.js" />
     <Content Include="app\services\TestDataService.js" />
     <Content Include="app\services\TestTypeDataService.js" />
+    <Content Include="app\services\ValidationDataService.js" />
     <Content Include="app\TestGroup\Index.js" />
     <Content Include="app\TestType\Index.js" />
     <Content Include="app\Test\details.js" />
     <Content Include="app\Test\Index.js" />
     <Content Include="app\Test\edit.js" />
+    <Content Include="app\Validation\Index.js" />
+    <Content Include="app\Validation\ValidateTest.js" />
+    <Content Include="app\Validation\ValidateTestGroup.js" />
     <Content Include="App_Data\LucentDb.mdf" />
     <Content Include="App_Data\LucentDb_log.ldf">
       <DependentUpon>LucentDb.mdf</DependentUpon>
@@ -561,6 +566,8 @@
     <Content Include="Views\ExpectedResultType\Details.cshtml" />
     <Content Include="Views\ExpectedResultType\Edit.cshtml" />
     <Content Include="Views\ExpectedResultType\Index.cshtml" />
+    <None Include="Views\Validation\Index.cshtml" />
+    <None Include="Views\Validation\ValidateTestGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />

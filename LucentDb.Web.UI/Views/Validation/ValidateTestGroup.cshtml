@@ -1,0 +1,32 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+
+<div ng-controller="validateTestGroupCtrl as vm">
+    <script>
+    window.testGroupId = @ViewBag.GroupId;
+    window.connectionId = @ViewBag.ConnectionId;
+    </script>
+    <h2 ng-bind="vm.title" ></h2>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 ">
+                <div>{{vm.validationResult.name}}</div>
+                <div class="row" ng-repeat="test in vm.validationResult.validationTests">
+                    <div class="col-md-12 ">
+                        <div>{{test.response.testName}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/app/Validation/ValidateTestGroup.js"></script>
+    <script src="~/app/services/ValidationDataService.js"></script>
+}

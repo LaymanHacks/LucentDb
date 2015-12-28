@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -38,20 +39,40 @@ namespace LucentDb.Web.UI.Controllers.API
                 _testFactory);
         }
 
+        [Route("api/testgroups/{groupId}/validate")]
         [Route("api/connections/{connectionId}/testgroups/{groupId}/validate")]
         [HttpGet]
-        public HttpResponseMessage ValidateGroup(int groupId, int connectionId)
+        public HttpResponseMessage ValidateGroup(int groupId, int connectionId = 0)
         {
             try
             {
-                var connection = _connectionFactory.CreateConnection(connectionId);
                 var testGroup = _testGroupFactory.CreateTestGroup(groupId);
+
+                Connection connection;
+                if (connectionId == 0)
+                {
+                    connection = _dataRepository.ConnectionRepository
+                        .GetDataByProjectId(testGroup.ProjectId)
+                        .FirstOrDefault(x => x.IsActive & x.IsDefault & x.ProjectId == testGroup.ProjectId);
+                    if (connection != null)
+                    {
+                        connection.ConnectionProvider =
+                            _dataRepository.ConnectionProviderRepository.GetDataById(connection.ConnectionProviderId)
+                                .FirstOrDefault();
+                        connectionId = connection.ConnectionId;
+                    }
+                }
+                else
+                {
+                    connection = _connectionFactory.CreateConnection(connectionId);
+                }
+
                 var proj = new ValidationProject(_dataRepository, testGroup.ProjectId);
                 if (!proj.ValidateConnection(connectionId))
                     throw new Exception(ConnectionNotValid);
 
                 var valTestGroup = new ValidationTestGroup(connection, testGroup);
-                
+
                 var valCollection = valTestGroup.Validate();
                 PersistValidationResults(valCollection, groupId, null);
 
@@ -63,7 +84,116 @@ namespace LucentDb.Web.UI.Controllers.API
             }
         }
 
-        private void PersistValidationResults(IEnumerable<ValidationResponse> valCollection, int? groupId, int? projectId)
+        [Route("api/projects/{projectId}/validate")]
+        [Route("api/connections/{connectionId}/projects/{projectId}/validate")]
+        [HttpGet]
+        public HttpResponseMessage ValidateProject(int projectId, int connectionId = 0)
+        {
+            try
+            {
+                var project = _projectFactory.CreateProject(projectId);
+                Connection connection;
+                if (connectionId == 0)
+                {
+                    connection = _dataRepository.ConnectionRepository
+                        .GetDataByProjectId(projectId)
+                        .FirstOrDefault(x => x.IsActive & x.IsDefault & x.ProjectId == projectId);
+                    if (connection != null)
+                    {
+                        connection.ConnectionProvider =
+                            _dataRepository.ConnectionProviderRepository.GetDataById(connection.ConnectionProviderId)
+                                .FirstOrDefault();
+                        connectionId = connection.ConnectionId;
+                    }
+                }
+                else
+                {
+                    connection = _connectionFactory.CreateConnection(connectionId);
+                }
+
+                var validationProject = new ValidationProject(_dataRepository, projectId);
+                if (!validationProject.ValidateConnection(connectionId))
+                    throw new Exception(ConnectionNotValid);
+
+                foreach (var test in project.Tests)
+                {
+                    validationProject.ValidationTests.Add(new ValidationTest(connection, test));
+                }
+                foreach (var testGroup in project.TestGroups)
+                {
+                    validationProject.ValidationTestGroups.Add(new ValidationTestGroup(connection, testGroup));
+                }
+
+
+                var valCollection = validationProject.Validate();
+                PersistValidationResults(valCollection, null, projectId);
+                return Request.CreateResponse(HttpStatusCode.OK, validationProject);
+            }
+            catch (Exception ex)
+            {
+                return
+                    Request.CreateErrorResponse(
+                        ex.Message == ConnectionNotValid
+                            ? HttpStatusCode.BadRequest
+                            : HttpStatusCode.InternalServerError, new HttpError(ex.Message));
+            }
+        }
+
+        //[Route("api/ValidateTest/{testId}/{connectionId}", Name = "ValidateTestRoute")]
+        [Route("api/tests/{testId}/validate")]
+        [Route("api/connections/{connectionId}/tests/{testId}/validate")]
+        [HttpGet]
+        public HttpResponseMessage ValidateTest(int testId, int connectionId = 0)
+        {
+            var test = _testFactory.CreateTest(testId);
+            var valProject = new ValidationProject(_dataRepository, test.ProjectId);
+            Connection connection;
+            if (connectionId == 0)
+            {
+                connection = _dataRepository.ConnectionRepository
+                    .GetDataByProjectId(test.ProjectId)
+                    .FirstOrDefault(x => x.IsActive & x.IsDefault & x.ProjectId == test.ProjectId);
+                if (connection != null)
+                {
+                    connection.ConnectionProvider =
+                        _dataRepository.ConnectionProviderRepository.GetDataById(connection.ConnectionProviderId)
+                            .FirstOrDefault();
+                    connectionId = connection.ConnectionId;
+                }
+            }
+            else
+            {
+                connection = _connectionFactory.CreateConnection(connectionId);
+            }
+
+            if (!valProject.ValidateConnection(connectionId))
+                throw new Exception(ConnectionNotValid);
+
+            var valTest = new ValidationTest(connection, test);
+
+            var valResult = new Collection<ValidationResponse> {valTest.Validate()};
+            PersistValidationResults(valResult, null, null);
+
+            return Request.CreateResponse(HttpStatusCode.OK, valResult);
+        }
+
+        private static Collection<ValidationResponse> ExecuteTests(IEnumerable<Test> tests, Connection connection)
+        {
+            var scriptVal = new SqlScriptValidator();
+            var valResponse = new Collection<ValidationResponse>();
+
+            foreach (var test in tests)
+            {
+                var valResult = scriptVal.Validate(connection, test);
+                if (valResult == null) continue;
+                valResponse.Add(valResult);
+            }
+
+            return valResponse;
+        }
+
+        private void PersistValidationResults(IEnumerable<ValidationResponse> valCollection, int? groupId,
+            int? projectId)
         {
             var rHistory = ProcessTestResults(valCollection, groupId, projectId);
             //need to make this a transaction
@@ -76,7 +206,7 @@ namespace LucentDb.Web.UI.Controllers.API
         }
 
         private static RunHistory ProcessTestResults(IEnumerable<ValidationResponse> valCollection,
-             int? groupId, int? projectId)
+            int? groupId, int? projectId)
         {
             var runHistoryLog = new StringBuilder();
             var runHistory = new RunHistory
@@ -103,76 +233,6 @@ namespace LucentDb.Web.UI.Controllers.API
             }
             runHistory.RunLog = runHistoryLog.ToString();
             return runHistory;
-        }
-
-        [Route("api/connections/{connectionId}/projects/{projectId}/validate")]
-        [HttpGet]
-        public HttpResponseMessage ValidateProject(int projectId, int connectionId)
-        {
-            try
-            {
-                var project = _projectFactory.CreateProject(projectId);
-                var validationProject = new ValidationProject(_dataRepository, projectId);
-                if (!validationProject.ValidateConnection(connectionId))
-                    throw new Exception(ConnectionNotValid);
-
-                var connection = _connectionFactory.CreateConnection(connectionId);
-
-                foreach (var test in project.Tests)
-                {
-                    validationProject.ValidationTests.Add(new ValidationTest(connection, test));
-                }
-                foreach (var testGroup in project.TestGroups)
-                {
-                    validationProject.ValidationTestGroups.Add(new ValidationTestGroup(connection, testGroup));
-                }
-
-
-                var valCollection = validationProject.Validate();
-                 PersistValidationResults(valCollection, null, projectId);
-                return Request.CreateResponse(HttpStatusCode.OK, validationProject);
-            }
-            catch (Exception ex)
-            {
-                return
-                    Request.CreateErrorResponse(
-                        ex.Message == ConnectionNotValid
-                            ? HttpStatusCode.BadRequest
-                            : HttpStatusCode.InternalServerError, new HttpError(ex.Message));
-            }
-        }
-
-        private static Collection<ValidationResponse> ExecuteTests(IEnumerable<Test> tests, Connection connection)
-        {
-            var scriptVal = new SqlScriptValidator();
-            var valResponse = new Collection<ValidationResponse>();
-
-            foreach (var test in tests)
-            {
-                var valResult = scriptVal.Validate(connection, test);
-                if (valResult == null) continue;
-                valResponse.Add(valResult);
-            }
-
-            return valResponse;
-        }
-
-        //[Route("api/ValidateTest/{testId}/{connectionId}", Name = "ValidateTestRoute")]
-        [Route("api/connections/{connectionId}/tests/{testId}/validate")]
-        [HttpGet]
-        public HttpResponseMessage ValidateTest(int testId, int connectionId)
-        {
-            var connection = _connectionFactory.CreateConnection(connectionId);
-            var test = _testFactory.CreateTest(testId);
-            var project = new ValidationProject(_dataRepository, test.ProjectId);
-            if (!project.ValidateConnection(connectionId))
-                throw new Exception(ConnectionNotValid);
-            var valTest = new ValidationTest(connection, test);
-
-            var valResult = new Collection<ValidationResponse> {valTest.Validate()};
-             PersistValidationResults(valResult , null, null);
-            
-            return Request.CreateResponse(HttpStatusCode.OK, valResult);
         }
     }
 }

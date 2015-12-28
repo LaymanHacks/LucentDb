@@ -10,6 +10,7 @@ namespace LucentDb.Domain.Model
         public ValidationTestGroup(Connection connection, TestGroup testGroup)
         {
             TestGroupId = testGroup.Id;
+            Name = testGroup.Name;
             ValidationTests = new Collection<ValidationTest>();
             foreach (var test in testGroup.Tests)
             {
@@ -17,8 +18,9 @@ namespace LucentDb.Domain.Model
             }
         }
 
-        public int TestGroupId { get; private set; }
         public bool IsValid { get; private set; }
+        public string Name { get; private set; }
+        public int TestGroupId { get; private set; }
         public Collection<ValidationTest> ValidationTests { get; private set; }
 
         public Collection<ValidationResponse> Validate()
