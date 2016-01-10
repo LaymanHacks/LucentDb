@@ -63,6 +63,7 @@
     <Compile Include="IValidator.cs" />
     <Compile Include="ScriptResolver\ScriptResolverFactory.cs" />
     <Compile Include="ScriptResolver\SqlSnippetResolver.cs" />
+    <Compile Include="SomeClass.cs" />
     <Compile Include="SqlScriptRunner.cs" />
     <Compile Include="SqlScriptTest.cs" />
     <Compile Include="SqlScriptValidator.cs" />

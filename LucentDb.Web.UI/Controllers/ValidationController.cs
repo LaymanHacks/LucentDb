@@ -23,5 +23,24 @@ namespace LucentDb.Web.UI.Controllers
             return View();
         }
 
+
+        [Route("tests/{testId}/validate")]
+        [Route("connections/{connectionId}/tests/{testId}/validate")]
+        public ActionResult ValidateTest(int testId, int connectionId = 0)
+        {
+            ViewBag.testId = testId;
+            ViewBag.ConnectionId = connectionId;
+            return View();
+        }
+
+         [Route("projects/{projectId}/validate")]
+        [Route("connections/{connectionId}/projects/{projectId}/validate")]
+        public ActionResult ValidateProject(int projectId, int connectionId = 0)
+        {
+            ViewBag.projectId = projectId;
+            ViewBag.ConnectionId = connectionId;
+            return View();
+        }
+    
     }
 }

@@ -16,11 +16,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 ">
-                <div>{{vm.validationResult.name}}</div>
-                <div class="row" ng-repeat="test in vm.validationResult.validationTests">
-                    <div class="col-md-12 ">
-                        <div>{{test.response.testName}}</div>
-                    </div>
+                <div style=" font-weight: bold">{{vm.validationResult.name}}</div>
+                <div  style="padding: 10px; font-weight: bold; color:#9DAE74" ng-repeat="test in vm.validationResult.validationTests">
+                    <div>{{test.response.testName}}</div>
                 </div>
             </div>
         </div>

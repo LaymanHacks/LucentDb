@@ -226,6 +226,7 @@
     <Content Include="app\Test\Index.js" />
     <Content Include="app\Test\edit.js" />
     <Content Include="app\Validation\Index.js" />
+    <Content Include="app\Validation\ValidateProject.js" />
     <Content Include="app\Validation\ValidateTest.js" />
     <Content Include="app\Validation\ValidateTestGroup.js" />
     <Content Include="App_Data\LucentDb.mdf" />
@@ -567,6 +568,8 @@
     <Content Include="Views\ExpectedResultType\Edit.cshtml" />
     <Content Include="Views\ExpectedResultType\Index.cshtml" />
     <None Include="Views\Validation\Index.cshtml" />
+    <Content Include="Views\Validation\ValidateTest.cshtml" />
+    <Content Include="Views\Validation\ValidateProject.cshtml" />
     <None Include="Views\Validation\ValidateTestGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
