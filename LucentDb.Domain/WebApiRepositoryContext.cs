@@ -17,6 +17,7 @@ namespace LucentDb.Domain
             RunHistoryRepository = new WebApiRunHistoryRepository(baseWebApiAddress);
             TestRepository = new WebApiTestRepository(baseWebApiAddress);
             TestTypeRepository = new WebApiTestTypeRepository(baseWebApiAddress);
+            TestValueTypeRepository = new WebApiTestValueTypeRepository(baseWebApiAddress);
             AssertTypeRepository = new WebApiAssertTypeRepository(baseWebApiAddress);
             TestGroupRepository = new WebApiTestGroupRepository(baseWebApiAddress);
             RunHistoryDetailRepository = new WebApiRunHistoryDetailRepository(baseWebApiAddress);
@@ -34,5 +35,6 @@ namespace LucentDb.Domain
 
 
         public IRunHistoryDetailRepository RunHistoryDetailRepository { get; set; }
+        public ITestValueTypeRepository TestValueTypeRepository { get; set; }
     }
 }

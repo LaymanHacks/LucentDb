@@ -3,11 +3,12 @@
 @using LucentDb.Domain.Entities
 @model LucentDb.Domain.Entities.Test
 @{
+    
     var projectList = (List<Project>) ViewBag.Projects;
     var testGroupList = (List<TestGroup>)ViewBag.TestGroups;
     var testTypeList = (List<TestType>)ViewBag.TestTypes;
     var testProject = projectList.FirstOrDefault(p => p.ProjectId == Model.ProjectId);
-    var testGroup = testGroupList.First(p => p.Id == Model.GroupId);
+    var testGroup = Model.GroupId != null ? testGroupList.First(p => p.Id == Model.GroupId):null;
     
     //if (@Model != null)
     //{

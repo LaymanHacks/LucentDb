@@ -15,7 +15,7 @@ namespace LucentDb.Web.UI.Controllers
         }
 
         [Route("testgroups/{groupId}/validate")]
-        [Route("connections/{connectionId}/testgroups/{groupId}/validate")]
+        [Route("testgroups/{groupId}/connections/{connectionId}/validate")]
         public ActionResult ValidateTestGroup(int groupId, int connectionId = 0)
         {
             ViewBag.GroupId = groupId;
@@ -25,7 +25,7 @@ namespace LucentDb.Web.UI.Controllers
 
 
         [Route("tests/{testId}/validate")]
-        [Route("connections/{connectionId}/tests/{testId}/validate")]
+        [Route("tests/{testId}/connections/{connectionId}/validate")]
         public ActionResult ValidateTest(int testId, int connectionId = 0)
         {
             ViewBag.testId = testId;
@@ -34,7 +34,7 @@ namespace LucentDb.Web.UI.Controllers
         }
 
          [Route("projects/{projectId}/validate")]
-        [Route("connections/{connectionId}/projects/{projectId}/validate")]
+         [Route("projects/{projectId}/connections/{connectionId}/validate")]
         public ActionResult ValidateProject(int projectId, int connectionId = 0)
         {
             ViewBag.projectId = projectId;

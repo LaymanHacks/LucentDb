@@ -21,7 +21,7 @@ namespace LucentDb.Validator.Tests
             fakeResponseHandler.AddFakeResponse(new Uri("http://LucentDb.com/test.sql"), rMessage);
 
             var httpScriptResolver = new HttpScriptResolver("http://LucentDb.com/test.sql", fakeResponseHandler);
-            var response = httpScriptResolver.GetSqlScript();
+            var response = httpScriptResolver.GetTestValue();
 
             Assert.AreEqual(scriptValue, response);
         }

@@ -12,12 +12,14 @@ namespace LucentDb.Domain.Factories
         private readonly IExpectedResultRepository _expectedResultRepository;
         private readonly ITestRepository _testRepository;
         private readonly ITestTypeRepository _testTypeRepository;
+        private readonly ITestValueTypeRepository _testValueTypeRepository;
 
-        public TestFactory(ITestRepository testRepository, ITestTypeRepository testTypeRepository,
+        public TestFactory(ITestRepository testRepository, ITestTypeRepository testTypeRepository,ITestValueTypeRepository testValueTypeRepository,
             IExpectedResultRepository expectedResultRepository, IAssertTypeRepository assertTypeRepository)
         {
             _testRepository = testRepository;
             _testTypeRepository = testTypeRepository;
+            _testValueTypeRepository = testValueTypeRepository;
             _expectedResultRepository = expectedResultRepository;
             _assertTypeRepository = assertTypeRepository;
         }
@@ -28,6 +30,7 @@ namespace LucentDb.Domain.Factories
             if (test == null) throw new Exception("Test not found.");
 
             test.TestType = _testTypeRepository.GetDataById(test.TestTypeId).FirstOrDefault();
+            test.TestValueType = _testValueTypeRepository.GetDataById(test.TestValueTypeId).FirstOrDefault();
 
             test.ExpectedResults =
                 (Collection<ExpectedResult>) _expectedResultRepository.GetDataByTestId(test.Id);

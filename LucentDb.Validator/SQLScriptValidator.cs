@@ -12,7 +12,7 @@ namespace LucentDb.Validator
     public class SqlScriptValidator : LucentDbValidatorBase, IValidator
     {
         private readonly SqlScriptRunner _sqlScriptRunner;
-        private IScriptResolver _scriptResolver;
+        private ITestValueResolver _scriptResolver;
 
         public SqlScriptValidator(SqlScriptRunner sqlScriptRunner)
         {
@@ -26,9 +26,9 @@ namespace LucentDb.Validator
         public ValidationResponse Validate(Connection testConnection, Test test)
         {
             if (test == null) return null;
-            _scriptResolver = new ScriptResolverFactory(test).GetScriptResolver();
+            _scriptResolver = new TestValueResolverFactory(test).GetScriptResolver();
             if (_scriptResolver == null) return null;
-            var scriptValue = _scriptResolver.GetSqlScript();
+            var scriptValue = _scriptResolver.GetTestValue();
             var runLog = new StringBuilder();
             var resultMessage = new StringBuilder();
             var valResponse = new ValidationResponse

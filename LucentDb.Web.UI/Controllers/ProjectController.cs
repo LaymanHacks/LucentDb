@@ -25,30 +25,32 @@ namespace LucentDb.Web.UI.Controllers
         }
 
         // GET: Project
+        [Route("Projects")]
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Project/Details/5
-        [Route("Project/Details/{projectId}", Name = "GetProjectDetails")]
+        // GET: Projects/Details/5
+        [Route("Projects/Details/{projectId}", Name = "GetProjectDetails")]
         public ActionResult Details(int projectId)
         {
             return View(_dbProjectRepository.GetDataByProjectId(projectId).FirstOrDefault());
         }
 
-        // GET: Project/Create
+       
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Project/Create
+        // POST: Projects/Create
         [HttpPost]
         public ActionResult Create(Project project)
         {
             try
             {
+                project.IsActive = true;
                 _dbProjectRepository.Insert(project);
                 return RedirectToAction("Index");
             }
@@ -58,8 +60,9 @@ namespace LucentDb.Web.UI.Controllers
             }
         }
 
-        // GET: Project/Edit/5
-        [Route("Project/Edit/{projectId}", Name = "GetProjectEdit")]
+        // GET: Projects/Edit/5
+        [Route("Projects/{projectId}")]
+        [Route("Projects/{projectId}/Edit", Name = "GetProjectEdit")]
         public ActionResult Edit(int projectId)
         {
             var project = _dbProjectRepository.GetDataByProjectId(projectId).FirstOrDefault();
@@ -67,8 +70,9 @@ namespace LucentDb.Web.UI.Controllers
             return View(project);
         }
 
-        // POST: Project/Edit/5
-        [Route("Project/Edit/{projectId}", Name = "PostProjectEdit")]
+        // POST: Projects/Edit/5
+         [Route("Projects/{projectId}")]
+        [Route("Projects/{projectId}/Edit", Name = "PostProjectEdit")]
         [HttpPost]
         public ActionResult Edit(int projectId, Project project)
         {

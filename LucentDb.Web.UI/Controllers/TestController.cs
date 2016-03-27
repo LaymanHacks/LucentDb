@@ -32,13 +32,13 @@ namespace LucentDb.Web.UI.Controllers
         }
 
         // GET: Test
+         [Route("Tests")]
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Test/Details/5
-        [Route("Test/Details/{id}")]
+        [Route("Tests/{id}/Details")]
         public ActionResult Details(int id)
         {
             var test = _dbTestRepository.GetDataById(id).FirstOrDefault();
@@ -49,7 +49,7 @@ namespace LucentDb.Web.UI.Controllers
             return View(test);
         }
 
-        // GET: Test/Create
+        [Route("Tests/Create")]
         public ActionResult Create()
         {
             ViewBag.TestTypes = _dbTestTypeRepository.GetData();
@@ -59,8 +59,8 @@ namespace LucentDb.Web.UI.Controllers
             return View();
         }
 
-        // POST: Test/Create
-        [HttpPost]
+         [Route("Tests/Create")]
+       [HttpPost]
         public ActionResult Create(Test test)
         {
             try
@@ -74,9 +74,7 @@ namespace LucentDb.Web.UI.Controllers
             }
         }
 
-        // GET: Test/Edit/5
-        [Route("Test/Edit/{id}", Name = "GetTestEdit")]
-        [Route("Test/{id}")]
+       [Route("Tests/{id}")]
         public ActionResult Edit(int id = 0)
         {
             if (id == 0) return View("Index");
@@ -88,18 +86,21 @@ namespace LucentDb.Web.UI.Controllers
             return View(test);
         }
 
-        // POST: Test/Edit/5
-        [Route("Test/Edit/{id}", Name = "PostTestEdit")]
+        [Route("Tests/{id}")]
         [HttpPost]
         public ActionResult Edit(int id, Test test)
         {
             try
             {
+                test.TestValueTypeId = 1;
                 _dbTestRepository.Update(test);
                 return RedirectToAction("Index");
             }
             catch
             {
+                ViewBag.TestTypes = _dbTestTypeRepository.GetData().ToList();
+                ViewBag.Projects = _dbProjectRepository.GetData().ToList();
+                ViewBag.TestGroups = _dbTestGroupRepository.GetData().ToList();
                 return View(test);
             }
         }

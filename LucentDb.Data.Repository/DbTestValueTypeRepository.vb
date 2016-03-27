@@ -10,7 +10,6 @@
 Imports System
 Imports System.Data
 Imports System.Collections.Generic
-Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 Imports LucentDb.Data.DbCommandProvider
 Imports System.Collections.ObjectModel

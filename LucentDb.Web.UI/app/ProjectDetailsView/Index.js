@@ -20,7 +20,7 @@
         vm.sortExpression = "";
         vm.currentPage = 1;
         vm.pageSize = 10;
-        vm.deleteProjectDetailsView = deleteProjectDetailsView;
+      
 
         activate();
 
@@ -40,9 +40,6 @@
             });
         }
 
-        function deleteProjectDetailsView(projectDetailsViewId) {
-            alert("test worked");
-            //  return projectDetailsViewDataService.deleteProjectDetailsView(projectDetailsViewId);
-        };
+    
     }
 })();

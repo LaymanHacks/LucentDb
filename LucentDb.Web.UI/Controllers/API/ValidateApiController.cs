@@ -30,7 +30,7 @@ namespace LucentDb.Web.UI.Controllers.API
             _dataRepository = new DbRepositoryContext();
             _connectionFactory = new ConnectionFactory(_dataRepository.ConnectionRepository,
                 _dataRepository.ConnectionProviderRepository);
-            _testFactory = new TestFactory(_dataRepository.TestRepository, _dataRepository.TestTypeRepository,
+            _testFactory = new TestFactory(_dataRepository.TestRepository, _dataRepository.TestTypeRepository, _dataRepository.TestValueTypeRepository,
                 _dataRepository.ExpectedResultRepository, _dataRepository.AssertTypeRepository);
             _projectFactory = new ProjectFactory(_dataRepository.ProjectRepository, _dataRepository.TestRepository,
                 _dataRepository.TestGroupRepository,
@@ -40,7 +40,7 @@ namespace LucentDb.Web.UI.Controllers.API
         }
 
         [Route("api/testgroups/{groupId}/validate")]
-        [Route("api/connections/{connectionId}/testgroups/{groupId}/validate")]
+        [Route("api/testgroups/{groupId}/connections/{connectionId}/validate")]
         [HttpGet]
         public HttpResponseMessage ValidateGroup(int groupId, int connectionId = 0)
         {
@@ -51,16 +51,10 @@ namespace LucentDb.Web.UI.Controllers.API
                 Connection connection;
                 if (connectionId == 0)
                 {
-                    connection = _dataRepository.ConnectionRepository
-                        .GetDataByProjectId(testGroup.ProjectId)
-                        .FirstOrDefault(x => x.IsActive & x.IsDefault & x.ProjectId == testGroup.ProjectId);
-                    if (connection != null)
-                    {
-                        connection.ConnectionProvider =
-                            _dataRepository.ConnectionProviderRepository.GetDataById(connection.ConnectionProviderId)
-                                .FirstOrDefault();
+                    connection = GetDefaultConnectionByProjectId(testGroup.ProjectId);
+
                         connectionId = connection.ConnectionId;
-                    }
+              
                 }
                 else
                 {
@@ -74,7 +68,7 @@ namespace LucentDb.Web.UI.Controllers.API
                 var valTestGroup = new ValidationTestGroup(connection, testGroup);
 
                 var valCollection = valTestGroup.Validate();
-                PersistValidationResults(valCollection, groupId, null);
+                PersistValidationResults(valCollection,connectionId,  null, groupId, null);
 
                 return Request.CreateResponse(HttpStatusCode.OK, valTestGroup);
             }
@@ -85,7 +79,7 @@ namespace LucentDb.Web.UI.Controllers.API
         }
 
         [Route("api/projects/{projectId}/validate")]
-        [Route("api/connections/{connectionId}/projects/{projectId}/validate")]
+        [Route("api/projects/{projectId}/connections/{connectionId}/validate")]
         [HttpGet]
         public HttpResponseMessage ValidateProject(int projectId, int connectionId = 0)
         {
@@ -95,16 +89,8 @@ namespace LucentDb.Web.UI.Controllers.API
                 Connection connection;
                 if (connectionId == 0)
                 {
-                    connection = _dataRepository.ConnectionRepository
-                        .GetDataByProjectId(projectId)
-                        .FirstOrDefault(x => x.IsActive & x.IsDefault & x.ProjectId == projectId);
-                    if (connection != null)
-                    {
-                        connection.ConnectionProvider =
-                            _dataRepository.ConnectionProviderRepository.GetDataById(connection.ConnectionProviderId)
-                                .FirstOrDefault();
-                        connectionId = connection.ConnectionId;
-                    }
+                    connection = GetDefaultConnectionByProjectId(projectId);
+                    connectionId = connection.ConnectionId;
                 }
                 else
                 {
@@ -126,7 +112,7 @@ namespace LucentDb.Web.UI.Controllers.API
 
 
                 var valCollection = validationProject.Validate();
-                PersistValidationResults(valCollection, null, projectId);
+                PersistValidationResults(valCollection, connectionId, null, null, projectId);
                 return Request.CreateResponse(HttpStatusCode.OK, validationProject);
             }
             catch (Exception ex)
@@ -139,9 +125,23 @@ namespace LucentDb.Web.UI.Controllers.API
             }
         }
 
+        private Connection GetDefaultConnectionByProjectId(int projectId)
+        {
+            var connection = _dataRepository.ConnectionRepository
+                .GetDataByProjectId(projectId)
+                .FirstOrDefault(x => x.IsActive & x.IsDefault & x.ProjectId == projectId);
+            if (connection != null)
+            {
+                connection.ConnectionProvider =
+                    _dataRepository.ConnectionProviderRepository.GetDataById(connection.ConnectionProviderId)
+                        .FirstOrDefault();
+               }
+            return connection;
+        }
+
         //[Route("api/ValidateTest/{testId}/{connectionId}", Name = "ValidateTestRoute")]
         [Route("api/tests/{testId}/validate")]
-        [Route("api/connections/{connectionId}/tests/{testId}/validate")]
+        [Route("api/tests/{testId}/connections/{connectionId}/validate")]
         [HttpGet]
         public HttpResponseMessage ValidateTest(int testId, int connectionId = 0)
         {
@@ -172,7 +172,7 @@ namespace LucentDb.Web.UI.Controllers.API
             var valTest = new ValidationTest(connection, test);
 
             var valResult = new Collection<ValidationResponse> {valTest.Validate()};
-            PersistValidationResults(valResult, null, null);
+            PersistValidationResults(valResult, connectionId, testId, null, null);
 
             return Request.CreateResponse(HttpStatusCode.OK, valResult);
         }
@@ -192,10 +192,10 @@ namespace LucentDb.Web.UI.Controllers.API
             return valResponse;
         }
 
-        private void PersistValidationResults(IEnumerable<ValidationResponse> valCollection, int? groupId,
+        private void PersistValidationResults(IEnumerable<ValidationResponse> valCollection,int connectionId,int? testId, int? groupId,
             int? projectId)
         {
-            var rHistory = ProcessTestResults(valCollection, groupId, projectId);
+            var rHistory = ProcessTestResults(valCollection, connectionId, testId, groupId, projectId);
             //need to make this a transaction
             var runHistoryId = _dataRepository.RunHistoryRepository.Insert(rHistory);
             foreach (var rHistoryDetails in rHistory.RunHistoryDetails)
@@ -205,12 +205,14 @@ namespace LucentDb.Web.UI.Controllers.API
             }
         }
 
-        private static RunHistory ProcessTestResults(IEnumerable<ValidationResponse> valCollection,
-            int? groupId, int? projectId)
+        private static RunHistory ProcessTestResults(IEnumerable<ValidationResponse> valCollection,int connectionId, int? testId, int? groupId, int? projectId )
         {
+            decimal totalDuration = 0;
+            var isValid = true;
             var runHistoryLog = new StringBuilder();
             var runHistory = new RunHistory
             {
+                TestId = testId,
                 GroupId = groupId,
                 ProjectId = projectId,
                 RunDateTime = DateTime.Now,
@@ -218,6 +220,8 @@ namespace LucentDb.Web.UI.Controllers.API
             };
             foreach (var valResult in valCollection)
             {
+                isValid = valResult.IsValid && isValid;
+                totalDuration += valResult.Duration;
                 var runHistoryDetail = new RunHistoryDetail
                 {
                     TestId = valResult.TestId,
@@ -226,11 +230,15 @@ namespace LucentDb.Web.UI.Controllers.API
                     Duration = valResult.Duration,
                     ResultString = valResult.ResultMessage
                 };
+
                 runHistoryLog.AppendLine(valResult.TestName);
                 runHistoryLog.AppendLine(valResult.ResultMessage);
                 runHistoryLog.AppendLine(valResult.RunLog);
                 runHistory.RunHistoryDetails.Add(runHistoryDetail);
             }
+            runHistory.TotalDuration = totalDuration;
+            runHistory.ConnectionId = connectionId;
+            runHistory.IsValid = isValid;
             runHistory.RunLog = runHistoryLog.ToString();
             return runHistory;
         }

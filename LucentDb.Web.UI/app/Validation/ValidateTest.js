@@ -22,7 +22,8 @@
 
         function validateTest(testId, connectionId) {
             return validationDataService.validateTest(testId, connectionId).then(function (results) {
-                return vm.validationResult = results.data[0];
+                return vm.validationResult = results.data[0]
+                ;
             });
         };
 

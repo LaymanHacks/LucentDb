@@ -62,6 +62,7 @@
     <Compile Include="DbTestGroupRepository.vb" />
     <Compile Include="DbTestRepository.vb" />
     <Compile Include="DbTestTypeRepository.vb" />
+    <Compile Include="DbTestValueTypeRepository.vb" />
     <Compile Include="SafeDataReader.vb" />
   </ItemGroup>
   <ItemGroup>

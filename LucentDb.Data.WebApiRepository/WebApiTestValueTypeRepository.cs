@@ -15,7 +15,6 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using LucentDb.Data.Repository;
 using LucentDb.Domain.Entities;
-using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 
 
@@ -96,7 +95,7 @@ namespace LucentDb.Data.WebApiRepository
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.GetAsync(UrlBase).Result;
-                if (!response.IsSuccessStatusCode) return null;
+                if (!response.IsSuccessStatusCode) return 0;
                 var resultString = response.Content.ReadAsStringAsync().Result;
                 var returnValue  = Convert.ToInt32(resultString);
                 return returnValue;
@@ -105,11 +104,11 @@ namespace LucentDb.Data.WebApiRepository
 
         public Int32 Insert(TestValueType testValueType)
         {
-            return Insert((Int32)testValueType.TestTypeId, testValueType.Name, (bool)testValueType.IsActive);
+            return Insert(testValueType.TestTypeId, testValueType.Name, testValueType.IsActive);
         }
 
 
-        public PagedResult<TestValueType> GetDataPageable(string sortExpression, Int32 page, Int32 pageSize)
+        public PagedResult<TestValueType> GetDataPageable(string sortExpression, int page, int pageSize)
         {
             using (var client = new HttpClient(_messageHandler))
             {
