@@ -45,10 +45,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
  .isValid {
 background: #efffe6; /* Old browsers */
-background: -moz-linear-gradient(top, #efffe6 0%, #d4f3c3 99%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top, #efffe6 0%,#d4f3c3 99%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom, #efffe6 0%,#d4f3c3 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efffe6', endColorstr='#d4f3c3',GradientType=0 );
+background: -moz-linear-gradient(top, #F6FCF2  0%, #EFFFE7  99%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #F6FCF2  0%,#EFFFE7  99%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #F6FCF2  6 0%,#EFFFE7 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F6FCF2 ', endColorstr='#EFFFE7',GradientType=0 );
  color: #0f250f;
      text-shadow: 0 1px 0 #ffffff;
      text-shadow: 0 1px 0 rgba(255,255,255,0.6);
@@ -57,10 +57,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efffe6', end
 
  .isInvalid {
 background: #fff7f7; /* Old browsers */
-background: -moz-linear-gradient(top, #fff7f7 0%, #ffeded 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top, #fff7f7 0%,#ffeded 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom, #fff7f7 0%,#ffeded 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff7f7', endColorstr='#ffeded',GradientType=0 ); color: #0f250f;
+background: -moz-linear-gradient(top, #fff9f9 0%, #fff3f3 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #fff9f9 0%,#fff3f3 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #fff9f9 0%,#fff3f3 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff9f9', endColorstr='#fff3f3',GradientType=0 ); color: #0f250f;
      text-shadow: 0 1px 0 #ffffff;
      text-shadow: 0 1px 0 rgba(255,255,255,0.6);
  }
@@ -92,7 +92,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff7f7', end
                     </div>
                     <div class="col-md-2">
                         <div style="float: right">
-                            <a class="btn btn-primary" href="api/Projects/{{item.projectId}}/validate"><i class="fa fa-play"></i> Run</a>
+                            <a class="btn btn-primary" href="Projects/{{item.projectId}}/validate"><i class="fa fa-play"></i> Run</a>
                           </div>
                     </div>
                 </div>
