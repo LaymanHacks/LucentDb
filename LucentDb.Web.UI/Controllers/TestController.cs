@@ -49,6 +49,15 @@ namespace LucentDb.Web.UI.Controllers
             return View(test);
         }
 
+        [Route("Projects/{projectId}/Tests")]
+        public ActionResult GetTestsByProject(int projectId)
+        {
+            var test = _dbTestRepository.GetActiveDataByProjectId(projectId);
+          
+
+            return View(test);
+        }
+
         [Route("Tests/Create")]
         public ActionResult Create()
         {

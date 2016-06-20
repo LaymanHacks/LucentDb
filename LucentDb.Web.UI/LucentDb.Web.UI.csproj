@@ -681,6 +681,7 @@
     <Content Include="Views\ExpectedResultType\Details.cshtml" />
     <Content Include="Views\ExpectedResultType\Edit.cshtml" />
     <Content Include="Views\ExpectedResultType\Index.cshtml" />
+    <Content Include="Views\Test\GetTestsByProject.cshtml" />
     <None Include="Views\Validation\Index.cshtml" />
     <Content Include="Views\Validation\ValidateTest.cshtml" />
     <Content Include="Views\Validation\ValidateProject.cshtml" />
