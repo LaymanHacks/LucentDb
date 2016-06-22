@@ -23,18 +23,20 @@
  */
 
 (function() {
-    CodeMirror.defineOption("autoCloseTags", false, function(cm, val, old) {
-        if (val && (old == CodeMirror.Init || !old)) {
-            var map = { name: "autoCloseTags" };
-            if (typeof val != "object" || val.whenClosing)
-                map["'/'"] = function(cm) { autoCloseTag(cm, "/"); };
-            if (typeof val != "object" || val.whenOpening)
-                map["'>'"] = function(cm) { autoCloseTag(cm, ">"); };
-            cm.addKeyMap(map);
-        } else if (!val && (old != CodeMirror.Init && old)) {
-            cm.removeKeyMap("autoCloseTags");
-        }
-    });
+    CodeMirror.defineOption("autoCloseTags",
+        false,
+        function(cm, val, old) {
+            if (val && (old == CodeMirror.Init || !old)) {
+                var map = { name: "autoCloseTags" };
+                if (typeof val != "object" || val.whenClosing)
+                    map["'/'"] = function(cm) { autoCloseTag(cm, "/"); };
+                if (typeof val != "object" || val.whenOpening)
+                    map["'>'"] = function(cm) { autoCloseTag(cm, ">"); };
+                cm.addKeyMap(map);
+            } else if (!val && (old != CodeMirror.Init && old)) {
+                cm.removeKeyMap("autoCloseTags");
+            }
+        });
 
     var htmlDontClose = [
         "area", "base", "br", "col", "command", "embed", "hr", "img", "input", "keygen", "link", "meta", "param",

@@ -35,9 +35,10 @@
         }
 
         function getDataPageable(sortExpression, page, pageSize) {
-            return testDataService.getDataPageable(sortExpression, page, pageSize).then(function(results) {
-                return vm.pageableResults = results.data;
-            });
+            return testDataService.getDataPageable(sortExpression, page, pageSize)
+                .then(function(results) {
+                    return vm.pageableResults = results.data;
+                });
         }
 
         function deleteTest(testId) {

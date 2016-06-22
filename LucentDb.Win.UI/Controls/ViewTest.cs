@@ -49,7 +49,8 @@ namespace LucentDb.Win.UI.Controls
                     , _test);
 
 
-            repo.RunHistoryRepository.Insert(_test.Id,  null, null, connection.ConnectionId, valResult.RunDateTime, valResult.Duration, valResult.IsValid, valResult.RunLog);
+            repo.RunHistoryRepository.Insert(_test.Id, null, null, connection.ConnectionId, valResult.RunDateTime,
+                valResult.Duration, valResult.IsValid, valResult.RunLog);
             MessageBox.Show(valResult.IsValid.ToString());
         }
     }

@@ -32,7 +32,7 @@ namespace LucentDb.Web.UI.Controllers
         }
 
         // GET: Test
-         [Route("Tests")]
+        [Route("Tests")]
         public ActionResult Index()
         {
             return View();
@@ -53,7 +53,7 @@ namespace LucentDb.Web.UI.Controllers
         public ActionResult GetTestsByProject(int projectId)
         {
             var test = _dbTestRepository.GetActiveDataByProjectId(projectId);
-          
+
 
             return View(test);
         }
@@ -64,12 +64,12 @@ namespace LucentDb.Web.UI.Controllers
             ViewBag.TestTypes = _dbTestTypeRepository.GetData();
             ViewBag.Projects = _dbProjectRepository.GetData();
             ViewBag.TestGroups = _dbTestGroupRepository.GetData();
-       
+
             return View();
         }
 
-         [Route("Tests/Create")]
-       [HttpPost]
+        [Route("Tests/Create")]
+        [HttpPost]
         public ActionResult Create(Test test)
         {
             try
@@ -83,7 +83,7 @@ namespace LucentDb.Web.UI.Controllers
             }
         }
 
-       [Route("Tests/{id}")]
+        [Route("Tests/{id}")]
         public ActionResult Edit(int id = 0)
         {
             if (id == 0) return View("Index");

@@ -10,11 +10,11 @@ namespace LucentDb.Domain.Factories
     {
         private readonly IProjectRepository _projectRepository;
         private readonly TestFactory _testFactory;
-        private readonly ITestRepository _testRepository;
         private readonly ITestGroupRepository _testGroupRepository;
+        private readonly ITestRepository _testRepository;
 
         public ProjectFactory(IProjectRepository projectRepository, ITestRepository testRepository,
-             ITestGroupRepository testGroupRepository, TestFactory testFactory)
+            ITestGroupRepository testGroupRepository, TestFactory testFactory)
         {
             _projectRepository = projectRepository;
             _testRepository = testRepository;
@@ -38,24 +38,23 @@ namespace LucentDb.Domain.Factories
             {
                 testGroup.Tests = new Collection<Test>();
                 var dTests = new Collection<Test>();
-                var @group = testGroup;
-                foreach (var test in project.Tests.Where(test =>  test.GroupId == @group.Id))
+                var group = testGroup;
+                foreach (var test in project.Tests.Where(test => test.GroupId == group.Id))
                 {
-                    testGroup.Tests.Add(test);   
+                    testGroup.Tests.Add(test);
                     dTests.Add(test);
                 }
 
                 foreach (var test in dTests)
                 {
                     project.Tests.Remove(test);
-                }           
-              
-                project.TestGroups.Add(testGroup);
-               
-            }
-            
+                }
 
-         return  project;
+                project.TestGroups.Add(testGroup);
+            }
+
+
+            return project;
         }
     }
 }

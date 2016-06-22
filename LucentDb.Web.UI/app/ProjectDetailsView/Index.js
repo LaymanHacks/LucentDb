@@ -3,7 +3,8 @@
     "use strict";
 
     var controllerId = "projectDetailsViewIndexCtrl";
-    angular.module("app").controller(controllerId, ["common", "projectDetailsViewDataService", projectDetailsViewIndexCtrl]);
+    angular.module("app")
+        .controller(controllerId, ["common", "projectDetailsViewDataService", projectDetailsViewIndexCtrl]);
 
     function projectDetailsViewIndexCtrl(common, projectDetailsViewDataService) {
         var getLogFn = common.logger.getLogFn;
@@ -20,7 +21,7 @@
         vm.sortExpression = "";
         vm.currentPage = 1;
         vm.pageSize = 10;
-      
+
 
         activate();
 
@@ -35,11 +36,12 @@
         }
 
         function getDataPageable(sortExpression, page, pageSize) {
-            return projectDetailsViewDataService.getDataPageable(sortExpression, page, pageSize).then(function(results) {
-                return vm.pageableResults = results.data;
-            });
+            return projectDetailsViewDataService.getDataPageable(sortExpression, page, pageSize)
+                .then(function(results) {
+                    return vm.pageableResults = results.data;
+                });
         }
 
-    
+
     }
 })();

@@ -62,17 +62,20 @@
     function doSearch(cm, rev) {
         var state = getSearchState(cm);
         if (state.query) return findNext(cm, rev);
-        dialog(cm, queryDialog, "Search for:", function(query) {
-            cm.operation(function() {
-                if (!query || state.query) return;
-                state.query = parseQuery(query);
-                cm.removeOverlay(state.overlay);
-                state.overlay = searchOverlay(query);
-                cm.addOverlay(state.overlay);
-                state.posFrom = state.posTo = cm.getCursor();
-                findNext(cm, rev);
+        dialog(cm,
+            queryDialog,
+            "Search for:",
+            function(query) {
+                cm.operation(function() {
+                    if (!query || state.query) return;
+                    state.query = parseQuery(query);
+                    cm.removeOverlay(state.overlay);
+                    state.overlay = searchOverlay(query);
+                    cm.addOverlay(state.overlay);
+                    state.posFrom = state.posTo = cm.getCursor();
+                    findNext(cm, rev);
+                });
             });
-        });
     }
 
     function findNext(cm, rev) {
@@ -104,45 +107,54 @@
     var doReplaceConfirm = "Replace? <button>Yes</button> <button>No</button> <button>Stop</button>";
 
     function replace(cm, all) {
-        dialog(cm, replaceQueryDialog, "Replace:", function(query) {
-            if (!query) return;
-            query = parseQuery(query);
-            dialog(cm, replacementQueryDialog, "Replace with:", function(text) {
-                if (all) {
-                    cm.operation(function() {
-                        for (var cursor = getSearchCursor(cm, query); cursor.findNext();) {
-                            if (typeof query != "string") {
-                                var match = cm.getRange(cursor.from(), cursor.to()).match(query);
-                                cursor.replace(text.replace(/\$(\d)/, function(_, i) { return match[i]; }));
-                            } else cursor.replace(text);
+        dialog(cm,
+            replaceQueryDialog,
+            "Replace:",
+            function(query) {
+                if (!query) return;
+                query = parseQuery(query);
+                dialog(cm,
+                    replacementQueryDialog,
+                    "Replace with:",
+                    function(text) {
+                        if (all) {
+                            cm.operation(function() {
+                                for (var cursor = getSearchCursor(cm, query); cursor.findNext();) {
+                                    if (typeof query != "string") {
+                                        var match = cm.getRange(cursor.from(), cursor.to()).match(query);
+                                        cursor.replace(text.replace(/\$(\d)/, function(_, i) { return match[i]; }));
+                                    } else cursor.replace(text);
+                                }
+                            });
+                        } else {
+                            clearSearch(cm);
+                            var cursor = getSearchCursor(cm, query, cm.getCursor());
+
+                            function advance() {
+                                var start = cursor.from(), match;
+                                if (!(match = cursor.findNext())) {
+                                    cursor = getSearchCursor(cm, query);
+                                    if (!(match = cursor.findNext()) ||
+                                    (start && cursor.from().line == start.line && cursor.from().ch == start.ch)) return;
+                                }
+                                cm.setSelection(cursor.from(), cursor.to());
+                                confirmDialog(cm,
+                                    doReplaceConfirm,
+                                    "Replace?",
+                                    [function() { doReplace(match); }, advance]);
+                            }
+
+                            function doReplace(match) {
+                                cursor.replace(typeof query == "string"
+                                    ? text
+                                    : text.replace(/\$(\d)/, function(_, i) { return match[i]; }));
+                                advance();
+                            }
+
+                            advance();
                         }
                     });
-                } else {
-                    clearSearch(cm);
-                    var cursor = getSearchCursor(cm, query, cm.getCursor());
-
-                    function advance() {
-                        var start = cursor.from(), match;
-                        if (!(match = cursor.findNext())) {
-                            cursor = getSearchCursor(cm, query);
-                            if (!(match = cursor.findNext()) ||
-                            (start && cursor.from().line == start.line && cursor.from().ch == start.ch)) return;
-                        }
-                        cm.setSelection(cursor.from(), cursor.to());
-                        confirmDialog(cm, doReplaceConfirm, "Replace?",
-                        [function() { doReplace(match); }, advance]);
-                    }
-
-                    function doReplace(match) {
-                        cursor.replace(typeof query == "string" ? text :
-                            text.replace(/\$(\d)/, function(_, i) { return match[i]; }));
-                        advance();
-                    }
-
-                    advance();
-                }
             });
-        });
     }
 
     CodeMirror.commands.find = function(cm) {

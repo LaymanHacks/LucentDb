@@ -1,28 +1,33 @@
-@using System.Collections
-@using System.Diagnostics
 @using LucentDb.Domain.Entities
 @model LucentDb.Domain.Entities.Test
 @{
-    
+
     var projectList = (List<Project>) ViewBag.Projects;
-    var testGroupList = (List<TestGroup>)ViewBag.TestGroups;
-    var testTypeList = (List<TestType>)ViewBag.TestTypes;
+    var testGroupList = (List<TestGroup>) ViewBag.TestGroups;
+    var testTypeList = (List<TestType>) ViewBag.TestTypes;
     var testProject = projectList.FirstOrDefault(p => p.ProjectId == Model.ProjectId);
-    var testGroup = Model.GroupId != null ? testGroupList.First(p => p.Id == Model.GroupId):null;
-    
+    var testGroup = Model.GroupId != null ? testGroupList.First(p => p.Id == Model.GroupId) : null;
+
     //if (@Model != null)
     //{
-        var selectListTestTypes = new SelectList(testTypeList, "Id", "Name", @Model.TestTypeId);
-        var selectListProjects = new SelectList(projectList, "ProjectId", "Name", @Model.ProjectId);
-        var selectListTestGroups = new SelectList(testGroupList, "Id", "Name", @Model.GroupId);
-  //  }
+    var selectListTestTypes = new SelectList(testTypeList, "Id", "Name", Model.TestTypeId);
+    var selectListProjects = new SelectList(projectList, "ProjectId", "Name", Model.ProjectId);
+    var selectListTestGroups = new SelectList(testGroupList, "Id", "Name", Model.GroupId);
+    //  }
 }
 <ul class="breadcrumb">
     @if (testProject != null)
-    {<li><a href="../../project/details/@testProject.ProjectId">@testProject.Name</a>
-    </li>}
-    @if (@testGroup != null)
-    {<li><a href="../../testGroup/details/@testGroup.Id">@testGroup.Name</a></li>}
+    {
+        <li>
+            <a href="../../project/details/@testProject.ProjectId">@testProject.Name</a>
+        </li>
+    }
+    @if (testGroup != null)
+    {
+        <li>
+            <a href="../../testGroup/details/@testGroup.Id">@testGroup.Name</a>
+        </li>
+    }
     <li class="active">@Model.Name</li>
 </ul>
 
@@ -33,11 +38,11 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-           
+
 
             <div class="form-vertical">
                 <h2>Test - @Model.Id</h2>
-                <hr />
+                <hr/>
 
                 <div class="form-group">
                     <label for="txtName" class="control-label">Name</label>
@@ -48,59 +53,59 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.TestValue, new { @class = "control-label" })
+                    @Html.LabelFor(model => model.TestValue, new {@class = "control-label"})
                     <div>
                         <textarea id="testvalue" name="testvalue" class="form-control" rows="3">@Model.TestValue</textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.TestTypeId, new { @class = "control-label" })
+                    @Html.LabelFor(model => model.TestTypeId, new {@class = "control-label"})
                     <div>
-                        @Html.DropDownListFor(model => model.TestTypeId, @selectListTestTypes, "--Select--", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.TestTypeId, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.TestTypeId, selectListTestTypes, "--Select--", new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.TestTypeId, "", new {@class = "text-danger"})
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ProjectId, new { @class = "control-label" })
+                    @Html.LabelFor(model => model.ProjectId, new {@class = "control-label"})
                     <div>
-                        @Html.DropDownListFor(model => model.ProjectId, @selectListProjects, "--Select--", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.ProjectId, selectListProjects, "--Select--", new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.ProjectId, "", new {@class = "text-danger"})
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.GroupId, new { @class = "control-label" })
+                    @Html.LabelFor(model => model.GroupId, new {@class = "control-label"})
                     <div>
-                        @Html.DropDownListFor(model => model.GroupId, @selectListTestGroups, "--Select--", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.GroupId, selectListTestGroups, "--Select--", new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.ProjectId, "", new {@class = "text-danger"})
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
+                    @Html.LabelFor(model => model.IsActive, new {@class = "control-label"})
                     <div>
                         @Html.EditorFor(model => model.IsActive)
 
-                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.IsActive, "", new {@class = "text-danger"})
                     </div>
                 </div>
 
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="button" class="btn btn-default" value="Cancel" onclick="location.href = '@Url.Action("Index")'" />
-                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <input type="button" class="btn btn-default" value="Cancel" onclick="location.href = '@Url.Action("Index")'"/>
+                        <input type="submit" value="Save" class="btn btn-primary"/>
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        @Scripts.Render("~/bundles/LucentDbServices")
-        <script src="~/app/services/ExpectedResultDataService.js"></script>
-        <script src="~/app/Test/edit.js"></script>
-    }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/LucentDbServices")
+    <script src="~/app/services/ExpectedResultDataService.js"></script>
+    <script src="~/app/Test/edit.js"></script>
+}

@@ -1,4 +1,4 @@
-﻿(function () {
+﻿(function() {
     "use strict";
 
     var controllerId = "validateTestCtrl";
@@ -17,14 +17,14 @@
         function activate() {
             var promises = [validateTest(vm.testId, vm.connectionId)];
             common.activateController(promises, controllerId)
-                .then(function () { });
+                .then(function() {});
         }
 
         function validateTest(testId, connectionId) {
-            return validationDataService.validateTest(testId, connectionId).then(function (results) {
-                return vm.validationResult = results.data[0]
-                ;
-            });
+            return validationDataService.validateTest(testId, connectionId)
+                .then(function(results) {
+                    return vm.validationResult = results.data[0];
+                });
         };
 
     }

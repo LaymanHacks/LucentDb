@@ -4,24 +4,42 @@ Imports System.Data
 
 Namespace LucentDb.Data.DbCommandProvider
     Public Interface IDbRunHistoryCommandProvider
-        ReadOnly Property RunHistoryDbConnectionHolder() As DbConnectionHolder
+        ReadOnly Property RunHistoryDbConnectionHolder As DbConnectionHolder
         ReadOnly Property DbConnectionName As String
         Function GetGetDataDbCommand() As IDbCommand
-        Function GetUpdateDbCommand(ByVal testId As Nullable(Of Int32), ByVal projectId As Nullable(Of Int32), ByVal groupId As Nullable(Of Int32), ByVal connectionId As Nullable(Of Int32), ByVal runDateTime As DateTime, ByVal totalDuration As Nullable(Of Decimal), ByVal isValid As Boolean, ByVal runLog As String, ByVal id As Int64) As IDbCommand
-        Function GetDeleteDbCommand(ByVal id As Int64) As IDbCommand
-        Function GetInsertDbCommand(ByVal testId As Nullable(Of Int32), ByVal projectId As Nullable(Of Int32), ByVal groupId As Nullable(Of Int32), ByVal connectionId As Nullable(Of Int32), ByVal runDateTime As DateTime, ByVal totalDuration As Nullable(Of Decimal), ByVal isValid As Boolean, ByVal runLog As String) As IDbCommand
-        Function GetGetDataPageableDbCommand(ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As IDbCommand
-        Function GetGetRowCountDbCommand() As IDbCommand
-        Function GetGetDataByIdDbCommand(ByVal id As Int64) As IDbCommand
-        Function GetGetDataByProjectIdDbCommand(ByVal projectId As Int32) As IDbCommand
-        Function GetGetDataByProjectIdPageableDbCommand(ByVal projectId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As IDbCommand
-        Function GetGetDataByProjectIdRowCountDbCommand(ByVal projectId As Int32) As IDbCommand
-        Function GetGetDataByTestIdDbCommand(ByVal testId As Int32) As IDbCommand
-        Function GetGetDataByTestIdPageableDbCommand(ByVal testId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As IDbCommand
-        Function GetGetDataByTestIdRowCountDbCommand(ByVal testId As Int32) As IDbCommand
-        Function GetGetDataByGroupIdDbCommand(ByVal groupId As Int32) As IDbCommand
-        Function GetGetDataByGroupIdPageableDbCommand(ByVal groupId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As IDbCommand
-        Function GetGetDataByGroupIdRowCountDbCommand(ByVal groupId As Int32) As IDbCommand
 
+        Function GetUpdateDbCommand(testId As Nullable(Of Int32), projectId As Nullable(Of Int32),
+                                    groupId As Nullable(Of Int32), connectionId As Nullable(Of Int32),
+                                    runDateTime As DateTime, totalDuration As Nullable(Of Decimal), isValid As Boolean,
+                                    runLog As String, id As Int64) As IDbCommand
+
+        Function GetDeleteDbCommand(id As Int64) As IDbCommand
+
+        Function GetInsertDbCommand(testId As Nullable(Of Int32), projectId As Nullable(Of Int32),
+                                    groupId As Nullable(Of Int32), connectionId As Nullable(Of Int32),
+                                    runDateTime As DateTime, totalDuration As Nullable(Of Decimal), isValid As Boolean,
+                                    runLog As String) As IDbCommand
+
+        Function GetGetDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) As IDbCommand
+        Function GetGetRowCountDbCommand() As IDbCommand
+        Function GetGetDataByIdDbCommand(id As Int64) As IDbCommand
+        Function GetGetDataByProjectIdDbCommand(projectId As Int32) As IDbCommand
+
+        Function GetGetDataByProjectIdPageableDbCommand(projectId As Int32, sortExpression As String, page As Int32,
+                                                        pageSize As Int32) As IDbCommand
+
+        Function GetGetDataByProjectIdRowCountDbCommand(projectId As Int32) As IDbCommand
+        Function GetGetDataByTestIdDbCommand(testId As Int32) As IDbCommand
+
+        Function GetGetDataByTestIdPageableDbCommand(testId As Int32, sortExpression As String, page As Int32,
+                                                     pageSize As Int32) As IDbCommand
+
+        Function GetGetDataByTestIdRowCountDbCommand(testId As Int32) As IDbCommand
+        Function GetGetDataByGroupIdDbCommand(groupId As Int32) As IDbCommand
+
+        Function GetGetDataByGroupIdPageableDbCommand(groupId As Int32, sortExpression As String, page As Int32,
+                                                      pageSize As Int32) As IDbCommand
+
+        Function GetGetDataByGroupIdRowCountDbCommand(groupId As Int32) As IDbCommand
     End Interface
 End Namespace

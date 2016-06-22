@@ -9,137 +9,141 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Data
-Imports System.Data.Common
 Imports System.Data.SqlClient
 Imports LucentDb.Data.DbCommandProvider
 
-Namespace LucentDb.Data.SqlDbCommandProvider 
+Namespace LucentDb.Data.SqlDbCommandProvider
+    Public Class SqlDbProjectDetailsViewCommandProvider
+        Implements IDbProjectDetailsViewCommandProvider
 
-  
-Public Class SqlDbProjectDetailsViewCommandProvider
-      Implements IDbProjectDetailsViewCommandProvider
-    
-      ReadOnly _dbConnHolder As DbConnectionHolder
+        ReadOnly _dbConnHolder As DbConnectionHolder
 
-      Public Sub New()
-          _dbConnHolder = New DbConnectionHolder(DbConnectionName)
-      End Sub
+        Public Sub New()
+            _dbConnHolder = New DbConnectionHolder(DbConnectionName)
+        End Sub
 
-      Public ReadOnly Property DbConnectionName() As String Implements IDbProjectDetailsViewCommandProvider.DbConnectionName
-          Get
-              Return "LucentDbConnection"
-          End Get
-      End Property
+        Public ReadOnly Property DbConnectionName As String _
+            Implements IDbProjectDetailsViewCommandProvider.DbConnectionName
+            Get
+                Return "LucentDbConnection"
+            End Get
+        End Property
 
-      Public ReadOnly Property ProjectDetailsViewDbConnectionHolder() As DbConnectionHolder Implements IDbProjectDetailsViewCommandProvider.ProjectDetailsViewDbConnectionHolder
-          Get
-              Return _dbConnHolder
-          End Get
-      End Property
-      
-    
+        Public ReadOnly Property ProjectDetailsViewDbConnectionHolder As DbConnectionHolder _
+            Implements IDbProjectDetailsViewCommandProvider.ProjectDetailsViewDbConnectionHolder
+            Get
+                Return _dbConnHolder
+            End Get
+        End Property
+
+
         ''' <summary>
-        ''' Selects one or more records from the ProjectDetailsView table 
+        '''     Selects one or more records from the ProjectDetailsView table
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataDbCommand() As IDbCommand Implements IDbProjectDetailsViewCommandProvider.GetGetDataDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataDbCommand() As IDbCommand _
+            Implements IDbProjectDetailsViewCommandProvider.GetGetDataDbCommand
+
             Dim command As New SqlCommand("ProjectDetailsView_Select")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetDataPageable returns a IDataReader populated with a subset of data from ProjectDetailsView
+        '''     Function GetDataPageable returns a IDataReader populated with a subset of data from ProjectDetailsView
         ''' </summary>
-      ''' <param name="sortExpression" />
-      ''' <param name="page" />
-      ''' <param name="pageSize" />
+        ''' <param name="sortExpression" />
+        ''' <param name="page" />
+        ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand Implements IDbProjectDetailsViewCommandProvider.GetGetDataPageableDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) _
+            As IDbCommand Implements IDbProjectDetailsViewCommandProvider.GetGetDataPageableDbCommand
+
             Dim command As New SqlCommand("ProjectDetailsView_GetDataPageable")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetRowCount returns the row count for ProjectDetailsView
+        '''     Function GetRowCount returns the row count for ProjectDetailsView
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetRowCountDbCommand() As IDbCommand Implements IDbProjectDetailsViewCommandProvider.GetGetRowCountDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetRowCountDbCommand() As IDbCommand _
+            Implements IDbProjectDetailsViewCommandProvider.GetGetRowCountDbCommand
+
             Dim command As New SqlCommand("ProjectDetailsView_GetRowCount")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveData returns a IDataReader for ProjectDetailsView with records that are marked as active
+        '''     Function GetActiveData returns a IDataReader for ProjectDetailsView with records that are marked as active
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataDbCommand() As IDbCommand Implements IDbProjectDetailsViewCommandProvider.GetGetActiveDataDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataDbCommand() As IDbCommand _
+            Implements IDbProjectDetailsViewCommandProvider.GetGetActiveDataDbCommand
+
             Dim command As New SqlCommand("ProjectDetailsView_GetActiveData")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveDataPageable returns a IDataReader populated with paged active records from ProjectDetailsView
+        '''     Function GetActiveDataPageable returns a IDataReader populated with paged active records from ProjectDetailsView
         ''' </summary>
-      ''' <param name="sortExpression" />
-      ''' <param name="page" />
-      ''' <param name="pageSize" />
+        ''' <param name="sortExpression" />
+        ''' <param name="page" />
+        ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataPageableDbCommand( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32) As IDbCommand Implements IDbProjectDetailsViewCommandProvider.GetGetActiveDataPageableDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) _
+            As IDbCommand Implements IDbProjectDetailsViewCommandProvider.GetGetActiveDataPageableDbCommand
+
             Dim command As New SqlCommand("ProjectDetailsView_GetActiveDataPageable")
             command.CommandType = CommandType.StoredProcedure
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
-                  command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@PageSize", SqlDbType.Int, pageSize))
-      
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@PageSize", SqlDbType.Int, pageSize))
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
+        End Function
+
+
         ''' <summary>
-        ''' Function GetActiveDataRowCount returns the row count for ProjectDetailsView
+        '''     Function GetActiveDataRowCount returns the row count for ProjectDetailsView
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetActiveDataRowCountDbCommand() As IDbCommand Implements IDbProjectDetailsViewCommandProvider.GetGetActiveDataRowCountDbCommand
-            
+        ''' <remarks></remarks>
+        Public Function GetGetActiveDataRowCountDbCommand() As IDbCommand _
+            Implements IDbProjectDetailsViewCommandProvider.GetGetActiveDataRowCountDbCommand
+
             Dim command As New SqlCommand("ProjectDetailsView_GetActiveDataRowCount")
             command.CommandType = CommandType.StoredProcedure
-    
+
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
-      End Function
-         
-            
-  End Class
- End Namespace
-  
+        End Function
+    End Class
+End Namespace

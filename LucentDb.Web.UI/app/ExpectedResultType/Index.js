@@ -11,7 +11,8 @@
     "use strict";
 
     var controllerId = "expectedResultTypeIndexCtrl";
-    angular.module("app").controller(controllerId, ["common", "expectedResultTypeDataService", expectedResultTypeIndexCtrl]);
+    angular.module("app")
+        .controller(controllerId, ["common", "expectedResultTypeDataService", expectedResultTypeIndexCtrl]);
 
     function expectedResultTypeIndexCtrl(common, expectedResultTypeDataService) {
         var getLogFn = common.logger.getLogFn;
@@ -43,9 +44,10 @@
         }
 
         function getDataPageable(sortExpression, page, pageSize) {
-            return expectedResultTypeDataService.getDataPageable(sortExpression, page, pageSize).then(function(results) {
-                return vm.pageableResults = results.data;
-            });
+            return expectedResultTypeDataService.getDataPageable(sortExpression, page, pageSize)
+                .then(function(results) {
+                    return vm.pageableResults = results.data;
+                });
         }
 
         function deleteExpectedResultType(expectedResultTypeId) {

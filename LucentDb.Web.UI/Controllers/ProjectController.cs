@@ -38,7 +38,7 @@ namespace LucentDb.Web.UI.Controllers
             return View(_dbProjectRepository.GetDataByProjectId(projectId).FirstOrDefault());
         }
 
-       
+
         public ActionResult Create()
         {
             return View();
@@ -71,7 +71,7 @@ namespace LucentDb.Web.UI.Controllers
         }
 
         // POST: Projects/Edit/5
-         [Route("Projects/{projectId}")]
+        [Route("Projects/{projectId}")]
         [Route("Projects/{projectId}/Edit", Name = "PostProjectEdit")]
         [HttpPost]
         public ActionResult Edit(int projectId, Project project)

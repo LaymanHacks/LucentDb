@@ -65,7 +65,8 @@
     }
 
     CodeMirror.javascriptHint = function(editor, options) {
-        return scriptHint(editor, javascriptKeywords,
+        return scriptHint(editor,
+            javascriptKeywords,
             function(e, cur) { return e.getTokenAt(cur); },
             options);
     };
@@ -128,7 +129,8 @@
             } else if (obj.type == "atom") {
                 base = 1;
             } else if (obj.type == "function") {
-                if (window.jQuery != null && (obj.string == "$" || obj.string == "jQuery") &&
+                if (window.jQuery != null &&
+                (obj.string == "$" || obj.string == "jQuery") &&
                 (typeof window.jQuery == "function"))
                     base = window.jQuery();
                 else if (window._ != null && (obj.string == "_") && (typeof window._ == "function"))

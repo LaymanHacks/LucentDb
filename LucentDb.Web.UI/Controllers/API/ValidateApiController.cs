@@ -30,7 +30,8 @@ namespace LucentDb.Web.UI.Controllers.API
             _dataRepository = new DbRepositoryContext();
             _connectionFactory = new ConnectionFactory(_dataRepository.ConnectionRepository,
                 _dataRepository.ConnectionProviderRepository);
-            _testFactory = new TestFactory(_dataRepository.TestRepository, _dataRepository.TestTypeRepository, _dataRepository.TestValueTypeRepository,
+            _testFactory = new TestFactory(_dataRepository.TestRepository, _dataRepository.TestTypeRepository,
+                _dataRepository.TestValueTypeRepository,
                 _dataRepository.ExpectedResultRepository, _dataRepository.AssertTypeRepository);
             _projectFactory = new ProjectFactory(_dataRepository.ProjectRepository, _dataRepository.TestRepository,
                 _dataRepository.TestGroupRepository,
@@ -53,8 +54,7 @@ namespace LucentDb.Web.UI.Controllers.API
                 {
                     connection = GetDefaultConnectionByProjectId(testGroup.ProjectId);
 
-                        connectionId = connection.ConnectionId;
-              
+                    connectionId = connection.ConnectionId;
                 }
                 else
                 {
@@ -68,7 +68,7 @@ namespace LucentDb.Web.UI.Controllers.API
                 var valTestGroup = new ValidationTestGroup(connection, testGroup);
 
                 var valCollection = valTestGroup.Validate();
-                PersistValidationResults(valCollection,connectionId,  null, groupId, null);
+                PersistValidationResults(valCollection, connectionId, null, groupId, null);
 
                 return Request.CreateResponse(HttpStatusCode.OK, valTestGroup);
             }
@@ -135,7 +135,7 @@ namespace LucentDb.Web.UI.Controllers.API
                 connection.ConnectionProvider =
                     _dataRepository.ConnectionProviderRepository.GetDataById(connection.ConnectionProviderId)
                         .FirstOrDefault();
-               }
+            }
             return connection;
         }
 
@@ -192,7 +192,8 @@ namespace LucentDb.Web.UI.Controllers.API
             return valResponse;
         }
 
-        private void PersistValidationResults(IEnumerable<ValidationResponse> valCollection,int connectionId,int? testId, int? groupId,
+        private void PersistValidationResults(IEnumerable<ValidationResponse> valCollection, int connectionId,
+            int? testId, int? groupId,
             int? projectId)
         {
             var rHistory = ProcessTestResults(valCollection, connectionId, testId, groupId, projectId);
@@ -205,7 +206,8 @@ namespace LucentDb.Web.UI.Controllers.API
             }
         }
 
-        private static RunHistory ProcessTestResults(IEnumerable<ValidationResponse> valCollection,int connectionId, int? testId, int? groupId, int? projectId )
+        private static RunHistory ProcessTestResults(IEnumerable<ValidationResponse> valCollection, int connectionId,
+            int? testId, int? groupId, int? projectId)
         {
             decimal totalDuration = 0;
             var isValid = true;

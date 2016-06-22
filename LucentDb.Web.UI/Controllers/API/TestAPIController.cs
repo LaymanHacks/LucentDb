@@ -28,7 +28,8 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPut]
         public void Update(Test test)
         {
-            _dbRepository.Update(test.TestTypeId,test.TestValueTypeId, test.ProjectId, test.GroupId, test.Name, test.TestValue, test.IsActive,
+            _dbRepository.Update(test.TestTypeId, test.TestValueTypeId, test.ProjectId, test.GroupId, test.Name,
+                test.TestValue, test.IsActive,
                 test.Id);
         }
 
@@ -51,7 +52,8 @@ namespace LucentDb.Web.UI.Controllers.Api
         [HttpPost]
         public int Insert(Test test)
         {
-            return _dbRepository.Insert(test.TestTypeId,test.TestValueTypeId, test.ProjectId, test.GroupId, test.Name, test.TestValue,
+            return _dbRepository.Insert(test.TestTypeId, test.TestValueTypeId, test.ProjectId, test.GroupId, test.Name,
+                test.TestValue,
                 test.IsActive);
         }
 

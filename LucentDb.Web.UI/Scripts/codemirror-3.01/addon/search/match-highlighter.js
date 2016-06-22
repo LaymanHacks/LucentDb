@@ -33,15 +33,17 @@
                         //Only apply matchhighlight to the matches other than the one actually selected
                         if (cursor.from().line !== cm.getCursor(true).line ||
                             cursor.from().ch !== cm.getCursor(true).ch)
-                            state.marked.push(cm.markText(cursor.from(), cursor.to(),
-                            { className: className }));
+                            state.marked.push(cm.markText(cursor.from(),
+                                cursor.to(),
+                                { className: className }));
                     }
                 }
             });
         }
     }
 
-    CodeMirror.defineExtension("matchHighlight", function(className, minChars) {
-        markDocument(this, className, minChars);
-    });
+    CodeMirror.defineExtension("matchHighlight",
+        function(className, minChars) {
+            markDocument(this, className, minChars);
+        });
 })();

@@ -2,7 +2,8 @@
     "use strict";
 
     var controllerId = "connectionProviderIndexCtrl";
-    angular.module("app").controller(controllerId, ["common", "connectionProviderDataService", connectionProviderIndexCtrl]);
+    angular.module("app")
+        .controller(controllerId, ["common", "connectionProviderDataService", connectionProviderIndexCtrl]);
 
     function connectionProviderIndexCtrl(common, connectionProviderDataService) {
         var getLogFn = common.logger.getLogFn;
@@ -34,9 +35,10 @@
         }
 
         function getDataPageable(sortExpression, page, pageSize) {
-            return connectionProviderDataService.getDataPageable(sortExpression, page, pageSize).then(function(results) {
-                return vm.pageableResults = results.data;
-            });
+            return connectionProviderDataService.getDataPageable(sortExpression, page, pageSize)
+                .then(function(results) {
+                    return vm.pageableResults = results.data;
+                });
         }
 
         function deleteConnectionProvider(connectionProviderId) {

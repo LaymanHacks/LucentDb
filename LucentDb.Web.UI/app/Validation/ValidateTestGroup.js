@@ -1,5 +1,5 @@
 ﻿
-(function () {
+(function() {
     "use strict";
 
     var controllerId = "validateTestGroupCtrl";
@@ -18,13 +18,14 @@
         function activate() {
             var promises = [validateTestGroup(vm.testGroupId, vm.connectionId)];
             common.activateController(promises, controllerId)
-                .then(function () { });
+                .then(function() {});
         }
 
         function validateTestGroup(testGroupId, connectionId) {
-            return validationDataService.validateTestGroup(testGroupId, connectionId).then(function (results) {
-                return vm.validationResult = results.data;
-            });
+            return validationDataService.validateTestGroup(testGroupId, connectionId)
+                .then(function(results) {
+                    return vm.validationResult = results.data;
+                });
         };
 
     }

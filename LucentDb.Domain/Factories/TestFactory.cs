@@ -14,7 +14,8 @@ namespace LucentDb.Domain.Factories
         private readonly ITestTypeRepository _testTypeRepository;
         private readonly ITestValueTypeRepository _testValueTypeRepository;
 
-        public TestFactory(ITestRepository testRepository, ITestTypeRepository testTypeRepository,ITestValueTypeRepository testValueTypeRepository,
+        public TestFactory(ITestRepository testRepository, ITestTypeRepository testTypeRepository,
+            ITestValueTypeRepository testValueTypeRepository,
             IExpectedResultRepository expectedResultRepository, IAssertTypeRepository assertTypeRepository)
         {
             _testRepository = testRepository;

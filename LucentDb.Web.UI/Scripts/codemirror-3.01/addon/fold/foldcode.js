@@ -2,7 +2,8 @@
 //   Copyright (C) 2011 by Daniel Glazman <daniel@glazman.org>
 // released under the MIT license (../../LICENSE) like the rest of CodeMirror
 CodeMirror.tagRangeFinder = function(cm, start) {
-    var nameStartChar = "A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD";
+    var nameStartChar =
+        "A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD";
     var nameChar = nameStartChar + "\-\:\.0-9\\u00B7\\u0300-\\u036F\\u203F-\\u2040";
     var xmlNAMERegExp = new RegExp("^[" + nameStartChar + "][" + nameChar + "]*");
 
@@ -185,10 +186,12 @@ CodeMirror.newFoldFunction = function(rangeFinder, widget) {
 
         var myWidget = widget.cloneNode(true);
         CodeMirror.on(myWidget, "mousedown", function() { myRange.clear(); });
-        var myRange = cm.markText(range.from, range.to, {
-            replacedWith: myWidget,
-            clearOnEnter: true,
-            __isFold: true
-        });
+        var myRange = cm.markText(range.from,
+            range.to,
+            {
+                replacedWith: myWidget,
+                clearOnEnter: true,
+                __isFold: true
+            });
     };
 };

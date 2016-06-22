@@ -1,7 +1,8 @@
 (function() {
     var modes = ["clike", "css", "javascript"];
     for (var i = 0; i < modes.length; ++i)
-        CodeMirror.extendMode(modes[i], {
+        CodeMirror.extendMode(modes[i],
+        {
             blockCommentStart: "/*",
             blockCommentEnd: "*/",
             blockCommentContinue: " * "

@@ -28,8 +28,8 @@ namespace LucentDb.Win.UI.Controls
                 var scriptViewer = new ViewTest(script)
                 {
                     Dock = DockStyle.Top,
-                    Anchor = ((AnchorStyles.Top | AnchorStyles.Bottom)
-                              | AnchorStyles.Left)
+                    Anchor = AnchorStyles.Top | AnchorStyles.Bottom
+                             | AnchorStyles.Left
                              | AnchorStyles.Right
                 };
                 tlpScripts.Controls.Add(scriptViewer, 1, row++);

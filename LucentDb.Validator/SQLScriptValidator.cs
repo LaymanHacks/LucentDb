@@ -92,6 +92,5 @@ namespace LucentDb.Validator
             }
             return valResponse;
         }
-
     }
 }

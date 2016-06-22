@@ -34,21 +34,24 @@
         var list = loading[mode] = [cont];
         var count = 0,
             poll = setInterval(function() {
-                if (++count > 100) return clearInterval(poll);
-                if (CodeMirror.modes.hasOwnProperty(mode)) {
-                    clearInterval(poll);
-                    loading[mode] = null;
-                    ensureDeps(mode, function() {
-                        for (var i = 0; i < list.length; ++i) list[i]();
-                    });
-                }
-            }, 200);
+                    if (++count > 100) return clearInterval(poll);
+                    if (CodeMirror.modes.hasOwnProperty(mode)) {
+                        clearInterval(poll);
+                        loading[mode] = null;
+                        ensureDeps(mode,
+                            function() {
+                                for (var i = 0; i < list.length; ++i) list[i]();
+                            });
+                    }
+                },
+                200);
     };
 
     CodeMirror.autoLoadMode = function(instance, mode) {
         if (!CodeMirror.modes.hasOwnProperty(mode))
-            CodeMirror.requireMode(mode, function() {
-                instance.setOption("mode", instance.getOption("mode"));
-            });
+            CodeMirror.requireMode(mode,
+                function() {
+                    instance.setOption("mode", instance.getOption("mode"));
+                });
     };
 }());

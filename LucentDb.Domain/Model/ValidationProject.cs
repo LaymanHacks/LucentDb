@@ -8,10 +8,9 @@ namespace LucentDb.Domain.Model
     [DataContract]
     public class ValidationProject
     {
-
         private readonly ILucentDbRepositoryContext _dataRepository;
 
-        public ValidationProject(ILucentDbRepositoryContext dataRepository,int projectId)
+        public ValidationProject(ILucentDbRepositoryContext dataRepository, int projectId)
         {
             _dataRepository = dataRepository;
             ProjectId = projectId;
@@ -19,14 +18,16 @@ namespace LucentDb.Domain.Model
             ValidationTests = new Collection<ValidationTest>();
         }
 
-      
+
         [DataMember]
         public int ProjectId { get; set; }
+
         [DataMember]
         public Collection<ValidationTestGroup> ValidationTestGroups { get; private set; }
+
         [DataMember]
         public Collection<ValidationTest> ValidationTests { get; private set; }
-        
+
 
         public Collection<ValidationResponse> Validate()
         {
@@ -39,7 +40,6 @@ namespace LucentDb.Domain.Model
                     {
                         validationResponses.Add(valResponse);
                     }
-                
                 }
             if (ValidationTests == null) return validationResponses;
             foreach (var vTest in ValidationTests)
@@ -47,7 +47,7 @@ namespace LucentDb.Domain.Model
                 var valResponse = vTest.Validate();
                 validationResponses.Add(valResponse);
             }
-            return validationResponses;     
+            return validationResponses;
         }
 
         public bool ValidateConnection(int connectionId)

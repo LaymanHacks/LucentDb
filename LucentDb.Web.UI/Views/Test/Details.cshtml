@@ -1,14 +1,12 @@
-
 @model LucentDb.Domain.Entities.Test
 
 @{
-    ViewBag.Title = "Test - " + @Model.Id;
+    ViewBag.Title = "Test - " + Model.Id;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
-    var selectListTestTypes = new SelectList(ViewBag.TestTypes, "Id", "Name", @Model.TestTypeId);
-    var selectListProjects = new SelectList(ViewBag.Projects, "ProjectId", "Name",@Model.ProjectId);
-    var selectListTestGroups = new SelectList(ViewBag.TestGroups, "Id", "Name", @Model.GroupId);
-           
+
+    var selectListTestTypes = new SelectList(ViewBag.TestTypes, "Id", "Name", Model.TestTypeId);
+    var selectListProjects = new SelectList(ViewBag.Projects, "ProjectId", "Name", Model.ProjectId);
+    var selectListTestGroups = new SelectList(ViewBag.TestGroups, "Id", "Name", Model.GroupId);
 }
 <link href="~/Content/codemirror-3.01/codemirror.css" rel="stylesheet"/>
 <link href="~/Content/codemirror-3.0/theme/ambiance.css" rel="stylesheet"/>
@@ -27,70 +25,70 @@
 </style>
 
 <div class="row" ng-controller="testDetailsCtrl as vm">
-   
-            <div class="form-vertical">
-                <h4 style="font-size: 40px">Test - @Model.Id</h4>
-                <hr />
-                
 
-                <div class="form-group">
-                    <label for="txtName" class="control-label">Name</label>
-                    <div>
-                        <input type="text" class="form-control" id="txtName" placeholder="Name" value="@Model.Name">
-                    </div>
-                  
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TestValue, new {@class = "control-label"})
-                    <div>
-                        <textarea class="form-control" rows="3" >@Model.TestValue</textarea>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TestTypeId, new { @class = "control-label" })
-                    <div>
-                        @Html.DropDownListFor(model => model.TestTypeId,  @selectListTestTypes,"--Select Test Type--", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.TestTypeId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ProjectId, new { @class = "control-label" })
-                    <div>
-                        @Html.DropDownListFor(model => model.ProjectId, @selectListProjects, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.GroupId, new { @class = "control-label" })
-                    <div>
-                        @Html.DropDownListFor(model => model.GroupId, @selectListTestGroups, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
-                    <div>
-                        @Html.EditorFor(model => model.IsActive)
-
-                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+    <div class="form-vertical">
+        <h4 style="font-size: 40px">Test - @Model.Id</h4>
+        <hr/>
 
 
-                @*<div class="form-group">
+        <div class="form-group">
+            <label for="txtName" class="control-label">Name</label>
+            <div>
+                <input type="text" class="form-control" id="txtName" placeholder="Name" value="@Model.Name">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TestValue, new {@class = "control-label"})
+            <div>
+                <textarea class="form-control" rows="3">@Model.TestValue</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TestTypeId, new {@class = "control-label"})
+            <div>
+                @Html.DropDownListFor(model => model.TestTypeId, selectListTestTypes, "--Select Test Type--", new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.TestTypeId, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectId, new {@class = "control-label"})
+            <div>
+                @Html.DropDownListFor(model => model.ProjectId, selectListProjects, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.ProjectId, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GroupId, new {@class = "control-label"})
+            <div>
+                @Html.DropDownListFor(model => model.GroupId, selectListTestGroups, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.ProjectId, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, new {@class = "control-label"})
+            <div>
+                @Html.EditorFor(model => model.IsActive)
+
+                @Html.ValidationMessageFor(model => model.IsActive, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+
+        @*<div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="button" class="btn btn-default" value="Cancel" onclick="location.href = '@Url.Action("Index")'" />
                         <input type="submit" value="Save" class="btn btn-primary" />
                     </div>
                 </div>*@
-            </div>
-        </div>
-    
+    </div>
+</div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
     @Html.ActionLink("Back to List", "Index")

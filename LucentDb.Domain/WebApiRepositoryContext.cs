@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using LucentDb.Data.Repository;
+﻿using LucentDb.Data.Repository;
 using LucentDb.Data.WebApiRepository;
 
 namespace LucentDb.Domain

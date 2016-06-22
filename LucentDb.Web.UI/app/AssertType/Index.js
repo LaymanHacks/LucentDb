@@ -36,9 +36,10 @@
         }
 
         function getDataPageable(sortExpression, page, pageSize) {
-            return assertTypeDataService.getDataPageable(sortExpression, page, pageSize).then(function(results) {
-                return vm.pageableResults = results.data;
-            });
+            return assertTypeDataService.getDataPageable(sortExpression, page, pageSize)
+                .then(function(results) {
+                    return vm.pageableResults = results.data;
+                });
         }
 
         function deleteAssertType(assertTypeId) {

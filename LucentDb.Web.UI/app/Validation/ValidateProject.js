@@ -1,5 +1,5 @@
 ﻿
-(function () {
+(function() {
     "use strict";
 
     var controllerId = "validateProjectCtrl";
@@ -18,13 +18,14 @@
         function activate() {
             var promises = [validateProject(vm.projectId, vm.connectionId)];
             common.activateController(promises, controllerId)
-                .then(function () { });
+                .then(function() {});
         }
 
         function validateProject(projectId, connectionId) {
-            return validationDataService.validateProject(projectId, connectionId).then(function (results) {
-                return vm.validationResult = results.data;
-            });
+            return validationDataService.validateProject(projectId, connectionId)
+                .then(function(results) {
+                    return vm.validationResult = results.data;
+                });
         };
 
     }

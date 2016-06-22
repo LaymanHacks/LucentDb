@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace LucentDb.Web.UI.Controllers
 {
@@ -33,14 +29,13 @@ namespace LucentDb.Web.UI.Controllers
             return View();
         }
 
-         [Route("projects/{projectId}/validate")]
-         [Route("projects/{projectId}/connections/{connectionId}/validate")]
+        [Route("projects/{projectId}/validate")]
+        [Route("projects/{projectId}/connections/{connectionId}/validate")]
         public ActionResult ValidateProject(int projectId, int connectionId = 0)
         {
             ViewBag.projectId = projectId;
             ViewBag.ConnectionId = connectionId;
             return View();
         }
-    
     }
 }

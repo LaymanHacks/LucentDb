@@ -35,9 +35,10 @@
         }
 
         function getDataPageable(sortExpression, page, pageSize) {
-            return testTypeDataService.getDataPageable(sortExpression, page, pageSize).then(function(results) {
-                return vm.pageableResults = results.data;
-            });
+            return testTypeDataService.getDataPageable(sortExpression, page, pageSize)
+                .then(function(results) {
+                    return vm.pageableResults = results.data;
+                });
         }
 
         function deleteTestType(testTypeId) {

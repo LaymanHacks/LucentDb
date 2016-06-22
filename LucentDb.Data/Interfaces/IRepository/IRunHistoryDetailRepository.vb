@@ -9,23 +9,32 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Collections.Generic
-Imports LucentDb.Data
 Imports LucentDb.Domain.Entities
 
-  
- Namespace LucentDb.Data.Repository     
+
+Namespace LucentDb.Data.Repository
     Public Interface IRunHistoryDetailRepository
-        Function GetData()  as ICollection(Of RunHistoryDetail)
-        Sub Update(ByVal runHistoryId As Int64, ByVal testId As Int32, ByVal runDateTime As DateTime, ByVal duration As Nullable(Of Decimal), ByVal isValid As Boolean, ByVal resultString As String, ByVal id As Int64)
-        Sub Update(ByVal runHistoryDetail As RunHistoryDetail)
-        Sub Delete(ByVal id As Int64)
-        Sub Delete(ByVal runHistoryDetail As RunHistoryDetail)
-        Function Insert(ByVal runHistoryId As Int64, ByVal testId As Int32, ByVal runDateTime As DateTime, ByVal duration As Nullable(Of Decimal), ByVal isValid As Boolean, ByVal resultString As String) As Int64
-        Function Insert(ByVal runHistoryDetail as RunHistoryDetail)  as Int64
-        Function GetDataPageable( ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of RunHistoryDetail)
-        Function GetDataById( ByVal id As Int64)  as ICollection(Of RunHistoryDetail)
-        Function GetDataByRunHistoryId( ByVal runHistoryId As Int64)  as ICollection(Of RunHistoryDetail)
-        Function GetDataByRunHistoryIdPageable( ByVal runHistoryId As Int64,  ByVal sortExpression As String,  ByVal page As Int32,  ByVal pageSize As Int32)  as PagedResult(Of RunHistoryDetail)
-    End Interface 
+        Function GetData() as ICollection(Of RunHistoryDetail)
+
+        Sub Update(runHistoryId As Int64, testId As Int32, runDateTime As DateTime, duration As Nullable(Of Decimal),
+                   isValid As Boolean, resultString As String, id As Int64)
+
+        Sub Update(runHistoryDetail As RunHistoryDetail)
+        Sub Delete(id As Int64)
+        Sub Delete(runHistoryDetail As RunHistoryDetail)
+
+        Function Insert(runHistoryId As Int64, testId As Int32, runDateTime As DateTime,
+                        duration As Nullable(Of Decimal), isValid As Boolean, resultString As String) As Int64
+
+        Function Insert(runHistoryDetail as RunHistoryDetail) as Int64
+
+        Function GetDataPageable(sortExpression As String, page As Int32, pageSize As Int32) _
+            as PagedResult(Of RunHistoryDetail)
+
+        Function GetDataById(id As Int64) as ICollection(Of RunHistoryDetail)
+        Function GetDataByRunHistoryId(runHistoryId As Int64) as ICollection(Of RunHistoryDetail)
+
+        Function GetDataByRunHistoryIdPageable(runHistoryId As Int64, sortExpression As String, page As Int32,
+                                               pageSize As Int32) as PagedResult(Of RunHistoryDetail)
+    End Interface
 End NameSpace
-  

@@ -25,22 +25,31 @@
             }
         }
 
-        for (var i = cur.line, found, e = forward ? Math.min(i + 100, cm.lineCount()) : Math.max(-1, i - 100); i != e; i += d) {
+        for (var i = cur.line, found, e = forward ? Math.min(i + 100, cm.lineCount()) : Math.max(-1, i - 100);
+            i != e;
+            i += d) {
             if (i == cur.line) found = scan(line, i, pos);
             else found = scan(cm.getLineHandle(i), i);
             if (found) break;
         }
-        return { from: { line: cur.line, ch: pos }, to: found && { line: i, ch: found.pos }, match: found && found.match };
+        return {
+            from: { line: cur.line, ch: pos },
+            to: found && { line: i, ch: found.pos },
+            match: found && found.match
+        };
     }
 
     function matchBrackets(cm, autoclear) {
         var found = findMatchingBracket(cm);
         if (!found) return;
         var style = found.match ? "CodeMirror-matchingbracket" : "CodeMirror-nonmatchingbracket";
-        var one = cm.markText(found.from, { line: found.from.line, ch: found.from.ch + 1 },
+        var one = cm.markText(found.from,
+        { line: found.from.line, ch: found.from.ch + 1 },
         { className: style });
-        var two = found.to && cm.markText(found.to, { line: found.to.line, ch: found.to.ch + 1 },
-        { className: style });
+        var two = found.to &&
+            cm.markText(found.to,
+            { line: found.to.line, ch: found.to.ch + 1 },
+            { className: style });
         var clear = function() {
             cm.operation(function() {
                 one.clear();
@@ -63,10 +72,12 @@
         });
     }
 
-    CodeMirror.defineOption("matchBrackets", false, function(cm, val) {
-        if (val) cm.on("cursorActivity", doMatchBrackets);
-        else cm.off("cursorActivity", doMatchBrackets);
-    });
+    CodeMirror.defineOption("matchBrackets",
+        false,
+        function(cm, val) {
+            if (val) cm.on("cursorActivity", doMatchBrackets);
+            else cm.off("cursorActivity", doMatchBrackets);
+        });
 
     CodeMirror.defineExtension("matchBrackets", function() { matchBrackets(this, true); });
     CodeMirror.defineExtension("findMatchingBracket", function() { return findMatchingBracket(this); });

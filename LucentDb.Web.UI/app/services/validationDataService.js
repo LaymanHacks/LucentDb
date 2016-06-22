@@ -1,5 +1,5 @@
 ﻿
-(function () {
+(function() {
     "use strict";
 
     var serviceId = "validationDataService";
@@ -7,8 +7,8 @@
 
     function validationDataService($http) {
         var urlBase = "/api";
-        
-        this.validateProject = function (projectId, connectionId) {
+
+        this.validateProject = function(projectId, connectionId) {
             if (connectionId !== 0) {
                 return $http.get(urlBase + "/connections/" + connectionId + "/projects/" + projectId + "/validate");
             } else {
@@ -16,7 +16,7 @@
             }
         };
 
-        this.validateTestGroup = function (testGroupId, connectionId) {
+        this.validateTestGroup = function(testGroupId, connectionId) {
             if (connectionId !== 0) {
                 return $http.get(urlBase + "/connections/" + connectionId + "/testgroups/" + testGroupId + "/validate");
             } else {
@@ -25,8 +25,8 @@
         };
 
 
-        this.validateTest = function (testId, connectionId) {
-            if (connectionId !==0) {
+        this.validateTest = function(testId, connectionId) {
+            if (connectionId !== 0) {
                 return $http.get(urlBase + "/connections/" + connectionId + "/tests/" + testId + "/validate");
             } else {
                 return $http.get(urlBase + "/tests/" + testId + "/validate");

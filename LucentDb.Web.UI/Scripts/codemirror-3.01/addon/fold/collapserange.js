@@ -1,11 +1,13 @@
 (function() {
-    CodeMirror.defineOption("collapseRange", false, function(cm, val, old) {
-        var wasOn = old && old != CodeMirror.Init;
-        if (val && !wasOn)
-            enableRangeCollapsing(cm);
-        else if (!val && wasOn)
-            disableRangeCollapsing(cm);
-    });
+    CodeMirror.defineOption("collapseRange",
+        false,
+        function(cm, val, old) {
+            var wasOn = old && old != CodeMirror.Init;
+            if (val && !wasOn)
+                enableRangeCollapsing(cm);
+            else if (!val && wasOn)
+                disableRangeCollapsing(cm);
+        });
 
     var gutterClass = "CodeMirror-collapserange";
 
@@ -34,7 +36,9 @@
             var from = Math.min(old, line), to = Math.max(old, line);
             if (from != to) {
                 // Finish this fold
-                var fold = cm.markText({ line: from + 1, ch: 0 }, { line: to - 1 }, {
+                var fold = cm.markText({ line: from + 1, ch: 0 },
+                { line: to - 1 },
+                {
                     collapsed: true,
                     inclusiveLeft: true,
                     inclusiveRight: true,

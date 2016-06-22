@@ -9,13 +9,10 @@
 '------------------------------------------------------------------------------
 Imports System
 Imports System.Data
-Imports System.Data.Common
 Imports System.Data.SqlClient
 Imports LucentDb.Data.DbCommandProvider
 
 Namespace LucentDb.Data.SqlDbCommandProvider
-
-
     Public Class SqlDbRunHistoryCommandProvider
         Implements IDbRunHistoryCommandProvider
 
@@ -25,13 +22,14 @@ Namespace LucentDb.Data.SqlDbCommandProvider
             _dbConnHolder = New DbConnectionHolder(DbConnectionName)
         End Sub
 
-        Public ReadOnly Property DbConnectionName() As String Implements IDbRunHistoryCommandProvider.DbConnectionName
+        Public ReadOnly Property DbConnectionName As String Implements IDbRunHistoryCommandProvider.DbConnectionName
             Get
                 Return "LucentDbConnection"
             End Get
         End Property
 
-        Public ReadOnly Property RunHistoryDbConnectionHolder() As DbConnectionHolder Implements IDbRunHistoryCommandProvider.RunHistoryDbConnectionHolder
+        Public ReadOnly Property RunHistoryDbConnectionHolder As DbConnectionHolder _
+            Implements IDbRunHistoryCommandProvider.RunHistoryDbConnectionHolder
             Get
                 Return _dbConnHolder
             End Get
@@ -39,10 +37,10 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Selects one or more records from the RunHistory table 
+        '''     Selects one or more records from the RunHistory table
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
+        ''' <remarks></remarks>
         Public Function GetGetDataDbCommand() As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataDbCommand
 
             Dim command As New SqlCommand("RunHistory_Select")
@@ -54,7 +52,7 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Updates one or more records from the RunHistory table 
+        '''     Updates one or more records from the RunHistory table
         ''' </summary>
         ''' <param name="testId" />
         ''' <param name="projectId" />
@@ -66,8 +64,12 @@ Namespace LucentDb.Data.SqlDbCommandProvider
         ''' <param name="runLog" />
         ''' <param name="id" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetUpdateDbCommand(ByVal testId As Nullable(Of Int32), ByVal projectId As Nullable(Of Int32), ByVal groupId As Nullable(Of Int32), ByVal connectionId As Nullable(Of Int32), ByVal runDateTime As DateTime, ByVal totalDuration As Nullable(Of Decimal), ByVal isValid As Boolean, ByVal runLog As String, ByVal id As Int64) As IDbCommand Implements IDbRunHistoryCommandProvider.GetUpdateDbCommand
+        ''' <remarks></remarks>
+        Public Function GetUpdateDbCommand(testId As Nullable(Of Int32), projectId As Nullable(Of Int32),
+                                           groupId As Nullable(Of Int32), connectionId As Nullable(Of Int32),
+                                           runDateTime As DateTime, totalDuration As Nullable(Of Decimal),
+                                           isValid As Boolean, runLog As String, id As Int64) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetUpdateDbCommand
 
             Dim command As New SqlCommand("RunHistory_Update")
             command.CommandType = CommandType.StoredProcedure
@@ -75,39 +77,45 @@ Namespace LucentDb.Data.SqlDbCommandProvider
             If (TestId.HasValue = True) Then
                 command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TestId", SqlDbType.int, testId))
             Else
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TestId", SqlDbType.int, Global.System.DBNull.Value))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TestId", SqlDbType.int, DBNull.Value))
             End If
 
             If (ProjectId.HasValue = True) Then
                 command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
             Else
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, Global.System.DBNull.Value))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int,
+                                                                                DBNull.Value))
             End If
 
             If (GroupId.HasValue = True) Then
                 command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@GroupId", SqlDbType.int, groupId))
             Else
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@GroupId", SqlDbType.int, Global.System.DBNull.Value))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@GroupId", SqlDbType.int, DBNull.Value))
             End If
 
             If (ConnectionId.HasValue = True) Then
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ConnectionId", SqlDbType.int, connectionId))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ConnectionId", SqlDbType.int,
+                                                                                connectionId))
             Else
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ConnectionId", SqlDbType.int, Global.System.DBNull.Value))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ConnectionId", SqlDbType.int,
+                                                                                DBNull.Value))
             End If
-            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunDateTime", SqlDbType.datetime, runDateTime))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunDateTime", SqlDbType.datetime,
+                                                                            runDateTime))
 
             If (TotalDuration.HasValue = True) Then
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TotalDuration", SqlDbType.decimal, totalDuration))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TotalDuration", SqlDbType.decimal,
+                                                                                totalDuration))
             Else
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TotalDuration", SqlDbType.decimal, Global.System.DBNull.Value))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TotalDuration", SqlDbType.decimal,
+                                                                                DBNull.Value))
             End If
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsValid", SqlDbType.bit, isValid))
 
             If (Not runLog Is Nothing) Then
                 command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunLog", SqlDbType.text, runLog))
             Else
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunLog", SqlDbType.text, Global.System.DBNull.Value))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunLog", SqlDbType.text, DBNull.Value))
             End If
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@Id", SqlDbType.bigint, id))
 
@@ -117,12 +125,13 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Deletes one or more records from the RunHistory table 
+        '''     Deletes one or more records from the RunHistory table
         ''' </summary>
         ''' <param name="id" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetDeleteDbCommand(ByVal id As Int64) As IDbCommand Implements IDbRunHistoryCommandProvider.GetDeleteDbCommand
+        ''' <remarks></remarks>
+        Public Function GetDeleteDbCommand(id As Int64) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetDeleteDbCommand
 
             Dim command As New SqlCommand("RunHistory_Delete")
             command.CommandType = CommandType.StoredProcedure
@@ -134,7 +143,7 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Inserts a record into the RunHistory table on the database.
+        '''     Inserts a record into the RunHistory table on the database.
         ''' </summary>
         ''' <param name="testId" />
         ''' <param name="projectId" />
@@ -145,8 +154,12 @@ Namespace LucentDb.Data.SqlDbCommandProvider
         ''' <param name="isValid" />
         ''' <param name="runLog" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetInsertDbCommand(ByVal testId As Nullable(Of Int32), ByVal projectId As Nullable(Of Int32), ByVal groupId As Nullable(Of Int32), ByVal connectionId As Nullable(Of Int32), ByVal runDateTime As DateTime, ByVal totalDuration As Nullable(Of Decimal), ByVal isValid As Boolean, ByVal runLog As String) As IDbCommand Implements IDbRunHistoryCommandProvider.GetInsertDbCommand
+        ''' <remarks></remarks>
+        Public Function GetInsertDbCommand(testId As Nullable(Of Int32), projectId As Nullable(Of Int32),
+                                           groupId As Nullable(Of Int32), connectionId As Nullable(Of Int32),
+                                           runDateTime As DateTime, totalDuration As Nullable(Of Decimal),
+                                           isValid As Boolean, runLog As String) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetInsertDbCommand
 
             Dim command As New SqlCommand("RunHistory_Insert")
             command.CommandType = CommandType.StoredProcedure
@@ -154,39 +167,45 @@ Namespace LucentDb.Data.SqlDbCommandProvider
             If (TestId.HasValue = True) Then
                 command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TestId", SqlDbType.int, testId))
             Else
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TestId", SqlDbType.int, Global.System.DBNull.Value))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TestId", SqlDbType.int, DBNull.Value))
             End If
 
             If (ProjectId.HasValue = True) Then
                 command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
             Else
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, Global.System.DBNull.Value))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int,
+                                                                                DBNull.Value))
             End If
 
             If (GroupId.HasValue = True) Then
                 command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@GroupId", SqlDbType.int, groupId))
             Else
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@GroupId", SqlDbType.int, Global.System.DBNull.Value))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@GroupId", SqlDbType.int, DBNull.Value))
             End If
 
             If (ConnectionId.HasValue = True) Then
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ConnectionId", SqlDbType.int, connectionId))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ConnectionId", SqlDbType.int,
+                                                                                connectionId))
             Else
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ConnectionId", SqlDbType.int, Global.System.DBNull.Value))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ConnectionId", SqlDbType.int,
+                                                                                DBNull.Value))
             End If
-            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunDateTime", SqlDbType.datetime, runDateTime))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunDateTime", SqlDbType.datetime,
+                                                                            runDateTime))
 
             If (TotalDuration.HasValue = True) Then
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TotalDuration", SqlDbType.decimal, totalDuration))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TotalDuration", SqlDbType.decimal,
+                                                                                totalDuration))
             Else
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TotalDuration", SqlDbType.decimal, Global.System.DBNull.Value))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TotalDuration", SqlDbType.decimal,
+                                                                                DBNull.Value))
             End If
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@IsValid", SqlDbType.bit, isValid))
 
             If (Not runLog Is Nothing) Then
                 command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunLog", SqlDbType.text, runLog))
             Else
-                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunLog", SqlDbType.text, Global.System.DBNull.Value))
+                command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@RunLog", SqlDbType.text, DBNull.Value))
             End If
 
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
@@ -195,18 +214,20 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Function GetDataPageable returns a IDataReader populated with a subset of data from RunHistory
+        '''     Function GetDataPageable returns a IDataReader populated with a subset of data from RunHistory
         ''' </summary>
         ''' <param name="sortExpression" />
         ''' <param name="page" />
         ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataPageableDbCommand(ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataPageableDbCommand
+        ''' <remarks></remarks>
+        Public Function GetGetDataPageableDbCommand(sortExpression As String, page As Int32, pageSize As Int32) _
+            As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataPageableDbCommand
 
             Dim command As New SqlCommand("RunHistory_GetDataPageable")
             command.CommandType = CommandType.StoredProcedure
-            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
 
@@ -216,11 +237,12 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Function GetRowCount returns the row count for RunHistory
+        '''     Function GetRowCount returns the row count for RunHistory
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetRowCountDbCommand() As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetRowCountDbCommand
+        ''' <remarks></remarks>
+        Public Function GetGetRowCountDbCommand() As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetGetRowCountDbCommand
 
             Dim command As New SqlCommand("RunHistory_GetRowCount")
             command.CommandType = CommandType.StoredProcedure
@@ -231,12 +253,13 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Function  GetDataById returns a IDataReader for RunHistory
+        '''     Function  GetDataById returns a IDataReader for RunHistory
         ''' </summary>
         ''' <param name="id" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByIdDbCommand(ByVal id As Int64) As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataByIdDbCommand
+        ''' <remarks></remarks>
+        Public Function GetGetDataByIdDbCommand(id As Int64) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetGetDataByIdDbCommand
 
             Dim command As New SqlCommand("RunHistory_GetDataById")
             command.CommandType = CommandType.StoredProcedure
@@ -248,12 +271,13 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Function GetDataByProjectId returns a IDataReader for RunHistory
+        '''     Function GetDataByProjectId returns a IDataReader for RunHistory
         ''' </summary>
         ''' <param name="projectId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByProjectIdDbCommand(ByVal projectId As Int32) As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataByProjectIdDbCommand
+        ''' <remarks></remarks>
+        Public Function GetGetDataByProjectIdDbCommand(projectId As Int32) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetGetDataByProjectIdDbCommand
 
             Dim command As New SqlCommand("RunHistory_GetDataByProjectId")
             command.CommandType = CommandType.StoredProcedure
@@ -265,20 +289,23 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Function GetDataByProjectIdPageable returns a IDataReader populated with a subset of data from RunHistory
+        '''     Function GetDataByProjectIdPageable returns a IDataReader populated with a subset of data from RunHistory
         ''' </summary>
         ''' <param name="projectId" />
         ''' <param name="sortExpression" />
         ''' <param name="page" />
         ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByProjectIdPageableDbCommand(ByVal projectId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataByProjectIdPageableDbCommand
+        ''' <remarks></remarks>
+        Public Function GetGetDataByProjectIdPageableDbCommand(projectId As Int32, sortExpression As String,
+                                                               page As Int32, pageSize As Int32) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetGetDataByProjectIdPageableDbCommand
 
             Dim command As New SqlCommand("RunHistory_GetDataByProjectIdPageable")
             command.CommandType = CommandType.StoredProcedure
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@ProjectId", SqlDbType.int, projectId))
-            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
 
@@ -288,12 +315,13 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Function GetRowCount returns the row count for RunHistory
+        '''     Function GetRowCount returns the row count for RunHistory
         ''' </summary>
         ''' <param name="projectId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByProjectIdRowCountDbCommand(ByVal projectId As Int32) As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataByProjectIdRowCountDbCommand
+        ''' <remarks></remarks>
+        Public Function GetGetDataByProjectIdRowCountDbCommand(projectId As Int32) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetGetDataByProjectIdRowCountDbCommand
 
             Dim command As New SqlCommand("RunHistory_GetDataByProjectIdRowCount")
             command.CommandType = CommandType.StoredProcedure
@@ -305,12 +333,13 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Function GetDataByTestId returns a IDataReader for RunHistory
+        '''     Function GetDataByTestId returns a IDataReader for RunHistory
         ''' </summary>
         ''' <param name="testId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByTestIdDbCommand(ByVal testId As Int32) As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataByTestIdDbCommand
+        ''' <remarks></remarks>
+        Public Function GetGetDataByTestIdDbCommand(testId As Int32) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetGetDataByTestIdDbCommand
 
             Dim command As New SqlCommand("RunHistory_GetDataByTestId")
             command.CommandType = CommandType.StoredProcedure
@@ -322,20 +351,23 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Function GetDataByTestIdPageable returns a IDataReader populated with a subset of data from RunHistory
+        '''     Function GetDataByTestIdPageable returns a IDataReader populated with a subset of data from RunHistory
         ''' </summary>
         ''' <param name="testId" />
         ''' <param name="sortExpression" />
         ''' <param name="page" />
         ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByTestIdPageableDbCommand(ByVal testId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataByTestIdPageableDbCommand
+        ''' <remarks></remarks>
+        Public Function GetGetDataByTestIdPageableDbCommand(testId As Int32, sortExpression As String, page As Int32,
+                                                            pageSize As Int32) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetGetDataByTestIdPageableDbCommand
 
             Dim command As New SqlCommand("RunHistory_GetDataByTestIdPageable")
             command.CommandType = CommandType.StoredProcedure
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@TestId", SqlDbType.int, testId))
-            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
 
@@ -345,12 +377,13 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Function GetRowCount returns the row count for RunHistory
+        '''     Function GetRowCount returns the row count for RunHistory
         ''' </summary>
         ''' <param name="testId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByTestIdRowCountDbCommand(ByVal testId As Int32) As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataByTestIdRowCountDbCommand
+        ''' <remarks></remarks>
+        Public Function GetGetDataByTestIdRowCountDbCommand(testId As Int32) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetGetDataByTestIdRowCountDbCommand
 
             Dim command As New SqlCommand("RunHistory_GetDataByTestIdRowCount")
             command.CommandType = CommandType.StoredProcedure
@@ -362,12 +395,13 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Function GetDataByGroupId returns a IDataReader for RunHistory
+        '''     Function GetDataByGroupId returns a IDataReader for RunHistory
         ''' </summary>
         ''' <param name="groupId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByGroupIdDbCommand(ByVal groupId As Int32) As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataByGroupIdDbCommand
+        ''' <remarks></remarks>
+        Public Function GetGetDataByGroupIdDbCommand(groupId As Int32) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetGetDataByGroupIdDbCommand
 
             Dim command As New SqlCommand("RunHistory_GetDataByGroupId")
             command.CommandType = CommandType.StoredProcedure
@@ -379,20 +413,23 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Function GetDataByGroupIdPageable returns a IDataReader populated with a subset of data from RunHistory
+        '''     Function GetDataByGroupIdPageable returns a IDataReader populated with a subset of data from RunHistory
         ''' </summary>
         ''' <param name="groupId" />
         ''' <param name="sortExpression" />
         ''' <param name="page" />
         ''' <param name="pageSize" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByGroupIdPageableDbCommand(ByVal groupId As Int32, ByVal sortExpression As String, ByVal page As Int32, ByVal pageSize As Int32) As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataByGroupIdPageableDbCommand
+        ''' <remarks></remarks>
+        Public Function GetGetDataByGroupIdPageableDbCommand(groupId As Int32, sortExpression As String, page As Int32,
+                                                             pageSize As Int32) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetGetDataByGroupIdPageableDbCommand
 
             Dim command As New SqlCommand("RunHistory_GetDataByGroupIdPageable")
             command.CommandType = CommandType.StoredProcedure
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@GroupId", SqlDbType.int, groupId))
-            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar, sortExpression))
+            command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@sortExpression", SqlDbType.varchar,
+                                                                            sortExpression))
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@page", SqlDbType.Int, page))
             command.Parameters.Add(SqlParameterFactory.CreateInputParameter("@pageSize", SqlDbType.Int, pageSize))
 
@@ -402,12 +439,13 @@ Namespace LucentDb.Data.SqlDbCommandProvider
 
 
         ''' <summary>
-        ''' Function GetRowCount returns the row count for RunHistory
+        '''     Function GetRowCount returns the row count for RunHistory
         ''' </summary>
         ''' <param name="groupId" />
         ''' <returns></returns>
-        ''' <remarks></remarks> 
-        Public Function GetGetDataByGroupIdRowCountDbCommand(ByVal groupId As Int32) As IDbCommand Implements IDbRunHistoryCommandProvider.GetGetDataByGroupIdRowCountDbCommand
+        ''' <remarks></remarks>
+        Public Function GetGetDataByGroupIdRowCountDbCommand(groupId As Int32) As IDbCommand _
+            Implements IDbRunHistoryCommandProvider.GetGetDataByGroupIdRowCountDbCommand
 
             Dim command As New SqlCommand("RunHistory_GetDataByGroupIdRowCount")
             command.CommandType = CommandType.StoredProcedure
@@ -416,7 +454,5 @@ Namespace LucentDb.Data.SqlDbCommandProvider
             command.Connection = CType(_dbConnHolder.Connection, SqlConnection)
             Return command
         End Function
-
-
     End Class
 End Namespace

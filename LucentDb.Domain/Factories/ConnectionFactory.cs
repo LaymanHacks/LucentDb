@@ -17,7 +17,7 @@ namespace LucentDb.Domain.Factories
             _connectionProviderRepository = connectionProviderRepository;
         }
 
-        public Connection 
+        public Connection
             CreateConnection(int connectionId)
         {
             var connection = _connectionRepository.GetDataByConnectionId(connectionId).FirstOrDefault();

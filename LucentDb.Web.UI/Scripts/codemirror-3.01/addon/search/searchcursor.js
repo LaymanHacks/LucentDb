@@ -52,7 +52,8 @@
                 } else {
                     this.matches = function(reverse, pos) {
                         var line = fold(cm.getLine(pos.line)), len = query.length, match;
-                        if (reverse ? (pos.ch >= len && (match = line.lastIndexOf(query, pos.ch - len)) != -1)
+                        if (reverse
+                            ? (pos.ch >= len && (match = line.lastIndexOf(query, pos.ch - len)) != -1)
                             : (match = line.indexOf(query, pos.ch)) != -1)
                             return {
                                 from: { line: pos.line, ch: match },
@@ -62,9 +63,13 @@
                 }
             } else {
                 this.matches = function(reverse, pos) {
-                    var ln = pos.line, idx = (reverse ? target.length - 1 : 0), match = target[idx], line = fold(cm.getLine(ln));
+                    var ln = pos.line,
+                        idx = (reverse ? target.length - 1 : 0),
+                        match = target[idx],
+                        line = fold(cm.getLine(ln));
                     var offsetA = (reverse ? line.indexOf(match) + match.length : line.lastIndexOf(match));
-                    if (reverse ? offsetA >= pos.ch || offsetA != match.length
+                    if (reverse
+                        ? offsetA >= pos.ch || offsetA != match.length
                         : offsetA <= pos.ch || offsetA != line.length - match.length)
                         return;
                     for (;;) {
@@ -126,7 +131,8 @@
         }
     };
 
-    CodeMirror.defineExtension("getSearchCursor", function(query, pos, caseFold) {
-        return new SearchCursor(this, query, pos, caseFold);
-    });
+    CodeMirror.defineExtension("getSearchCursor",
+        function(query, pos, caseFold) {
+            return new SearchCursor(this, query, pos, caseFold);
+        });
 })();

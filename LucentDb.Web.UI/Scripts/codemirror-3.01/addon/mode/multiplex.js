@@ -35,7 +35,8 @@ CodeMirror.multiplexingMode = function(outer /*, others */) {
                     if (found == stream.pos) {
                         stream.match(other.open);
                         state.innerActive = other;
-                        state.inner = CodeMirror.startState(other.mode, outer.indent ? outer.indent(state.outer, "") : 0);
+                        state.inner = CodeMirror.startState(other.mode,
+                            outer.indent ? outer.indent(state.outer, "") : 0);
                         return other.delimStyle;
                     } else if (found != -1 && found < cutOff) {
                         cutOff = found;
@@ -89,7 +90,9 @@ CodeMirror.multiplexingMode = function(outer /*, others */) {
         electricChars: outer.electricChars,
 
         innerMode: function(state) {
-            return state.inner ? { state: state.inner, mode: state.innerActive.mode } : { state: state.outer, mode: outer };
+            return state.inner
+                ? { state: state.inner, mode: state.innerActive.mode }
+                : { state: state.outer, mode: outer };
         }
     };
 };

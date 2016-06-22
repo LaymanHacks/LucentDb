@@ -35,9 +35,10 @@
         }
 
         function getDataPageable(sortExpression, page, pageSize) {
-            return connectionDataService.getDataPageable(sortExpression, page, pageSize).then(function(results) {
-                return vm.pageableResults = results.data;
-            });
+            return connectionDataService.getDataPageable(sortExpression, page, pageSize)
+                .then(function(results) {
+                    return vm.pageableResults = results.data;
+                });
         }
 
         function deleteConnection(connectionId) {

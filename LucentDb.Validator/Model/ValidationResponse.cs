@@ -2,7 +2,6 @@ using System;
 
 namespace LucentDb.Validator.Model
 {
- 
     public class ValidationResponse
     {
         public int TestId { get; set; }

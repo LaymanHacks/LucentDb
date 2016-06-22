@@ -1,4 +1,3 @@
-
 @model LucentDb.Domain.Entities.Test
 
 @{
@@ -17,11 +16,10 @@
         @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
 
-      
         <div class="form-group">
             @Html.LabelFor(model => model.TestTypeId, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TestTypeId, @selectListTestTypes, new {@class = "form-control"})
+                @Html.DropDownListFor(model => model.TestTypeId, selectListTestTypes, new {@class = "form-control"})
                 @Html.ValidationMessageFor(model => model.TestTypeId, "", new {@class = "text-danger"})
             </div>
         </div>
@@ -29,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ProjectId, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.ProjectId, @selectListProjects, new {@class = "form-control"})
+                @Html.DropDownListFor(model => model.ProjectId, selectListProjects, new {@class = "form-control"})
                 @Html.ValidationMessageFor(model => model.ProjectId, "", new {@class = "text-danger"})
             </div>
         </div>
@@ -37,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.GroupId, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.GroupId, @selectListTestGroups, new {@class = "form-control"})
+                @Html.DropDownListFor(model => model.GroupId, selectListTestGroups, new {@class = "form-control"})
                 @Html.ValidationMessageFor(model => model.GroupId, "", new {@class = "text-danger"})
             </div>
         </div>
@@ -59,8 +57,6 @@
                 @Html.ValidationMessageFor(model => model.TestValue, "", new {@class = "text-danger"})
             </div>
         </div>
-
-       
 
 
         <div class="form-group">

@@ -45,10 +45,11 @@ namespace LucentDb.Validator.Tests
             Assert.AreEqual(scriptValue, fFileSysSctRes.GetTestValue());
         }
 
-        //[Test]
-        //[ExpectedException("System.IO.FileNotFoundException")]
-        //public void GetSqlScript_Throws_FileNotFoundException_If_Script_Is_Not_Found()
         //{
+        //public void GetSqlScript_Throws_FileNotFoundException_If_Script_Is_Not_Found()
+        //[ExpectedException("System.IO.FileNotFoundException")]
+
+        //[Test]
         //    _fileServiceMock
         //        .Setup(it => it.Exists())
         //        .Returns(false);

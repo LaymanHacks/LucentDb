@@ -3,21 +3,20 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
 
 <div ng-controller="validateProjectCtrl as vm">
     <script>
-    window.projectId = @ViewBag.ProjectId;
-    window.connectionId = @ViewBag.ConnectionId;
+        window.projectId = @ViewBag.ProjectId;
+        window.connectionId = @ViewBag.ConnectionId;
     </script>
     <h2 ng-bind="vm.title"></h2>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 ">
-                <div style=" font-weight: bold">{{vm.validationResult.name}}</div>
-                <div style="padding: 10px; font-weight: bold; color:#9DAE74" ng-repeat="test in vm.validationResult.validationTests">
+                <div style="font-weight: bold">{{vm.validationResult.name}}</div>
+                <div style="color: #9DAE74; font-weight: bold; padding: 10px;" ng-repeat="test in vm.validationResult.validationTests">
                     <div>{{test.response.testName}}</div>
                 </div>
             </div>

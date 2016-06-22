@@ -22,7 +22,7 @@ namespace LucentDb.Domain.Entities.Extensions
         public static Test IncludeProject(this Test test, IProjectRepository projectRepository)
         {
             if (test.Project != null) return test;
-            test.Project = projectRepository.GetDataByProjectId((int) test.ProjectId).ToList().First();
+            test.Project = projectRepository.GetDataByProjectId(test.ProjectId).ToList().First();
             return test;
         }
 

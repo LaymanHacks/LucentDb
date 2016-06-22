@@ -35,9 +35,10 @@
         }
 
         function getDataPageable(sortExpression, page, pageSize) {
-            return projectDataService.getDataPageable(sortExpression, page, pageSize).then(function(results) {
-                return vm.pageableResults = results.data;
-            });
+            return projectDataService.getDataPageable(sortExpression, page, pageSize)
+                .then(function(results) {
+                    return vm.pageableResults = results.data;
+                });
         }
 
         function deleteProject(projectId) {

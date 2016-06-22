@@ -3,7 +3,9 @@
     "use strict";
 
     var controllerId = "expectedResultIndexCtrl";
-    angular.module("app").controller(controllerId, ["common", "expectedResultDataService", "assertTypeDataService", expectedResultIndexCtrl]);
+    angular.module("app")
+        .controller(controllerId,
+        ["common", "expectedResultDataService", "assertTypeDataService", expectedResultIndexCtrl]);
 
     function expectedResultIndexCtrl(common, expectedResultDataService, assertTypeDataService) {
         var getLogFn = common.logger.getLogFn;
@@ -36,15 +38,17 @@
         }
 
         function getAssertTypes() {
-            return assertTypeDataService.getData().then(function(results) {
-                return vm.assertTypes = results.data;
-            });
+            return assertTypeDataService.getData()
+                .then(function(results) {
+                    return vm.assertTypes = results.data;
+                });
         }
 
         function getDataPageable(sortExpression, page, pageSize) {
-            return expectedResultDataService.getDataPageable(sortExpression, page, pageSize).then(function(results) {
-                return vm.pageableResults = results.data;
-            });
+            return expectedResultDataService.getDataPageable(sortExpression, page, pageSize)
+                .then(function(results) {
+                    return vm.pageableResults = results.data;
+                });
         }
 
         function deleteExpectedResult(expectedResultId) {

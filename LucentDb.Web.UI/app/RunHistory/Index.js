@@ -35,9 +35,10 @@
         }
 
         function getDataPageable(sortExpression, page, pageSize) {
-            return runHistoryDataService.getDataPageable(sortExpression, page, pageSize).then(function(results) {
-                return vm.pageableResults = results.data;
-            });
+            return runHistoryDataService.getDataPageable(sortExpression, page, pageSize)
+                .then(function(results) {
+                    return vm.pageableResults = results.data;
+                });
         }
 
         function deleteRunHistory(runHistoryId) {
