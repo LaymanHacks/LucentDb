@@ -2,7 +2,87 @@
 
 @{
     ViewBag.Title = "title";
-    Layout = "_Layout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>title</h2>
+
+<div >
+ 
+    <table class="table">
+        <tr>
+
+            <th>
+                Id
+            </th>
+
+            <th>
+                Test Type Id
+            </th>
+
+            <th>
+                Project Id
+            </th>
+
+            <th>
+                Group Id
+            </th>
+
+            <th>
+                Name
+            </th>
+
+            <th>
+                Test Value
+            </th>
+
+            <th>
+                Is Active
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @item.Id
+                </td>
+
+                <td>
+                    @item.TestTypeId
+                </td>
+
+                <td>
+                    @item.ProjectId
+                </td>
+
+                <td>
+                    @item.GroupId
+                </td>
+
+                <td>
+                    @item.Name
+                </td>
+
+                <td>
+                    @item.TestValue
+                </td>
+
+                <td>
+                    @item.IsActive
+                </td>
+
+                <td>
+                   
+                    <a href="/Test/Edit/@item.Id">Edit</a>
+                </td>
+            </tr>
+        }
+       
+
+
+    </table>
+ </div>

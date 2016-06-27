@@ -52,10 +52,10 @@ namespace LucentDb.Web.UI.Controllers
         [Route("Projects/{projectId}/Tests")]
         public ActionResult GetTestsByProject(int projectId)
         {
-            var test = _dbTestRepository.GetActiveDataByProjectId(projectId);
+            var tests = _dbTestRepository.GetActiveDataByProjectId(projectId);
 
 
-            return View(test);
+            return View(tests);
         }
 
         [Route("Tests/Create")]
